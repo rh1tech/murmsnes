@@ -146,8 +146,13 @@ static void Sanitize(char* str, size_t bufsize)
 /**********************************************************************************************/
 bool S9xInitMemory(void)
 {
-   IPPU.TileCache = (uint8_t*) calloc(MAX_2BIT_TILES, 128);
-   IPPU.TileCached = (uint8_t*) calloc(MAX_2BIT_TILES, 1);
+   // ConvertTile writes 64 bytes per tile cache entry (see tile.c), so allocate 64-byte entries.
+   IPPU.TileCache[TILE_2BIT] = (uint8_t*) calloc(MAX_2BIT_TILES, 64);
+   IPPU.TileCache[TILE_4BIT] = (uint8_t*) calloc(MAX_4BIT_TILES, 64);
+   IPPU.TileCache[TILE_8BIT] = (uint8_t*) calloc(MAX_8BIT_TILES, 64);
+   IPPU.TileCached[TILE_2BIT] = (uint8_t*) calloc(MAX_2BIT_TILES, 1);
+   IPPU.TileCached[TILE_4BIT] = (uint8_t*) calloc(MAX_4BIT_TILES, 1);
+   IPPU.TileCached[TILE_8BIT] = (uint8_t*) calloc(MAX_8BIT_TILES, 1);
    Memory.Map = (uint8_t**)calloc(MEMMAP_NUM_BLOCKS, sizeof(uint8_t*));
    Memory.MapInfo = (SMapInfo*)calloc(MEMMAP_NUM_BLOCKS, sizeof(SMapInfo));
 
@@ -174,7 +179,10 @@ bool S9xInitMemory(void)
    }
 
    if (!Memory.RAM || !Memory.SRAM || !Memory.VRAM || !Memory.ROM || !Memory.Map || !Memory.MapInfo
-      || !IPPU.ScreenColors || !IPPU.TileCache || !IPPU.TileCached || !bytes0x2000)
+      || !IPPU.ScreenColors
+      || !IPPU.TileCache[TILE_2BIT] || !IPPU.TileCache[TILE_4BIT] || !IPPU.TileCache[TILE_8BIT]
+      || !IPPU.TileCached[TILE_2BIT] || !IPPU.TileCached[TILE_4BIT] || !IPPU.TileCached[TILE_8BIT]
+      || !bytes0x2000)
    {
       S9xDeinitMemory();
       return false;
@@ -212,11 +220,13 @@ void S9xDeinitMemory(void)
    free(IPPU.ScreenColors);
    IPPU.ScreenColors = NULL;
 
-   free(IPPU.TileCached);
-   IPPU.TileCached = NULL;
-
-   free(IPPU.TileCache);
-   IPPU.TileCache = NULL;
+   for (int i = 0; i < 3; i++)
+   {
+      free(IPPU.TileCached[i]);
+      IPPU.TileCached[i] = NULL;
+      free(IPPU.TileCache[i]);
+      IPPU.TileCache[i] = NULL;
+   }
 
    free(bytes0x2000);
    bytes0x2000 = NULL;

@@ -56,6 +56,11 @@ static struct {
    int32_t MixOutputPrev[2];
 } *LocalState;
 
+// Optional kill switch for SNES noise generator (vinyl-like hiss/scratch)
+static bool g_disable_noise = true;
+// Per-channel mute mask for debugging; bit i mutes channel i (0..7)
+static uint8_t g_channel_mute_mask = 0x08; // mute only channel 3 (identified clicking channel)
+
 #define wave LocalState->wave
 #define Echo LocalState->Echo
 #define MixBuffer LocalState->MixBuffer
@@ -488,6 +493,12 @@ static INLINE void MixStereo(int32_t sample_count)
       uint32_t freq0;
       uint8_t mod;
       Channel* ch = &SoundData.channels[J];
+
+      if ((g_channel_mute_mask & (1u << J)) != 0)
+         continue;
+
+      if (g_disable_noise && (ch->type == SOUND_NOISE || ch->type == SOUND_EXTRA_NOISE))
+         continue;
 
       if (ch->state == SOUND_SILENT)
          continue;

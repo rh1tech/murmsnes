@@ -6,7 +6,7 @@
 #include "stdbool.h"
 #include "hardware/dma.h" // Added for DMA_IRQ_0
 
-#define VIDEO_DMA_IRQ (DMA_IRQ_0)
+#define VIDEO_DMA_IRQ (DMA_IRQ_1)
 
 #ifndef HDMI_BASE_PIN
 #define HDMI_BASE_PIN (6)
@@ -20,10 +20,10 @@
 #endif
 
 #ifndef PIO_VIDEO
-#define PIO_VIDEO pio1
+#define PIO_VIDEO pio0
 #endif
 #ifndef PIO_VIDEO_ADDR
-#define PIO_VIDEO_ADDR pio1
+#define PIO_VIDEO_ADDR pio0
 #endif
 
 #ifndef beginHDMI_PIN_data

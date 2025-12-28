@@ -17,6 +17,11 @@
 #include "gfx.h"
 #include "apu.h"
 
+#ifdef MURMSNES_PROFILE
+#include "pico/stdlib.h"
+#include "murmsnes_profile.h"
+#endif
+
 static const uint8_t BitShifts[8][4] =
 {
    {2, 2, 2, 2}, /* 0 */
@@ -663,8 +668,8 @@ static void DrawOBJS(bool OnMain, uint8_t D)
    BG.PaletteShift = 4;
    BG.PaletteMask = 7;
    BG.Depth = TILE_4BIT;
-   BG.Buffer = IPPU.TileCache;
-   BG.Buffered = IPPU.TileCached;
+   BG.Buffer = IPPU.TileCache[BG.Depth];
+   BG.Buffered = IPPU.TileCached[BG.Depth];
    BG.NameSelect = PPU.OBJNameSelect;
    BG.DirectColourMode = false;
    GFX.PixSize = 1;
@@ -1591,8 +1596,8 @@ static void DrawBackground(uint32_t BGMode, uint32_t bg, uint8_t Z1, uint8_t Z2)
    BG.TileAddress = PPU.BG[bg].NameBase << 1;
    BG.NameSelect = 0;
    BG.Depth = Depths [BGMode][bg];
-   BG.Buffer = IPPU.TileCache;
-   BG.Buffered = IPPU.TileCached;
+   BG.Buffer = IPPU.TileCache[BG.Depth];
+   BG.Buffered = IPPU.TileCached[BG.Depth];
    BG.PaletteShift = PaletteShifts[BGMode][bg];
    BG.PaletteMask = PaletteMasks[BGMode][bg];
    BG.DirectColourMode = (BGMode == 3 || BGMode == 4) && bg == 0 && (GFX.r2130 & 1);
@@ -2459,6 +2464,9 @@ static void DrawBGMode7Background16Sub1_2_i(uint8_t* Screen, int32_t bg)
 
 static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D)
 {
+#ifdef MURMSNES_PROFILE
+   uint32_t __rs_t0 = time_us_32();
+#endif
    bool BG0;
    bool BG1;
    bool BG2;
@@ -2495,27 +2503,57 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
          if (OB)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(4));
+#ifdef MURMSNES_PROFILE
+            uint32_t __t0 = time_us_32();
+#endif
             DrawOBJS(!sub, D);
+#ifdef MURMSNES_PROFILE
+            murmsnes_prof_add_rs_obj_us((uint32_t)(time_us_32() - __t0));
+#endif
          }
          if (BG0)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(0));
+#ifdef MURMSNES_PROFILE
+            uint32_t __t0 = time_us_32();
+#endif
             DrawBackground(PPU.BGMode, 0, D + 10, D + 14);
+#ifdef MURMSNES_PROFILE
+            murmsnes_prof_add_rs_bg0_us((uint32_t)(time_us_32() - __t0));
+#endif
          }
          if (BG1)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(1));
+#ifdef MURMSNES_PROFILE
+            uint32_t __t0 = time_us_32();
+#endif
             DrawBackground(PPU.BGMode, 1, D + 9, D + 13);
+#ifdef MURMSNES_PROFILE
+            murmsnes_prof_add_rs_bg1_us((uint32_t)(time_us_32() - __t0));
+#endif
          }
          if (BG2)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(2));
+#ifdef MURMSNES_PROFILE
+            uint32_t __t0 = time_us_32();
+#endif
             DrawBackground(PPU.BGMode, 2, D + 3, PPU.BG3Priority ? D + 17 : D + 6);
+#ifdef MURMSNES_PROFILE
+            murmsnes_prof_add_rs_bg2_us((uint32_t)(time_us_32() - __t0));
+#endif
          }
          if (BG3 && PPU.BGMode == 0)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(3));
+#ifdef MURMSNES_PROFILE
+            uint32_t __t0 = time_us_32();
+#endif
             DrawBackground(PPU.BGMode, 3, D + 2, D + 5);
+#ifdef MURMSNES_PROFILE
+            murmsnes_prof_add_rs_bg3_us((uint32_t)(time_us_32() - __t0));
+#endif
          }
          break;
       case 2:
@@ -2526,24 +2564,48 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
          if (OB)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(4));
+#ifdef MURMSNES_PROFILE
+            uint32_t __t0 = time_us_32();
+#endif
             DrawOBJS(!sub, D);
+#ifdef MURMSNES_PROFILE
+            murmsnes_prof_add_rs_obj_us((uint32_t)(time_us_32() - __t0));
+#endif
          }
          if (BG0)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(0));
+#ifdef MURMSNES_PROFILE
+            uint32_t __t0 = time_us_32();
+#endif
             DrawBackground(PPU.BGMode, 0, D + 5, D + 13);
+#ifdef MURMSNES_PROFILE
+            murmsnes_prof_add_rs_bg0_us((uint32_t)(time_us_32() - __t0));
+#endif
          }
          if (BG1 && PPU.BGMode != 6)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(1));
+#ifdef MURMSNES_PROFILE
+            uint32_t __t0 = time_us_32();
+#endif
             DrawBackground(PPU.BGMode, 1, D + 2, D + 9);
+#ifdef MURMSNES_PROFILE
+            murmsnes_prof_add_rs_bg1_us((uint32_t)(time_us_32() - __t0));
+#endif
          }
          break;
       case 7:
          if (OB)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(4));
+#ifdef MURMSNES_PROFILE
+            uint32_t __t0 = time_us_32();
+#endif
             DrawOBJS(!sub, D);
+#ifdef MURMSNES_PROFILE
+            murmsnes_prof_add_rs_obj_us((uint32_t)(time_us_32() - __t0));
+#endif
          }
          if (BG0 || ((Memory.FillRAM [0x2133] & 0x40) && BG1))
          {
@@ -2566,22 +2628,62 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
                bg = 0;
             }
             if (sub || !SUB_OR_ADD(0))
+            {
+#ifdef MURMSNES_PROFILE
+               uint32_t __t0 = time_us_32();
+#endif
                DrawBGMode7Background16(Screen, bg);
+#ifdef MURMSNES_PROFILE
+               murmsnes_prof_add_rs_mode7_us((uint32_t)(time_us_32() - __t0));
+#endif
+            }
             else
             {
                if (GFX.r2131 & 0x80)
                {
                   if (GFX.r2131 & 0x40)
+                  {
+#ifdef MURMSNES_PROFILE
+                     uint32_t __t0 = time_us_32();
+#endif
                      DrawBGMode7Background16Sub1_2(Screen, bg);
+#ifdef MURMSNES_PROFILE
+                     murmsnes_prof_add_rs_mode7_us((uint32_t)(time_us_32() - __t0));
+#endif
+                  }
                   else
+                  {
+#ifdef MURMSNES_PROFILE
+                     uint32_t __t0 = time_us_32();
+#endif
                      DrawBGMode7Background16Sub(Screen, bg);
+#ifdef MURMSNES_PROFILE
+                     murmsnes_prof_add_rs_mode7_us((uint32_t)(time_us_32() - __t0));
+#endif
+                  }
                }
                else
                {
                   if (GFX.r2131 & 0x40)
+                  {
+#ifdef MURMSNES_PROFILE
+                     uint32_t __t0 = time_us_32();
+#endif
                      DrawBGMode7Background16Add1_2(Screen, bg);
+#ifdef MURMSNES_PROFILE
+                     murmsnes_prof_add_rs_mode7_us((uint32_t)(time_us_32() - __t0));
+#endif
+                  }
                   else
+                  {
+#ifdef MURMSNES_PROFILE
+                     uint32_t __t0 = time_us_32();
+#endif
                      DrawBGMode7Background16Add(Screen, bg);
+#ifdef MURMSNES_PROFILE
+                     murmsnes_prof_add_rs_mode7_us((uint32_t)(time_us_32() - __t0));
+#endif
+                  }
                }
             }
          }
@@ -2589,10 +2691,17 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
       default:
          break;
    }
+
+#ifdef MURMSNES_PROFILE
+   murmsnes_prof_add_render_screen_us((uint32_t)(time_us_32() - __rs_t0));
+#endif
 }
 
 void S9xUpdateScreen(void)
 {
+#ifdef MURMSNES_PROFILE
+   uint32_t __us_t0 = time_us_32();
+#endif
    int32_t x2 = 1;
    uint32_t starty, endy, black;
 
@@ -2640,6 +2749,9 @@ void S9xUpdateScreen(void)
       {
          /* The game has switched from lo-res to hi-res mode part way down
           * the screen. Scale any existing lo-res pixels on screen */
+#ifdef MURMSNES_PROFILE
+         uint32_t __scale_t0 = time_us_32();
+#endif
          uint32_t y;
          for (y = 0; y < starty; y++)
          {
@@ -2649,6 +2761,9 @@ void S9xUpdateScreen(void)
             for (x = 255; x >= 0; x--, p--, q -= 2)
                q[0] = q[1] = p[0];
          }
+#ifdef MURMSNES_PROFILE
+         murmsnes_prof_add_upd_scale_us((uint32_t)(time_us_32() - __scale_t0));
+#endif
          IPPU.DoubleWidthPixels = true;
          IPPU.HalfWidthPixels = false;
       }
@@ -2656,6 +2771,9 @@ void S9xUpdateScreen(void)
        *     too. */
       if (IPPU.Interlace && !IPPU.DoubleHeightPixels)
       {
+   #ifdef MURMSNES_PROFILE
+         uint32_t __scale_t0 = time_us_32();
+   #endif
          int32_t y;
 
          starty                    = GFX.StartY * 2;
@@ -2677,6 +2795,9 @@ void S9xUpdateScreen(void)
             /* memmove converted: Same malloc, different addresses [Neb] */
             memcpy(GFX.Screen + (y * 2 + 1) * GFX.Pitch2, GFX.Screen + y * GFX.Pitch2, GFX.Pitch2);
          }
+#ifdef MURMSNES_PROFILE
+         murmsnes_prof_add_upd_scale_us((uint32_t)(time_us_32() - __scale_t0));
+#endif
       }
    }
 
@@ -2704,6 +2825,9 @@ void S9xUpdateScreen(void)
       if (pClip->Count [5])
       {
          /* Colour window enabled. */
+#ifdef MURMSNES_PROFILE
+         uint32_t __zclear_t0 = time_us_32();
+#endif
          uint32_t y;
          for (y = starty; y <= endy; y++)
          {
@@ -2743,9 +2867,15 @@ void S9xUpdateScreen(void)
                }
             }
          }
+#ifdef MURMSNES_PROFILE
+         murmsnes_prof_add_upd_zclear_us((uint32_t)(time_us_32() - __zclear_t0));
+#endif
       }
       else
       {
+#ifdef MURMSNES_PROFILE
+         uint32_t __zclear_t0 = time_us_32();
+#endif
          uint32_t y;
          for (y = starty; y <= endy; y++)
          {
@@ -2766,16 +2896,28 @@ void S9xUpdateScreen(void)
                   *p++ = b;
             }
          }
+#ifdef MURMSNES_PROFILE
+         murmsnes_prof_add_upd_zclear_us((uint32_t)(time_us_32() - __zclear_t0));
+#endif
       }
 
       if (ANYTHING_ON_SUB)
       {
          GFX.DB = GFX.SubZBuffer;
+#ifdef MURMSNES_PROFILE
+         uint32_t __sub_t0 = time_us_32();
+#endif
          RenderScreen(GFX.SubScreen, true, true, SUB_SCREEN_DEPTH);
+#ifdef MURMSNES_PROFILE
+         murmsnes_prof_add_upd_render_sub_us((uint32_t)(time_us_32() - __sub_t0));
+#endif
       }
 
       if (IPPU.Clip [0].Count [5])
       {
+#ifdef MURMSNES_PROFILE
+         uint32_t __cm_t0 = time_us_32();
+#endif
          uint32_t y;
          for (y = starty; y <= endy; y++)
          {
@@ -2793,13 +2935,25 @@ void S9xUpdateScreen(void)
                p++;
             }
          }
+#ifdef MURMSNES_PROFILE
+         murmsnes_prof_add_upd_colormath_us((uint32_t)(time_us_32() - __cm_t0));
+#endif
       }
 
       GFX.DB = GFX.ZBuffer;
+   #ifdef MURMSNES_PROFILE
+      uint32_t __main_t0 = time_us_32();
+   #endif
       RenderScreen(GFX.Screen, false, false, MAIN_SCREEN_DEPTH);
+   #ifdef MURMSNES_PROFILE
+      murmsnes_prof_add_upd_render_main_us((uint32_t)(time_us_32() - __main_t0));
+   #endif
 
       if (SUB_OR_ADD(5))
       {
+   #ifdef MURMSNES_PROFILE
+         uint32_t __cm_t0 = time_us_32();
+   #endif
          uint32_t y;
          uint32_t back = IPPU.ScreenColors [0];
          uint32_t Left = 0;
@@ -2977,9 +3131,15 @@ void S9xUpdateScreen(void)
                }
             }
          }
+#ifdef MURMSNES_PROFILE
+         murmsnes_prof_add_upd_colormath_us((uint32_t)(time_us_32() - __cm_t0));
+#endif
       } /* --if (SUB_OR_ADD(5)) */
       else
       {
+#ifdef MURMSNES_PROFILE
+         uint32_t __cm_t0 = time_us_32();
+#endif
          uint32_t y;
          /* Subscreen not being added to back */
          uint32_t back = IPPU.ScreenColors [0] | (IPPU.ScreenColors [0] << 16);
@@ -3026,6 +3186,9 @@ void S9xUpdateScreen(void)
                }
             }
          }
+#ifdef MURMSNES_PROFILE
+         murmsnes_prof_add_upd_colormath_us((uint32_t)(time_us_32() - __cm_t0));
+#endif
       }
    } /* force blanking */
    else
@@ -3040,6 +3203,9 @@ void S9xUpdateScreen(void)
 
       if (IPPU.Clip [0].Count[5])
       {
+   #ifdef MURMSNES_PROFILE
+         uint32_t __bd_t0 = time_us_32();
+   #endif
          uint32_t y;
          for (y = starty; y <= endy; y++)
          {
@@ -3063,9 +3229,15 @@ void S9xUpdateScreen(void)
                }
             }
          }
+#ifdef MURMSNES_PROFILE
+         murmsnes_prof_add_upd_backdrop_us((uint32_t)(time_us_32() - __bd_t0));
+#endif
       }
       else
       {
+#ifdef MURMSNES_PROFILE
+         uint32_t __bd_t0 = time_us_32();
+#endif
          uint32_t y;
          for (y = starty; y <= endy; y++)
          {
@@ -3074,15 +3246,33 @@ void S9xUpdateScreen(void)
             while (p < q)
                *p++ = back;
          }
+#ifdef MURMSNES_PROFILE
+         murmsnes_prof_add_upd_backdrop_us((uint32_t)(time_us_32() - __bd_t0));
+#endif
       }
 
       if (!PPU.ForcedBlanking)
       {
          uint32_t y;
+
+#ifdef MURMSNES_PROFILE
+         uint32_t __zclear_t0 = time_us_32();
+#endif
          for (y = starty; y <= endy; y++)
             memset(GFX.ZBuffer + y * GFX.ZPitch, 0, IPPU.RenderedScreenWidth);
+#ifdef MURMSNES_PROFILE
+         murmsnes_prof_add_upd_zclear_us((uint32_t)(time_us_32() - __zclear_t0));
+#endif
+
          GFX.DB = GFX.ZBuffer;
+
+#ifdef MURMSNES_PROFILE
+         uint32_t __main_t0 = time_us_32();
+#endif
          RenderScreen(GFX.Screen, false, true, SUB_SCREEN_DEPTH);
+#ifdef MURMSNES_PROFILE
+         murmsnes_prof_add_upd_render_main_us((uint32_t)(time_us_32() - __main_t0));
+#endif
       }
    }
 
@@ -3090,6 +3280,9 @@ void S9xUpdateScreen(void)
    {
       /* Mixture of background modes used on screen - scale width
        * of all non-mode 5 and 6 pixels. */
+   #ifdef MURMSNES_PROFILE
+      uint32_t __scale_t0 = time_us_32();
+   #endif
       uint32_t y;
       for (y = starty; y <= endy; y++)
       {
@@ -3099,10 +3292,23 @@ void S9xUpdateScreen(void)
          for (x = 255; x >= 0; x--, p--, q -= 2)
             q[0] = q[1] = p[0];
       }
+#ifdef MURMSNES_PROFILE
+      murmsnes_prof_add_upd_scale_us((uint32_t)(time_us_32() - __scale_t0));
+#endif
    }
 
    /* Double the height of the pixels just drawn */
+#ifdef MURMSNES_PROFILE
+   uint32_t __scale_t0 = time_us_32();
+#endif
    FIX_INTERLACE(GFX.Screen, false, GFX.ZBuffer);
+#ifdef MURMSNES_PROFILE
+   murmsnes_prof_add_upd_scale_us((uint32_t)(time_us_32() - __scale_t0));
+#endif
 
    IPPU.PreviousLine = IPPU.CurrentLine;
+
+#ifdef MURMSNES_PROFILE
+   murmsnes_prof_add_update_screen_us((uint32_t)(time_us_32() - __us_t0));
+#endif
 }

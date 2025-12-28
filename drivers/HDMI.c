@@ -337,7 +337,7 @@ static inline void irq_remove_handler_DMA_core1() {
 
 static inline void irq_set_exclusive_handler_DMA_core1() {
     irq_set_exclusive_handler(VIDEO_DMA_IRQ, dma_handler_HDMI);
-    irq_set_priority(VIDEO_DMA_IRQ, 0);
+    irq_set_priority(VIDEO_DMA_IRQ, 0);  // Highest priority for HDMI
     irq_set_enabled(VIDEO_DMA_IRQ, true);
 }
 

@@ -3,12 +3,20 @@
 #ifndef _TILE_H_
 #define _TILE_H_
 
+#ifdef MURMSNES_PROFILE
+#include "murmsnes_profile.h"
+#define MURMSNES_TILE_CONVERT_PROF() murmsnes_prof_inc_tile_convert()
+#else
+#define MURMSNES_TILE_CONVERT_PROF() do { } while (0)
+#endif
+
 #define TILE_PREAMBLE_VARS() \
     uint32_t l; \
     uint16_t *ScreenColors; \
     uint8_t *pCache; \
     uint32_t TileNumber; \
-    uint32_t TileAddr
+   uint32_t TileAddr; \
+   bool TileOpaque
 
 #define TILE_PREAMBLE_CODE() \
     TileAddr = BG.TileAddress + ((Tile & 0x3ff) << BG.TileShift); \
@@ -16,12 +24,13 @@
        TileAddr += BG.NameSelect; \
     TileAddr &= 0xffff; \
     pCache = &BG.Buffer[(TileNumber = (TileAddr >> BG.TileShift)) << 6]; \
-    if (BG.Buffered [TileNumber] != (0x10|BG.Depth)) \
+    if ((BG.Buffered [TileNumber] & 0x1f) != (0x10|BG.Depth)) \
     { \
-      BG.Buffered[TileAddr >> 4] = BG.Buffered[TileAddr >> 5] = BG.Buffered[TileAddr >> 6] = false; \
+      MURMSNES_TILE_CONVERT_PROF(); \
       BG.Buffered[TileNumber] = ConvertTile (pCache, TileAddr); \
     } \
-    if (BG.Buffered [TileNumber] == BLANK_TILE) \
+    TileOpaque = (BG.Buffered[TileNumber] & 0x20) != 0; \
+    if ((BG.Buffered [TileNumber] & 0x1f) == BLANK_TILE) \
        return; \
     if (BG.DirectColourMode) \
        ScreenColors = &IPPU.DirectColors [((Tile >> 10) & BG.PaletteMask) << 8]; \

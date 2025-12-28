@@ -12,6 +12,9 @@ set(CPU_SPEED "378" CACHE STRING "CPU clock in MHz: 252, 378, 504")
 # PSRAM speed configuration (84, 100, 133, 166 MHz target)
 set(PSRAM_SPEED "133" CACHE STRING "PSRAM max frequency in MHz: 84, 100, 133, 166")
 
+# Lightweight on-device profiling (prints once per second over USB stdio)
+option(MURMSNES_PROFILE "Enable periodic performance profiling output" OFF)
+
 # CPU voltage selection based on speed
 if(CPU_SPEED GREATER_EQUAL 504)
     set(CPU_VOLTAGE "VREG_VOLTAGE_1_65")
@@ -59,7 +62,7 @@ target_compile_definitions(drivers PRIVATE
     PSRAM_MAX_FREQ_MHZ=${PSRAM_SPEED}
     # I2S Audio configuration - use PIO1 (HDMI uses PIO0)
     PICO_AUDIO_I2S_PIO=1
-    PICO_AUDIO_I2S_DMA_IRQ=1
+    PICO_AUDIO_I2S_DMA_IRQ=0
 )
 
 # Set I2S pins based on board variant for drivers lib
@@ -103,6 +106,7 @@ set(SNES9X_SOURCES
 
 add_executable(murmsnes
     src/main.c
+    src/murmsnes_profile.c
     ${SNES9X_SOURCES}
 )
 
@@ -130,10 +134,14 @@ target_compile_definitions(murmsnes PRIVATE
     PICO_ON_DEVICE=1
     # I2S Audio configuration - use PIO1 (HDMI uses PIO0)
     PICO_AUDIO_I2S_PIO=1
-    PICO_AUDIO_I2S_DMA_IRQ=1
+    PICO_AUDIO_I2S_DMA_IRQ=0
     # Snes9x configuration
     FAST_LSB_WORD_ACCESS=1
 )
+
+if(MURMSNES_PROFILE)
+    target_compile_definitions(murmsnes PRIVATE MURMSNES_PROFILE=1)
+endif()
 
 # Set peripheral pins based on board variant
 if(BOARD_VARIANT STREQUAL "M1")

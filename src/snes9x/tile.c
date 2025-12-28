@@ -61,10 +61,15 @@ static uint8_t ConvertTile(uint8_t* pCache, uint32_t TileAddr)
    uint8_t* tp = &Memory.VRAM[TileAddr];
    uint32_t* p = (uint32_t*) pCache;
    uint32_t non_zero = 0;
+   bool opaque = true;
    uint8_t line;
    uint32_t p1;
    uint32_t p2;
    uint8_t pix;
+
+   // Detect zero bytes in a 32-bit word (classic bit trick).
+   // Each cached pixel is one byte; a zero byte implies transparent pixel.
+   #define HAS_ZERO_BYTE(x) (((x) - 0x01010101u) & ~(x) & 0x80808080u)
 
    switch (BG.BitShift)
    {
@@ -115,6 +120,7 @@ static uint8_t ConvertTile(uint8_t* pCache, uint32_t TileAddr)
          *p++ = p1;
          *p++ = p2;
          non_zero |= p1 | p2;
+         opaque = opaque && !HAS_ZERO_BYTE(p1) && !HAS_ZERO_BYTE(p2);
       }
       break;
    case 4:
@@ -144,6 +150,7 @@ static uint8_t ConvertTile(uint8_t* pCache, uint32_t TileAddr)
          *p++ = p1;
          *p++ = p2;
          non_zero |= p1 | p2;
+         opaque = opaque && !HAS_ZERO_BYTE(p1) && !HAS_ZERO_BYTE(p2);
       }
       break;
    case 2:
@@ -163,10 +170,16 @@ static uint8_t ConvertTile(uint8_t* pCache, uint32_t TileAddr)
          *p++ = p1;
          *p++ = p2;
          non_zero |= p1 | p2;
+         opaque = opaque && !HAS_ZERO_BYTE(p1) && !HAS_ZERO_BYTE(p2);
       }
       break;
    }
-   return non_zero ? (0x10|BG.Depth) : BLANK_TILE;
+   #undef HAS_ZERO_BYTE
+
+   // Low 5 bits are the legacy validity/depth encoding; bit 0x20 marks opaque tiles.
+   if (!non_zero)
+      return BLANK_TILE;
+   return (0x10 | BG.Depth) | (opaque ? 0x20 : 0);
 }
 
 #define PLOT_PIXEL(screen, pixel) (pixel)
@@ -224,6 +237,33 @@ static INLINE void WRITE_4PIXELS16_FLIPPED(int32_t Offset, uint8_t* Pixels, uint
       Screen[3] = ScreenColors[Pixel];
       Depth[3] = Z2;
    }
+}
+
+// Opaque variants: skip Pixel==0 checks (safe only if Pixels contain no zeros).
+static INLINE void WRITE_4PIXELS16_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   uint16_t* Screen = (uint16_t*) GFX.S + Offset;
+   uint8_t*  Depth = GFX.DB + Offset;
+   uint8_t Z1 = GFX.Z1;
+   uint8_t Z2 = GFX.Z2;
+
+   if (Z1 > Depth[0]) { Screen[0] = ScreenColors[Pixels[0]]; Depth[0] = Z2; }
+   if (Z1 > Depth[1]) { Screen[1] = ScreenColors[Pixels[1]]; Depth[1] = Z2; }
+   if (Z1 > Depth[2]) { Screen[2] = ScreenColors[Pixels[2]]; Depth[2] = Z2; }
+   if (Z1 > Depth[3]) { Screen[3] = ScreenColors[Pixels[3]]; Depth[3] = Z2; }
+}
+
+static INLINE void WRITE_4PIXELS16_FLIPPED_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   uint16_t* Screen = (uint16_t*) GFX.S + Offset;
+   uint8_t*  Depth = GFX.DB + Offset;
+   uint8_t Z1 = GFX.Z1;
+   uint8_t Z2 = GFX.Z2;
+
+   if (Z1 > Depth[0]) { Screen[0] = ScreenColors[Pixels[3]]; Depth[0] = Z2; }
+   if (Z1 > Depth[1]) { Screen[1] = ScreenColors[Pixels[2]]; Depth[1] = Z2; }
+   if (Z1 > Depth[2]) { Screen[2] = ScreenColors[Pixels[1]]; Depth[2] = Z2; }
+   if (Z1 > Depth[3]) { Screen[3] = ScreenColors[Pixels[0]]; Depth[3] = Z2; }
 }
 #else
 // Fallback for non-ARM platforms

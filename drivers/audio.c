@@ -11,140 +11,135 @@
 #define AUDIO_CLOCK_PIN PICO_AUDIO_I2S_CLOCK_PIN_BASE
 #endif
 
-#define PWM_PIN0 (AUDIO_PWM_PIN&0xfe)
-#define PWM_PIN1 (PWM_PIN0+1)
-
 #include "audio.h"
+
+#include "pico/audio.h"
+#include "pico/audio_i2s.h"
+#include "hardware/dma.h"
+#include "hardware/pio.h"
+#include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 
-#ifdef AUDIO_PWM_PIN
-#include "hardware/pwm.h"
-#include "hardware/clocks.h"
-#endif
+// Minimal shim that routes the legacy i2s_* API to the murmdom pico_audio_i2s
+// buffer-pool pipeline. We treat each frame as a packed stereo 32-bit word.
 
-// Static DMA buffer in SRAM - avoids PSRAM allocation
-// 22050/60 = 367 samples * 2 (stereo) = 734 uint16_t = 1468 bytes
-// Allocate extra for safety - regular static array in BSS
-static uint16_t audio_dma_buf_static[1024];
+static audio_buffer_pool_t *producer_pool;
+static audio_format_t audio_format;
+static audio_buffer_format_t producer_format;
+static bool audio_i2s_started;
 
-/**
- * return the default i2s context used to store information about the setup
- */
 i2s_config_t i2s_get_default_config(void) {
     i2s_config_t i2s_config = {
-		.sample_freq = 44100, 
-		.channel_count = 2,
-		.data_pin = AUDIO_DATA_PIN,
-		.clock_pin_base = AUDIO_CLOCK_PIN,
-		.pio = pio1,
-		.sm = 0,
+        .sample_freq = 44100,
+        .channel_count = 2,
+        .data_pin = AUDIO_DATA_PIN,
+        .clock_pin_base = AUDIO_CLOCK_PIN,
+        .pio = pio1,
+        .sm = 0xFF, // sentinel meaning auto-pick
         .dma_channel = 0,
         .dma_buf = NULL,
         .dma_trans_count = 0,
         .volume = 0,
-	};
-
+    };
     return i2s_config;
 }
 
-/**
- * Initialize the I2S driver. Must be called before calling i2s_write or i2s_dma_write
- * i2s_config: I2S context obtained by i2s_get_default_config()
- */
 void i2s_init(i2s_config_t *i2s_config) {
-
-#ifndef AUDIO_PWM_PIN
-
-    uint8_t func=GPIO_FUNC_PIO1;
-    gpio_set_function(i2s_config->data_pin, func);
-    gpio_set_function(i2s_config->clock_pin_base, func);
-    gpio_set_function(i2s_config->clock_pin_base+1, func);
-    
-    i2s_config->sm = pio_claim_unused_sm(i2s_config->pio, true);
-
-    /* Set PIO clock */
-    uint32_t system_clock_frequency = clock_get_hz(clk_sys);
-    uint32_t divider = system_clock_frequency * 4 / i2s_config->sample_freq;
-
-#ifdef I2S_CS4334
-    uint offset = pio_add_program(i2s_config->pio, &audio_i2s_cs4334_program);
-    audio_i2s_cs4334_program_init(i2s_config->pio, i2s_config->sm , offset, i2s_config->data_pin , i2s_config->clock_pin_base);
-    divider >>= 3;
-#else
-    uint offset = pio_add_program(i2s_config->pio, &audio_i2s_program);
-    audio_i2s_program_init(i2s_config->pio, i2s_config->sm , offset, i2s_config->data_pin , i2s_config->clock_pin_base);
-#endif
-
-    pio_sm_set_clkdiv_int_frac(i2s_config->pio, i2s_config->sm , divider >> 8u, divider & 0xffu);
-
-    pio_sm_set_enabled(i2s_config->pio, i2s_config->sm, true);
-#endif
-
-    // For blocking-only mode, skip DMA setup entirely
-    // DMA configuration is now optional and won't interfere
-}
-
-/**
- * Write samples to I2S directly and wait for completion (blocking)
- */
-void i2s_write(const i2s_config_t *i2s_config,const int16_t *samples,const size_t len) {
-    for(size_t i=0;i<len;i++) {
-            pio_sm_put_blocking(i2s_config->pio, i2s_config->sm, (uint32_t)samples[i]);
+    // Pick unused DMA channel/SM without claiming ahead of pico_audio_i2s
+    if (i2s_config->dma_channel == 0) {
+        uint ch = dma_claim_unused_channel(true);
+        dma_channel_unclaim(ch);
+        i2s_config->dma_channel = (uint8_t)ch;
     }
+    if (i2s_config->sm == 0xFF) {
+        int sm = pio_claim_unused_sm(i2s_config->pio, true);
+        pio_sm_unclaim(i2s_config->pio, sm);
+        i2s_config->sm = (uint8_t)sm;
+    }
+
+    audio_i2s_started = false;
+
+    audio_format.sample_freq = i2s_config->sample_freq;
+    audio_format.format = AUDIO_BUFFER_FORMAT_PCM_S16;
+    audio_format.channel_count = i2s_config->channel_count;
+
+    producer_format.format = &audio_format;
+    producer_format.sample_stride = i2s_config->channel_count * sizeof(int16_t);
+
+    // Allocate a small buffer pool sized to the emulator's frame chunk
+    producer_pool = audio_new_producer_pool(&producer_format, 3, i2s_config->dma_trans_count);
+
+    audio_i2s_config_t cfg = {
+        .data_pin = i2s_config->data_pin,
+        .clock_pin_base = i2s_config->clock_pin_base,
+        .dma_channel = (uint8_t)i2s_config->dma_channel,
+        .pio_sm = (uint8_t)i2s_config->sm,
+    };
+
+    printf("audio shim: dma_ch=%u sm=%u\n", (unsigned)i2s_config->dma_channel, (unsigned)i2s_config->sm);
+    audio_i2s_setup(&audio_format, &cfg);
+    printf("audio shim: setup ok\n");
+    audio_i2s_connect_extra(producer_pool, false, 3, i2s_config->dma_trans_count, NULL);
+    printf("audio shim: connect ok (will enable on first write)\n");
 }
 
-/**
- * Write samples to DMA buffer and initiate DMA transfer (non blocking)
- */
-void i2s_dma_write(i2s_config_t *i2s_config,const int16_t *samples) {
-    /* Wait the completion of the previous DMA transfer */
-    dma_channel_wait_for_finish_blocking(i2s_config->dma_channel);
-    /* Copy samples into the DMA buffer */
+void i2s_write(const i2s_config_t *i2s_config, const int16_t *samples, const size_t len) {
+    (void)i2s_config;
+    (void)len;
+    // Legacy blocking path is not used; reuse DMA path for compatibility
+    i2s_dma_write((i2s_config_t *)i2s_config, samples);
+}
 
-#ifdef AUDIO_PWM_PIN
-    for(uint16_t i=0;i<i2s_config->dma_trans_count*2;i++) {
-            i2s_config->dma_buf[i] = (65536/2+(samples[i]))>>(4+i2s_config->volume);
-        }
-#else
+void i2s_dma_write(i2s_config_t *i2s_config, const int16_t *samples) {
+    if (!producer_pool) return;
+    audio_buffer_t *ab = take_audio_buffer(producer_pool, true);
+    if (!ab) return;
 
-    if(i2s_config->volume==0) {
-        memcpy(i2s_config->dma_buf,samples,i2s_config->dma_trans_count*sizeof(int32_t));
+    // Apply simple right-shift volume if requested; input is packed stereo 32-bit words
+    uint32_t *dst = (uint32_t *)ab->buffer->bytes;
+    const uint32_t *src = (const uint32_t *)samples;
+    const uint shift = i2s_config->volume;
+    const uint32_t frames = i2s_config->dma_trans_count;
+
+    if (shift == 0) {
+        memcpy(dst, src, frames * sizeof(uint32_t));
     } else {
-        for(uint16_t i=0;i<i2s_config->dma_trans_count*2;i++) {
-            i2s_config->dma_buf[i] = samples[i]>>i2s_config->volume;
+        for (uint32_t i = 0; i < frames; i++) {
+            uint32_t v = src[i];
+            int16_t l = (int16_t)(v >> 16);
+            int16_t r = (int16_t)(v & 0xFFFF);
+            l >>= shift;
+            r >>= shift;
+            dst[i] = ((uint32_t)(uint16_t)l << 16) | (uint16_t)r;
         }
     }
-#endif    
 
-    /* Initiate the DMA transfer */
-    dma_channel_transfer_from_buffer_now(i2s_config->dma_channel,
-                                         i2s_config->dma_buf,
-                                         i2s_config->dma_trans_count);
+    ab->sample_count = frames;
+    give_audio_buffer(producer_pool, ab);
+
+    if (!audio_i2s_started) {
+        audio_i2s_set_enabled(true);
+        audio_i2s_started = true;
+    }
 }
 
-/**
- * Adjust the output volume
- */
-void i2s_volume(i2s_config_t *i2s_config,uint8_t volume) {
-    if(volume>16) volume=16;
-    i2s_config->volume=volume;
+void i2s_dma_write_direct(i2s_config_t *i2s_config, const uint32_t *samples) {
+    i2s_dma_write(i2s_config, (const int16_t *)samples);
 }
 
-/**
- * Increases the output volume
- */
+void i2s_volume(i2s_config_t *i2s_config, uint8_t volume) {
+    if (volume > 16) volume = 16;
+    i2s_config->volume = volume;
+}
+
 void i2s_increase_volume(i2s_config_t *i2s_config) {
-    if(i2s_config->volume>0) {
+    if (i2s_config->volume > 0) {
         i2s_config->volume--;
     }
 }
 
-/**
- * Decreases the output volume
- */
 void i2s_decrease_volume(i2s_config_t *i2s_config) {
-    if(i2s_config->volume<16) {
+    if (i2s_config->volume < 16) {
         i2s_config->volume++;
     }
 }
