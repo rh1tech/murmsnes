@@ -106,6 +106,14 @@ add_executable(murmsnes
     ${SNES9X_SOURCES}
 )
 
+# Enable aggressive optimization for SNES9x hot path
+# -O3: Maximum optimization
+# -fno-strict-aliasing: Required for SNES9x pointer casting
+# -funroll-loops: Unroll loops for speed
+# -fomit-frame-pointer: Free up a register
+set_source_files_properties(${SNES9X_SOURCES} PROPERTIES COMPILE_FLAGS 
+    "-O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer")
+
 target_include_directories(murmsnes PRIVATE
     src
     src/snes9x

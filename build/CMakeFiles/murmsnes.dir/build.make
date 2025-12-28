@@ -90,281 +90,281 @@ CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/apu.c
 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/apu.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/apu.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/apu.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/apu.c > CMakeFiles/murmsnes.dir/src/snes9x/apu.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/apu.c > CMakeFiles/murmsnes.dir/src/snes9x/apu.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/apu.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/apu.c -o CMakeFiles/murmsnes.dir/src/snes9x/apu.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/apu.c -o CMakeFiles/murmsnes.dir/src/snes9x/apu.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4.c
 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/c4.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4.c > CMakeFiles/murmsnes.dir/src/snes9x/c4.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4.c > CMakeFiles/murmsnes.dir/src/snes9x/c4.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/c4.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4.c -o CMakeFiles/murmsnes.dir/src/snes9x/c4.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4.c -o CMakeFiles/murmsnes.dir/src/snes9x/c4.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4emu.c
 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4emu.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4emu.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4emu.c > CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4emu.c > CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4emu.c -o CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4emu.c -o CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/clip.c
 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/clip.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/clip.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/clip.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/clip.c > CMakeFiles/murmsnes.dir/src/snes9x/clip.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/clip.c > CMakeFiles/murmsnes.dir/src/snes9x/clip.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/clip.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/clip.c -o CMakeFiles/murmsnes.dir/src/snes9x/clip.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/clip.c -o CMakeFiles/murmsnes.dir/src/snes9x/clip.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpu.c
 CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpu.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpu.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpu.c > CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpu.c > CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpu.c -o CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpu.c -o CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuexec.c
 CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuexec.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuexec.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuexec.c > CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuexec.c > CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuexec.c -o CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuexec.c -o CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuops.c
 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuops.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuops.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuops.c > CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuops.c > CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuops.c -o CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuops.c -o CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dma.c
 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dma.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dma.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/dma.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dma.c > CMakeFiles/murmsnes.dir/src/snes9x/dma.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dma.c > CMakeFiles/murmsnes.dir/src/snes9x/dma.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/dma.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dma.c -o CMakeFiles/murmsnes.dir/src/snes9x/dma.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dma.c -o CMakeFiles/murmsnes.dir/src/snes9x/dma.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dsp.c
 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dsp.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dsp.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dsp.c > CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dsp.c > CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dsp.c -o CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dsp.c -o CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/getset.c
 CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/getset.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/getset.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/getset.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/getset.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/getset.c > CMakeFiles/murmsnes.dir/src/snes9x/getset.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/getset.c > CMakeFiles/murmsnes.dir/src/snes9x/getset.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/getset.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/getset.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/getset.c -o CMakeFiles/murmsnes.dir/src/snes9x/getset.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/getset.c -o CMakeFiles/murmsnes.dir/src/snes9x/getset.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/gfx.c
 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/gfx.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/gfx.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/gfx.c > CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/gfx.c > CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/gfx.c -o CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/gfx.c -o CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/globals.c
 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/globals.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/globals.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/globals.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/globals.c > CMakeFiles/murmsnes.dir/src/snes9x/globals.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/globals.c > CMakeFiles/murmsnes.dir/src/snes9x/globals.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/globals.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/globals.c -o CMakeFiles/murmsnes.dir/src/snes9x/globals.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/globals.c -o CMakeFiles/murmsnes.dir/src/snes9x/globals.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/memmap.c
 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/memmap.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/memmap.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/memmap.c > CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/memmap.c > CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/memmap.c -o CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/memmap.c -o CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/obc1.c
 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/obc1.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/obc1.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/obc1.c > CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/obc1.c > CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/obc1.c -o CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/obc1.c -o CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/ppu.c
 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/ppu.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/ppu.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/ppu.c > CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/ppu.c > CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/ppu.c -o CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/ppu.c -o CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/snapshot.c
 CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/snapshot.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/snapshot.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/snapshot.c > CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/snapshot.c > CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/snapshot.c -o CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/snapshot.c -o CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/soundux.c
 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/soundux.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/soundux.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/soundux.c > CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/soundux.c > CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/soundux.c -o CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/soundux.c -o CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/spc700.c
 CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/spc700.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/spc700.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/spc700.c > CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/spc700.c > CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/spc700.c -o CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/spc700.c -o CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/srtc.c
 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/srtc.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/srtc.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/srtc.c > CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/srtc.c > CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/srtc.c -o CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/srtc.c -o CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.s
 
 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/tile.c
 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/tile.c
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/tile.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/snes9x/tile.c.i"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/tile.c > CMakeFiles/murmsnes.dir/src/snes9x/tile.c.i
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -E /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/tile.c > CMakeFiles/murmsnes.dir/src/snes9x/tile.c.i
 
 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/snes9x/tile.c.s"
-	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/tile.c -o CMakeFiles/murmsnes.dir/src/snes9x/tile.c.s
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -S /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/tile.c -o CMakeFiles/murmsnes.dir/src/snes9x/tile.c.s
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c

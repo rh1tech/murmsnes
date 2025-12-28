@@ -281,23 +281,50 @@ static void __scratch_x("render") render_core(void) {
 extern volatile bool g_palette_needs_update;
 extern void S9xFixColourBrightness(void);
 
+// Auto frame skip - target ~60fps (16.67ms per frame)
+#define TARGET_FRAME_US 16667
+#define MAX_FRAME_SKIP 2  // Maximum consecutive frames to skip
+
 static void __time_critical_func(emulation_loop)(void) {
     LOG("Starting emulation loop...\n");
     
+    uint32_t last_frame_time = time_us_32();
+    uint32_t frames_skipped = 0;
+    
     while (true) {
+        uint32_t current_time = time_us_32();
+        uint32_t elapsed = current_time - last_frame_time;
+        
+        // Auto frame skip: if we're behind schedule, skip rendering
+        // but always render at least every MAX_FRAME_SKIP+1 frames
+        bool skip_render = (elapsed < TARGET_FRAME_US) && (frames_skipped < MAX_FRAME_SKIP);
+        
+        // Force render if too many frames skipped
+        if (frames_skipped >= MAX_FRAME_SKIP) {
+            skip_render = false;
+        }
+        
+        IPPU.RenderThisFrame = !skip_render;
+        
         // Run one SNES frame
         S9xMainLoop();
         
+        if (skip_render) {
+            frames_skipped++;
+        } else {
+            frames_skipped = 0;
+            last_frame_time = time_us_32();
+            
+            // Swap display buffers only when we rendered
+            current_buffer = !current_buffer;
+            GFX.SubScreen = GFX.Screen = (uint8_t *)SCREEN[current_buffer];
+        }
+        
         // Update palette if brightness changed during frame
-        // This happens between frames (during vblank) to avoid tearing
         if (g_palette_needs_update) {
             S9xFixColourBrightness();
             g_palette_needs_update = false;
         }
-        
-        // Swap display buffers
-        current_buffer = !current_buffer;
-        GFX.SubScreen = GFX.Screen = (uint8_t *)SCREEN[current_buffer];
         
         tight_loop_contents();
     }

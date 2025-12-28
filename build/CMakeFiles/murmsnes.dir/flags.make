@@ -22,3 +22,43 @@ CXX_INCLUDES = -I/Users/A2506402/Documents/GitHub/murmsnes/src -I/Users/A2506402
 
 CXX_FLAGS = -mcpu=cortex-m33 -mthumb -march=armv8-m.main+fp+dsp -mfloat-abi=softfp -mcmse -g -O3 -DNDEBUG -std=gnu++17 -fno-exceptions -fno-unwind-tables -fno-rtti -fno-use-cxa-atexit -ffunction-sections -fdata-sections
 
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+
