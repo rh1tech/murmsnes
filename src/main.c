@@ -267,12 +267,23 @@ static void __scratch_x("render") render_core(void) {
 // Main Emulation Loop
 //=============================================================================
 
+// Deferred palette update flag from PPU
+extern volatile bool g_palette_needs_update;
+extern void S9xFixColourBrightness(void);
+
 static void __time_critical_func(emulation_loop)(void) {
     LOG("Starting emulation loop...\n");
     
     while (true) {
         // Run one SNES frame
         S9xMainLoop();
+        
+        // Update palette if brightness changed during frame
+        // This happens between frames (during vblank) to avoid tearing
+        if (g_palette_needs_update) {
+            S9xFixColourBrightness();
+            g_palette_needs_update = false;
+        }
         
         // Swap display buffers
         current_buffer = !current_buffer;

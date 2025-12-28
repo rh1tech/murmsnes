@@ -19,6 +19,9 @@
 
 extern const uint8_t mul_brightness [16][32];
 
+// Deferred palette update flag - set by PPU, processed by main loop
+volatile bool g_palette_needs_update = false;
+
 static uint32_t justifiers = 0xffff00aa;
 static uint8_t in_bit = 0;
 
@@ -90,22 +93,16 @@ void S9xUpdateHTimer()
 void S9xFixColourBrightness() {
    IPPU.XB = mul_brightness [PPU.Brightness];
    
-   // For HDMI, always use full brightness (15) to avoid fade-to-black issues
-   // The internal SNES colors still use actual brightness for compatibility
-   const uint8_t* hdmi_xb = mul_brightness[15];
-   
    for (size_t i = 0; i < 256; i++)
    {
       IPPU.Red [i] = IPPU.XB [PPU.CGDATA [i] & 0x1f];
       IPPU.Green [i] = IPPU.XB [(PPU.CGDATA [i] >> 5) & 0x1f];
       IPPU.Blue [i] = IPPU.XB [(PPU.CGDATA [i] >> 10) & 0x1f];
-      
-      // HDMI palette uses full brightness
-      uint8_t r = hdmi_xb [PPU.CGDATA [i] & 0x1f];
-      uint8_t g = hdmi_xb [(PPU.CGDATA [i] >> 5) & 0x1f];
-      uint8_t b = hdmi_xb [(PPU.CGDATA [i] >> 10) & 0x1f];
-      graphics_set_palette(i, RGB888(r << 3, g << 3, b << 3));
+      graphics_set_palette(i, RGB888(IPPU.Red [i] << 3, IPPU.Green [i] << 3, IPPU.Blue [i] << 3));
    }
+   // Request HDMI palette update (will be applied during vblank)
+   extern void graphics_request_palette_update(void);
+   graphics_request_palette_update();
 }
 
 /******************************************************************************/
@@ -126,6 +123,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
             {
                IPPU.ColorsChanged = true;
                PPU.Brightness = Byte & 0xF;
+               g_palette_needs_update = true;  // Defer palette update to main loop
             }
             if ((Memory.FillRAM[0x2100] & 0x80) != (Byte & 0x80))
             {

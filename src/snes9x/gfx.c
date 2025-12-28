@@ -348,9 +348,9 @@ void S9xEndScreenRefresh(void)
    if (IPPU.RenderThisFrame)
    {
       FLUSH_REDRAW();
+      
       if (IPPU.ColorsChanged)
       {
-         S9xFixColourBrightness();
          uint32_t saved = PPU.CGDATA[0];
          IPPU.ColorsChanged = false;
          PPU.CGDATA[0] = saved;

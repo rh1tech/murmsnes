@@ -87,6 +87,12 @@ static int SM_conv = -1;
 //буфер  палитры 256 цветов в формате R8G8B8
 static uint32_t palette[256];
 
+// Palette update flag - set by emulator, checked during vblank
+static volatile bool palette_dirty = false;
+static volatile bool full_palette_update_pending = false;  // Request full re-conversion
+static void apply_pending_palette(void);  // Forward declaration
+void graphics_convert_all_palette(void);  // Convert all palette to TMDS
+
 // HDMI sync control indices start at 251
 
 
@@ -285,6 +291,11 @@ static void __scratch_y("hdmi_driver") dma_handler_HDMI() {
         //   memset(activ_buf+376,BASE_HDMI_CTRL_INX,24);
     }
     else {
+        // VBlank area - apply pending palette at start of vblank
+        if (line == (239*2 + 1)) {
+            apply_pending_palette();
+        }
+        
         if ((line >= 490) && (line < 492)) {
             //кадровый синхроимпульс
             //для выравнивания синхры
@@ -568,17 +579,62 @@ static inline bool hdmi_init() {
 };
 
 void graphics_set_palette_hdmi(uint8_t i, uint32_t color888) {
-    palette[i] = color888 & 0x00ffffff;
-
+    // Store color and update TMDS immediately
+    // (This is safe because S9xFixColourBrightness is called between frames)
+    color888 &= 0x00ffffff;
+    palette[i] = color888;
+    
     // Don't write to hardware palette for HDMI control indices (251-254), but allow 255 (bgcolor)
     if ((i >= BASE_HDMI_CTRL_INX) && (i != 255)) return;
-
+    
     uint64_t* conv_color64 = (uint64_t *)conv_color;
     const uint8_t R = (color888 >> 16) & 0xff;
     const uint8_t G = (color888 >> 8) & 0xff;
     const uint8_t B = (color888 >> 0) & 0xff;
     conv_color64[i * 2] = get_ser_diff_data(tmds_encoder(R), tmds_encoder(G), tmds_encoder(B));
     conv_color64[i * 2 + 1] = conv_color64[i * 2] ^ 0x0003ffffffffffffl;
+}
+
+// Mark that a full palette update is needed (no longer used - kept for API compatibility)
+void graphics_request_palette_update(void) {
+    // Immediate conversion now happens in graphics_set_palette_hdmi()
+}
+
+// Convert all palette entries to TMDS format (called during vblank)
+void graphics_convert_all_palette(void) {
+    uint64_t* conv_color64 = (uint64_t *)conv_color;
+    
+    // Convert first 251 colors (0-250) - skip HDMI control indices
+    for (int i = 0; i < BASE_HDMI_CTRL_INX; i++) {
+        uint32_t color888 = palette[i];
+        const uint8_t R = (color888 >> 16) & 0xff;
+        const uint8_t G = (color888 >> 8) & 0xff;
+        const uint8_t B = (color888 >> 0) & 0xff;
+        conv_color64[i * 2] = get_ser_diff_data(tmds_encoder(R), tmds_encoder(G), tmds_encoder(B));
+        conv_color64[i * 2 + 1] = conv_color64[i * 2] ^ 0x0003ffffffffffffl;
+    }
+    
+    // Also update color 255 (bgcolor)
+    uint32_t color888 = palette[255];
+    const uint8_t R = (color888 >> 16) & 0xff;
+    const uint8_t G = (color888 >> 8) & 0xff;
+    const uint8_t B = (color888 >> 0) & 0xff;
+    conv_color64[255 * 2] = get_ser_diff_data(tmds_encoder(R), tmds_encoder(G), tmds_encoder(B));
+    conv_color64[255 * 2 + 1] = conv_color64[255 * 2] ^ 0x0003ffffffffffffl;
+    
+    // Restore sync colors
+    graphics_restore_sync_colors();
+}
+
+// Restore sync colors after palette update (called during vblank)
+// Apply pending palette during vblank
+static void apply_pending_palette(void) {
+    if (!full_palette_update_pending) return;
+    
+    // Convert all software palette to TMDS
+    graphics_convert_all_palette();
+    
+    full_palette_update_pending = false;
 };
 
 #define RGB888(r, g, b) ((r<<16) | (g << 8 ) | b )
@@ -593,6 +649,12 @@ void graphics_init_hdmi() {
     dma_chan_pal_conv = dma_claim_unused_channel(true);
 
     hdmi_init();
+    
+    // Initialize palette to all black and immediately convert to TMDS
+    for (int i = 0; i < 256; i++) {
+        palette[i] = 0;
+    }
+    graphics_convert_all_palette();
 }
 
 void graphics_set_bgcolor_hdmi(uint32_t color888) //определяем зарезервированный цвет в палитре
