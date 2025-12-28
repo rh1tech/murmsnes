@@ -87,6 +87,9 @@ static int SM_conv = -1;
 //буфер  палитры 256 цветов в формате R8G8B8
 static uint32_t palette[256];
 
+// Substitute map for HDMI reserved sync-control indices (BASE_HDMI_CTRL_INX..BASE_HDMI_CTRL_INX+3)
+static uint8_t hdmi_color_substitute[4] = {0, 0, 0, 0};
+
 // Palette update flag - set by emulator, checked during vblank
 static volatile bool palette_dirty = false;
 static volatile bool full_palette_update_pending = false;  // Request full re-conversion
@@ -131,6 +134,36 @@ extern volatile uint32_t current_buffer;
 
 #define BASE_HDMI_CTRL_INX (251)
 //программа конвертации адреса
+
+static inline uint32_t rgb_dist2(uint32_t a, uint32_t b) {
+    int dr = (int)((a >> 16) & 0xff) - (int)((b >> 16) & 0xff);
+    int dg = (int)((a >> 8) & 0xff) - (int)((b >> 8) & 0xff);
+    int db = (int)(a & 0xff) - (int)(b & 0xff);
+    return (uint32_t)(dr * dr + dg * dg + db * db);
+}
+
+static void hdmi_recompute_color_substitute(void) {
+    const int base = BASE_HDMI_CTRL_INX;
+    for (int i = 0; i < 4; i++) {
+        const uint8_t reserved = (uint8_t)(base + i);
+        const uint32_t target = palette[reserved] & 0x00ffffff;
+
+        uint8_t best = 0;
+        uint32_t best_d = 0xffffffffu;
+        for (int j = 0; j < 256; j++) {
+            if (j >= base && j <= base + 3) continue; // don't map to sync-control indices
+            const uint32_t cand = palette[j] & 0x00ffffff;
+            const uint32_t d = rgb_dist2(target, cand);
+            if (d < best_d) {
+                best_d = d;
+                best = (uint8_t)j;
+                if (d == 0) break;
+            }
+        }
+
+        hdmi_color_substitute[i] = best;
+    }
+}
 
 uint16_t pio_program_instructions_conv_HDMI[] = {
     //         //     .wrap_target
@@ -264,8 +297,12 @@ static void __scratch_y("hdmi_driver") dma_handler_HDMI() {
         
         // Copy pixels - low byte of each 16-bit value is the palette index
         for (int i = graphics_buffer_width; i--;) {
-            const uint8_t i_color = (uint8_t)(*input++);
-            *output_buffer++ = (i_color >= BASE_HDMI_CTRL_INX) ? 0 : i_color;
+            uint8_t c = (uint8_t)(*input++);
+            // Substitute HDMI reserved sync-control indices with nearest palette matches
+            if (c >= BASE_HDMI_CTRL_INX && c <= (BASE_HDMI_CTRL_INX + 3)) {
+                c = hdmi_color_substitute[c - BASE_HDMI_CTRL_INX];
+            }
+            *output_buffer++ = c;
         }
         
         // Fill right margin
@@ -384,11 +421,10 @@ static inline bool hdmi_init() {
     offs_prg0 = pio_add_program(PIO_VIDEO, &program_PIO_HDMI);
     pio_set_x(PIO_VIDEO_ADDR, SM_conv, ((uint32_t)conv_color >> 12));
 
-    //заполнение палитры (skip only sync control 240-243, but initialize 244-254)
-    for (int ci = 0; ci < 240; ci++) graphics_set_palette_hdmi(ci, palette[ci]);
-    // Initialize 244-254 to black initially (will be updated when Doom sets palette)
-    for (int ci = 244; ci < 256; ci++) {
-        if (palette[ci] == 0) palette[ci] = 0x000000; // Ensure initialized
+    // Initialize palette conversion (skip HDMI sync-control indices, but initialize all others)
+    for (int ci = 0; ci < BASE_HDMI_CTRL_INX; ci++) graphics_set_palette_hdmi(ci, palette[ci]);
+    for (int ci = BASE_HDMI_CTRL_INX + 4; ci < 256; ci++) {
+        if (palette[ci] == 0) palette[ci] = 0x000000;
         graphics_set_palette_hdmi(ci, palette[ci]);
     }
 
@@ -624,6 +660,9 @@ void graphics_convert_all_palette(void) {
     
     // Restore sync colors
     graphics_restore_sync_colors();
+
+    // Keep substitute map up to date for any accidental use of reserved indices
+    hdmi_recompute_color_substitute();
 }
 
 // Restore sync colors after palette update (called during vblank)
