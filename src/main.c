@@ -229,23 +229,33 @@ static bool load_rom_from_sd(const char *filename) {
 }
 
 //=============================================================================
-// Render Core (Core 1) - Audio output  
+// Render Core (Core 1) - HDMI & Audio output  
 //=============================================================================
 
 static void __scratch_x("render") render_core(void) {
     // Allow core 0 to pause this core during flash operations
     multicore_lockout_victim_init();
     
+    // Initialize HDMI on Core 1 (DMA IRQ will run on this core)
+    graphics_init(g_out_HDMI);
+    
+    // Set up screen buffer (low byte of each 16-bit value is palette index)
+    graphics_set_buffer((uint8_t *)SCREEN[0]);
+    graphics_set_res(SCREEN_WIDTH, SCREEN_HEIGHT);
+    graphics_set_shift(32, 0);  // Center 256 pixels in 320-pixel output
+    graphics_set_mode(GRAPHICSMODE_DEFAULT);
+    
     // Initialize audio on Core 1
     audio_init();
     
-    // Signal that we're ready
+    // Signal that we're ready (HDMI + Audio initialized)
     sem_release(&render_start_semaphore);
     
     // Track buffer swaps for audio sync (like pico-snes-master)
     uint32_t old_buffer = current_buffer;
     
     // Core 1 loop - handles audio mixing when buffer swaps
+    // HDMI DMA runs via interrupt on this core
     while (1) {
         if (old_buffer != current_buffer) {
             // Mix audio on buffer swap (same as pico-snes-master)
@@ -353,29 +363,17 @@ int main(void) {
     }
     LOG("SD card mounted\n");
     
-    // Initialize HDMI on Core 0
-    LOG("Initializing HDMI...\n");
-    graphics_init(g_out_HDMI);
-    
-    // Set up screen buffer (low byte of each 16-bit value is palette index)
-    graphics_set_buffer((uint8_t *)SCREEN[0]);
-    graphics_set_res(SCREEN_WIDTH, SCREEN_HEIGHT);
-    graphics_set_shift(32, 0);  // Center 256 pixels in 320-pixel output
-    
-    // Use default graphics mode (palette-based)
-    graphics_set_mode(GRAPHICSMODE_DEFAULT);
-    LOG("HDMI initialized (%dx%d)\n", SCREEN_WIDTH, SCREEN_HEIGHT);
-    
     // Initialize semaphore for render core sync
     sem_init(&render_start_semaphore, 0, 1);
     
-    // Launch Core 1 (audio output)
-    LOG("Starting audio core...\n");
+    // Launch Core 1 (HDMI + Audio)
+    // HDMI DMA IRQ runs on Core 1, freeing Core 0 for emulation
+    LOG("Starting render core (HDMI + Audio)...\n");
     multicore_launch_core1(render_core);
     
-    // Wait for Core 1 to be ready
+    // Wait for Core 1 to initialize HDMI and audio
     sem_acquire_blocking(&render_start_semaphore);
-    LOG("Audio core started\n");
+    LOG("Render core started (HDMI + Audio on Core 1)\n");
     
     // Try to load ROM from SD card
     LOG("Loading ROM...\n");
