@@ -57,8 +57,8 @@ target_include_directories(drivers PUBLIC drivers src)
 target_compile_definitions(drivers PRIVATE
     BOARD_${BOARD_VARIANT}
     PSRAM_MAX_FREQ_MHZ=${PSRAM_SPEED}
-    # I2S Audio configuration - use PIO0 to avoid conflict with HDMI on PIO1
-    PICO_AUDIO_I2S_PIO=0
+    # I2S Audio configuration - use PIO1 (HDMI uses PIO0)
+    PICO_AUDIO_I2S_PIO=1
     PICO_AUDIO_I2S_DMA_IRQ=1
 )
 
@@ -128,8 +128,8 @@ target_compile_definitions(murmsnes PRIVATE
     CPU_VOLTAGE=${CPU_VOLTAGE}
     PSRAM_MAX_FREQ_MHZ=${PSRAM_SPEED}
     PICO_ON_DEVICE=1
-    # I2S Audio configuration - use PIO0 to avoid conflict with HDMI on PIO1
-    PICO_AUDIO_I2S_PIO=0
+    # I2S Audio configuration - use PIO1 (HDMI uses PIO0)
+    PICO_AUDIO_I2S_PIO=1
     PICO_AUDIO_I2S_DMA_IRQ=1
     # Snes9x configuration
     FAST_LSB_WORD_ACCESS=1

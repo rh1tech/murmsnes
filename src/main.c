@@ -29,13 +29,8 @@
 #include "snes9x/cpuexec.h"
 #include "snes9x/srtc.h"
 
-// Audio driver
+// Audio driver (exact copy from pico-snes-master)
 #include "audio.h"
-
-// Pico audio for buffer types
-#define none pico_audio_enum_none
-#include "pico/audio_i2s.h"
-#undef none
 
 //=============================================================================
 // Configuration
@@ -44,8 +39,8 @@
 #define SCREEN_WIDTH     SNES_WIDTH           // 256
 #define SCREEN_HEIGHT    SNES_HEIGHT_EXTENDED // 239
 
-#define AUDIO_SAMPLE_RATE_SNES   22050
-#define AUDIO_BUFFER_LENGTH      (AUDIO_SAMPLE_RATE_SNES / 60 + 1)
+#define AUDIO_SAMPLE_RATE   (24000)
+#define AUDIO_BUFFER_LENGTH (AUDIO_SAMPLE_RATE / 60 + 1)
 
 //=============================================================================
 // Screen Buffers
@@ -60,20 +55,20 @@ static uint8_t __attribute__((aligned(4))) SubZBuffer[SNES_WIDTH * SNES_HEIGHT_E
 volatile uint32_t current_buffer = 0;
 
 //=============================================================================
-// Audio Buffers
+// Audio - Core 0 mixes into buffer, Core 1 plays
 //=============================================================================
 
-// Audio output buffer - stereo interleaved
-int16_t __attribute__((aligned(4))) audio_output_buffer[AUDIO_BUFFER_LENGTH * 2];
-volatile int audio_output_samples = 0;
-
-// Local audio buffer for mixing
-static int16_t __attribute__((aligned(4))) audioBuffer[AUDIO_BUFFER_LENGTH * 2];
+// Double buffer for audio - Core 0 writes to one, Core 1 reads from other
+// Aligned to 32 bytes to avoid cache line sharing
+static int16_t __attribute__((aligned(32))) audio_mix_buffer[2][AUDIO_BUFFER_LENGTH * 2];
+volatile uint32_t audio_write_idx = 0;  // Which buffer Core 0 is writing to
+volatile uint32_t audio_read_idx = 1;   // Which buffer Core 1 is reading from
+volatile bool audio_buffer_ready = false;  // Set by Core 0 after mixing
 
 //=============================================================================
-// Semaphore for render core sync
+// Sync flags
 //=============================================================================
-static semaphore_t render_start_semaphore;
+static volatile bool core1_ready = false;
 
 //=============================================================================
 // FatFS
@@ -161,8 +156,8 @@ static inline void snes9x_init(void) {
     Settings.FrameTimeNTSC = 16667;
     Settings.ControllerOption = SNES_JOYPAD;
     Settings.HBlankStart = (256 * Settings.H_Max) / SNES_HCOUNTER_MAX;
-    Settings.SoundPlaybackRate = AUDIO_SAMPLE_RATE_SNES;
-    Settings.DisableSoundEcho = true;
+    Settings.SoundPlaybackRate = AUDIO_SAMPLE_RATE;
+    Settings.DisableSoundEcho = false;  // Echo is important for music!
     Settings.InterpolatedSound = true;
     // Keep APU enabled - some games need it even without audio output
 
@@ -229,47 +224,53 @@ static bool load_rom_from_sd(const char *filename) {
 }
 
 //=============================================================================
-// Render Core (Core 1) - HDMI & Audio output  
+// Render Core (Core 1) - HDMI & Audio output (exact copy from pico-snes-master)
 //=============================================================================
 
-static void __scratch_x("render") render_core(void) {
-    // Allow core 0 to pause this core during flash operations
-    multicore_lockout_victim_init();
+// Test tone buffer in SRAM (not PSRAM)
+static int16_t __attribute__((aligned(4))) test_tone[512];
+
+void __time_critical_func(render_core)(void) {
+    // Pre-generate test tone - 440Hz square wave
+    for (int i = 0; i < 256; i++) {
+        int16_t sample = ((i / 25) & 1) ? 8000 : -8000;
+        test_tone[i * 2] = sample;      // Left
+        test_tone[i * 2 + 1] = sample;  // Right
+    }
     
-    // Initialize HDMI on Core 1 (DMA IRQ will run on this core)
+    // Initialize audio
+    static i2s_config_t i2s_config;
+    i2s_config = i2s_get_default_config();
+    i2s_config.sample_freq = AUDIO_SAMPLE_RATE;
+    i2s_config.dma_trans_count = AUDIO_SAMPLE_RATE / 60;
+    i2s_volume(&i2s_config, 0);
+    i2s_init(&i2s_config);
+    
+    // Initialize HDMI AFTER audio
     graphics_init(g_out_HDMI);
-    
-    // Set up screen buffer (low byte of each 16-bit value is palette index)
     graphics_set_buffer((uint8_t *)SCREEN[0]);
     graphics_set_res(SCREEN_WIDTH, SCREEN_HEIGHT);
-    graphics_set_shift(32, 0);  // Center 256 pixels in 320-pixel output
+    graphics_set_shift(32, 0);
     graphics_set_mode(GRAPHICSMODE_DEFAULT);
     
-    // Initialize audio on Core 1
-    audio_init();
+    // Signal ready with memory barrier
+    __dmb();
+    core1_ready = true;
+    __dmb();
     
-    // Signal that we're ready (HDMI + Audio initialized)
-    sem_release(&render_start_semaphore);
-    
-    // Track buffer swaps for audio sync (like pico-snes-master)
-    uint32_t old_buffer = current_buffer;
-    
-    // Core 1 loop - handles audio mixing when buffer swaps
-    // HDMI DMA runs via interrupt on this core
-    while (1) {
-        if (old_buffer != current_buffer) {
-            // Mix audio on buffer swap (same as pico-snes-master)
-            S9xMixSamples((void *)audioBuffer, AUDIO_BUFFER_LENGTH * 2);
-            old_buffer = current_buffer;
-        }
+    // Audio playback - continuously play from read buffer
+    while (true) {
+        // Get buffer index and play the ENTIRE buffer
+        uint32_t buf_to_play = audio_read_idx;
+        int16_t *samples16 = (int16_t *)audio_mix_buffer[buf_to_play];
         
-        // Feed I2S buffers
-        audio_buffer_t *buffer = take_audio_buffer(audio_get_producer_pool(), false);
-        if (buffer != NULL) {
-            audio_fill_buffer(buffer);
+        for (int i = 0; i < AUDIO_BUFFER_LENGTH; i++) {
+            // Direct output - no volume modification
+            int16_t left = samples16[i * 2];
+            int16_t right = samples16[i * 2 + 1];
+            uint32_t sample32 = ((uint32_t)(uint16_t)right << 16) | (uint16_t)left;
+            pio_sm_put_blocking(i2s_config.pio, i2s_config.sm, sample32);
         }
-        
-        tight_loop_contents();
     }
 }
 
@@ -308,6 +309,21 @@ static void __time_critical_func(emulation_loop)(void) {
         
         // Run one SNES frame
         S9xMainLoop();
+        
+        // Mix audio on Core 0 into write buffer
+        S9xMixSamples((void *)audio_mix_buffer[audio_write_idx], AUDIO_BUFFER_LENGTH * 2);
+        
+        // Memory barrier to ensure all writes are visible
+        __dmb();
+        
+        // Swap buffers
+        uint32_t old_write = audio_write_idx;
+        audio_write_idx = audio_read_idx;
+        audio_read_idx = old_write;
+        
+        // Signal audio is ready to play
+        audio_buffer_ready = true;
+        __dmb();
         
         if (skip_render) {
             frames_skipped++;
@@ -390,17 +406,17 @@ int main(void) {
     }
     LOG("SD card mounted\n");
     
-    // Initialize semaphore for render core sync
-    sem_init(&render_start_semaphore, 0, 1);
-    
     // Launch Core 1 (HDMI + Audio)
     // HDMI DMA IRQ runs on Core 1, freeing Core 0 for emulation
     LOG("Starting render core (HDMI + Audio)...\n");
     multicore_launch_core1(render_core);
     
     // Wait for Core 1 to initialize HDMI and audio
-    sem_acquire_blocking(&render_start_semaphore);
-    LOG("Render core started (HDMI + Audio on Core 1)\n");
+    LOG("[Core0] Waiting for Core 1 to initialize...\n");
+    while (!core1_ready) {
+        tight_loop_contents();
+    }
+    LOG("[Core0] Render core started (HDMI + Audio on Core 1)\n");
     
     // Try to load ROM from SD card
     LOG("Loading ROM...\n");

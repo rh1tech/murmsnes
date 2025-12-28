@@ -1,53 +1,63 @@
-/*
- * murmsnes - Audio driver for RP2350
- * Uses pico_audio_i2s for I2S output
- * Adapted for SNES emulation (22050 Hz sample rate)
+/**
+ * MIT License
+ *
+ * Copyright (c) 2022 Vincent Mistler
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
  */
-#ifndef AUDIO_H
-#define AUDIO_H
 
-#include <stdint.h>
-#include <stdbool.h>
+#pragma once
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-// Forward declarations to avoid pulling in pico_audio headers
-struct audio_buffer_pool;
-struct audio_buffer;
+#include <stdlib.h>
+#include <string.h>
+#include <hardware/pio.h>
+#include <hardware/clocks.h>
+#include <hardware/dma.h>
+#include "audio_i2s.pio.h"
 
-// SNES audio sample rate (22050 Hz standard for SNES emulation)
-#define AUDIO_SAMPLE_RATE 22050
+typedef struct i2s_config 
+{
+    uint32_t sample_freq;        
+    uint16_t channel_count; 
+    uint8_t  data_pin;
+    uint8_t  clock_pin_base;
+    PIO	     pio;
+    uint8_t  sm; 
+    uint8_t  dma_channel;
+    uint16_t dma_trans_count;
+    uint16_t *dma_buf;
+    uint8_t volume;
+} i2s_config_t;
 
-// Audio buffer size - samples per buffer
-// SNES runs at ~60 FPS, so ~368 samples per frame (22050/60)
-#define AUDIO_BUFFER_SAMPLES 512
 
-// Initialize audio system
-bool audio_init(void);
+i2s_config_t i2s_get_default_config(void);
+void i2s_init(i2s_config_t *i2s_config);
+void i2s_write(const i2s_config_t *i2s_config,const int16_t *samples,const size_t len);
+void i2s_dma_write(i2s_config_t *i2s_config,const int16_t *samples);
+void i2s_dma_write_direct(i2s_config_t *i2s_config, const uint32_t *samples);
+void i2s_volume(i2s_config_t *i2s_config,uint8_t volume);
+void i2s_increase_volume(i2s_config_t *i2s_config);
+void i2s_decrease_volume(i2s_config_t *i2s_config);
 
-// Shutdown audio system
-void audio_shutdown(void);
-
-// Check if audio is initialized
-bool audio_is_initialized(void);
-
-// Update audio - call this to process audio buffers
-void audio_update(void);
-
-// Get producer pool for direct buffer access
-struct audio_buffer_pool *audio_get_producer_pool(void);
-
-// Fill an I2S buffer directly from sound buffer
-void audio_fill_buffer(struct audio_buffer *buffer);
-
-// Set master volume (0-128)
-void audio_set_volume(int volume);
-
-// Get current master volume
-int audio_get_volume(void);
-
-// Enable/disable audio
-void audio_set_enabled(bool enabled);
-
-// Check if audio is enabled
-bool audio_is_enabled(void);
-
-#endif // AUDIO_H
+#ifdef __cplusplus
+}
+#endif
