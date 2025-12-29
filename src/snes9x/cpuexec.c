@@ -9,8 +9,14 @@
 #include "apu.h"
 #include "dma.h"
 
+/* Mark main loop as hot for RAM execution on Pico */
+#ifdef PICO_ON_DEVICE
+#define CPU_HOT __attribute__((hot, section(".time_critical.cpu_loop")))
+#else
+#define CPU_HOT
+#endif
 
-void S9xMainLoop()
+CPU_HOT void S9xMainLoop()
 {
    do
    {
