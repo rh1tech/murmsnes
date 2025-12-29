@@ -401,7 +401,11 @@ void DrawTile16(uint32_t Tile, int32_t Offset, uint32_t StartLine, uint32_t Line
    uint8_t* bp;
    TILE_PREAMBLE_VARS();
    TILE_PREAMBLE_CODE();
+#if PICO_ON_DEVICE
+   RENDER_TILE_OPAQUE(WRITE_4PIXELS16, WRITE_4PIXELS16_FLIPPED, WRITE_4PIXELS16_OPAQUE, WRITE_4PIXELS16_FLIPPED_OPAQUE, 4);
+#else
    RENDER_TILE(WRITE_4PIXELS16, WRITE_4PIXELS16_FLIPPED, 4);
+#endif
 }
 
 void DrawClippedTile16(uint32_t Tile, int32_t Offset, uint32_t StartPixel, uint32_t Width, uint32_t StartLine, uint32_t LineCount)
