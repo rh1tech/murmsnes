@@ -533,8 +533,8 @@ static void __time_critical_func(emulation_loop)(void) {
 
         // Optional stable 30fps cap: render only on every other emulated frame.
         // We still allow lateness-based skipping on top.
-        // Force 30fps video rendering while keeping 60Hz emulation for correct game speed
-        if ((video_phase & 1u)) {
+        // Force 24fps video rendering (2 out of every 5 frames) while keeping 60Hz emulation
+        if ((video_phase % 5) >= 2) {
             skip_render = true;
         } else if (cap30_active && (video_phase & 1u)) {
             skip_render = true;
