@@ -1,1 +1,15 @@
-/build
+# Build directories
+build/
+
+# Third party dependencies
+third_party/
+
+# IDE
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+/release

@@ -1,9 +1,0 @@
-#pragma once
-#include "snes9x/snes9x.h"
-#include "snes9x/soundux.h"
-#include "snes9x/memmap.h"
-#include "snes9x/apu.h"
-#include "snes9x/display.h"
-#include "snes9x/gfx.h"
-#include "snes9x/cpuexec.h"
-#include "snes9x/srtc.h"

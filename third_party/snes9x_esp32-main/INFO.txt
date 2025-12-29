@@ -1,3 +1,0 @@
-* build with ESP-IDF v5.4.0
-* config: disable WDT, enable PSRAM @ 200 MHz, optimize compiler for performance (O2)
-
