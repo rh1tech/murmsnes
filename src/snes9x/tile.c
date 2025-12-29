@@ -10,8 +10,12 @@
 
 #if PICO_ON_DEVICE
 /* Assembly-optimized tile pixel functions */
+extern void WRITE_4PIXELS16_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+extern void WRITE_4PIXELS16_FLIPPED_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 extern void WRITE_4PIXELS16_OPAQUE_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 extern void WRITE_4PIXELS16_FLIPPED_OPAQUE_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+extern void WRITE_4PIXELS16x2_OPAQUE_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+extern void WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 #endif
 
 static const uint32_t HeadMask[4] =
@@ -190,8 +194,49 @@ static uint8_t ConvertTile(uint8_t* pCache, uint32_t TileAddr)
 
 #define PLOT_PIXEL(screen, pixel) (pixel)
 
-// ARM Cortex-M33 optimized version - fully unrolled, no loop overhead
-#if defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_7M__) || defined(PICO_ON_DEVICE)
+/*
+ * Tile pixel-writing functions organized by platform:
+ * - PICO_ON_DEVICE: Uses hand-optimized assembly
+ * - ARM_ARCH: Uses C with manual unrolling
+ * - Other: Uses simple loop-based C
+ */
+
+#if PICO_ON_DEVICE
+/* ============ PICO: Assembly-optimized versions ============ */
+
+static INLINE void WRITE_4PIXELS16(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   WRITE_4PIXELS16_asm(Offset, Pixels, ScreenColors);
+}
+
+static INLINE void WRITE_4PIXELS16_FLIPPED(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   WRITE_4PIXELS16_FLIPPED_asm(Offset, Pixels, ScreenColors);
+}
+
+static INLINE void WRITE_4PIXELS16_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   WRITE_4PIXELS16_OPAQUE_asm(Offset, Pixels, ScreenColors);
+}
+
+static INLINE void WRITE_4PIXELS16_FLIPPED_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   WRITE_4PIXELS16_FLIPPED_OPAQUE_asm(Offset, Pixels, ScreenColors);
+}
+
+static INLINE void WRITE_4PIXELS16x2_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   WRITE_4PIXELS16x2_OPAQUE_asm(Offset, Pixels, ScreenColors);
+}
+
+static INLINE void WRITE_4PIXELS16_FLIPPEDx2_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm(Offset, Pixels, ScreenColors);
+}
+
+#elif defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_7M__)
+/* ============ ARM: Unrolled C versions ============ */
+
 static INLINE void WRITE_4PIXELS16(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
 {
    uint16_t* Screen = (uint16_t*) GFX.S + Offset;
@@ -200,23 +245,10 @@ static INLINE void WRITE_4PIXELS16(int32_t Offset, uint8_t* Pixels, uint16_t* Sc
    uint8_t Z2 = GFX.Z2;
    uint8_t Pixel;
    
-   // Fully unrolled - no loop, fewer branches
-   if (Z1 > Depth[0] && (Pixel = Pixels[0])) {
-      Screen[0] = ScreenColors[Pixel];
-      Depth[0] = Z2;
-   }
-   if (Z1 > Depth[1] && (Pixel = Pixels[1])) {
-      Screen[1] = ScreenColors[Pixel];
-      Depth[1] = Z2;
-   }
-   if (Z1 > Depth[2] && (Pixel = Pixels[2])) {
-      Screen[2] = ScreenColors[Pixel];
-      Depth[2] = Z2;
-   }
-   if (Z1 > Depth[3] && (Pixel = Pixels[3])) {
-      Screen[3] = ScreenColors[Pixel];
-      Depth[3] = Z2;
-   }
+   if (Z1 > Depth[0] && (Pixel = Pixels[0])) { Screen[0] = ScreenColors[Pixel]; Depth[0] = Z2; }
+   if (Z1 > Depth[1] && (Pixel = Pixels[1])) { Screen[1] = ScreenColors[Pixel]; Depth[1] = Z2; }
+   if (Z1 > Depth[2] && (Pixel = Pixels[2])) { Screen[2] = ScreenColors[Pixel]; Depth[2] = Z2; }
+   if (Z1 > Depth[3] && (Pixel = Pixels[3])) { Screen[3] = ScreenColors[Pixel]; Depth[3] = Z2; }
 }
 
 static INLINE void WRITE_4PIXELS16_FLIPPED(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
@@ -227,37 +259,12 @@ static INLINE void WRITE_4PIXELS16_FLIPPED(int32_t Offset, uint8_t* Pixels, uint
    uint8_t Z2 = GFX.Z2;
    uint8_t Pixel;
    
-   if (Z1 > Depth[0] && (Pixel = Pixels[3])) {
-      Screen[0] = ScreenColors[Pixel];
-      Depth[0] = Z2;
-   }
-   if (Z1 > Depth[1] && (Pixel = Pixels[2])) {
-      Screen[1] = ScreenColors[Pixel];
-      Depth[1] = Z2;
-   }
-   if (Z1 > Depth[2] && (Pixel = Pixels[1])) {
-      Screen[2] = ScreenColors[Pixel];
-      Depth[2] = Z2;
-   }
-   if (Z1 > Depth[3] && (Pixel = Pixels[0])) {
-      Screen[3] = ScreenColors[Pixel];
-      Depth[3] = Z2;
-   }
+   if (Z1 > Depth[0] && (Pixel = Pixels[3])) { Screen[0] = ScreenColors[Pixel]; Depth[0] = Z2; }
+   if (Z1 > Depth[1] && (Pixel = Pixels[2])) { Screen[1] = ScreenColors[Pixel]; Depth[1] = Z2; }
+   if (Z1 > Depth[2] && (Pixel = Pixels[1])) { Screen[2] = ScreenColors[Pixel]; Depth[2] = Z2; }
+   if (Z1 > Depth[3] && (Pixel = Pixels[0])) { Screen[3] = ScreenColors[Pixel]; Depth[3] = Z2; }
 }
 
-// Opaque variants: skip Pixel==0 checks (safe only if Pixels contain no zeros).
-// On Pico, use assembly-optimized versions
-#if PICO_ON_DEVICE
-static INLINE void WRITE_4PIXELS16_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
-{
-   WRITE_4PIXELS16_OPAQUE_asm(Offset, Pixels, ScreenColors);
-}
-
-static INLINE void WRITE_4PIXELS16_FLIPPED_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
-{
-   WRITE_4PIXELS16_FLIPPED_OPAQUE_asm(Offset, Pixels, ScreenColors);
-}
-#else
 static INLINE void WRITE_4PIXELS16_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
 {
    uint16_t* Screen = (uint16_t*) GFX.S + Offset;
@@ -283,9 +290,7 @@ static INLINE void WRITE_4PIXELS16_FLIPPED_OPAQUE(int32_t Offset, uint8_t* Pixel
    if (Z1 > Depth[2]) { Screen[2] = ScreenColors[Pixels[1]]; Depth[2] = Z2; }
    if (Z1 > Depth[3]) { Screen[3] = ScreenColors[Pixels[0]]; Depth[3] = Z2; }
 }
-#endif /* !PICO_ON_DEVICE */
 
-// Opaque x2 variants: write doubled pixels without transparency check
 static INLINE void WRITE_4PIXELS16x2_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
 {
    uint16_t* Screen = (uint16_t*) GFX.S + Offset;
@@ -311,8 +316,10 @@ static INLINE void WRITE_4PIXELS16_FLIPPEDx2_OPAQUE(int32_t Offset, uint8_t* Pix
    if (Z1 > Depth[4]) { Screen[4] = Screen[5] = ScreenColors[Pixels[1]]; Depth[4] = Depth[5] = Z2; }
    if (Z1 > Depth[6]) { Screen[6] = Screen[7] = ScreenColors[Pixels[0]]; Depth[6] = Depth[7] = Z2; }
 }
+
 #else
-// Fallback for non-ARM platforms
+/* ============ Fallback: Simple loop-based C ============ */
+
 static INLINE void WRITE_4PIXELS16(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
 {
    uint8_t  Pixel, N;
@@ -344,7 +351,14 @@ static INLINE void WRITE_4PIXELS16_FLIPPED(int32_t Offset, uint8_t* Pixels, uint
       }
    }
 }
-#endif
+
+/* Opaque variants not implemented for non-ARM - use regular versions */
+#define WRITE_4PIXELS16_OPAQUE WRITE_4PIXELS16
+#define WRITE_4PIXELS16_FLIPPED_OPAQUE WRITE_4PIXELS16_FLIPPED
+#define WRITE_4PIXELS16x2_OPAQUE WRITE_4PIXELS16x2
+#define WRITE_4PIXELS16_FLIPPEDx2_OPAQUE WRITE_4PIXELS16_FLIPPEDx2
+
+#endif /* platform selection */
 
 static void WRITE_4PIXELS16_HALFWIDTH(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
 {
