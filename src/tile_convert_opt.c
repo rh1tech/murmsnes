@@ -7,9 +7,13 @@
 #include "memmap.h"
 #include "ppu.h"
 #include "gfx.h"
+#include "tile.h"
 
 /* External assembly function */
 extern uint8_t ConvertTile_opt_8bpp(uint8_t* pCache, uint32_t TileAddr, uint8_t* vram_base);
+
+/* External C function from tile.c */
+extern uint8_t ConvertTile(uint8_t* pCache, uint32_t TileAddr);
 
 /* Lookup tables from tile.c */
 extern const uint32_t odd[4][16];

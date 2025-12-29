@@ -110,10 +110,11 @@ ConvertTile_opt_8bpp:
     ldrb    r1, [r2, #16]
     cbz     r1, .Lskip_tp16
     lsrs    r10, r1, #4
-    ldr     r10, [r8, #(16*4), r10, lsl #2]  /* odd[1][pix >> 4] */
+    add     r11, r8, #(16*4)  /* &odd[1] */
+    ldr     r10, [r11, r10, lsl #2]  /* odd[1][pix >> 4] */
     orrs    r4, r10
     ands    r1, #0x0F
-    ldr     r10, [r8, #(16*4), r1, lsl #2]
+    ldr     r10, [r11, r1, lsl #2]
     orrs    r5, r10
 .Lskip_tp16:
     
@@ -121,10 +122,11 @@ ConvertTile_opt_8bpp:
     ldrb    r1, [r2, #17]
     cbz    r1, .Lskip_tp17
     lsrs    r10, r1, #4
-    ldr     r10, [r9, #(16*4), r10, lsl #2]  /* even[1][pix >> 4] */
+    add     r11, r9, #(16*4)  /* &even[1] */
+    ldr     r10, [r11, r10, lsl #2]  /* even[1][pix >> 4] */
     orrs    r4, r10
     ands    r1, #0x0F
-    ldr     r10, [r9, #(16*4), r1, lsl #2]
+    ldr     r10, [r11, r1, lsl #2]
     orrs    r5, r10
 .Lskip_tp17:
     
@@ -132,10 +134,11 @@ ConvertTile_opt_8bpp:
     ldrb    r1, [r2, #32]
     cbz     r1, .Lskip_tp32
     lsrs    r10, r1, #4
-    ldr     r10, [r8, #(32*4), r10, lsl #2]  /* odd[2][pix >> 4] */
+    add     r11, r8, #(32*4)  /* &odd[2] */
+    ldr     r10, [r11, r10, lsl #2]  /* odd[2][pix >> 4] */
     orrs    r4, r10
     ands    r1, #0x0F
-    ldr     r10, [r8, #(32*4), r1, lsl #2]
+    ldr     r10, [r11, r1, lsl #2]
     orrs    r5, r10
 .Lskip_tp32:
     
@@ -143,10 +146,11 @@ ConvertTile_opt_8bpp:
     ldrb    r1, [r2, #33]
     cbz     r1, .Lskip_tp33
     lsrs    r10, r1, #4
-    ldr     r10, [r9, #(32*4), r10, lsl #2]  /* even[2][pix >> 4] */
+    add     r11, r9, #(32*4)  /* &even[2] */
+    ldr     r10, [r11, r10, lsl #2]  /* even[2][pix >> 4] */
     orrs    r4, r10
     ands    r1, #0x0F
-    ldr     r10, [r9, #(32*4), r1, lsl #2]
+    ldr     r10, [r11, r1, lsl #2]
     orrs    r5, r10
 .Lskip_tp33:
     
@@ -154,10 +158,11 @@ ConvertTile_opt_8bpp:
     ldrb    r1, [r2, #48]
     cbz     r1, .Lskip_tp48
     lsrs    r10, r1, #4
-    ldr     r10, [r8, #(48*4), r10, lsl #2]  /* odd[3][pix >> 4] */
+    add     r11, r8, #(48*4)  /* &odd[3] */
+    ldr     r10, [r11, r10, lsl #2]  /* odd[3][pix >> 4] */
     orrs    r4, r10
     ands    r1, #0x0F
-    ldr     r10, [r8, #(48*4), r1, lsl #2]
+    ldr     r10, [r11, r1, lsl #2]
     orrs    r5, r10
 .Lskip_tp48:
     
@@ -165,10 +170,11 @@ ConvertTile_opt_8bpp:
     ldrb    r1, [r2, #49]
     cbz     r1, .Lskip_tp49
     lsrs    r10, r1, #4
-    ldr     r10, [r9, #(48*4), r10, lsl #2]  /* even[3][pix >> 4] */
+    add     r11, r9, #(48*4)  /* &even[3] */
+    ldr     r10, [r11, r10, lsl #2]  /* even[3][pix >> 4] */
     orrs    r4, r10
     ands    r1, #0x0F
-    ldr     r10, [r9, #(48*4), r1, lsl #2]
+    ldr     r10, [r11, r1, lsl #2]
     orrs    r5, r10
 .Lskip_tp49:
     
