@@ -107,10 +107,17 @@ set(SNES9X_SOURCES
     src/snes9x/tile_asm.S
 )
 
+# Assembly optimizations
+set(ASM_OPT_SOURCES
+    src/asm/tile_convert_optimized.S
+    src/tile_convert_opt.c
+)
+
 add_executable(murmsnes
     src/main.c
     src/murmsnes_profile.c
     ${SNES9X_SOURCES}
+    ${ASM_OPT_SOURCES}
 )
 
 # Enable aggressive optimization for SNES9x hot path
