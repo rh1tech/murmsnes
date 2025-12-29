@@ -19,6 +19,7 @@ set(CMAKE_DEPENDS_CHECK_ASM
   "/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_conv32_vfp.S" "/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_conv32_vfp.S.o"
   "/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_sci_m33_vfp.S" "/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_sci_m33_vfp.S.o"
   "/Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_audio/audio_utils.S" "/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio_utils.S.o"
+  "/Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpu_asm.S" "/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o"
   )
 set(CMAKE_ASM_COMPILER_ID "GNU")
 

@@ -190,6 +190,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o.d"
   "CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o"
   "CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o.d"
+  "CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o"
   "CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o"
   "CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o.d"
   "CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o"

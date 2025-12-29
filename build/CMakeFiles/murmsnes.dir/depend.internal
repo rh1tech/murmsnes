@@ -267,3 +267,5 @@ CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio_utils.S.o
  /Users/A2506402/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/platform_defs.h
  /Users/A2506402/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/addressmap.h
  /Users/A2506402/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/sio.h
+CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
+ /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpu_asm.S

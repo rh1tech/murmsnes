@@ -62,3 +62,5 @@ CXX_FLAGS = -mcpu=cortex-m33 -mthumb -march=armv8-m.main+fp+dsp -mfloat-abi=soft
 
 # Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
 
+# Custom flags: CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o_FLAGS = -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer
+

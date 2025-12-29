@@ -2877,6 +2877,14 @@ src/snes9x/cpu.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/murmsnes.dir/build.make CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.s
 .PHONY : src/snes9x/cpu.c.s
 
+src/snes9x/cpu_asm.o: src/snes9x/cpu_asm.S.o
+.PHONY : src/snes9x/cpu_asm.o
+
+# target to build an object file
+src/snes9x/cpu_asm.S.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/murmsnes.dir/build.make CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
+.PHONY : src/snes9x/cpu_asm.S.o
+
 src/snes9x/cpuexec.o: src/snes9x/cpuexec.c.o
 .PHONY : src/snes9x/cpuexec.o
 
@@ -3559,6 +3567,7 @@ help:
 	@echo "... src/snes9x/cpu.o"
 	@echo "... src/snes9x/cpu.i"
 	@echo "... src/snes9x/cpu.s"
+	@echo "... src/snes9x/cpu_asm.o"
 	@echo "... src/snes9x/cpuexec.o"
 	@echo "... src/snes9x/cpuexec.i"
 	@echo "... src/snes9x/cpuexec.s"

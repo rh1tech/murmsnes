@@ -393,6 +393,21 @@ Discarded input sections
  .text          0x00000000        0x0 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
  .data          0x00000000        0x0 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
  .bss           0x00000000        0x0 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
+ .text          0x00000000        0x0 CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
+ .data          0x00000000        0x0 CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
+ .bss           0x00000000        0x0 CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
+ .time_critical.snes9x_cpu_asm
+                0x00000000       0xa8 CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
+ .debug_line    0x00000000       0x9b CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
+ .debug_line_str
+                0x00000000       0x6f CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
+ .debug_info    0x00000000       0x53 CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
+ .debug_abbrev  0x00000000       0x28 CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
+ .debug_aranges
+                0x00000000       0x20 CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
+ .debug_str     0x00000000       0xb2 CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
+ .ARM.attributes
+                0x00000000       0x24 CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
  .text          0x00000000        0x0 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o
  .data          0x00000000        0x0 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o
  .bss           0x00000000        0x0 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o
@@ -6312,6 +6327,7 @@ LOAD CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
 LOAD CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o
 LOAD CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o
 LOAD CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
+LOAD CMakeFiles/murmsnes.dir/src/snes9x/cpu_asm.S.o
 LOAD CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o
 LOAD CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o
 LOAD CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/platform.c.o

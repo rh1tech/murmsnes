@@ -12,6 +12,8 @@ hardware/regs/addressmap.h
 hardware/regs/sio.h
 /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_audio/hardware/regs/sio.h
 
+/Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpu_asm.S
+
 /Users/A2506402/pico/pico-sdk/src/boards/include/boards/pico2.h
 
 /Users/A2506402/pico/pico-sdk/src/common/boot_picobin_headers/include/boot/picobin.h

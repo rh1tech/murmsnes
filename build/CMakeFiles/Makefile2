@@ -2888,16 +2888,16 @@ src/fatfs/clean:
 # Target rules for target CMakeFiles/drivers.dir
 
 # All Build rule for target.
-CMakeFiles/drivers.dir/all: pico-sdk/src/rp2350/boot_stage2/CMakeFiles/bs2_default_library.dir/all
 CMakeFiles/drivers.dir/all: pico_extras/src/rp2_common/pico_audio_i2s/CMakeFiles/pico_audio_i2s_audio_i2s_pio_h.dir/all
+CMakeFiles/drivers.dir/all: pico-sdk/src/rp2350/boot_stage2/CMakeFiles/bs2_default_library.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/drivers.dir/build.make CMakeFiles/drivers.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/drivers.dir/build.make CMakeFiles/drivers.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36 "Built target drivers"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35 "Built target drivers"
 .PHONY : CMakeFiles/drivers.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/drivers.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles 38
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles 37
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/drivers.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles 0
 .PHONY : CMakeFiles/drivers.dir/rule
@@ -2909,7 +2909,7 @@ drivers: CMakeFiles/drivers.dir/rule
 # codegen rule for target.
 CMakeFiles/drivers.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/drivers.dir/build.make CMakeFiles/drivers.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36 "Finished codegen for target drivers"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35 "Finished codegen for target drivers"
 .PHONY : CMakeFiles/drivers.dir/codegen
 
 # clean rule for target.
@@ -2921,13 +2921,13 @@ CMakeFiles/drivers.dir/clean:
 # Target rules for target CMakeFiles/murmsnes.dir
 
 # All Build rule for target.
-CMakeFiles/murmsnes.dir/all: CMakeFiles/drivers.dir/all
-CMakeFiles/murmsnes.dir/all: pico-sdk/src/rp2350/boot_stage2/CMakeFiles/bs2_default_library.dir/all
 CMakeFiles/murmsnes.dir/all: pico_extras/src/rp2_common/pico_audio_i2s/CMakeFiles/pico_audio_i2s_audio_i2s_pio_h.dir/all
 CMakeFiles/murmsnes.dir/all: drivers/sdcard/CMakeFiles/sdcard_spi_pio_h.dir/all
+CMakeFiles/murmsnes.dir/all: CMakeFiles/drivers.dir/all
+CMakeFiles/murmsnes.dir/all: pico-sdk/src/rp2350/boot_stage2/CMakeFiles/bs2_default_library.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/murmsnes.dir/build.make CMakeFiles/murmsnes.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/murmsnes.dir/build.make CMakeFiles/murmsnes.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91 "Built target murmsnes"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91 "Built target murmsnes"
 .PHONY : CMakeFiles/murmsnes.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2944,7 +2944,7 @@ murmsnes: CMakeFiles/murmsnes.dir/rule
 # codegen rule for target.
 CMakeFiles/murmsnes.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/murmsnes.dir/build.make CMakeFiles/murmsnes.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91 "Finished codegen for target murmsnes"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91 "Finished codegen for target murmsnes"
 .PHONY : CMakeFiles/murmsnes.dir/codegen
 
 # clean rule for target.
