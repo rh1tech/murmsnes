@@ -67,11 +67,18 @@
 /* On little-endian MIPS, a 16-bit word can be read directly from an address
  * only if it's aligned. */
 #define FAST_ALIGNED_LSB_WORD_ACCESS
+#elif defined(__ARM_ARCH) && (__ARM_ARCH >= 7)
+/* ARM Cortex-M33 (RP2350) and ARMv7+ support unaligned access */
+#define FAST_LSB_WORD_ACCESS
 #endif
 
 #define ABS(X)   ((X) <  0  ? -(X) : (X))
+#ifndef MIN
 #define MIN(A,B) ((A) < (B) ?  (A) : (B))
+#endif
+#ifndef MAX
 #define MAX(A,B) ((A) > (B) ?  (A) : (B))
+#endif
 
 /* Integer square root by Halleck's method, with Legalize's speedup */
 static INLINE int32_t _isqrt(int32_t val)
