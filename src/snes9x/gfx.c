@@ -2019,31 +2019,35 @@ static void DrawBGMode7Background(uint8_t* Screen, int32_t bg)
    RENDER_BACKGROUND_MODE7(uint8_t, (uint8_t) (b & GFX.Mode7Mask))
 }
 
+/* Mode7: Output palette index directly since HDMI driver reads low byte as palette index.
+ * Color math cannot work properly without expensive RGB→palette quantization,
+ * so we skip it and just output the palette index. */
 static void DrawBGMode7Background16(uint8_t* Screen, int32_t bg)
 {
    RENDER_BACKGROUND_MODE7(uint16_t, ScreenColors [b & GFX.Mode7Mask]);
 }
 
-/* Mode7 color math: Since SubScreen==Screen on this platform, sub-screen blending
- * would read undefined data. Always use fixed color path for correct rendering. */
+/* Mode7 color math: Cannot do RGB color math with palette-indexed output.
+ * Just output palette index - color math effect will be missing but at least
+ * the background will render correctly. */
 static void DrawBGMode7Background16Add(uint8_t * Screen, int32_t bg)
 {
-   RENDER_BACKGROUND_MODE7(uint16_t, *(d + GFX.DepthDelta) ? COLOR_ADD(ScreenColors[b & GFX.Mode7Mask], GFX.FixedColour) : ScreenColors[b & GFX.Mode7Mask]);
+   RENDER_BACKGROUND_MODE7(uint16_t, ScreenColors [b & GFX.Mode7Mask]);
 }
 
 static void DrawBGMode7Background16Add1_2(uint8_t * Screen, int32_t bg)
 {
-   RENDER_BACKGROUND_MODE7(uint16_t, *(d + GFX.DepthDelta) ? COLOR_ADD(ScreenColors[b & GFX.Mode7Mask], GFX.FixedColour) : ScreenColors[b & GFX.Mode7Mask]);
+   RENDER_BACKGROUND_MODE7(uint16_t, ScreenColors [b & GFX.Mode7Mask]);
 }
 
 static void DrawBGMode7Background16Sub(uint8_t * Screen, int32_t bg)
 {
-   RENDER_BACKGROUND_MODE7(uint16_t, *(d + GFX.DepthDelta) ? COLOR_SUB(ScreenColors[b & GFX.Mode7Mask], GFX.FixedColour) : ScreenColors[b & GFX.Mode7Mask]);
+   RENDER_BACKGROUND_MODE7(uint16_t, ScreenColors [b & GFX.Mode7Mask]);
 }
 
 static void DrawBGMode7Background16Sub1_2(uint8_t * Screen, int32_t bg)
 {
-   RENDER_BACKGROUND_MODE7(uint16_t, *(d + GFX.DepthDelta) ? COLOR_SUB(ScreenColors[b & GFX.Mode7Mask], GFX.FixedColour) : ScreenColors[b & GFX.Mode7Mask]);
+   RENDER_BACKGROUND_MODE7(uint16_t, ScreenColors [b & GFX.Mode7Mask]);
 }
 
 #define RENDER_BACKGROUND_MODE7_i(TYPE,FUNC,COLORFUNC) \
@@ -2441,28 +2445,29 @@ static uint32_t Q_INTERPOLATE(uint32_t A, uint32_t B, uint32_t C, uint32_t D)
 
 static void DrawBGMode7Background16_i(uint8_t* Screen, int32_t bg)
 {
-   RENDER_BACKGROUND_MODE7_i(uint16_t, theColor, (ScreenColors[b & GFX.Mode7Mask]));
+   /* Mode7: Output palette index - interpolation is not meaningful for palette indices */
+   RENDER_BACKGROUND_MODE7_i(uint16_t, ScreenColors[b & GFX.Mode7Mask], (ScreenColors[b & GFX.Mode7Mask]));
 }
 
-/* Mode7 interpolated color math: Since SubScreen==Screen, always use fixed color path */
+/* Mode7 interpolated color math: Cannot do RGB operations with palette output */
 static void DrawBGMode7Background16Add_i(uint8_t* Screen, int32_t bg)
 {
-   RENDER_BACKGROUND_MODE7_i(uint16_t, *(d + GFX.DepthDelta) ? COLOR_ADD(theColor, GFX.FixedColour) : theColor, (ScreenColors[b & GFX.Mode7Mask]));
+   RENDER_BACKGROUND_MODE7_i(uint16_t, ScreenColors[b & GFX.Mode7Mask], (ScreenColors[b & GFX.Mode7Mask]));
 }
 
 static void DrawBGMode7Background16Add1_2_i(uint8_t* Screen, int32_t bg)
 {
-   RENDER_BACKGROUND_MODE7_i(uint16_t, *(d + GFX.DepthDelta) ? COLOR_ADD(theColor, GFX.FixedColour) : theColor, (ScreenColors[b & GFX.Mode7Mask]));
+   RENDER_BACKGROUND_MODE7_i(uint16_t, ScreenColors[b & GFX.Mode7Mask], (ScreenColors[b & GFX.Mode7Mask]));
 }
 
 static void DrawBGMode7Background16Sub_i(uint8_t* Screen, int32_t bg)
 {
-   RENDER_BACKGROUND_MODE7_i(uint16_t, *(d + GFX.DepthDelta) ? COLOR_SUB(theColor, GFX.FixedColour) : theColor, (ScreenColors[b & GFX.Mode7Mask]));
+   RENDER_BACKGROUND_MODE7_i(uint16_t, ScreenColors[b & GFX.Mode7Mask], (ScreenColors[b & GFX.Mode7Mask]));
 }
 
 static void DrawBGMode7Background16Sub1_2_i(uint8_t* Screen, int32_t bg)
 {
-   RENDER_BACKGROUND_MODE7_i(uint16_t, *(d + GFX.DepthDelta) ? COLOR_SUB(theColor, GFX.FixedColour) : theColor, (ScreenColors[b & GFX.Mode7Mask]));
+   RENDER_BACKGROUND_MODE7_i(uint16_t, ScreenColors[b & GFX.Mode7Mask], (ScreenColors[b & GFX.Mode7Mask]));
 }
 
 static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D)

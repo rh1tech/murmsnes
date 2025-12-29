@@ -1674,6 +1674,9 @@ static void CommonPPUReset()
    IPPU.XB = NULL;
    for (c = 0; c < 256; c++)
       IPPU.ScreenColors [c] = c;
+   /* Initialize DirectColors to palette indices as well (used by Mode7 direct color mode) */
+   for (c = 0; c < 256 * 8; c++)
+      IPPU.DirectColors [c] = c & 0xff;
    S9xFixColourBrightness();
    IPPU.PreviousLine = IPPU.CurrentLine = 0;
 
