@@ -265,6 +265,33 @@ static INLINE void WRITE_4PIXELS16_FLIPPED_OPAQUE(int32_t Offset, uint8_t* Pixel
    if (Z1 > Depth[2]) { Screen[2] = ScreenColors[Pixels[1]]; Depth[2] = Z2; }
    if (Z1 > Depth[3]) { Screen[3] = ScreenColors[Pixels[0]]; Depth[3] = Z2; }
 }
+
+// Opaque x2 variants: write doubled pixels without transparency check
+static INLINE void WRITE_4PIXELS16x2_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   uint16_t* Screen = (uint16_t*) GFX.S + Offset;
+   uint8_t*  Depth = GFX.DB + Offset;
+   uint8_t Z1 = GFX.Z1;
+   uint8_t Z2 = GFX.Z2;
+
+   if (Z1 > Depth[0]) { Screen[0] = Screen[1] = ScreenColors[Pixels[0]]; Depth[0] = Depth[1] = Z2; }
+   if (Z1 > Depth[2]) { Screen[2] = Screen[3] = ScreenColors[Pixels[1]]; Depth[2] = Depth[3] = Z2; }
+   if (Z1 > Depth[4]) { Screen[4] = Screen[5] = ScreenColors[Pixels[2]]; Depth[4] = Depth[5] = Z2; }
+   if (Z1 > Depth[6]) { Screen[6] = Screen[7] = ScreenColors[Pixels[3]]; Depth[6] = Depth[7] = Z2; }
+}
+
+static INLINE void WRITE_4PIXELS16_FLIPPEDx2_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   uint16_t* Screen = (uint16_t*) GFX.S + Offset;
+   uint8_t*  Depth = GFX.DB + Offset;
+   uint8_t Z1 = GFX.Z1;
+   uint8_t Z2 = GFX.Z2;
+
+   if (Z1 > Depth[0]) { Screen[0] = Screen[1] = ScreenColors[Pixels[3]]; Depth[0] = Depth[1] = Z2; }
+   if (Z1 > Depth[2]) { Screen[2] = Screen[3] = ScreenColors[Pixels[2]]; Depth[2] = Depth[3] = Z2; }
+   if (Z1 > Depth[4]) { Screen[4] = Screen[5] = ScreenColors[Pixels[1]]; Depth[4] = Depth[5] = Z2; }
+   if (Z1 > Depth[6]) { Screen[6] = Screen[7] = ScreenColors[Pixels[0]]; Depth[6] = Depth[7] = Z2; }
+}
 #else
 // Fallback for non-ARM platforms
 static INLINE void WRITE_4PIXELS16(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
@@ -443,7 +470,11 @@ void DrawTile16x2(uint32_t Tile, int32_t Offset, uint32_t StartLine, uint32_t Li
    uint8_t* bp;
    TILE_PREAMBLE_VARS();
    TILE_PREAMBLE_CODE();
+#if PICO_ON_DEVICE
+   RENDER_TILE_OPAQUE(WRITE_4PIXELS16x2, WRITE_4PIXELS16_FLIPPEDx2, WRITE_4PIXELS16x2_OPAQUE, WRITE_4PIXELS16_FLIPPEDx2_OPAQUE, 8);
+#else
    RENDER_TILE(WRITE_4PIXELS16x2, WRITE_4PIXELS16_FLIPPEDx2, 8);
+#endif
 }
 
 void DrawClippedTile16x2(uint32_t Tile, int32_t Offset, uint32_t StartPixel, uint32_t Width, uint32_t StartLine, uint32_t LineCount)
