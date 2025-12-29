@@ -76,6 +76,50 @@
        break; \
     }
 
+/* Optimized version for opaque tiles - skips the pixel==0 transparency check */
+#define RENDER_TILE_OPAQUE(NORMAL, FLIPPED, NORMAL_OPAQUE, FLIPPED_OPAQUE, N) \
+    if (TileOpaque) { \
+       switch (Tile & (V_FLIP | H_FLIP)) \
+       { \
+       case 0: \
+          bp = pCache + StartLine; \
+          for (l = LineCount; l != 0; l--, bp += 8, Offset += GFX.PPL) \
+          { \
+             NORMAL_OPAQUE (Offset, bp, ScreenColors); \
+             NORMAL_OPAQUE (Offset + N, bp + 4, ScreenColors); \
+          } \
+          break; \
+       case H_FLIP: \
+          bp = pCache + StartLine; \
+          for (l = LineCount; l != 0; l--, bp += 8, Offset += GFX.PPL) \
+          { \
+             FLIPPED_OPAQUE (Offset, bp + 4, ScreenColors); \
+             FLIPPED_OPAQUE (Offset + N, bp, ScreenColors); \
+          } \
+          break; \
+       case H_FLIP | V_FLIP: \
+          bp = pCache + 56 - StartLine; \
+          for (l = LineCount; l != 0; l--, bp -= 8, Offset += GFX.PPL) \
+          { \
+             FLIPPED_OPAQUE (Offset, bp + 4, ScreenColors); \
+             FLIPPED_OPAQUE (Offset + N, bp, ScreenColors); \
+          } \
+          break; \
+       case V_FLIP: \
+          bp = pCache + 56 - StartLine; \
+          for (l = LineCount; l != 0; l--, bp -= 8, Offset += GFX.PPL) \
+          { \
+             NORMAL_OPAQUE (Offset, bp, ScreenColors); \
+             NORMAL_OPAQUE (Offset + N, bp + 4, ScreenColors); \
+          } \
+          break; \
+       default: \
+          break; \
+       } \
+    } else { \
+       RENDER_TILE(NORMAL, FLIPPED, N) \
+    }
+
 #define TILE_CLIP_PREAMBLE_VARS() \
     uint32_t d1; \
     uint32_t d2
