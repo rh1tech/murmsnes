@@ -34,6 +34,12 @@ extern "C" {
 #include <hardware/dma.h>
 #include "audio_i2s.pio.h"
 
+// Step 4: Assembly optimized volume shift
+#ifdef PICO_ON_DEVICE
+void audio_volume_shift(uint32_t* dst, const uint32_t* src, 
+                        uint32_t frames, uint32_t shift);
+#endif
+
 typedef struct i2s_config 
 {
     uint32_t sample_freq;        

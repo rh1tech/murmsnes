@@ -104,6 +104,11 @@ void i2s_dma_write(i2s_config_t *i2s_config, const int16_t *samples) {
     if (shift == 0) {
         memcpy(dst, src, frames * sizeof(uint32_t));
     } else {
+#ifdef PICO_ON_DEVICE
+        // Step 4: Use assembly-optimized volume shift
+        audio_volume_shift(dst, src, frames, shift);
+#else
+        // C fallback for non-device builds
         for (uint32_t i = 0; i < frames; i++) {
             uint32_t v = src[i];
             int16_t l = (int16_t)(v >> 16);
@@ -112,6 +117,7 @@ void i2s_dma_write(i2s_config_t *i2s_config, const int16_t *samples) {
             r >>= shift;
             dst[i] = ((uint32_t)(uint16_t)l << 16) | (uint16_t)r;
         }
+#endif
     }
 
     ab->sample_count = frames;
