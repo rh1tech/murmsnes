@@ -21,6 +21,11 @@
 #include "memmap.h"
 #include "cpuexec.h"
 
+// Step 2: Include audio optimizations
+#ifdef PICO_ON_DEVICE
+#include "../audio_opt.h"
+#endif
+
 #define CLIP16(v) \
 (v) = (((v) <= -32768) ? -32768 : (((v) >= 32767) ? 32767 : (v)))
 
@@ -836,13 +841,24 @@ void S9xMixSamples(int16_t* buffer, int32_t sample_count)
    else
    {
       /* 16-bit mono or stereo sound, no echo */
+#ifdef PICO_ON_DEVICE
+      // Step 2: Use optimized no-echo mixing
+      audio_mix_noecho_opt(buffer, sample_count, MixBuffer, SoundData.master_volume);
+#else
       for (J = 0; J < sample_count; J++)
       {
          I = (MixBuffer[J] * SoundData.master_volume [J & 1]) / VOL_DIV16;
          CLIP16(I);
          buffer[J] = I;
       }
+#endif
    }
+}
+
+/* Get internal MixBuffer for optimized mixing */
+const int32_t* S9xGetMixBuffer(void)
+{
+   return MixBuffer;
 }
 
 void S9xMixSamplesLowPass(int16_t* buffer, int32_t sample_count, int32_t low_pass_range)

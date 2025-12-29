@@ -27,6 +27,18 @@ extern "C" {
 void audio_pack_opt(uint32_t* dst, const int16_t* src, uint32_t count,
                      int gain_num, int gain_den, bool use_soft_limit);
 
+/**
+ * Optimized audio mixing for no-echo case
+ * Step 2: C implementation matching S9xMixSamples no-echo path
+ * 
+ * @param buffer Output int16_t samples
+ * @param sample_count Number of samples (stereo interleaved)
+ * @param MixBuffer Input int32_t mix buffer
+ * @param master_volume Two-element array [left_vol, right_vol]
+ */
+void audio_mix_noecho_opt(int16_t* buffer, int32_t sample_count,
+                           const int32_t* MixBuffer, const int16_t* master_volume);
+
 #ifdef __cplusplus
 }
 #endif

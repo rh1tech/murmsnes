@@ -39,3 +39,44 @@ void audio_pack_opt(uint32_t* dst, const int16_t* src, uint32_t count,
         dst[i] = ((uint32_t)(uint16_t)left << 16) | (uint16_t)right;
     }
 }
+
+/**
+ * Optimized no-echo mixing
+ * Matches the logic from soundux.c lines 838-843:
+ *   for (J = 0; J < sample_count; J++) {
+ *     I = (MixBuffer[J] * SoundData.master_volume[J & 1]) / VOL_DIV16;
+ *     CLIP16(I);
+ *     buffer[J] = I;
+ *   }
+ * VOL_DIV16 = 128 (0x80)
+ */
+void audio_mix_noecho_opt(int16_t* buffer, int32_t sample_count,
+                           const int32_t* MixBuffer, const int16_t* master_volume)
+{
+    const int32_t left_vol = master_volume[0];
+    const int32_t right_vol = master_volume[1];
+    
+    // Process in pairs for better performance
+    int32_t i = 0;
+    for (; i < sample_count - 1; i += 2) {
+        // Left channel (even index)
+        int32_t val = (MixBuffer[i] * left_vol) >> 7;  // Divide by 128
+        if (val < -32768) val = -32768;
+        if (val > 32767) val = 32767;
+        buffer[i] = val;
+        
+        // Right channel (odd index)
+        val = (MixBuffer[i + 1] * right_vol) >> 7;
+        if (val < -32768) val = -32768;
+        if (val > 32767) val = 32767;
+        buffer[i + 1] = val;
+    }
+    
+    // Handle odd sample (if any)
+    if (i < sample_count) {
+        int32_t val = (MixBuffer[i] * left_vol) >> 7;
+        if (val < -32768) val = -32768;
+        if (val > 32767) val = 32767;
+        buffer[i] = val;
+    }
+}

@@ -113,6 +113,9 @@ void S9xSetSoundHertz(int32_t channel, int32_t hertz);
 void S9xSetSoundType(int32_t channel, int32_t type_of_sound);
 void S9xSetMasterVolume(int16_t master_volume_left, int16_t master_volume_right);
 void S9xSetEchoVolume(int16_t echo_volume_left, int16_t echo_volume_right);
+
+/* Get internal MixBuffer for optimized mixing */
+const int32_t* S9xGetMixBuffer(void);
 void S9xSetEnvelopeHeight(int32_t channel, int32_t height);
 void S9xSetSoundADSR(int32_t channel, int32_t attack, int32_t decay, int32_t sustain, int32_t sustain_level, int32_t release);
 void S9xSetSoundKeyOff(int32_t channel);
