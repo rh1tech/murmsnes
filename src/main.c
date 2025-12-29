@@ -46,8 +46,9 @@
 #define SCREEN_WIDTH     SNES_WIDTH           // 256
 #define SCREEN_HEIGHT    SNES_HEIGHT_EXTENDED // 239
 
-#define AUDIO_SAMPLE_RATE   (24000)
-// Audio chunk size must match output rate: 60 chunks/sec at 24 kHz => 400 frames/chunk.
+// Reduced from 24kHz to 18kHz for better performance with digital sound effects
+#define AUDIO_SAMPLE_RATE   (18000)
+// Audio chunk size must match output rate: 60 chunks/sec at 18 kHz => 300 frames/chunk.
 #define AUDIO_BUFFER_LENGTH (AUDIO_SAMPLE_RATE / 60)
 
 //=============================================================================
@@ -71,13 +72,14 @@ volatile uint32_t current_buffer = 0;
 // streams these packed frames to pico_audio_i2s.
 //
 // Key goal: keep Core 1 work minimal so HDMI activity doesn't starve audio.
-#define AUDIO_QUEUE_DEPTH 16
+// Deeper queue for better buffering during CPU spikes (digital sound effects in MK3)
+#define AUDIO_QUEUE_DEPTH 24
 // NOTE: With fixed 60Hz emulation producing exactly one audio chunk per frame,
 // the producer cannot stay "ahead" of the consumer by >1 chunk in steady state.
 // Using queue-fill watermarks to decide frame skipping will therefore
 // permanently starve video (e.g. render ~12fps with MAX_FRAME_SKIP=4).
 // We keep this watermark only for choosing the cheaper limiter path.
-#define AUDIO_LOW_WATERMARK 0
+#define AUDIO_LOW_WATERMARK 4
 static uint32_t __attribute__((aligned(32))) audio_packed_buffer[AUDIO_QUEUE_DEPTH][AUDIO_BUFFER_LENGTH];
 static uint32_t __attribute__((aligned(32))) audio_packed_discard[AUDIO_BUFFER_LENGTH];
 static volatile uint32_t audio_prod_seq = 0; // total chunks produced
