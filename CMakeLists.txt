@@ -137,8 +137,7 @@ target_compile_definitions(murmsnes PRIVATE
     # I2S Audio configuration - use PIO1 (HDMI uses PIO0)
     PICO_AUDIO_I2S_PIO=1
     PICO_AUDIO_I2S_DMA_IRQ=0
-    # Snes9x configuration
-    FAST_LSB_WORD_ACCESS=1
+    # Snes9x configuration - FAST_LSB_WORD_ACCESS is defined in port.h for ARM
 )
 
 if(MURMSNES_PROFILE)
