@@ -104,6 +104,7 @@ set(SNES9X_SOURCES
     src/snes9x/srtc.c
     src/snes9x/tile.c
     src/snes9x/cpu_asm.S
+    src/snes9x/tile_asm.S
 )
 
 add_executable(murmsnes

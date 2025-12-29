@@ -8,6 +8,12 @@
 #include "gfx.h"
 #include "tile.h"
 
+#if PICO_ON_DEVICE
+/* Assembly-optimized tile pixel functions */
+extern void WRITE_4PIXELS16_OPAQUE_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+extern void WRITE_4PIXELS16_FLIPPED_OPAQUE_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+#endif
+
 static const uint32_t HeadMask[4] =
 {
 #ifdef MSB_FIRST
@@ -240,6 +246,18 @@ static INLINE void WRITE_4PIXELS16_FLIPPED(int32_t Offset, uint8_t* Pixels, uint
 }
 
 // Opaque variants: skip Pixel==0 checks (safe only if Pixels contain no zeros).
+// On Pico, use assembly-optimized versions
+#if PICO_ON_DEVICE
+static INLINE void WRITE_4PIXELS16_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   WRITE_4PIXELS16_OPAQUE_asm(Offset, Pixels, ScreenColors);
+}
+
+static INLINE void WRITE_4PIXELS16_FLIPPED_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   WRITE_4PIXELS16_FLIPPED_OPAQUE_asm(Offset, Pixels, ScreenColors);
+}
+#else
 static INLINE void WRITE_4PIXELS16_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
 {
    uint16_t* Screen = (uint16_t*) GFX.S + Offset;
@@ -265,6 +283,7 @@ static INLINE void WRITE_4PIXELS16_FLIPPED_OPAQUE(int32_t Offset, uint8_t* Pixel
    if (Z1 > Depth[2]) { Screen[2] = ScreenColors[Pixels[1]]; Depth[2] = Z2; }
    if (Z1 > Depth[3]) { Screen[3] = ScreenColors[Pixels[0]]; Depth[3] = Z2; }
 }
+#endif /* !PICO_ON_DEVICE */
 
 // Opaque x2 variants: write doubled pixels without transparency check
 static INLINE void WRITE_4PIXELS16x2_OPAQUE(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
