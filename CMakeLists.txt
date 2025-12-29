@@ -112,6 +112,7 @@ set(ASM_OPT_SOURCES
     src/asm/tile_convert_optimized.S
     src/tile_convert_opt.c
     src/audio_opt.c
+    src/asm/audio_pack_asm.S
 )
 
 add_executable(murmsnes

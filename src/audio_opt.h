@@ -16,6 +16,7 @@ extern "C" {
 /**
  * Optimized audio packing with gain and limiting
  * Step 1: C implementation for validation
+ * Step 3: Assembly implementation for maximum performance
  * 
  * @param dst Output packed stereo (left<<16 | right)
  * @param src Input int16_t stereo samples
@@ -24,8 +25,14 @@ extern "C" {
  * @param gain_den Gain denominator
  * @param use_soft_limit Use soft limiter vs hard clipping
  */
+#ifdef PICO_ON_DEVICE
+void audio_pack_asm(uint32_t* dst, const int16_t* src, uint32_t count,
+                    int gain_num, int gain_den, bool use_soft_limit);
+#define audio_pack_opt audio_pack_asm
+#else
 void audio_pack_opt(uint32_t* dst, const int16_t* src, uint32_t count,
-                     int gain_num, int gain_den, bool use_soft_limit);
+                    int gain_num, int gain_den, bool use_soft_limit);
+#endif
 
 /**
  * Optimized audio mixing for no-echo case

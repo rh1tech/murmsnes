@@ -21,6 +21,8 @@ static inline int16_t soft_limit16(int32_t v) {
     return clamp16(v);
 }
 
+#ifndef PICO_ON_DEVICE
+// C implementation for non-device builds
 void audio_pack_opt(uint32_t* dst, const int16_t* src, uint32_t count,
                      int gain_num, int gain_den, bool use_soft_limit)
 {
@@ -39,6 +41,7 @@ void audio_pack_opt(uint32_t* dst, const int16_t* src, uint32_t count,
         dst[i] = ((uint32_t)(uint16_t)left << 16) | (uint16_t)right;
     }
 }
+#endif
 
 /**
  * Optimized no-echo mixing
