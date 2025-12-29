@@ -362,7 +362,15 @@ void __time_critical_func(render_core)(void) {
     static uint32_t __attribute__((aligned(32))) replay_buf[AUDIO_BUFFER_LENGTH];
     static bool replay_is_silence = true;
     const uint32_t fade_frames = 128;
+    uint32_t last_displayed_buffer = 0;
     while (true) {
+        // Update HDMI buffer pointer if Core 0 swapped buffers (double buffering sync)
+        uint32_t current_buf = current_buffer;
+        if (current_buf != last_displayed_buffer) {
+            graphics_set_buffer((uint8_t *)SCREEN[current_buf]);
+            last_displayed_buffer = current_buf;
+        }
+        
         // Consume next mixed chunk if available; otherwise replay the last chunk.
         uint32_t prod = audio_prod_seq;
         uint32_t cons = audio_cons_seq;
@@ -533,8 +541,10 @@ static void __time_critical_func(emulation_loop)(void) {
 
         // Optional stable 30fps cap: render only on every other emulated frame.
         // We still allow lateness-based skipping on top.
-        // Force 24fps video rendering (2 out of every 5 frames) while keeping 60Hz emulation
-        if ((video_phase % 5) >= 2) {
+        // Force 24fps video rendering (frames 0 and 3 out of every 5) while keeping 60Hz emulation
+        // This spaces rendered frames more evenly: render, skip, skip, render, skip
+        uint32_t phase_mod5 = video_phase % 5;
+        if (phase_mod5 != 0 && phase_mod5 != 3) {
             skip_render = true;
         } else if (cap30_active && (video_phase & 1u)) {
             skip_render = true;
