@@ -480,4 +480,159 @@ WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm:
 .size WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm, .-WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm
 
 
+/*
+ * WRITE_4PIXELS16x2_asm - Write 4 doubled pixels with transparency
+ *
+ * Each pixel is written twice (Screen[N*2] and Screen[N*2+1])
+ * Includes transparency check (skip if pixel == 0)
+ */
+.global WRITE_4PIXELS16x2_asm
+.type WRITE_4PIXELS16x2_asm, %function
+.thumb_func
+WRITE_4PIXELS16x2_asm:
+    push    {r4-r7, lr}
+    
+    ldr     r3, =GFX
+    ldr     r4, [r3, #GFX_OFF_S]
+    ldr     r5, [r3, #GFX_OFF_DB]
+    ldrb    r6, [r3, #GFX_OFF_Z1]
+    ldrb    r7, [r3, #GFX_OFF_Z2]
+    
+    add     r5, r5, r0                  @ r5 = Depth
+    add     r4, r4, r0, lsl #1          @ r4 = Screen
+    
+    ldr     r3, [r1]                    @ r3 = Pixels[0-3] packed
+    
+    /* Pixel 0: Screen[0,1] */
+    and     r0, r3, #0xFF               @ r0 = Pixels[0]
+    cbz     r0, .Lx2t0_skip             @ skip if transparent
+    ldrb    r12, [r5, #0]
+    cmp     r6, r12
+    bls     .Lx2t0_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #0]
+    strh    r0, [r4, #2]
+    strb    r7, [r5, #0]
+    strb    r7, [r5, #1]
+.Lx2t0_skip:
+
+    /* Pixel 1: Screen[2,3] */
+    ubfx    r0, r3, #8, #8              @ r0 = Pixels[1]
+    cbz     r0, .Lx2t1_skip
+    ldrb    r12, [r5, #2]
+    cmp     r6, r12
+    bls     .Lx2t1_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #4]
+    strh    r0, [r4, #6]
+    strb    r7, [r5, #2]
+    strb    r7, [r5, #3]
+.Lx2t1_skip:
+
+    /* Pixel 2: Screen[4,5] */
+    ubfx    r0, r3, #16, #8             @ r0 = Pixels[2]
+    cbz     r0, .Lx2t2_skip
+    ldrb    r12, [r5, #4]
+    cmp     r6, r12
+    bls     .Lx2t2_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #8]
+    strh    r0, [r4, #10]
+    strb    r7, [r5, #4]
+    strb    r7, [r5, #5]
+.Lx2t2_skip:
+
+    /* Pixel 3: Screen[6,7] */
+    lsr     r0, r3, #24                 @ r0 = Pixels[3]
+    cbz     r0, .Lx2t3_skip
+    ldrb    r12, [r5, #6]
+    cmp     r6, r12
+    bls     .Lx2t3_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #12]
+    strh    r0, [r4, #14]
+    strb    r7, [r5, #6]
+    strb    r7, [r5, #7]
+.Lx2t3_skip:
+
+    pop     {r4-r7, pc}
+.size WRITE_4PIXELS16x2_asm, .-WRITE_4PIXELS16x2_asm
+
+
+/*
+ * WRITE_4PIXELS16_FLIPPEDx2_asm - Write 4 doubled pixels (H-flipped) with transparency
+ */
+.global WRITE_4PIXELS16_FLIPPEDx2_asm
+.type WRITE_4PIXELS16_FLIPPEDx2_asm, %function
+.thumb_func
+WRITE_4PIXELS16_FLIPPEDx2_asm:
+    push    {r4-r7, lr}
+    
+    ldr     r3, =GFX
+    ldr     r4, [r3, #GFX_OFF_S]
+    ldr     r5, [r3, #GFX_OFF_DB]
+    ldrb    r6, [r3, #GFX_OFF_Z1]
+    ldrb    r7, [r3, #GFX_OFF_Z2]
+    
+    add     r5, r5, r0
+    add     r4, r4, r0, lsl #1
+    
+    ldr     r3, [r1]                    @ r3 = Pixels[0-3] packed
+    
+    /* Pixel 0 <- Pixels[3] */
+    lsr     r0, r3, #24
+    cbz     r0, .Lx2tf0_skip
+    ldrb    r12, [r5, #0]
+    cmp     r6, r12
+    bls     .Lx2tf0_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #0]
+    strh    r0, [r4, #2]
+    strb    r7, [r5, #0]
+    strb    r7, [r5, #1]
+.Lx2tf0_skip:
+
+    /* Pixel 1 <- Pixels[2] */
+    ubfx    r0, r3, #16, #8
+    cbz     r0, .Lx2tf1_skip
+    ldrb    r12, [r5, #2]
+    cmp     r6, r12
+    bls     .Lx2tf1_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #4]
+    strh    r0, [r4, #6]
+    strb    r7, [r5, #2]
+    strb    r7, [r5, #3]
+.Lx2tf1_skip:
+
+    /* Pixel 2 <- Pixels[1] */
+    ubfx    r0, r3, #8, #8
+    cbz     r0, .Lx2tf2_skip
+    ldrb    r12, [r5, #4]
+    cmp     r6, r12
+    bls     .Lx2tf2_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #8]
+    strh    r0, [r4, #10]
+    strb    r7, [r5, #4]
+    strb    r7, [r5, #5]
+.Lx2tf2_skip:
+
+    /* Pixel 3 <- Pixels[0] */
+    and     r0, r3, #0xFF
+    cbz     r0, .Lx2tf3_skip
+    ldrb    r12, [r5, #6]
+    cmp     r6, r12
+    bls     .Lx2tf3_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #12]
+    strh    r0, [r4, #14]
+    strb    r7, [r5, #6]
+    strb    r7, [r5, #7]
+.Lx2tf3_skip:
+
+    pop     {r4-r7, pc}
+.size WRITE_4PIXELS16_FLIPPEDx2_asm, .-WRITE_4PIXELS16_FLIPPEDx2_asm
+
+
 /* End of file */

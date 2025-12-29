@@ -14,6 +14,8 @@ extern void WRITE_4PIXELS16_asm(int32_t Offset, uint8_t* Pixels, uint16_t* Scree
 extern void WRITE_4PIXELS16_FLIPPED_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 extern void WRITE_4PIXELS16_OPAQUE_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 extern void WRITE_4PIXELS16_FLIPPED_OPAQUE_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+extern void WRITE_4PIXELS16x2_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+extern void WRITE_4PIXELS16_FLIPPEDx2_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 extern void WRITE_4PIXELS16x2_OPAQUE_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 extern void WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 #endif
@@ -234,6 +236,16 @@ static INLINE void WRITE_4PIXELS16_FLIPPEDx2_OPAQUE(int32_t Offset, uint8_t* Pix
    WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm(Offset, Pixels, ScreenColors);
 }
 
+static INLINE void WRITE_4PIXELS16x2(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   WRITE_4PIXELS16x2_asm(Offset, Pixels, ScreenColors);
+}
+
+static INLINE void WRITE_4PIXELS16_FLIPPEDx2(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
+{
+   WRITE_4PIXELS16_FLIPPEDx2_asm(Offset, Pixels, ScreenColors);
+}
+
 #elif defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_7M__)
 /* ============ ARM: Unrolled C versions ============ */
 
@@ -392,6 +404,8 @@ static void WRITE_4PIXELS16_FLIPPED_HALFWIDTH(int32_t Offset, uint8_t* Pixels, u
    }
 }
 
+#if !PICO_ON_DEVICE
+/* Non-PICO platforms use loop-based x2 functions */
 static void WRITE_4PIXELS16x2(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
 {
    uint8_t  Pixel, N;
@@ -423,6 +437,7 @@ static void WRITE_4PIXELS16_FLIPPEDx2(int32_t Offset, uint8_t* Pixels, uint16_t*
       }
    }
 }
+#endif /* !PICO_ON_DEVICE */
 
 static void WRITE_4PIXELS16x2x2(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors)
 {
