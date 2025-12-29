@@ -32,6 +32,9 @@
 // Audio driver (exact copy from pico-snes-master)
 #include "audio.h"
 
+// Audio optimizations
+#include "audio_opt.h"
+
 #ifdef MURMSNES_PROFILE
 #include "murmsnes_profile.h"
 #endif
@@ -570,18 +573,8 @@ static void __time_critical_func(emulation_loop)(void) {
 #ifdef MURMSNES_PROFILE
         uint32_t t4 = time_us_32();
 #endif
-        for (uint32_t i = 0; i < AUDIO_BUFFER_LENGTH; i++) {
-            int32_t left = (mix16[i * 2] * gain_num) / gain_den;
-            int32_t right = (mix16[i * 2 + 1] * gain_num) / gain_den;
-            if (use_soft_limiter) {
-                left = soft_limit16(left);
-                right = soft_limit16(right);
-            } else {
-                left = clamp16(left);
-                right = clamp16(right);
-            }
-            dst32[i] = ((uint32_t)(uint16_t)left << 16) | (uint16_t)right;
-        }
+        // Use optimized audio packing (Step 1: C implementation)
+        audio_pack_opt(dst32, mix16, AUDIO_BUFFER_LENGTH, gain_num, gain_den, use_soft_limiter);
 #ifdef MURMSNES_PROFILE
         uint32_t t5 = time_us_32();
 #endif
