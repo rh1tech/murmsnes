@@ -189,4 +189,295 @@ WRITE_4PIXELS16_FLIPPED_OPAQUE_asm:
 .size WRITE_4PIXELS16_FLIPPED_OPAQUE_asm, .-WRITE_4PIXELS16_FLIPPED_OPAQUE_asm
 
 
+/*
+ * WRITE_4PIXELS16_asm - Write 4 pixels with transparency and depth test
+ *
+ * For each pixel: if (Z1 > Depth[i] && Pixels[i] != 0) { write pixel }
+ * This is the standard path for tiles with some transparent pixels.
+ *
+ * Input:
+ *   r0 = Offset (int32_t)
+ *   r1 = Pixels (uint8_t*)
+ *   r2 = ScreenColors (uint16_t*)
+ */
+.global WRITE_4PIXELS16_asm
+.type WRITE_4PIXELS16_asm, %function
+.thumb_func
+WRITE_4PIXELS16_asm:
+    push    {r4-r7, lr}
+    
+    ldr     r3, =GFX
+    ldr     r4, [r3, #GFX_OFF_S]        @ r4 = GFX.S
+    ldr     r5, [r3, #GFX_OFF_DB]       @ r5 = GFX.DB
+    ldrb    r6, [r3, #GFX_OFF_Z1]       @ r6 = Z1
+    ldrb    r7, [r3, #GFX_OFF_Z2]       @ r7 = Z2
+    
+    add     r5, r5, r0                  @ r5 = Depth
+    add     r4, r4, r0, lsl #1          @ r4 = Screen
+    
+    ldr     r3, [r1]                    @ r3 = Pixels[0-3] packed
+    
+    /* Pixel 0 */
+    and     r0, r3, #0xFF               @ r0 = Pixels[0]
+    cbz     r0, .Lt0_skip               @ skip if transparent
+    ldrb    r12, [r5, #0]
+    cmp     r6, r12
+    bls     .Lt0_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #0]
+    strb    r7, [r5, #0]
+.Lt0_skip:
+
+    /* Pixel 1 */
+    ubfx    r0, r3, #8, #8              @ r0 = Pixels[1]
+    cbz     r0, .Lt1_skip
+    ldrb    r12, [r5, #1]
+    cmp     r6, r12
+    bls     .Lt1_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #2]
+    strb    r7, [r5, #1]
+.Lt1_skip:
+
+    /* Pixel 2 */
+    ubfx    r0, r3, #16, #8             @ r0 = Pixels[2]
+    cbz     r0, .Lt2_skip
+    ldrb    r12, [r5, #2]
+    cmp     r6, r12
+    bls     .Lt2_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #4]
+    strb    r7, [r5, #2]
+.Lt2_skip:
+
+    /* Pixel 3 */
+    lsr     r0, r3, #24                 @ r0 = Pixels[3]
+    cbz     r0, .Lt3_skip
+    ldrb    r12, [r5, #3]
+    cmp     r6, r12
+    bls     .Lt3_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #6]
+    strb    r7, [r5, #3]
+.Lt3_skip:
+
+    pop     {r4-r7, pc}
+.size WRITE_4PIXELS16_asm, .-WRITE_4PIXELS16_asm
+
+
+/*
+ * WRITE_4PIXELS16_FLIPPED_asm - Write 4 pixels (H-flipped) with transparency
+ */
+.global WRITE_4PIXELS16_FLIPPED_asm
+.type WRITE_4PIXELS16_FLIPPED_asm, %function
+.thumb_func
+WRITE_4PIXELS16_FLIPPED_asm:
+    push    {r4-r7, lr}
+    
+    ldr     r3, =GFX
+    ldr     r4, [r3, #GFX_OFF_S]
+    ldr     r5, [r3, #GFX_OFF_DB]
+    ldrb    r6, [r3, #GFX_OFF_Z1]
+    ldrb    r7, [r3, #GFX_OFF_Z2]
+    
+    add     r5, r5, r0
+    add     r4, r4, r0, lsl #1
+    
+    ldr     r3, [r1]                    @ r3 = Pixels[0-3] packed
+    
+    /* Pixel 0 <- Pixels[3] */
+    lsr     r0, r3, #24
+    cbz     r0, .Ltf0_skip
+    ldrb    r12, [r5, #0]
+    cmp     r6, r12
+    bls     .Ltf0_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #0]
+    strb    r7, [r5, #0]
+.Ltf0_skip:
+
+    /* Pixel 1 <- Pixels[2] */
+    ubfx    r0, r3, #16, #8
+    cbz     r0, .Ltf1_skip
+    ldrb    r12, [r5, #1]
+    cmp     r6, r12
+    bls     .Ltf1_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #2]
+    strb    r7, [r5, #1]
+.Ltf1_skip:
+
+    /* Pixel 2 <- Pixels[1] */
+    ubfx    r0, r3, #8, #8
+    cbz     r0, .Ltf2_skip
+    ldrb    r12, [r5, #2]
+    cmp     r6, r12
+    bls     .Ltf2_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #4]
+    strb    r7, [r5, #2]
+.Ltf2_skip:
+
+    /* Pixel 3 <- Pixels[0] */
+    and     r0, r3, #0xFF
+    cbz     r0, .Ltf3_skip
+    ldrb    r12, [r5, #3]
+    cmp     r6, r12
+    bls     .Ltf3_skip
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #6]
+    strb    r7, [r5, #3]
+.Ltf3_skip:
+
+    pop     {r4-r7, pc}
+.size WRITE_4PIXELS16_FLIPPED_asm, .-WRITE_4PIXELS16_FLIPPED_asm
+
+
+/*
+ * WRITE_4PIXELS16x2_OPAQUE_asm - Write 4 doubled pixels (opaque)
+ *
+ * Each pixel is written twice (Screen[N*2] and Screen[N*2+1])
+ * Used for x2 width tile modes.
+ */
+.global WRITE_4PIXELS16x2_OPAQUE_asm
+.type WRITE_4PIXELS16x2_OPAQUE_asm, %function
+.thumb_func
+WRITE_4PIXELS16x2_OPAQUE_asm:
+    push    {r4-r7, lr}
+    
+    ldr     r3, =GFX
+    ldr     r4, [r3, #GFX_OFF_S]
+    ldr     r5, [r3, #GFX_OFF_DB]
+    ldrb    r6, [r3, #GFX_OFF_Z1]
+    ldrb    r7, [r3, #GFX_OFF_Z2]
+    
+    add     r5, r5, r0                  @ r5 = Depth
+    add     r4, r4, r0, lsl #1          @ r4 = Screen
+    
+    ldr     r3, [r1]                    @ r3 = Pixels[0-3] packed
+    
+    /* Pixel 0: Screen[0,1] = color, Depth[0,1] = Z2 */
+    ldrb    r12, [r5, #0]
+    cmp     r6, r12
+    bls     .Lx0_skip
+    and     r0, r3, #0xFF
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #0]
+    strh    r0, [r4, #2]
+    strb    r7, [r5, #0]
+    strb    r7, [r5, #1]
+.Lx0_skip:
+
+    /* Pixel 1: Screen[2,3] */
+    ldrb    r12, [r5, #2]
+    cmp     r6, r12
+    bls     .Lx1_skip
+    ubfx    r0, r3, #8, #8
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #4]
+    strh    r0, [r4, #6]
+    strb    r7, [r5, #2]
+    strb    r7, [r5, #3]
+.Lx1_skip:
+
+    /* Pixel 2: Screen[4,5] */
+    ldrb    r12, [r5, #4]
+    cmp     r6, r12
+    bls     .Lx2_skip
+    ubfx    r0, r3, #16, #8
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #8]
+    strh    r0, [r4, #10]
+    strb    r7, [r5, #4]
+    strb    r7, [r5, #5]
+.Lx2_skip:
+
+    /* Pixel 3: Screen[6,7] */
+    ldrb    r12, [r5, #6]
+    cmp     r6, r12
+    bls     .Lx3_skip
+    lsr     r0, r3, #24
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #12]
+    strh    r0, [r4, #14]
+    strb    r7, [r5, #6]
+    strb    r7, [r5, #7]
+.Lx3_skip:
+
+    pop     {r4-r7, pc}
+.size WRITE_4PIXELS16x2_OPAQUE_asm, .-WRITE_4PIXELS16x2_OPAQUE_asm
+
+
+/*
+ * WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm - Write 4 doubled pixels (H-flipped, opaque)
+ */
+.global WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm
+.type WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm, %function
+.thumb_func
+WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm:
+    push    {r4-r7, lr}
+    
+    ldr     r3, =GFX
+    ldr     r4, [r3, #GFX_OFF_S]
+    ldr     r5, [r3, #GFX_OFF_DB]
+    ldrb    r6, [r3, #GFX_OFF_Z1]
+    ldrb    r7, [r3, #GFX_OFF_Z2]
+    
+    add     r5, r5, r0
+    add     r4, r4, r0, lsl #1
+    
+    ldr     r3, [r1]
+    
+    /* Pixel 0 <- Pixels[3] */
+    ldrb    r12, [r5, #0]
+    cmp     r6, r12
+    bls     .Lxf0_skip
+    lsr     r0, r3, #24
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #0]
+    strh    r0, [r4, #2]
+    strb    r7, [r5, #0]
+    strb    r7, [r5, #1]
+.Lxf0_skip:
+
+    /* Pixel 1 <- Pixels[2] */
+    ldrb    r12, [r5, #2]
+    cmp     r6, r12
+    bls     .Lxf1_skip
+    ubfx    r0, r3, #16, #8
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #4]
+    strh    r0, [r4, #6]
+    strb    r7, [r5, #2]
+    strb    r7, [r5, #3]
+.Lxf1_skip:
+
+    /* Pixel 2 <- Pixels[1] */
+    ldrb    r12, [r5, #4]
+    cmp     r6, r12
+    bls     .Lxf2_skip
+    ubfx    r0, r3, #8, #8
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #8]
+    strh    r0, [r4, #10]
+    strb    r7, [r5, #4]
+    strb    r7, [r5, #5]
+.Lxf2_skip:
+
+    /* Pixel 3 <- Pixels[0] */
+    ldrb    r12, [r5, #6]
+    cmp     r6, r12
+    bls     .Lxf3_skip
+    and     r0, r3, #0xFF
+    ldrh    r0, [r2, r0, lsl #1]
+    strh    r0, [r4, #12]
+    strh    r0, [r4, #14]
+    strb    r7, [r5, #6]
+    strb    r7, [r5, #7]
+.Lxf3_skip:
+
+    pop     {r4-r7, pc}
+.size WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm, .-WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm
+
+
 /* End of file */
