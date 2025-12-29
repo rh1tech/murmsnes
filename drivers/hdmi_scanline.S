@@ -16,7 +16,7 @@
     .syntax unified
     .cpu cortex-m33
     .thumb
-    .section .scratch_y.hdmi_asm,"ax",%progbits
+    .section .time_critical.hdmi_asm,"ax",%progbits
 
     .global hdmi_copy_scanline_asm
     .type hdmi_copy_scanline_asm, %function
@@ -196,5 +196,133 @@ hdmi_memset_fast:
     pop     {r4-r5, pc}
     
     .size hdmi_memset_fast, . - hdmi_memset_fast
+
+
+/*
+ * TMDS serialization for differential HDMI output
+ * 
+ * Converts 3 TMDS-encoded 10-bit values (R, G, B) into a 64-bit 
+ * serialized differential pair format for PIO output.
+ *
+ * uint64_t get_ser_diff_data_asm(uint16_t dataR, uint16_t dataG, uint16_t dataB);
+ *
+ * Input: r0 = dataR (10-bit TMDS), r1 = dataG, r2 = dataB
+ * Output: r0 = low 32 bits, r1 = high 32 bits of 64-bit result
+ *
+ * Algorithm: For each of 10 bit positions (9 down to 0):
+ *   - Extract bit from R, G, B
+ *   - Convert to differential (bit, ~bit)
+ *   - Pack as 6-bit value: (R_diff << 4) | (G_diff << 2) | B_diff
+ *   - Shift into 64-bit accumulator
+ *   - At position 5, insert 2 extra bits for clock
+ */
+    .global get_ser_diff_data_asm
+    .type get_ser_diff_data_asm, %function
+    .align 4
+
+get_ser_diff_data_asm:
+    push    {r4-r11, lr}
+    
+    /* r0 = dataR, r1 = dataG, r2 = dataB */
+    /* Use r3, r4 as 64-bit accumulator (r4 = high, r3 = low) */
+    movs    r3, #0              /* out64 low */
+    movs    r4, #0              /* out64 high */
+    
+    /* r5 = bit position (9 down to 0) */
+    movs    r5, #9
+    
+    /* r6 = HDMI_PIN_invert_diffpairs (assume 0 for now, can be parameterized) */
+    movs    r6, #0
+    
+    /* r7 = HDMI_PIN_RGB_notBGR (assume 1 = RGB order) */
+    movs    r7, #1
+    
+.L_ser_loop:
+    /* Shift accumulator left by 6 bits */
+    /* out64 <<= 6 means: high = (high << 6) | (low >> 26), low = low << 6 */
+    lsls    r4, r4, #6
+    lsrs    r8, r3, #26
+    orrs    r4, r4, r8
+    lsls    r3, r3, #6
+    
+    /* At position 5, insert 2 extra bits for clock lane */
+    cmp     r5, #4
+    bne     .L_no_clock_gap
+    /* Shift 2 more bits */
+    lsls    r4, r4, #2
+    lsrs    r8, r3, #30
+    orrs    r4, r4, r8
+    lsls    r3, r3, #2
+.L_no_clock_gap:
+    
+    /* Extract bit from R: bR = (dataR >> bit_pos) & 1 */
+    mov     r8, r0
+    lsrs    r8, r8, r5
+    ands    r8, r8, #1
+    
+    /* Extract bit from G: bG = (dataG >> bit_pos) & 1 */
+    mov     r9, r1
+    lsrs    r9, r9, r5
+    ands    r9, r9, #1
+    
+    /* Extract bit from B: bB = (dataB >> bit_pos) & 1 */
+    mov     r10, r2
+    lsrs    r10, r10, r5
+    ands    r10, r10, #1
+    
+    /* Convert to differential pairs: bit -> (bit, ~bit) = bit | ((bit^1) << 1) */
+    /* bR = bR | ((bR ^ 1) << 1) */
+    eors    r11, r8, #1
+    lsls    r11, r11, #1
+    orrs    r8, r8, r11
+    
+    /* bG = bG | ((bG ^ 1) << 1) */
+    eors    r11, r9, #1
+    lsls    r11, r11, #1
+    orrs    r9, r9, r11
+    
+    /* bB = bB | ((bB ^ 1) << 1) */
+    eors    r11, r10, #1
+    lsls    r11, r11, #1
+    orrs    r10, r10, r11
+    
+    /* Apply inversion if HDMI_PIN_invert_diffpairs (skip if r6 == 0) */
+    cmp     r6, #0
+    beq     .L_no_invert
+    eors    r8, r8, #3
+    eors    r9, r9, #3
+    eors    r10, r10, #3
+.L_no_invert:
+    
+    /* Pack as d6 = (bR << 4) | (bG << 2) | bB for RGB order */
+    /* or d6 = (bB << 4) | (bG << 2) | bR for BGR order */
+    cmp     r7, #0
+    beq     .L_bgr_order
+    /* RGB order */
+    lsls    r11, r8, #4
+    orrs    r11, r11, r9, lsl #2
+    orrs    r11, r11, r10
+    b       .L_pack_done
+.L_bgr_order:
+    /* BGR order */
+    lsls    r11, r10, #4
+    orrs    r11, r11, r9, lsl #2
+    orrs    r11, r11, r8
+.L_pack_done:
+    
+    /* OR into accumulator low bits */
+    orrs    r3, r3, r11
+    
+    /* Decrement bit position and loop */
+    subs    r5, r5, #1
+    bpl     .L_ser_loop
+    
+    /* Return 64-bit value: r0 = low, r1 = high */
+    mov     r0, r3
+    mov     r1, r4
+    
+    pop     {r4-r11, pc}
+    
+    .size get_ser_diff_data_asm, . - get_ser_diff_data_asm
 
     .end

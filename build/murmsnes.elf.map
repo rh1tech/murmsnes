@@ -2331,13 +2331,13 @@ Discarded input sections
  .text.vsync_handler
                 0x00000000        0x4 libdrivers.a(HDMI.c.o)
  .text.graphics_set_palette_hdmi
-                0x00000000      0x620 libdrivers.a(HDMI.c.o)
+                0x00000000      0x338 libdrivers.a(HDMI.c.o)
  .text.graphics_set_bgcolor_hdmi
-                0x00000000      0x5a0 libdrivers.a(HDMI.c.o)
+                0x00000000      0x344 libdrivers.a(HDMI.c.o)
  .text.graphics_get_palette
                 0x00000000        0xc libdrivers.a(HDMI.c.o)
  .text.graphics_set_bgcolor
-                0x00000000      0x5a0 libdrivers.a(HDMI.c.o)
+                0x00000000      0x344 libdrivers.a(HDMI.c.o)
  .text.startVIDEO
                 0x00000000        0x4 libdrivers.a(HDMI.c.o)
  .text.set_palette
@@ -3109,7 +3109,7 @@ LOAD /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-no
 .flash_begin    0x10000000        0x0
                 0x10000000                        __flash_binary_start = .
 
-.text           0x10000000    0x4b1d0
+.text           0x10000000    0x4a368
                 0x10000000                        __logical_binary_start = .
  *(.vectors)
  .vectors       0x10000000      0x124 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
@@ -5090,209 +5090,209 @@ LOAD /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-no
                 0x100462a8       0x74 libdrivers.a(HDMI.c.o)
                 0x100462a8                graphics_restore_sync_colors
  .text.graphics_convert_all_palette
-                0x1004631c      0xcb8 libdrivers.a(HDMI.c.o)
+                0x1004631c      0x710 libdrivers.a(HDMI.c.o)
                 0x1004631c                graphics_convert_all_palette
- *fill*         0x10046fd4        0x4 
+ *fill*         0x10046a2c        0x4 
  .text.graphics_init_hdmi
-                0x10046fd8     0x11b4 libdrivers.a(HDMI.c.o)
-                0x10046fd8                graphics_init_hdmi
+                0x10046a30      0xbdc libdrivers.a(HDMI.c.o)
+                0x10046a30                graphics_init_hdmi
  .text.graphics_set_mode
-                0x1004818c        0xc libdrivers.a(HDMI.c.o)
-                0x1004818c                graphics_set_mode
+                0x1004760c        0xc libdrivers.a(HDMI.c.o)
+                0x1004760c                graphics_set_mode
  .text.graphics_init
-                0x10048198        0x4 libdrivers.a(HDMI.c.o)
-                0x10048198                graphics_init
+                0x10047618        0x4 libdrivers.a(HDMI.c.o)
+                0x10047618                graphics_init
  .text.graphics_set_palette
-                0x1004819c      0x620 libdrivers.a(HDMI.c.o)
-                0x1004819c                graphics_set_palette
+                0x1004761c      0x338 libdrivers.a(HDMI.c.o)
+                0x1004761c                graphics_set_palette
  .text.psram_malloc
-                0x100487bc       0xc8 libdrivers.a(psram_allocator.c.o)
-                0x100487bc                psram_malloc
+                0x10047954       0xc8 libdrivers.a(psram_allocator.c.o)
+                0x10047954                psram_malloc
  .text.psram_free
-                0x10048884       0x10 libdrivers.a(psram_allocator.c.o)
-                0x10048884                psram_free
+                0x10047a1c       0x10 libdrivers.a(psram_allocator.c.o)
+                0x10047a1c                psram_free
  .text.psram_reset
-                0x10048894       0x28 libdrivers.a(psram_allocator.c.o)
-                0x10048894                psram_reset
+                0x10047a2c       0x28 libdrivers.a(psram_allocator.c.o)
+                0x10047a2c                psram_reset
  .text.i2s_get_default_config
-                0x100488bc       0x20 libdrivers.a(audio.c.o)
-                0x100488bc                i2s_get_default_config
+                0x10047a54       0x20 libdrivers.a(audio.c.o)
+                0x10047a54                i2s_get_default_config
  .text.i2s_init
-                0x100488dc       0xcc libdrivers.a(audio.c.o)
-                0x100488dc                i2s_init
+                0x10047a74       0xcc libdrivers.a(audio.c.o)
+                0x10047a74                i2s_init
  .text.i2s_dma_write
-                0x100489a8       0x7c libdrivers.a(audio.c.o)
-                0x100489a8                i2s_dma_write
+                0x10047b40       0x7c libdrivers.a(audio.c.o)
+                0x10047b40                i2s_dma_write
  .text.i2s_volume
-                0x10048a24        0xc libdrivers.a(audio.c.o)
-                0x10048a24                i2s_volume
- .text.calloc   0x10048a30       0x10 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-calloc.o)
-                0x10048a30                calloc
+                0x10047bbc        0xc libdrivers.a(audio.c.o)
+                0x10047bbc                i2s_volume
+ .text.calloc   0x10047bc8       0x10 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-calloc.o)
+                0x10047bc8                calloc
  .text._calloc_r
-                0x10048a40       0x70 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-callocr.o)
-                0x10048a40                _calloc_r
- .text.qsort    0x10048ab0      0x5d8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-qsort.o)
-                0x10048ab0                qsort
- .text.malloc   0x10049088       0x10 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-malloc.o)
-                0x10049088                malloc
- .text.free     0x10049098       0x10 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-malloc.o)
-                0x10049098                free
+                0x10047bd8       0x70 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-callocr.o)
+                0x10047bd8                _calloc_r
+ .text.qsort    0x10047c48      0x5d8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-qsort.o)
+                0x10047c48                qsort
+ .text.malloc   0x10048220       0x10 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-malloc.o)
+                0x10048220                malloc
+ .text.free     0x10048230       0x10 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-malloc.o)
+                0x10048230                free
  .text._malloc_r
-                0x100490a8      0x578 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
-                0x100490a8                _malloc_r
+                0x10048240      0x578 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
+                0x10048240                _malloc_r
  .text._fseek_r
-                0x10049620        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseek.o)
-                0x10049620                _fseek_r
- .text.fseek    0x10049624       0x18 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseek.o)
-                0x10049624                fseek
- .text.ftell    0x1004963c       0x10 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftell.o)
-                0x1004963c                ftell
+                0x100487b8        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseek.o)
+                0x100487b8                _fseek_r
+ .text.fseek    0x100487bc       0x18 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseek.o)
+                0x100487bc                fseek
+ .text.ftell    0x100487d4       0x10 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftell.o)
+                0x100487d4                ftell
  .text.__malloc_lock
-                0x1004964c        0xc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mlock.o)
-                0x1004964c                __malloc_lock
+                0x100487e4        0xc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mlock.o)
+                0x100487e4                __malloc_lock
  .text.__malloc_unlock
-                0x10049658        0xc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mlock.o)
-                0x10049658                __malloc_unlock
- .text.rand     0x10049664       0x40 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-rand.o)
-                0x10049664                rand
+                0x100487f0        0xc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mlock.o)
+                0x100487f0                __malloc_unlock
+ .text.rand     0x100487fc       0x40 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-rand.o)
+                0x100487fc                rand
  .text._fclose_r
-                0x100496a4       0xc0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fclose.o)
-                0x100496a4                _fclose_r
- .text.fclose   0x10049764       0x10 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fclose.o)
-                0x10049764                fclose
+                0x1004883c       0xc0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fclose.o)
+                0x1004883c                _fclose_r
+ .text.fclose   0x100488fc       0x10 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fclose.o)
+                0x100488fc                fclose
  .text.__sflush_r
-                0x10049774      0x138 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fflush.o)
-                0x10049774                __sflush_r
+                0x1004890c      0x138 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fflush.o)
+                0x1004890c                __sflush_r
  .text._fflush_r
-                0x100498ac       0x54 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fflush.o)
-                0x100498ac                _fflush_r
- .text.fflush   0x10049900       0x74 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fflush.o)
-                0x10049900                fflush
+                0x10048a44       0x54 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fflush.o)
+                0x10048a44                _fflush_r
+ .text.fflush   0x10048a98       0x74 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fflush.o)
+                0x10048a98                fflush
  .text.stdio_exit_handler
-                0x10049974       0x18 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+                0x10048b0c       0x18 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
  .text.cleanup_stdio
-                0x1004998c       0x40 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+                0x10048b24       0x40 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
  .text.global_stdio_init.part.0
-                0x100499cc       0xf0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
- .text.__sfp    0x10049abc       0xc0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
-                0x10049abc                __sfp
- .text.__sinit  0x10049b7c       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
-                0x10049b7c                __sinit
+                0x10048b64       0xf0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+ .text.__sfp    0x10048c54       0xc0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+                0x10048c54                __sfp
+ .text.__sinit  0x10048d14       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+                0x10048d14                __sinit
  .text.__sfp_lock_acquire
-                0x10049bb8        0xc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
-                0x10049bb8                __sfp_lock_acquire
+                0x10048d50        0xc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+                0x10048d50                __sfp_lock_acquire
  .text.__sfp_lock_release
-                0x10049bc4        0xc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
-                0x10049bc4                __sfp_lock_release
+                0x10048d5c        0xc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+                0x10048d5c                __sfp_lock_release
  .text._fopen_r
-                0x10049bd0       0xc0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fopen.o)
-                0x10049bd0                _fopen_r
- .text.fopen    0x10049c90       0x10 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fopen.o)
-                0x10049c90                fopen
+                0x10048d68       0xc0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fopen.o)
+                0x10048d68                _fopen_r
+ .text.fopen    0x10048e28       0x10 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fopen.o)
+                0x10048e28                fopen
  .text._fread_r
-                0x10049ca0      0x1d0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fread.o)
-                0x10049ca0                _fread_r
- .text.fread    0x10049e70       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fread.o)
-                0x10049e70                fread
+                0x10048e38      0x1d0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fread.o)
+                0x10048e38                _fread_r
+ .text.fread    0x10049008       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fread.o)
+                0x10049008                fread
  .text._fseeko_r
-                0x10049e90      0x308 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseeko.o)
-                0x10049e90                _fseeko_r
+                0x10049028      0x308 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseeko.o)
+                0x10049028                _fseeko_r
  .text._ftello_r
-                0x1004a198       0xe0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftello.o)
-                0x1004a198                _ftello_r
- .text.memcmp   0x1004a278       0x5c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcmp.o)
-                0x1004a278                memcmp
- .text.memmove  0x1004a2d4      0x130 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memmove.o)
-                0x1004a2d4                memmove
- .text.memset   0x1004a404       0x9c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memset.o)
-                0x1004a404                memset
- .text.strchr   0x1004a4a0       0xd0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strchr.o)
-                0x1004a4a0                strchr
+                0x10049330       0xe0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftello.o)
+                0x10049330                _ftello_r
+ .text.memcmp   0x10049410       0x5c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcmp.o)
+                0x10049410                memcmp
+ .text.memmove  0x1004946c      0x130 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memmove.o)
+                0x1004946c                memmove
+ .text.memset   0x1004959c       0x9c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memset.o)
+                0x1004959c                memset
+ .text.strchr   0x10049638       0xd0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strchr.o)
+                0x10049638                strchr
  .text.strncasecmp
-                0x1004a570       0x54 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncasecmp.o)
-                0x1004a570                strncasecmp
- .text.strncmp  0x1004a5c4       0x74 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncmp.o)
-                0x1004a5c4                strncmp
- .text.time     0x1004a638       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-time.o)
-                0x1004a638                time
+                0x10049708       0x54 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncasecmp.o)
+                0x10049708                strncasecmp
+ .text.strncmp  0x1004975c       0x74 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncmp.o)
+                0x1004975c                strncmp
+ .text.time     0x100497d0       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-time.o)
+                0x100497d0                time
  .text._fstat_r
-                0x1004a670       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fstatr.o)
-                0x1004a670                _fstat_r
+                0x10049808       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fstatr.o)
+                0x10049808                _fstat_r
  .text._gettimeofday_r
-                0x1004a69c       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-gettimeofdayr.o)
-                0x1004a69c                _gettimeofday_r
- .text._open_r  0x1004a6c8       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-openr.o)
-                0x1004a6c8                _open_r
- .text._sbrk_r  0x1004a6f4       0x24 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sbrkr.o)
-                0x1004a6f4                _sbrk_r
- .text.__errno  0x1004a718        0xc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-errno.o)
-                0x1004a718                __errno
- .text.sysconf  0x1004a724       0x1c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sysconf.o)
-                0x1004a724                sysconf
- .text          0x1004a740      0x1bc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strcmp.o)
-                0x1004a740                strcmp
+                0x10049834       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-gettimeofdayr.o)
+                0x10049834                _gettimeofday_r
+ .text._open_r  0x10049860       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-openr.o)
+                0x10049860                _open_r
+ .text._sbrk_r  0x1004988c       0x24 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sbrkr.o)
+                0x1004988c                _sbrk_r
+ .text.__errno  0x100498b0        0xc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-errno.o)
+                0x100498b0                __errno
+ .text.sysconf  0x100498bc       0x1c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sysconf.o)
+                0x100498bc                sysconf
+ .text          0x100498d8      0x1bc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strcmp.o)
+                0x100498d8                strcmp
  .text.__retarget_lock_init_recursive
-                0x1004a8fc        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
-                0x1004a8fc                __retarget_lock_init_recursive
+                0x10049a94        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
+                0x10049a94                __retarget_lock_init_recursive
  .text.__retarget_lock_close_recursive
-                0x1004a900        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
-                0x1004a900                __retarget_lock_close_recursive
+                0x10049a98        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
+                0x10049a98                __retarget_lock_close_recursive
  .text.__retarget_lock_acquire_recursive
-                0x1004a904        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
-                0x1004a904                __retarget_lock_acquire_recursive
+                0x10049a9c        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
+                0x10049a9c                __retarget_lock_acquire_recursive
  .text.__retarget_lock_release_recursive
-                0x1004a908        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
-                0x1004a908                __retarget_lock_release_recursive
- .text          0x1004a90c       0xec /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcpy.o)
-                0x1004a90c                memcpy
- .text.strlen   0x1004a9f8       0x5c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strlen-stub.o)
-                0x1004a9f8                strlen
+                0x10049aa0        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
+                0x10049aa0                __retarget_lock_release_recursive
+ .text          0x10049aa4       0xec /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcpy.o)
+                0x10049aa4                memcpy
+ .text.strlen   0x10049b90       0x5c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strlen-stub.o)
+                0x10049b90                strlen
  .text._malloc_trim_r
-                0x1004aa54       0xb8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-freer.o)
-                0x1004aa54                _malloc_trim_r
- .text._free_r  0x1004ab0c      0x1e8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-freer.o)
-                0x1004ab0c                _free_r
+                0x10049bec       0xb8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-freer.o)
+                0x10049bec                _malloc_trim_r
+ .text._free_r  0x10049ca4      0x1e8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-freer.o)
+                0x10049ca4                _free_r
  .text._fwalk_sglue
-                0x1004acf4       0x44 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fwalk.o)
-                0x1004acf4                _fwalk_sglue
+                0x10049e8c       0x44 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fwalk.o)
+                0x10049e8c                _fwalk_sglue
  .text.__smakebuf_r
-                0x1004ad38       0xd0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-makebuf.o)
-                0x1004ad38                __smakebuf_r
- .text.lflush   0x1004ae08       0x1c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-refill.o)
+                0x10049ed0       0xd0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-makebuf.o)
+                0x10049ed0                __smakebuf_r
+ .text.lflush   0x10049fa0       0x1c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-refill.o)
  .text.__srefill_r
-                0x1004ae24       0xf8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-refill.o)
-                0x1004ae24                __srefill_r
- .text.__sread  0x1004af1c       0x24 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
-                0x1004af1c                __sread
+                0x10049fbc       0xf8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-refill.o)
+                0x10049fbc                __srefill_r
+ .text.__sread  0x1004a0b4       0x24 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
+                0x1004a0b4                __sread
  .text.__swrite
-                0x1004af40       0x40 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
-                0x1004af40                __swrite
- .text.__sseek  0x1004af80       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
-                0x1004af80                __sseek
+                0x1004a0d8       0x40 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
+                0x1004a0d8                __swrite
+ .text.__sseek  0x1004a118       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
+                0x1004a118                __sseek
  .text.__sclose
-                0x1004afa8        0x8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
-                0x1004afa8                __sclose
+                0x1004a140        0x8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
+                0x1004a140                __sclose
  .text.__sflags
-                0x1004afb0       0x80 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-flags.o)
-                0x1004afb0                __sflags
+                0x1004a148       0x80 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-flags.o)
+                0x1004a148                __sflags
  .text._close_r
-                0x1004b030       0x24 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-closer.o)
-                0x1004b030                _close_r
+                0x1004a1c8       0x24 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-closer.o)
+                0x1004a1c8                _close_r
  .text._isatty_r
-                0x1004b054       0x24 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-isattyr.o)
-                0x1004b054                _isatty_r
+                0x1004a1ec       0x24 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-isattyr.o)
+                0x1004a1ec                _isatty_r
  .text._lseek_r
-                0x1004b078       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lseekr.o)
-                0x1004b078                _lseek_r
- .text._read_r  0x1004b0a4       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-readr.o)
-                0x1004b0a4                _read_r
+                0x1004a210       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lseekr.o)
+                0x1004a210                _lseek_r
+ .text._read_r  0x1004a23c       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-readr.o)
+                0x1004a23c                _read_r
  .text._write_r
-                0x1004b0d0       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-writer.o)
-                0x1004b0d0                _write_r
+                0x1004a268       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-writer.o)
+                0x1004a268                _write_r
  *(.fini)
- .fini          0x1004b0fc        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crti.o
-                0x1004b0fc                _fini
- .fini.__stub   0x1004b100       0x88 linker stubs
+ .fini          0x1004a294        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crti.o
+                0x1004a294                _fini
+ .fini.__stub   0x1004a298       0x88 linker stubs
  *crtbegin.o(.ctors)
  *crtbegin?.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .ctors)
@@ -5303,374 +5303,376 @@ LOAD /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-no
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .dtors)
  *(SORT_BY_NAME(.dtors.*))
  *(.dtors)
-                0x1004b188                        . = ALIGN (0x4)
-                0x1004b188                        PROVIDE (__preinit_array_start = .)
+                0x1004a320                        . = ALIGN (0x4)
+                0x1004a320                        PROVIDE (__preinit_array_start = .)
  *(SORT_BY_NAME(.preinit_array.*))
  .preinit_array.00050
-                0x1004b188        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
-                0x1004b188                __pre_init_runtime_init_bootrom_reset
+                0x1004a320        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
+                0x1004a320                __pre_init_runtime_init_bootrom_reset
  .preinit_array.00100
-                0x1004b18c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
-                0x1004b18c                __pre_init_runtime_init_early_resets
+                0x1004a324        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
+                0x1004a324                __pre_init_runtime_init_early_resets
  .preinit_array.00101
-                0x1004b190        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
-                0x1004b190                __pre_init_runtime_init_usb_power_down
+                0x1004a328        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
+                0x1004a328                __pre_init_runtime_init_usb_power_down
  .preinit_array.00500
-                0x1004b194        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
-                0x1004b194                __pre_init_runtime_init_clocks
+                0x1004a32c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
+                0x1004a32c                __pre_init_runtime_init_clocks
  .preinit_array.00600
-                0x1004b198        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
-                0x1004b198                __pre_init_runtime_init_post_clock_resets
+                0x1004a330        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
+                0x1004a330                __pre_init_runtime_init_post_clock_resets
  .preinit_array.01000
-                0x1004b19c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o
-                0x1004b19c                __pre_init_runtime_init_boot_locks_reset
+                0x1004a334        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o
+                0x1004a334                __pre_init_runtime_init_boot_locks_reset
  .preinit_array.01000
-                0x1004b1a0        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
-                0x1004b1a0                __pre_init_runtime_init_spin_locks_reset
+                0x1004a338        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
+                0x1004a338                __pre_init_runtime_init_spin_locks_reset
  .preinit_array.01010
-                0x1004b1a4        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o
-                0x1004b1a4                __pre_init_runtime_init_bootrom_locking_enable
+                0x1004a33c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o
+                0x1004a33c                __pre_init_runtime_init_bootrom_locking_enable
  .preinit_array.01100
-                0x1004b1a8        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o
-                0x1004b1a8                __pre_init_runtime_init_mutex
+                0x1004a340        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o
+                0x1004a340                __pre_init_runtime_init_mutex
  .preinit_array.10080
-                0x1004b1ac        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
-                0x1004b1ac                __pre_init_runtime_init_install_ram_vector_table
+                0x1004a344        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
+                0x1004a344                __pre_init_runtime_init_install_ram_vector_table
  .preinit_array.11000
-                0x1004b1b0        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
-                0x1004b1b0                __pre_init_runtime_init_default_alarm_pool
+                0x1004a348        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
+                0x1004a348                __pre_init_runtime_init_default_alarm_pool
  .preinit_array.YYYYY
-                0x1004b1b4        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o
-                0x1004b1b4                __pre_init_first_per_core_initializer
+                0x1004a34c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o
+                0x1004a34c                __pre_init_first_per_core_initializer
  .preinit_array.ZZZZZ.00051
-                0x1004b1b8        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
-                0x1004b1b8                __pre_init_runtime_init_per_core_bootrom_reset
+                0x1004a350        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
+                0x1004a350                __pre_init_runtime_init_per_core_bootrom_reset
  .preinit_array.ZZZZZ.00200
-                0x1004b1bc        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
-                0x1004b1bc                __pre_init_runtime_init_per_core_enable_coprocessors
+                0x1004a354        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
+                0x1004a354                __pre_init_runtime_init_per_core_enable_coprocessors
  .preinit_array.ZZZZZ.01000
-                0x1004b1c0        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o
-                0x1004b1c0                __pre_init_spinlock_set_extexclall
+                0x1004a358        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o
+                0x1004a358                __pre_init_spinlock_set_extexclall
  .preinit_array.ZZZZZ.01200
-                0x1004b1c4        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
-                0x1004b1c4                __pre_init_runtime_init_per_core_irq_priorities
+                0x1004a35c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
+                0x1004a35c                __pre_init_runtime_init_per_core_irq_priorities
  *(.preinit_array)
-                0x1004b1c8                        PROVIDE (__preinit_array_end = .)
-                0x1004b1c8                        . = ALIGN (0x4)
-                0x1004b1c8                        PROVIDE (__init_array_start = .)
+                0x1004a360                        PROVIDE (__preinit_array_end = .)
+                0x1004a360                        . = ALIGN (0x4)
+                0x1004a360                        PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  .init_array.01000
-                0x1004b1c8        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o
+                0x1004a360        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o
  *(.init_array)
- .init_array    0x1004b1cc        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
-                0x1004b1d0                        PROVIDE (__init_array_end = .)
-                0x1004b1d0                        . = ALIGN (0x4)
+ .init_array    0x1004a364        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
+                0x1004a368                        PROVIDE (__init_array_end = .)
+                0x1004a368                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array)
                 [!provide]                        PROVIDE (__fini_array_end = .)
  *(.eh_frame*)
- .eh_frame      0x1004b1d0        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
-                0x1004b1d0                        . = ALIGN (0x4)
+ .eh_frame      0x1004a368        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
+                0x1004a368                        . = ALIGN (0x4)
 
-.glue_7         0x1004b1d0        0x0
- .glue_7        0x1004b1d0        0x0 linker stubs
+.glue_7         0x1004a368        0x0
+ .glue_7        0x1004a368        0x0 linker stubs
 
-.glue_7t        0x1004b1d0        0x0
- .glue_7t       0x1004b1d0        0x0 linker stubs
+.glue_7t        0x1004a368        0x0
+ .glue_7t       0x1004a368        0x0 linker stubs
 
-.vfp11_veneer   0x1004b1d0        0x0
- .vfp11_veneer  0x1004b1d0        0x0 linker stubs
+.vfp11_veneer   0x1004a368        0x0
+ .vfp11_veneer  0x1004a368        0x0 linker stubs
 
-.v4_bx          0x1004b1d0        0x0
- .v4_bx         0x1004b1d0        0x0 linker stubs
+.v4_bx          0x1004a368        0x0
+ .v4_bx         0x1004a368        0x0 linker stubs
 
-.iplt           0x1004b1d0        0x0
- .iplt          0x1004b1d0        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
+.iplt           0x1004a368        0x0
+ .iplt          0x1004a368        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
 
-.boot2          0x1004b1d0        0x0
-                0x1004b1d0                        __boot2_start__ = .
+.boot2          0x1004a368        0x0
+                0x1004a368                        __boot2_start__ = .
  *(.boot2)
-                0x1004b1d0                        __boot2_end__ = .
+                0x1004a368                        __boot2_end__ = .
                 0x00000001                        ASSERT (((__boot2_end__ - __boot2_start__) <= 0x100), ERROR: Pico second stage bootloader must be no more than 256 bytes in size)
 
-.rodata         0x1004b1d0     0x5388
+.rodata         0x1004a368     0x5588
  *(EXCLUDE_FILE(*libm.a: *libc.a:*lib_a-mem*.o *libgcc.a:) .rodata*)
  .rodata.set_sys_clock_khz.str1.4
-                0x1004b1d0      0xec8 CMakeFiles/murmsnes.dir/src/main.c.o
+                0x1004a368      0xec8 CMakeFiles/murmsnes.dir/src/main.c.o
                                  0x32 (size before relaxing)
  .rodata.load_rom_from_sd.str1.4
-                0x1004c098       0xff CMakeFiles/murmsnes.dir/src/main.c.o
+                0x1004b230       0xff CMakeFiles/murmsnes.dir/src/main.c.o
  .rodata.main.str1.4
-                0x1004c098      0x33e CMakeFiles/murmsnes.dir/src/main.c.o
+                0x1004b230      0x33e CMakeFiles/murmsnes.dir/src/main.c.o
  .rodata.str1.4
-                0x1004c098       0x46 CMakeFiles/murmsnes.dir/src/main.c.o
- .rodata        0x1004c098       0x1c CMakeFiles/murmsnes.dir/src/main.c.o
+                0x1004b230       0x46 CMakeFiles/murmsnes.dir/src/main.c.o
+ .rodata        0x1004b230       0x1c CMakeFiles/murmsnes.dir/src/main.c.o
  .rodata.atantbl
-                0x1004c0b4      0x200 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x1004c0b4                atantbl
+                0x1004b24c      0x200 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x1004b24c                atantbl
  .rodata.bmpdata.0
-                0x1004c2b4       0x50 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
+                0x1004b44c       0x50 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
  .rodata.C4CosTable
-                0x1004c304      0x400 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
-                0x1004c304                C4CosTable
+                0x1004b49c      0x400 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
+                0x1004b49c                C4CosTable
  .rodata.C4SinTable
-                0x1004c704      0x400 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
-                0x1004c704                C4SinTable
+                0x1004b89c      0x400 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
+                0x1004b89c                C4SinTable
  .rodata.C4TestPattern
-                0x1004cb04       0x30 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
+                0x1004bc9c       0x30 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
  .rodata.S9xOpcodesM0X1
-                0x1004cb34      0x400 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
-                0x1004cb34                S9xOpcodesM0X1
+                0x1004bccc      0x400 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
+                0x1004bccc                S9xOpcodesM0X1
  .rodata.S9xOpcodesM0X0
-                0x1004cf34      0x400 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
-                0x1004cf34                S9xOpcodesM0X0
+                0x1004c0cc      0x400 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
+                0x1004c0cc                S9xOpcodesM0X0
  .rodata.S9xOpcodesM1X0
-                0x1004d334      0x400 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
-                0x1004d334                S9xOpcodesM1X0
+                0x1004c4cc      0x400 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
+                0x1004c4cc                S9xOpcodesM1X0
  .rodata.S9xOpcodesE1
-                0x1004d734      0x400 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
-                0x1004d734                S9xOpcodesE1
+                0x1004c8cc      0x400 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
+                0x1004c8cc                S9xOpcodesE1
  .rodata.S9xOpcodesM1X1
-                0x1004db34      0x400 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
-                0x1004db34                S9xOpcodesM1X1
+                0x1004cccc      0x400 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
+                0x1004cccc                S9xOpcodesM1X1
  .rodata.HDMA_ModeByteCounts
-                0x1004df34       0x20 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o
+                0x1004d0cc       0x20 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o
  .rodata.OP0A_Values.0
-                0x1004df54       0x20 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+                0x1004d0ec       0x20 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
  .rodata.div_lut.1
-                0x1004df74       0x80 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+                0x1004d10c       0x80 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
  .rodata.LoAdd.2
-                0x1004dff4       0x10 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+                0x1004d18c       0x10 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
  .rodata.HiAdd.3
-                0x1004e004       0x20 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+                0x1004d19c       0x20 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
  .rodata.MaxAZS_Exp.4
-                0x1004e024       0x20 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+                0x1004d1bc       0x20 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
  .rodata.DSP3_DataROM
-                0x1004e044      0x800 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+                0x1004d1dc      0x800 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
  .rodata.DSP1_SinTable
-                0x1004e844      0x200 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+                0x1004d9dc      0x200 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
  .rodata.DSP1_MulTable
-                0x1004ea44      0x200 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+                0x1004dbdc      0x200 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
  .rodata.DSP1ROM
-                0x1004ec44      0x800 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+                0x1004dddc      0x800 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
  .rodata.CSWTCH.389
-                0x1004f444       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x1004e5dc       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .rodata.CSWTCH.388
-                0x1004f464       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x1004e5fc       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .rodata.CSWTCH.387
-                0x1004f484       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x1004e61c       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .rodata.CSWTCH.386
-                0x1004f4a4       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x1004e63c       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .rodata.Depths
-                0x1004f4c4       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x1004e65c       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .rodata.PaletteMasks
-                0x1004f4e4       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x1004e67c       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .rodata.PaletteShifts
-                0x1004f504       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x1004e69c       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .rodata.TileShifts
-                0x1004f524       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x1004e6bc       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .rodata.BitShifts
-                0x1004f544       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x1004e6dc       0x20 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .rodata.mul_brightness
-                0x1004f564      0x200 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x1004f564                mul_brightness
+                0x1004e6fc      0x200 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x1004e6fc                mul_brightness
  .rodata.S9xAPUCycleLengths
-                0x1004f764      0x100 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x1004f764                S9xAPUCycleLengths
+                0x1004e8fc      0x100 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x1004e8fc                S9xAPUCycleLengths
  .rodata.APUROM
-                0x1004f864       0x40 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x1004f864                APUROM
+                0x1004e9fc       0x40 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x1004e9fc                APUROM
  .rodata.NoiseFreq
-                0x1004f8a4       0x80 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x1004f8a4                NoiseFreq
+                0x1004ea3c       0x80 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x1004ea3c                NoiseFreq
  .rodata.ParseSNESHeader.str1.4
-                0x1004f924        0x5 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
+                0x1004eabc        0x5 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
  .rodata.ApplyROMPatches.str1.4
-                0x1004f924       0x7a CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
+                0x1004eabc       0x7a CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
  .rodata.ApplyROMFixes.str1.4
-                0x1004f924      0x322 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
+                0x1004eabc      0x322 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
  .rodata.InitROM.str1.4
-                0x1004f924      0x163 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
+                0x1004eabc      0x163 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
  .rodata.LoadROM.str1.4
-                0x1004f924      0x149 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
- .rodata        0x1004f924       0x14 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
+                0x1004eabc      0x149 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
+ .rodata        0x1004eabc       0x14 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
  .rodata.IncreaseRate
-                0x1004f938       0x80 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
+                0x1004ead0       0x80 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
  .rodata.DecreaseRateExp
-                0x1004f9b8       0x80 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
+                0x1004eb50       0x80 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
  .rodata.DecayRate
-                0x1004fa38       0x20 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
+                0x1004ebd0       0x20 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
  .rodata.AttackRate
-                0x1004fa58       0x40 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
- .rodata        0x1004fa98       0x28 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
+                0x1004ebf0       0x40 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
+ .rodata        0x1004ec30       0x28 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
  .rodata.month_keys
-                0x1004fac0       0x30 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o
- .rodata.even   0x1004faf0      0x100 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
- .rodata.odd    0x1004fbf0      0x100 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
+                0x1004ec58       0x30 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o
+ .rodata.even   0x1004ec88      0x100 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
+ .rodata.odd    0x1004ed88      0x100 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
  .rodata.TailMask
-                0x1004fcf0       0x14 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
+                0x1004ee88       0x14 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
  .rodata.HeadMask
-                0x1004fd04       0x10 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
+                0x1004ee9c       0x10 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
  .rodata.panic.str1.4
-                0x1004fd14       0x12 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o
+                0x1004eeac       0x12 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o
  .rodata.spin_lock_claim_unused.str1.4
-                0x1004fd14       0x1b CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o
+                0x1004eeac       0x1b CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o
  .rodata.user_irq_claim_unused.str1.4
-                0x1004fd14       0x1b CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
- *fill*         0x1004fd14        0x4 
+                0x1004eeac       0x1b CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
+ *fill*         0x1004eeac        0x4 
  .rodata.at_the_end_of_time
-                0x1004fd18        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
-                0x1004fd18                at_the_end_of_time
+                0x1004eeb0        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
+                0x1004eeb0                at_the_end_of_time
  .rodata.timer_hardware_alarm_claim.str1.4
-                0x1004fd20       0x22 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o
+                0x1004eeb8       0x22 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o
  .rodata.hard_assertion_failure.str1.4
-                0x1004fd20        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o
+                0x1004eeb8        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o
  .rodata.__wrap_malloc.str1.4
-                0x1004fd20        0xe CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o
+                0x1004eeb8        0xe CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o
  .rodata.str1.4
-                0x1004fd20       0x40 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004eeb8       0x40 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .rodata.__bi_84
-                0x1004fd20        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004eeb8        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .rodata.__bi_78
-                0x1004fd2c        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004eec4        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .rodata.__bi_54
-                0x1004fd38        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004eed0        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .rodata.__bi_48
-                0x1004fd44        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004eedc        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .rodata.__bi_42
-                0x1004fd50        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004eee8        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .rodata.__bi_34
-                0x1004fd5c        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004eef4        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .rodata.__bi_26
-                0x1004fd68        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004ef00        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .rodata._ftoa.str1.4
-                0x1004fd74       0x15 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o
- *fill*         0x1004fd74        0x4 
+                0x1004ef0c       0x15 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o
+ *fill*         0x1004ef0c        0x4 
  .rodata.pow10.0
-                0x1004fd78       0x50 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o
+                0x1004ef10       0x50 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o
  .rodata.crlf_str.0
-                0x1004fdc8        0x2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
- *fill*         0x1004fdca        0x2 
+                0x1004ef60        0x2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
+ *fill*         0x1004ef62        0x2 
  .rodata._resetd_driver
-                0x1004fdcc       0x20 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
+                0x1004ef64       0x20 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
  .rodata.desc_ms_os_20
-                0x1004fdec       0xa6 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
- *fill*         0x1004fe92        0x2 
+                0x1004ef84       0xa6 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
+ *fill*         0x1004f02a        0x2 
  .rodata.desc_bos
-                0x1004fe94       0x21 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
-                0x1004fe94                desc_bos
+                0x1004f02c       0x21 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
+                0x1004f02c                desc_bos
  .rodata.str1.4
-                0x1004feb5       0x13 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
- *fill*         0x1004feb5        0x3 
+                0x1004f04d       0x13 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+ *fill*         0x1004f04d        0x3 
  .rodata.__bi_202.0
-                0x1004feb8        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+                0x1004f050        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
  .rodata.str1.4
-                0x1004fec4       0x2a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
+                0x1004f05c       0x2a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
  .rodata.usbd_desc_str
-                0x1004fec4       0x18 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
+                0x1004f05c       0x18 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
  .rodata.usbd_desc_cfg
-                0x1004fedc       0x54 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
+                0x1004f074       0x54 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
  .rodata.usbd_desc_device
-                0x1004ff30       0x12 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
+                0x1004f0c8       0x12 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
  .rodata.str1.4
-                0x1004ff42       0x14 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
+                0x1004f0da       0x14 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
  .rodata.str1.4
-                0x1004ff42       0x48 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o
- *fill*         0x1004ff42        0x2 
+                0x1004f0da       0x48 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o
+ *fill*         0x1004f0da        0x2 
  .rodata._usbd_driver
-                0x1004ff44       0x40 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+                0x1004f0dc       0x40 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
  .rodata.dma_channel_claim.str1.4
-                0x1004ff84       0x22 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o
+                0x1004f11c       0x22 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o
  .rodata.dma_claim_unused_channel.str1.4
-                0x1004ff84       0x1e CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o
+                0x1004f11c       0x1e CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o
  .rodata.pio_sm_claim.str1.4
-                0x1004ff84       0x62 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o
+                0x1004f11c       0x62 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o
  .rodata.pio_claim_unused_sm.str1.4
-                0x1004ff84       0x24 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o
+                0x1004f11c       0x24 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o
  .rodata.check_fs.str1.4
-                0x1004ff84       0x15 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
+                0x1004f11c       0x15 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
  .rodata.follow_path.str1.4
-                0x1004ff84       0x13 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
- .rodata.ExCvt  0x1004ff84       0x80 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
+                0x1004f11c       0x13 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
+ .rodata.ExCvt  0x1004f11c       0x80 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
  .rodata.LfnOfs
-                0x10050004        0xd CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
- *fill*         0x10050011        0x3 
+                0x1004f19c        0xd CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
+ *fill*         0x1004f1a9        0x3 
  .rodata.GUID_MS_Basic
-                0x10050014       0x10 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
- .rodata        0x10050024       0x2c CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
+                0x1004f1ac       0x10 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
+ .rodata        0x1004f1bc       0x2c CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
  .rodata.cvt2.0
-                0x10050050       0xbc CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o
+                0x1004f1e8       0xbc CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o
  .rodata.cvt1.1
-                0x1005010c      0x1f2 CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o
- *fill*         0x100502fe        0x2 
- .rodata.uc437  0x10050300      0x100 CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o
+                0x1004f2a4      0x1f2 CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o
+ *fill*         0x1004f496        0x2 
+ .rodata.uc437  0x1004f498      0x100 CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o
  .rodata.ff_memalloc.str1.4
-                0x10050400       0x19 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
+                0x1004f598       0x19 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
  .rodata.audio_i2s_connect_thru.str1.4
-                0x10050400       0x64 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+                0x1004f598       0x64 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .rodata.audio_i2s_program
-                0x10050400        0x8 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+                0x1004f598        0x8 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .rodata.audio_i2s_program_instructions
-                0x10050408       0x10 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+                0x1004f5a0       0x10 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .rodata.program_PIO_HDMI
-                0x10050418        0x8 libdrivers.a(HDMI.c.o)
+                0x1004f5b0        0x8 libdrivers.a(HDMI.c.o)
  .rodata.instructions_PIO_HDMI
-                0x10050420       0x14 libdrivers.a(HDMI.c.o)
+                0x1004f5b8       0x14 libdrivers.a(HDMI.c.o)
  .rodata.pio_program_conv_addr_HDMI
-                0x10050434        0x8 libdrivers.a(HDMI.c.o)
-                0x10050434                pio_program_conv_addr_HDMI
+                0x1004f5cc        0x8 libdrivers.a(HDMI.c.o)
+                0x1004f5cc                pio_program_conv_addr_HDMI
+ .rodata.tmds_table
+                0x1004f5d4      0x200 libdrivers.a(HDMI.c.o)
  .rodata.psram_malloc.str1.4
-                0x1005043c       0x78 libdrivers.a(psram_allocator.c.o)
+                0x1004f7d4       0x78 libdrivers.a(psram_allocator.c.o)
  .rodata.i2s_init.str1.4
-                0x1005043c       0x6c libdrivers.a(audio.c.o)
- .rodata        0x1005043c       0x18 libdrivers.a(audio.c.o)
+                0x1004f7d4       0x6c libdrivers.a(audio.c.o)
+ .rodata        0x1004f7d4       0x18 libdrivers.a(audio.c.o)
  .rodata._ctype_
-                0x10050454      0x101 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ctype_.o)
-                0x10050454                _ctype_
+                0x1004f7ec      0x101 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ctype_.o)
+                0x1004f7ec                _ctype_
  *(.srodata*)
-                0x10050558                        . = ALIGN (0x4)
- *fill*         0x10050555        0x3 
+                0x1004f8f0                        . = ALIGN (0x4)
+ *fill*         0x1004f8ed        0x3 
  *(SORT_BY_ALIGNMENT(SORT_BY_NAME(.flashdata*)))
-                0x10050558                        . = ALIGN (0x4)
+                0x1004f8f0                        . = ALIGN (0x4)
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x10050558                        __exidx_start = .
+                0x1004f8f0                        __exidx_start = .
 
-.ARM.exidx      0x10050558        0x8
+.ARM.exidx      0x1004f8f0        0x8
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
- .ARM.exidx     0x10050558        0x8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strcmp.o)
- .ARM.exidx     0x10050560        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcpy.o)
+ .ARM.exidx     0x1004f8f0        0x8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strcmp.o)
+ .ARM.exidx     0x1004f8f8        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcpy.o)
                                   0x8 (size before relaxing)
  .ARM.exidx.text.__udivmoddi4
-                0x10050560        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_udivmoddi4.o)
+                0x1004f8f8        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_udivmoddi4.o)
                                   0x8 (size before relaxing)
-                0x10050560                        __exidx_end = .
-                0x10050560                        . = ALIGN (0x4)
-                0x10050560                        __binary_info_start = .
+                0x1004f8f8                        __exidx_end = .
+                0x1004f8f8                        . = ALIGN (0x4)
+                0x1004f8f8                        __binary_info_start = .
 
-.binary_info    0x10050560       0x20
+.binary_info    0x1004f8f8       0x20
  *(.binary_info.keep.*)
  .binary_info.keep.__bi_ptr84
-                0x10050560        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004f8f8        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .binary_info.keep.__bi_ptr78
-                0x10050564        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004f8fc        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .binary_info.keep.__bi_ptr54
-                0x10050568        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004f900        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .binary_info.keep.__bi_ptr48
-                0x1005056c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004f904        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .binary_info.keep.__bi_ptr42
-                0x10050570        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004f908        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .binary_info.keep.__bi_ptr34
-                0x10050574        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004f90c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  .binary_info.keep.__bi_ptr26
-                0x10050578        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+                0x1004f910        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
  *(.binary_info.*)
  .binary_info.__bi_ptr202
-                0x1005057c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
-                0x10050580                        __binary_info_end = .
-                0x10050580                        . = ALIGN (0x4)
+                0x1004f914        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+                0x1004f918                        __binary_info_end = .
+                0x1004f918                        . = ALIGN (0x4)
 
 .ram_vector_table
                 0x20000000      0x110
@@ -5684,7 +5686,7 @@ LOAD /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-no
                 0x20000110                        . = ALIGN (0x4)
  *(.uninitialized_data*)
 
-.data           0x20000110     0x1e28 load address 0x10050580
+.data           0x20000110     0x1fb8 load address 0x1004f918
                 0x20000110                        __data_start__ = .
  *(vtable)
  *(.time_critical*)
@@ -5753,522 +5755,525 @@ LOAD /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-no
                 0x200010e4                spi_read_blocking
  .time_critical.audio_i2s_dma_irq_handler
                 0x2000116c       0x74 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+ .time_critical.hdmi_asm
+                0x200011e0      0x18c libdrivers.a(hdmi_scanline.S.o)
+                0x200011e0                hdmi_copy_scanline_asm
+                0x20001290                hdmi_memset_fast
+                0x200012c0                get_ser_diff_data_asm
+ *fill*         0x2000136c        0x4 
  .time_critical.psram_init
-                0x200011e0      0x120 libdrivers.a(psram_init.c.o)
-                0x200011e0                psram_init
+                0x20001370      0x120 libdrivers.a(psram_init.c.o)
+                0x20001370                psram_init
  *(.text*)
- .text          0x20001300       0xa0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_ldivmod.o)
-                0x20001300                __aeabi_ldivmod
- .text          0x200013a0       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_uldivmod.o)
-                0x200013a0                __aeabi_uldivmod
+ .text          0x20001490       0xa0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_ldivmod.o)
+                0x20001490                __aeabi_ldivmod
+ .text          0x20001530       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_uldivmod.o)
+                0x20001530                __aeabi_uldivmod
  .text.__udivmoddi4
-                0x200013d0      0x34c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_udivmoddi4.o)
-                0x200013d0                __udivmoddi4
- .text          0x2000171c        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_dvmd_tls.o)
-                0x2000171c                __aeabi_ldiv0
-                0x2000171c                __aeabi_idiv0
- .text.__stub   0x20001720       0xa0 linker stubs
-                0x200017c0                        . = ALIGN (0x4)
+                0x20001560      0x34c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_udivmoddi4.o)
+                0x20001560                __udivmoddi4
+ .text          0x200018ac        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_dvmd_tls.o)
+                0x200018ac                __aeabi_ldiv0
+                0x200018ac                __aeabi_idiv0
+ .text.__stub   0x200018b0       0xa0 linker stubs
+                0x20001950                        . = ALIGN (0x4)
  *(.rodata*)
-                0x200017c0                        . = ALIGN (0x4)
+                0x20001950                        . = ALIGN (0x4)
  *(.data*)
  .data.replay_is_silence.1
-                0x200017c0        0x1 CMakeFiles/murmsnes.dir/src/main.c.o
- *fill*         0x200017c1        0x3 
+                0x20001950        0x1 CMakeFiles/murmsnes.dir/src/main.c.o
+ *fill*         0x20001951        0x3 
  .data.justifiers
-                0x200017c4        0x4 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o
+                0x20001954        0x4 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o
  .data.striped_spin_lock_num
-                0x200017c8        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o
- *fill*         0x200017c9        0x3 
- .data          0x200017cc       0x48 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.o
-                0x200017cc                irq_handler_chain_slots
-                0x200017fc                irq_handler_chain_first_slot
-                0x20001806                irq_handler_chain_remove_tail
+                0x20001958        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o
+ *fill*         0x20001959        0x3 
+ .data          0x2000195c       0x48 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.o
+                0x2000195c                irq_handler_chain_slots
+                0x2000198c                irq_handler_chain_first_slot
+                0x20001996                irq_handler_chain_remove_tail
  .data.default_alarm_pool
-                0x20001814       0x18 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
+                0x200019a4       0x18 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
  .data.stdio_usb
-                0x2000182c       0x18 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
-                0x2000182c                stdio_usb
+                0x200019bc       0x18 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+                0x200019bc                stdio_usb
  .data._usbd_qdef
-                0x20001844       0x1c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
-                0x20001844                _usbd_qdef
+                0x200019d4       0x1c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+                0x200019d4                _usbd_qdef
  .data._usbd_rhport
-                0x20001860        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
- .data.Stat     0x20001861        0x1 CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o
- *fill*         0x20001862        0x2 
+                0x200019f0        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+ .data.Stat     0x200019f1        0x1 CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o
+ *fill*         0x200019f2        0x2 
  .data.audio_i2s_pass_thru_connection
-                0x20001864       0x20 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+                0x200019f4       0x20 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .data.m2s_audio_i2s_pg_connection
-                0x20001884       0x20 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+                0x20001a14       0x20 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .data.m2s_audio_i2s_ct_connection
-                0x200018a4       0x20 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+                0x20001a34       0x20 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .data.pio_i2s_consumer_buffer_format
-                0x200018c4        0x8 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
-                0x200018c4                pio_i2s_consumer_buffer_format
+                0x20001a54        0x8 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+                0x20001a54                pio_i2s_consumer_buffer_format
  .data._ZL18connection_default
-                0x200018cc       0x18 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
+                0x20001a5c       0x18 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
  .data.pio_program_instructions_conv_HDMI
-                0x200018e4        0x8 libdrivers.a(HDMI.c.o)
-                0x200018e4                pio_program_instructions_conv_HDMI
- .data.SM_conv  0x200018ec        0x4 libdrivers.a(HDMI.c.o)
+                0x20001a74        0x8 libdrivers.a(HDMI.c.o)
+                0x20001a74                pio_program_instructions_conv_HDMI
+ .data.SM_conv  0x20001a7c        0x4 libdrivers.a(HDMI.c.o)
  .data.SM_video
-                0x200018f0        0x4 libdrivers.a(HDMI.c.o)
+                0x20001a80        0x4 libdrivers.a(HDMI.c.o)
  .data.hdmi_graphics_mode
-                0x200018f4        0x1 libdrivers.a(HDMI.c.o)
-                0x200018f4                hdmi_graphics_mode
- *fill*         0x200018f5        0x3 
+                0x20001a84        0x1 libdrivers.a(HDMI.c.o)
+                0x20001a84                hdmi_graphics_mode
+ *fill*         0x20001a85        0x3 
  .data.graphics_buffer_height
-                0x200018f8        0x4 libdrivers.a(HDMI.c.o)
-                0x200018f8                graphics_buffer_height
+                0x20001a88        0x4 libdrivers.a(HDMI.c.o)
+                0x20001a88                graphics_buffer_height
  .data.graphics_buffer_width
-                0x200018fc        0x4 libdrivers.a(HDMI.c.o)
-                0x200018fc                graphics_buffer_width
+                0x20001a8c        0x4 libdrivers.a(HDMI.c.o)
+                0x20001a8c                graphics_buffer_width
  .data.psram_offset
-                0x20001900        0x4 libdrivers.a(psram_allocator.c.o)
+                0x20001a90        0x4 libdrivers.a(psram_allocator.c.o)
  .data.__malloc_sbrk_base
-                0x20001904        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
-                0x20001904                __malloc_sbrk_base
+                0x20001a94        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
+                0x20001a94                __malloc_sbrk_base
  .data.__malloc_trim_threshold
-                0x20001908        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
-                0x20001908                __malloc_trim_threshold
- *fill*         0x2000190c        0x4 
+                0x20001a98        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
+                0x20001a98                __malloc_trim_threshold
+ *fill*         0x20001a9c        0x4 
  .data.__malloc_av_
-                0x20001910      0x408 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
-                0x20001910                __malloc_av_
- .data.__sglue  0x20001d18        0xc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
-                0x20001d18                __sglue
+                0x20001aa0      0x408 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
+                0x20001aa0                __malloc_av_
+ .data.__sglue  0x20001ea8        0xc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+                0x20001ea8                __sglue
  .data._impure_ptr
-                0x20001d24        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-impure.o)
-                0x20001d24                _impure_ptr
+                0x20001eb4        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-impure.o)
+                0x20001eb4                _impure_ptr
  .data._impure_data
-                0x20001d28      0x200 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-impure.o)
-                0x20001d28                _impure_data
+                0x20001eb8      0x200 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-impure.o)
+                0x20001eb8                _impure_data
  *(.sdata*)
-                0x20001f28                        . = ALIGN (0x4)
+                0x200020b8                        . = ALIGN (0x4)
  *(.after_data.*)
-                0x20001f28                        . = ALIGN (0x4)
-                0x20001f28                        PROVIDE (__mutex_array_start = .)
+                0x200020b8                        . = ALIGN (0x4)
+                0x200020b8                        PROVIDE (__mutex_array_start = .)
  *(SORT_BY_NAME(.mutex_array.*))
  *(.mutex_array)
- .mutex_array   0x20001f28        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o
- .mutex_array   0x20001f30        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
-                0x20001f38                        PROVIDE (__mutex_array_end = .)
+ .mutex_array   0x200020b8        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o
+ .mutex_array   0x200020c0        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
+                0x200020c8                        PROVIDE (__mutex_array_end = .)
  *(.jcr)
-                0x20001f38                        . = ALIGN (0x4)
+                0x200020c8                        . = ALIGN (0x4)
 
 .tm_clone_table
-                0x20001f38        0x0 load address 0x100523a8
+                0x200020c8        0x0 load address 0x100518d0
  .tm_clone_table
-                0x20001f38        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
+                0x200020c8        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
  .tm_clone_table
-                0x20001f38        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtend.o
+                0x200020c8        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtend.o
 
-.igot.plt       0x20001f38        0x0 load address 0x100523a8
- .igot.plt      0x20001f38        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
+.igot.plt       0x200020c8        0x0 load address 0x100518d0
+ .igot.plt      0x200020c8        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
 
-.tdata          0x20001f38        0x0 load address 0x100523a8
-                0x20001f38                        . = ALIGN (0x4)
+.tdata          0x200020c8        0x0 load address 0x100518d0
+                0x200020c8                        . = ALIGN (0x4)
  *(.tdata .tdata.* .gnu.linkonce.td.*)
-                0x20001f38                        __tdata_end = .
-                0x20001f38                        PROVIDE (__data_end__ = .)
-                0x10050580                        __etext = LOADADDR (.data)
+                0x200020c8                        __tdata_end = .
+                0x200020c8                        PROVIDE (__data_end__ = .)
+                0x1004f918                        __etext = LOADADDR (.data)
 
-.tbss           0x20001f38        0x0 load address 0x100523a8
-                0x20001f38                        . = ALIGN (0x4)
-                0x20001f38                        __bss_start__ = .
-                0x20001f38                        __tls_base = .
+.tbss           0x200020c8        0x0 load address 0x100518d0
+                0x200020c8                        . = ALIGN (0x4)
+                0x200020c8                        __bss_start__ = .
+                0x200020c8                        __tls_base = .
  *(.tbss .tbss.* .gnu.linkonce.tb.*)
  *(.tcommon)
-                0x20001f38                        __tls_end = .
+                0x200020c8                        __tls_end = .
 
-.bss            0x20002000    0x6562c load address 0x100523a8
-                0x20002000                        . = ALIGN (0x4)
-                0x20002000                        __tbss_end = .
+.bss            0x20003000    0x6562c load address 0x100518d0
+                0x20003000                        . = ALIGN (0x4)
+                0x20003000                        __tbss_end = .
  *(SORT_BY_ALIGNMENT(SORT_BY_NAME(.bss*)))
  .bss.conv_color
-                0x20002000     0x1320 libdrivers.a(HDMI.c.o)
-                0x20002000                conv_color
+                0x20003000     0x1320 libdrivers.a(HDMI.c.o)
+                0x20003000                conv_color
  .bss.audio_packed_buffer
-                0x20003320     0x6400 CMakeFiles/murmsnes.dir/src/main.c.o
+                0x20004320     0x6400 CMakeFiles/murmsnes.dir/src/main.c.o
  .bss.audio_packed_discard
-                0x20009720      0x640 CMakeFiles/murmsnes.dir/src/main.c.o
- .bss.mix16.0   0x20009d60      0x640 CMakeFiles/murmsnes.dir/src/main.c.o
+                0x2000a720      0x640 CMakeFiles/murmsnes.dir/src/main.c.o
+ .bss.mix16.0   0x2000ad60      0x640 CMakeFiles/murmsnes.dir/src/main.c.o
  .bss.replay_buf.2
-                0x2000a3a0      0x640 CMakeFiles/murmsnes.dir/src/main.c.o
- .bss.Files     0x2000a9e0      0x100 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
+                0x2000b3a0      0x640 CMakeFiles/murmsnes.dir/src/main.c.o
+ .bss.Files     0x2000b9e0      0x100 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
  .bss.default_alarm_pool_entries
-                0x2000aae0      0x180 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
+                0x2000bae0      0x180 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
  .bss.epoch_time_us_since_boot
-                0x2000ac60        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o
- .bss.fs        0x2000ac68      0x268 CMakeFiles/murmsnes.dir/src/main.c.o
+                0x2000bc60        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o
+ .bss.fs        0x2000bc68      0x268 CMakeFiles/murmsnes.dir/src/main.c.o
  .bss.last_avail_time.1
-                0x2000aed0        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
- .bss.palette   0x2000aed8      0x400 libdrivers.a(HDMI.c.o)
- .bss.rtc       0x2000b2d8       0x20 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o
-                0x2000b2d8                rtc
- .bss.APU       0x2000b2f8       0xe0 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000b2f8                APU
- .bss.BG        0x2000b3d8       0x34 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000b3d8                BG
- .bss.CPU       0x2000b40c       0x50 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000b40c                CPU
- .bss.DMA       0x2000b45c       0xb0 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000b45c                DMA
- .bss.DSP1      0x2000b50c        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
- .bss.DSP2      0x2000b510        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
- .bss.DSP3      0x2000b514        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
- .bss.DSP4      0x2000b518        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+                0x2000bed0        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+ .bss.palette   0x2000bed8      0x400 libdrivers.a(HDMI.c.o)
+ .bss.rtc       0x2000c2d8       0x20 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o
+                0x2000c2d8                rtc
+ .bss.APU       0x2000c2f8       0xe0 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000c2f8                APU
+ .bss.BG        0x2000c3d8       0x34 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000c3d8                BG
+ .bss.CPU       0x2000c40c       0x50 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000c40c                CPU
+ .bss.DMA       0x2000c45c       0xb0 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000c45c                DMA
+ .bss.DSP1      0x2000c50c        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+ .bss.DSP2      0x2000c510        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+ .bss.DSP3      0x2000c514        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+ .bss.DSP4      0x2000c518        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
  .bss.DrawClippedTilePtr
-                0x2000b51c        0x4 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x2000c51c        0x4 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .bss.DrawHiResClippedTilePtr
-                0x2000b520        0x4 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x2000c520        0x4 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .bss.DrawHiResTilePtr
-                0x2000b524        0x4 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x2000c524        0x4 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .bss.DrawLargePixelPtr
-                0x2000b528        0x4 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x2000c528        0x4 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .bss.DrawTilePtr
-                0x2000b52c        0x4 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
- .bss.FatFs     0x2000b530        0x8 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
- .bss.GFX       0x2000b538      0x168 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000b538                GFX
- .bss.GetDSP    0x2000b6a0        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+                0x2000c52c        0x4 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+ .bss.FatFs     0x2000c530        0x8 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
+ .bss.GFX       0x2000c538      0x168 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000c538                GFX
+ .bss.GetDSP    0x2000c6a0        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
  .bss.HDMABasePointers
-                0x2000b6a4       0x20 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000b6a4                HDMABasePointers
+                0x2000c6a4       0x20 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000c6a4                HDMABasePointers
  .bss.HDMAMemPointers
-                0x2000b6c4       0x20 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000b6c4                HDMAMemPointers
- .bss.IAPU      0x2000b6e4       0x3c CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000b6e4                IAPU
- .bss.ICPU      0x2000b720       0x34 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000b720                ICPU
- .bss.IPPU      0x2000b754      0x5e8 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000b754                IPPU
+                0x2000c6c4       0x20 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000c6c4                HDMAMemPointers
+ .bss.IAPU      0x2000c6e4       0x3c CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000c6e4                IAPU
+ .bss.ICPU      0x2000c720       0x34 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000c720                ICPU
+ .bss.IPPU      0x2000c754      0x5e8 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000c754                IPPU
  .bss.LocalState
-                0x2000bd3c        0x4 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+                0x2000cd3c        0x4 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
  .bss.LocalState
-                0x2000bd40        0x4 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
- .bss.Memory    0x2000bd44       0x70 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000bd44                Memory
+                0x2000cd40        0x4 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
+ .bss.Memory    0x2000cd44       0x70 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000cd44                Memory
  .bss.Mode7Depths
-                0x2000bdb4        0x2 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
- *fill*         0x2000bdb6        0x2 
+                0x2000cdb4        0x2 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+ *fill*         0x2000cdb6        0x2 
  .bss.OBC1_Address
-                0x2000bdb8        0x4 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o
-                0x2000bdb8                OBC1_Address
+                0x2000cdb8        0x4 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o
+                0x2000cdb8                OBC1_Address
  .bss.OBC1_BasePtr
-                0x2000bdbc        0x4 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o
-                0x2000bdbc                OBC1_BasePtr
- .bss.OBC1_RAM  0x2000bdc0        0x4 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o
+                0x2000cdbc        0x4 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o
+                0x2000cdbc                OBC1_BasePtr
+ .bss.OBC1_RAM  0x2000cdc0        0x4 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o
  .bss.OBC1_Shift
-                0x2000bdc4        0x4 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o
-                0x2000bdc4                OBC1_Shift
+                0x2000cdc4        0x4 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o
+                0x2000cdc4                OBC1_Shift
  .bss.OpAddress
-                0x2000bdc8        0x4 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000bdc8                OpAddress
- .bss.PPU       0x2000bdcc      0xadc CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000bdcc                PPU
+                0x2000cdc8        0x4 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000cdc8                OpAddress
+ .bss.PPU       0x2000cdcc      0xadc CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000cdcc                PPU
  .bss.S9xAPUCycles
-                0x2000c8a8      0x100 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2000c8a8                S9xAPUCycles
- .bss.SCREEN    0x2000c9a8    0x3bc00 CMakeFiles/murmsnes.dir/src/main.c.o
-                0x2000c9a8                SCREEN
- .bss.SetDSP    0x200485a8        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
- .bss.SetDSP3   0x200485ac        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
- .bss.Settings  0x200485b0       0x74 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x200485b0                Settings
+                0x2000d8a8      0x100 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2000d8a8                S9xAPUCycles
+ .bss.SCREEN    0x2000d9a8    0x3bc00 CMakeFiles/murmsnes.dir/src/main.c.o
+                0x2000d9a8                SCREEN
+ .bss.SetDSP    0x200495a8        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+ .bss.SetDSP3   0x200495ac        0x4 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+ .bss.Settings  0x200495b0       0x74 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x200495b0                Settings
  .bss.SoundData
-                0x20048624      0x504 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x20048624                SoundData
+                0x20049624      0x504 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x20049624                SoundData
  .bss.SubZBuffer
-                0x20048b28     0xef00 CMakeFiles/murmsnes.dir/src/main.c.o
- .bss.ZBuffer   0x20057a28     0xef00 CMakeFiles/murmsnes.dir/src/main.c.o
+                0x20049b28     0xef00 CMakeFiles/murmsnes.dir/src/main.c.o
+ .bss.ZBuffer   0x20058a28     0xef00 CMakeFiles/murmsnes.dir/src/main.c.o
  .bss.__lock___malloc_recursive_mutex
-                0x20066928        0x1 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
-                0x20066928                __lock___malloc_recursive_mutex
- *fill*         0x20066929        0x3 
+                0x20067928        0x1 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
+                0x20067928                __lock___malloc_recursive_mutex
+ *fill*         0x20067929        0x3 
  .bss.__lock___sfp_recursive_mutex
-                0x2006692c        0x1 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
-                0x2006692c                __lock___sfp_recursive_mutex
- *fill*         0x2006692d        0x3 
+                0x2006792c        0x1 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
+                0x2006792c                __lock___sfp_recursive_mutex
+ *fill*         0x2006792d        0x3 
  .bss.__malloc_current_mallinfo
-                0x20066930       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
-                0x20066930                __malloc_current_mallinfo
+                0x20067930       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
+                0x20067930                __malloc_current_mallinfo
  .bss.__malloc_max_sbrked_mem
-                0x20066958        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
-                0x20066958                __malloc_max_sbrked_mem
+                0x20067958        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
+                0x20067958                __malloc_max_sbrked_mem
  .bss.__malloc_max_total_mem
-                0x2006695c        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
-                0x2006695c                __malloc_max_total_mem
+                0x2006795c        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
+                0x2006795c                __malloc_max_total_mem
  .bss.__malloc_top_pad
-                0x20066960        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
-                0x20066960                __malloc_top_pad
- .bss.__sf      0x20066964      0x138 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
-                0x20066964                __sf
+                0x20067960        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
+                0x20067960                __malloc_top_pad
+ .bss.__sf      0x20067964      0x138 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+                0x20067964                __sf
  .bss.__stdio_exit_handler
-                0x20066a9c        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
-                0x20066a9c                __stdio_exit_handler
+                0x20067a9c        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+                0x20067a9c                __stdio_exit_handler
  .bss._app_driver
-                0x20066aa0        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+                0x20067aa0        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
  .bss._cdcd_epbuf
-                0x20066aa4       0x80 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o
+                0x20067aa4       0x80 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o
  .bss._cdcd_fifo_cfg
-                0x20066b24        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o
- *fill*         0x20066b25        0x3 
+                0x20067b24        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o
+ *fill*         0x20067b25        0x3 
  .bss._cdcd_itf
-                0x20066b28       0xc8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o
+                0x20067b28       0xc8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o
  .bss._ctrl_epbuf
-                0x20066bf0       0x40 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o
+                0x20067bf0       0x40 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o
  .bss._ctrl_xfer
-                0x20066c30       0x14 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o
+                0x20067c30       0x14 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o
  .bss._sw_spin_locks
-                0x20066c44       0x20 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o
-                0x20066c44                _sw_spin_locks
+                0x20067c44       0x20 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o
+                0x20067c44                _sw_spin_locks
  .bss._tusb_rhport_role
-                0x20066c64        0x2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o
-                0x20066c64                _tusb_rhport_role
- *fill*         0x20066c66        0x2 
+                0x20067c64        0x2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o
+                0x20067c64                _tusb_rhport_role
+ *fill*         0x20067c66        0x2 
  .bss._ubsd_mutexdef
-                0x20066c68        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+                0x20067c68        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
  .bss._usbd_dev
-                0x20066c70       0x54 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+                0x20067c70       0x54 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
  .bss._usbd_mutex
-                0x20066cc4        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
- .bss._usbd_q   0x20066cc8        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+                0x20067cc4        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+ .bss._usbd_q   0x20067cc8        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
  .bss._usbd_qdef_buf
-                0x20066ccc       0xc0 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
-                0x20066ccc                _usbd_qdef_buf
+                0x20067ccc       0xc0 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+                0x20067ccc                _usbd_qdef_buf
  .bss._used_instruction_space
-                0x20066d8c        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o
+                0x20067d8c        0xc CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o
  .bss._vendord_epbuf
-                0x20066d98       0x80 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o
+                0x20067d98       0x80 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o
  .bss._vendord_itf
-                0x20066e18      0x24c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o
+                0x20067e18      0x24c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o
  .bss.audio_cons_seq
-                0x20067064        0x4 CMakeFiles/murmsnes.dir/src/main.c.o
+                0x20068064        0x4 CMakeFiles/murmsnes.dir/src/main.c.o
  .bss.audio_format
-                0x20067068        0x8 libdrivers.a(audio.c.o)
+                0x20068068        0x8 libdrivers.a(audio.c.o)
  .bss.audio_i2s_consumer
-                0x20067070        0x4 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+                0x20068070        0x4 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .bss.audio_prod_seq
-                0x20067074        0x4 CMakeFiles/murmsnes.dir/src/main.c.o
+                0x20068074        0x4 CMakeFiles/murmsnes.dir/src/main.c.o
  .bss.bytes0x2000
-                0x20067078        0x4 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
+                0x20068078        0x4 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
  .bss.chars_available_callback
-                0x2006707c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+                0x2006807c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
  .bss.chars_available_param
-                0x20067080        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
- .bss.claimed   0x20067084        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o
- .bss.claimed   0x20067088        0x2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o
- *fill*         0x2006708a        0x2 
- .bss.claimed   0x2006708c        0x2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o
- *fill*         0x2006708e        0x2 
+                0x20068080        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+ .bss.claimed   0x20068084        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o
+ .bss.claimed   0x20068088        0x2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o
+ *fill*         0x2006808a        0x2 
+ .bss.claimed   0x2006808c        0x2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o
+ *fill*         0x2006808e        0x2 
  .bss.configured_freq
-                0x20067090       0x28 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o
+                0x20068090       0x28 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o
  .bss.current_buffer
-                0x200670b8        0x4 CMakeFiles/murmsnes.dir/src/main.c.o
-                0x200670b8                current_buffer
+                0x200680b8        0x4 CMakeFiles/murmsnes.dir/src/main.c.o
+                0x200680b8                current_buffer
  .bss.desc_str.0
-                0x200670bc       0x28 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
- .bss.dma_chan  0x200670e4        0x4 libdrivers.a(HDMI.c.o)
+                0x200680bc       0x28 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
+ .bss.dma_chan  0x200680e4        0x4 libdrivers.a(HDMI.c.o)
  .bss.dma_chan_ctrl
-                0x200670e8        0x4 libdrivers.a(HDMI.c.o)
+                0x200680e8        0x4 libdrivers.a(HDMI.c.o)
  .bss.dma_chan_pal_conv
-                0x200670ec        0x4 libdrivers.a(HDMI.c.o)
+                0x200680ec        0x4 libdrivers.a(HDMI.c.o)
  .bss.dma_chan_pal_conv_ctrl
-                0x200670f0        0x4 libdrivers.a(HDMI.c.o)
- .bss.drivers   0x200670f4        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
+                0x200680f0        0x4 libdrivers.a(HDMI.c.o)
+ .bss.drivers   0x200680f4        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
  .bss.e15_last_sof
-                0x200670f8        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o
-                0x200670f8                e15_last_sof
- .bss.errno     0x200670fc        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-reent.o)
-                0x200670fc                errno
- .bss.filter    0x20067100        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
+                0x200680f8        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o
+                0x200680f8                e15_last_sof
+ .bss.errno     0x200680fc        0x4 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-reent.o)
+                0x200680fc                errno
+ .bss.filter    0x20068100        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
  .bss.graphics_buffer_shift_x
-                0x20067104        0x4 libdrivers.a(HDMI.c.o)
-                0x20067104                graphics_buffer_shift_x
+                0x20068104        0x4 libdrivers.a(HDMI.c.o)
+                0x20068104                graphics_buffer_shift_x
  .bss.graphics_buffer_shift_y
-                0x20067108        0x4 libdrivers.a(HDMI.c.o)
-                0x20067108                graphics_buffer_shift_y
+                0x20068108        0x4 libdrivers.a(HDMI.c.o)
+                0x20068108                graphics_buffer_shift_y
  .bss.hdmi_color_substitute
-                0x2006710c        0x4 libdrivers.a(HDMI.c.o)
+                0x2006810c        0x4 libdrivers.a(HDMI.c.o)
  .bss.heap_end.0
-                0x20067110        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o
+                0x20068110        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o
  .bss.hw_endpoints
-                0x20067114      0x400 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
+                0x20068114      0x400 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
  .bss.i2s_config.3
-                0x20067514       0x18 CMakeFiles/murmsnes.dir/src/main.c.o
+                0x20068514       0x18 CMakeFiles/murmsnes.dir/src/main.c.o
  .bss.inx_buf_dma.1
-                0x2006752c        0x4 libdrivers.a(HDMI.c.o)
- .bss.irq_inx   0x20067530        0x4 libdrivers.a(HDMI.c.o)
+                0x2006852c        0x4 libdrivers.a(HDMI.c.o)
+ .bss.irq_inx   0x20068530        0x4 libdrivers.a(HDMI.c.o)
  .bss.lazy_vsnprintf
-                0x20067534        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o
- .bss.line.0    0x20067538        0x4 libdrivers.a(HDMI.c.o)
+                0x20068534        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o
+ .bss.line.0    0x20068538        0x4 libdrivers.a(HDMI.c.o)
  .bss.load_value
-                0x2006753c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o
+                0x2006853c        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o
  .bss.next_buffer_ptr
-                0x20067540        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
- .bss.object.0  0x20067544       0x18 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
+                0x20068540        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
+ .bss.object.0  0x20068544       0x18 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
  .bss.offs_prg0
-                0x2006755c        0x4 libdrivers.a(HDMI.c.o)
+                0x2006855c        0x4 libdrivers.a(HDMI.c.o)
  .bss.offs_prg1
-                0x20067560        0x4 libdrivers.a(HDMI.c.o)
+                0x20068560        0x4 libdrivers.a(HDMI.c.o)
  .bss.one_shot_timer_crit_sec
-                0x20067564        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+                0x20068564        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
  .bss.pio_i2s_consumer_format
-                0x2006756c        0x8 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
-                0x2006756c                pio_i2s_consumer_format
- .bss.pools     0x20067574       0x20 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
+                0x2006856c        0x8 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+                0x2006856c                pio_i2s_consumer_format
+ .bss.pools     0x20068574       0x20 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
  .bss.producer_format
-                0x20067594        0x8 libdrivers.a(audio.c.o)
+                0x20068594        0x8 libdrivers.a(audio.c.o)
  .bss.producer_pool
-                0x2006759c        0x4 libdrivers.a(audio.c.o)
+                0x2006859c        0x4 libdrivers.a(audio.c.o)
  .bss.psram_session_mark
-                0x200675a0        0x4 libdrivers.a(psram_allocator.c.o)
+                0x200685a0        0x4 libdrivers.a(psram_allocator.c.o)
  .bss.psram_sram_mode
-                0x200675a4        0x4 libdrivers.a(psram_allocator.c.o)
+                0x200685a4        0x4 libdrivers.a(psram_allocator.c.o)
  .bss.psram_temp_mode
-                0x200675a8        0x4 libdrivers.a(psram_allocator.c.o)
+                0x200685a8        0x4 libdrivers.a(psram_allocator.c.o)
  .bss.psram_temp_offset
-                0x200675ac        0x4 libdrivers.a(psram_allocator.c.o)
+                0x200685ac        0x4 libdrivers.a(psram_allocator.c.o)
  .bss.retrieved_id
-                0x200675b0        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o
+                0x200685b0        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o
  .bss.shared_state
-                0x200675b8        0xc CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
-                0x200675b8                shared_state
+                0x200685b8        0xc CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+                0x200685b8                shared_state
  .bss.sleep_notifier
-                0x200675c4        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
- .bss.so        0x200675c8       0x10 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x200675c8                so
+                0x200685c4        0x4 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
+ .bss.so        0x200685c8       0x10 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x200685c8                so
  .bss.stdio_usb_mutex
-                0x200675d8        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
- .bss.tanval    0x200675e0        0x4 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x200675e0                tanval
+                0x200685d8        0x8 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+ .bss.tanval    0x200685e0        0x4 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x200685e0                tanval
  .bss.usbd_serial_str
-                0x200675e4       0x11 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
- *fill*         0x200675f5        0x3 
- .bss.zero.0    0x200675f8        0x4 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+                0x200685e4       0x11 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
+ *fill*         0x200685f5        0x3 
+ .bss.zero.0    0x200685f8        0x4 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .bss.C41FAngleRes
-                0x200675fc        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x200675fc                C41FAngleRes
- .bss.C41FDist  0x200675fe        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x200675fe                C41FDist
+                0x200685fc        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x200685fc                C41FAngleRes
+ .bss.C41FDist  0x200685fe        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x200685fe                C41FDist
  .bss.C41FDistVal
-                0x20067600        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x20067600                C41FDistVal
- .bss.C41FXVal  0x20067602        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x20067602                C41FXVal
- .bss.C41FYVal  0x20067604        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x20067604                C41FYVal
- .bss.C4WFDist  0x20067606        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x20067606                C4WFDist
+                0x20068600        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x20068600                C41FDistVal
+ .bss.C41FXVal  0x20068602        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x20068602                C41FXVal
+ .bss.C41FYVal  0x20068604        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x20068604                C41FYVal
+ .bss.C4WFDist  0x20068606        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x20068606                C4WFDist
  .bss.C4WFScale
-                0x20067608        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x20067608                C4WFScale
+                0x20068608        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x20068608                C4WFScale
  .bss.C4WFX2Val
-                0x2006760a        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x2006760a                C4WFX2Val
- .bss.C4WFXVal  0x2006760c        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x2006760c                C4WFXVal
+                0x2006860a        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x2006860a                C4WFX2Val
+ .bss.C4WFXVal  0x2006860c        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x2006860c                C4WFXVal
  .bss.C4WFY2Val
-                0x2006760e        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x2006760e                C4WFY2Val
- .bss.C4WFYVal  0x20067610        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x20067610                C4WFYVal
- .bss.C4WFZVal  0x20067612        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
-                0x20067612                C4WFZVal
- .bss.Fsid      0x20067614        0x2 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
- .bss._claimed  0x20067616        0x2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o
- .bss.CardType  0x20067618        0x1 CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o
- .bss.CurrVol   0x20067619        0x1 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
- .bss.KeyOn.0   0x2006761a        0x1 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
+                0x2006860e        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x2006860e                C4WFY2Val
+ .bss.C4WFYVal  0x20068610        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x20068610                C4WFYVal
+ .bss.C4WFZVal  0x20068612        0x2 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+                0x20068612                C4WFZVal
+ .bss.Fsid      0x20068614        0x2 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
+ .bss._claimed  0x20068616        0x2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o
+ .bss.CardType  0x20068618        0x1 CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o
+ .bss.CurrVol   0x20068619        0x1 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
+ .bss.KeyOn.0   0x2006861a        0x1 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
  .bss.KeyOnPrev.1
-                0x2006761b        0x1 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
- .bss.OpenBus   0x2006761c        0x1 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
-                0x2006761c                OpenBus
+                0x2006861b        0x1 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
+ .bss.OpenBus   0x2006861c        0x1 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+                0x2006861c                OpenBus
  .bss._app_driver_count
-                0x2006761d        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+                0x2006861d        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
  .bss._sof_enable
-                0x2006761e        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
+                0x2006861e        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
  .bss._usbd_queued_setup
-                0x2006761f        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+                0x2006861f        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
  .bss.audio_enabled
-                0x20067620        0x1 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+                0x20068620        0x1 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .bss.audio_i2s_started
-                0x20067621        0x1 libdrivers.a(audio.c.o)
+                0x20068621        0x1 libdrivers.a(audio.c.o)
  .bss.core1_ready
-                0x20067622        0x1 CMakeFiles/murmsnes.dir/src/main.c.o
+                0x20068622        0x1 CMakeFiles/murmsnes.dir/src/main.c.o
  .bss.full_palette_update_pending
-                0x20067623        0x1 libdrivers.a(HDMI.c.o)
+                0x20068623        0x1 libdrivers.a(HDMI.c.o)
  .bss.g_palette_needs_update
-                0x20067624        0x1 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o
-                0x20067624                g_palette_needs_update
- .bss.in_bit    0x20067625        0x1 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o
+                0x20068624        0x1 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o
+                0x20068624                g_palette_needs_update
+ .bss.in_bit    0x20068625        0x1 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o
  .bss.irq_handler_chain_free_slot_head
-                0x20067626        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
- .bss.itf_num   0x20067627        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
+                0x20068626        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
+ .bss.itf_num   0x20068627        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
  .bss.last_p1.0
-                0x20067628        0x1 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o
+                0x20068628        0x1 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o
  .bss.low_priority_irq_num
-                0x20067629        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+                0x20068629        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
  .bss.one_shot_timer_pending
-                0x2006762a        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+                0x2006862a        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
  .bss.user_irq_claimed
-                0x2006762b        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
+                0x2006862b        0x1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
  *(COMMON)
                 [!provide]                        PROVIDE (__global_pointer$ = (. + 0x800))
  *(.sbss*)
-                0x2006762c                        . = ALIGN (0x4)
-                0x2006762c                        __bss_end__ = .
+                0x2006862c                        . = ALIGN (0x4)
+                0x2006862c                        __bss_end__ = .
 
-.heap           0x2006762c      0x800 load address 0x100523a8
-                0x2006762c                        __end__ = .
-                0x2006762c                        end = __end__
+.heap           0x2006862c      0x800 load address 0x100518d0
+                0x2006862c                        __end__ = .
+                0x2006862c                        end = __end__
  *(.heap*)
- .heap          0x2006762c      0x800 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
+ .heap          0x2006862c      0x800 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
                 0x20080000                        __HeapLimit = (ORIGIN (RAM) + LENGTH (RAM))
 
-.scratch_x      0x20080000        0x0 load address 0x100523a8
+.scratch_x      0x20080000        0x0 load address 0x100518d0
                 0x20080000                        __scratch_x_start__ = .
  *(.scratch_x.*)
                 0x20080000                        . = ALIGN (0x4)
                 0x20080000                        __scratch_x_end__ = .
-                0x100523a8                        __scratch_x_source__ = LOADADDR (.scratch_x)
+                0x100518d0                        __scratch_x_source__ = LOADADDR (.scratch_x)
 
-.scratch_y      0x20081000      0x240 load address 0x100523a8
+.scratch_y      0x20081000      0x16c load address 0x100518d0
                 0x20081000                        __scratch_y_start__ = .
  *(.scratch_y.*)
  .scratch_y.hdmi_driver
                 0x20081000      0x14c libdrivers.a(HDMI.c.o)
+ *fill*         0x2008114c        0x4 
+ .scratch_y.hdmi_driver.__stub
+                0x20081150        0x8 linker stubs
  .scratch_y.hdmi_ptr_4
-                0x2008114c        0x8 libdrivers.a(HDMI.c.o)
+                0x20081158        0x8 libdrivers.a(HDMI.c.o)
  .scratch_y.hdmi_ptr_3
-                0x20081154        0x8 libdrivers.a(HDMI.c.o)
+                0x20081160        0x8 libdrivers.a(HDMI.c.o)
  .scratch_y.hdmi_ptr
-                0x2008115c        0x4 libdrivers.a(HDMI.c.o)
- .scratch_y.hdmi_asm
-                0x20081160       0xd8 libdrivers.a(hdmi_scanline.S.o)
-                0x20081160                hdmi_copy_scanline_asm
-                0x20081210                hdmi_memset_fast
- .scratch_y.hdmi_asm.__stub
-                0x20081238        0x8 linker stubs
-                0x20081240                        . = ALIGN (0x4)
-                0x20081240                        __scratch_y_end__ = .
-                0x100523a8                        __scratch_y_source__ = LOADADDR (.scratch_y)
+                0x20081168        0x4 libdrivers.a(HDMI.c.o)
+                0x2008116c                        . = ALIGN (0x4)
+                0x2008116c                        __scratch_y_end__ = .
+                0x100518d0                        __scratch_y_source__ = LOADADDR (.scratch_y)
 
 .stack1_dummy   0x20080000      0x800
  *(.stack1*)
  .stack1        0x20080000      0x800 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o
 
-.stack_dummy    0x20081240      0x800
+.stack_dummy    0x20081180      0x800
  *(.stack*)
- .stack         0x20081240      0x800 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
+ .stack         0x20081180      0x800 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
 
-.flash_end      0x100525e8       0x14
+.flash_end      0x10051a3c       0x14
  *(.embedded_end_block*)
  .embedded_end_block
-                0x100525e8       0x14 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
-                0x100525fc                        PROVIDE (__flash_binary_end = .)
+                0x10051a3c       0x14 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
+                0x10051a50                        PROVIDE (__flash_binary_end = .)
                 0x20080000                        __StackLimit = (ORIGIN (RAM) + LENGTH (RAM))
                 0x20081000                        __StackOneTop = (ORIGIN (SCRATCH_X) + LENGTH (SCRATCH_X))
                 0x20082000                        __StackTop = (ORIGIN (SCRATCH_Y) + LENGTH (SCRATCH_Y))
@@ -6420,8 +6425,8 @@ LOAD /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-no
 OUTPUT(murmsnes.elf elf32-littlearm)
 LOAD linker stubs
 
-.rel.dyn        0x100525fc        0x0
- .rel.iplt      0x100525fc        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
+.rel.dyn        0x10051a50        0x0
+ .rel.iplt      0x10051a50        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
 
 .ARM.attributes
                 0x00000000       0x34
@@ -6767,7 +6772,7 @@ LOAD linker stubs
  .comment       0x00000046       0x47 libdrivers.a(psram_allocator.c.o)
  .comment       0x00000046       0x47 libdrivers.a(audio.c.o)
 
-.debug_info     0x00000000    0x9895b
+.debug_info     0x00000000    0x97da0
  .debug_info    0x00000000     0x35f9 CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_info    0x000035f9     0x1ca4 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
  .debug_info    0x0000529d      0x67f CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
@@ -6840,13 +6845,13 @@ LOAD linker stubs
  .debug_info    0x00088a01      0x189 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
  .debug_info    0x00088b8a     0x38a5 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .debug_info    0x0008c42f     0x54e4 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
- .debug_info    0x00091913     0x4e63 libdrivers.a(HDMI.c.o)
- .debug_info    0x00096776       0x3e libdrivers.a(hdmi_scanline.S.o)
- .debug_info    0x000967b4      0x48a libdrivers.a(psram_init.c.o)
- .debug_info    0x00096c3e      0xced libdrivers.a(psram_allocator.c.o)
- .debug_info    0x0009792b     0x1030 libdrivers.a(audio.c.o)
+ .debug_info    0x00091913     0x429c libdrivers.a(HDMI.c.o)
+ .debug_info    0x00095baf       0x4a libdrivers.a(hdmi_scanline.S.o)
+ .debug_info    0x00095bf9      0x48a libdrivers.a(psram_init.c.o)
+ .debug_info    0x00096083      0xced libdrivers.a(psram_allocator.c.o)
+ .debug_info    0x00096d70     0x1030 libdrivers.a(audio.c.o)
 
-.debug_abbrev   0x00000000    0x11520
+.debug_abbrev   0x00000000    0x1152a
  .debug_abbrev  0x00000000      0x7c2 CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_abbrev  0x000007c2      0x3e2 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
  .debug_abbrev  0x00000ba4      0x1eb CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
@@ -6919,14 +6924,14 @@ LOAD linker stubs
  .debug_abbrev  0x0000f6e6      0x110 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
  .debug_abbrev  0x0000f7f6      0x656 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .debug_abbrev  0x0000fe4c      0x652 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
- .debug_abbrev  0x0001049e      0x74e libdrivers.a(HDMI.c.o)
- .debug_abbrev  0x00010bec       0x28 libdrivers.a(hdmi_scanline.S.o)
- .debug_abbrev  0x00010c14      0x1ce libdrivers.a(psram_init.c.o)
- .debug_abbrev  0x00010de2      0x37a libdrivers.a(psram_allocator.c.o)
- .debug_abbrev  0x0001115c      0x3c4 libdrivers.a(audio.c.o)
+ .debug_abbrev  0x0001049e      0x758 libdrivers.a(HDMI.c.o)
+ .debug_abbrev  0x00010bf6       0x28 libdrivers.a(hdmi_scanline.S.o)
+ .debug_abbrev  0x00010c1e      0x1ce libdrivers.a(psram_init.c.o)
+ .debug_abbrev  0x00010dec      0x37a libdrivers.a(psram_allocator.c.o)
+ .debug_abbrev  0x00011166      0x3c4 libdrivers.a(audio.c.o)
 
 .debug_loclists
-                0x00000000    0x749a9
+                0x00000000    0x6e275
  .debug_loclists
                 0x00000000      0xcc4 CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_loclists
@@ -7060,13 +7065,13 @@ LOAD linker stubs
  .debug_loclists
                 0x000664ce     0x2a20 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
  .debug_loclists
-                0x00068eee     0xb033 libdrivers.a(HDMI.c.o)
+                0x00068eee     0x48ff libdrivers.a(HDMI.c.o)
  .debug_loclists
-                0x00073f21      0x13f libdrivers.a(psram_init.c.o)
+                0x0006d7ed      0x13f libdrivers.a(psram_init.c.o)
  .debug_loclists
-                0x00074060      0x391 libdrivers.a(psram_allocator.c.o)
+                0x0006d92c      0x391 libdrivers.a(psram_allocator.c.o)
  .debug_loclists
-                0x000743f1      0x5b8 libdrivers.a(audio.c.o)
+                0x0006dcbd      0x5b8 libdrivers.a(audio.c.o)
 
 .debug_aranges  0x00000000     0x3378
  .debug_aranges
@@ -7225,7 +7230,7 @@ LOAD linker stubs
                 0x00003320       0x58 libdrivers.a(audio.c.o)
 
 .debug_rnglists
-                0x00000000    0x11c9a
+                0x00000000    0x11953
  .debug_rnglists
                 0x00000000      0x205 CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_rnglists
@@ -7367,15 +7372,15 @@ LOAD linker stubs
  .debug_rnglists
                 0x000104bf      0xb04 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
  .debug_rnglists
-                0x00010fc3      0xb62 libdrivers.a(HDMI.c.o)
+                0x00010fc3      0x81b libdrivers.a(HDMI.c.o)
  .debug_rnglists
-                0x00011b25       0x23 libdrivers.a(psram_init.c.o)
+                0x000117de       0x23 libdrivers.a(psram_init.c.o)
  .debug_rnglists
-                0x00011b48       0x96 libdrivers.a(psram_allocator.c.o)
+                0x00011801       0x96 libdrivers.a(psram_allocator.c.o)
  .debug_rnglists
-                0x00011bde       0xbc libdrivers.a(audio.c.o)
+                0x00011897       0xbc libdrivers.a(audio.c.o)
 
-.debug_line     0x00000000    0xa3683
+.debug_line     0x00000000    0xa0395
  .debug_line    0x00000000     0x153d CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_line    0x0000153d     0x169e CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
  .debug_line    0x00002bdb      0x9db CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
@@ -7448,93 +7453,93 @@ LOAD linker stubs
  .debug_line    0x000969e2      0x17a CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
  .debug_line    0x00096b5c     0x15b1 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .debug_line    0x0009810d     0x30f3 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
- .debug_line    0x0009b200     0x6fc2 libdrivers.a(HDMI.c.o)
- .debug_line    0x000a21c2       0xab libdrivers.a(hdmi_scanline.S.o)
- .debug_line    0x000a226d      0x479 libdrivers.a(psram_init.c.o)
- .debug_line    0x000a26e6      0x5b4 libdrivers.a(psram_allocator.c.o)
- .debug_line    0x000a2c9a      0x9e9 libdrivers.a(audio.c.o)
+ .debug_line    0x0009b200     0x3c9c libdrivers.a(HDMI.c.o)
+ .debug_line    0x0009ee9c       0xe3 libdrivers.a(hdmi_scanline.S.o)
+ .debug_line    0x0009ef7f      0x479 libdrivers.a(psram_init.c.o)
+ .debug_line    0x0009f3f8      0x5b4 libdrivers.a(psram_allocator.c.o)
+ .debug_line    0x0009f9ac      0x9e9 libdrivers.a(audio.c.o)
 
-.debug_str      0x00000000    0x134e4
- .debug_str     0x00000000    0x134e4 CMakeFiles/murmsnes.dir/src/main.c.o
+.debug_str      0x00000000    0x134f0
+ .debug_str     0x00000000    0x134f0 CMakeFiles/murmsnes.dir/src/main.c.o
                                0x18f2 (size before relaxing)
- .debug_str     0x000134e4      0xf5c CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
- .debug_str     0x000134e4      0x325 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
- .debug_str     0x000134e4      0x69a CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
- .debug_str     0x000134e4      0x983 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o
- .debug_str     0x000134e4      0x97e CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o
- .debug_str     0x000134e4      0xf7a CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o
- .debug_str     0x000134e4     0x1a1a CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
- .debug_str     0x000134e4     0x1095 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o
- .debug_str     0x000134e4     0x1863 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
- .debug_str     0x000134e4      0x69d CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o
- .debug_str     0x000134e4     0x169c CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
- .debug_str     0x000134e4     0x1444 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
- .debug_str     0x000134e4     0x11d1 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
- .debug_str     0x000134e4      0x3de CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o
- .debug_str     0x000134e4     0x11b1 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o
- .debug_str     0x000134e4      0xf3c CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
- .debug_str     0x000134e4      0x8eb CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o
- .debug_str     0x000134e4      0x861 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o
- .debug_str     0x000134e4      0xb44 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
- .debug_str     0x000134e4      0xd36 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o
- .debug_str     0x000134e4      0x20f CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o
- .debug_str     0x000134e4      0x381 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.o
- .debug_str     0x000134e4      0x32c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o
- .debug_str     0x000134e4      0xbd9 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o
- .debug_str     0x000134e4      0xc58 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
- .debug_str     0x000134e4      0x21e CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.o
- .debug_str     0x000134e4      0x8f2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o
- .debug_str     0x000134e4      0x2f2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.o
- .debug_str     0x000134e4     0x1314 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
- .debug_str     0x000134e4      0xbac CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o
- .debug_str     0x000134e4      0xb9b CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o
- .debug_str     0x000134e4      0x4a5 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o
- .debug_str     0x000134e4      0x71c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.o
- .debug_str     0x000134e4      0x746 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o
- .debug_str     0x000134e4      0x2d2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o
- .debug_str     0x000134e4      0x96e CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o
- .debug_str     0x000134e4      0x2ba CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o
- .debug_str     0x000134e4      0x298 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o
- .debug_str     0x000134e4      0x24b CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o
- .debug_str     0x000134e4      0x2a1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o
- .debug_str     0x000134e4     0x1225 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
- .debug_str     0x000134e4      0x4ed CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o
- .debug_str     0x000134e4       0x8a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S.o
- .debug_str     0x000134e4      0x576 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o
- .debug_str     0x000134e4      0x410 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
- .debug_str     0x000134e4      0x4b7 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o
- .debug_str     0x000134e4       0x7c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
- .debug_str     0x000134e4      0x8a0 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o
- .debug_str     0x000134e4      0xc55 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
- .debug_str     0x000134e4      0xf67 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
- .debug_str     0x000134e4     0x105a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
- .debug_str     0x000134e4     0x1109 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
- .debug_str     0x000134e4      0x29d CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o
- .debug_str     0x000134e4     0x13db CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
- .debug_str     0x000134e4      0xbd2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o
- .debug_str     0x000134e4     0x1c6f CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
- .debug_str     0x000134e4      0x7fd CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o
- .debug_str     0x000134e4     0x187c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o
- .debug_str     0x000134e4      0xf6a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o
- .debug_str     0x000134e4      0xf46 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o
- .debug_str     0x000134e4      0x62f CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o
- .debug_str     0x000134e4     0x12f6 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o
- .debug_str     0x000134e4      0x788 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.o
- .debug_str     0x000134e4      0x67a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o
- .debug_str     0x000134e4     0x11c9 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o
- .debug_str     0x000134e4      0xd92 CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o
- .debug_str     0x000134e4      0xd12 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
- .debug_str     0x000134e4      0x200 CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o
- .debug_str     0x000134e4      0x1e3 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
- .debug_str     0x000134e4     0x1fb5 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
- .debug_str     0x000134e4     0x15c2 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
- .debug_str     0x000134e4     0x1f08 libdrivers.a(HDMI.c.o)
- .debug_str     0x000134e4       0xa8 libdrivers.a(hdmi_scanline.S.o)
- .debug_str     0x000134e4      0x4f0 libdrivers.a(psram_init.c.o)
- .debug_str     0x000134e4      0x713 libdrivers.a(psram_allocator.c.o)
- .debug_str     0x000134e4      0x848 libdrivers.a(audio.c.o)
+ .debug_str     0x000134f0      0xf5c CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
+ .debug_str     0x000134f0      0x325 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+ .debug_str     0x000134f0      0x69a CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
+ .debug_str     0x000134f0      0x983 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o
+ .debug_str     0x000134f0      0x97e CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o
+ .debug_str     0x000134f0      0xf7a CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o
+ .debug_str     0x000134f0     0x1a1a CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
+ .debug_str     0x000134f0     0x1095 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o
+ .debug_str     0x000134f0     0x1863 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+ .debug_str     0x000134f0      0x69d CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o
+ .debug_str     0x000134f0     0x169c CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+ .debug_str     0x000134f0     0x1444 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+ .debug_str     0x000134f0     0x11d1 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
+ .debug_str     0x000134f0      0x3de CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o
+ .debug_str     0x000134f0     0x11b1 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o
+ .debug_str     0x000134f0      0xf3c CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
+ .debug_str     0x000134f0      0x8eb CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o
+ .debug_str     0x000134f0      0x861 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o
+ .debug_str     0x000134f0      0xb44 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
+ .debug_str     0x000134f0      0xd36 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o
+ .debug_str     0x000134f0      0x20f CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o
+ .debug_str     0x000134f0      0x381 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.o
+ .debug_str     0x000134f0      0x32c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o
+ .debug_str     0x000134f0      0xbd9 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o
+ .debug_str     0x000134f0      0xc58 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
+ .debug_str     0x000134f0      0x21e CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.o
+ .debug_str     0x000134f0      0x8f2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o
+ .debug_str     0x000134f0      0x2f2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.o
+ .debug_str     0x000134f0     0x1314 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
+ .debug_str     0x000134f0      0xbac CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o
+ .debug_str     0x000134f0      0xb9b CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o
+ .debug_str     0x000134f0      0x4a5 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o
+ .debug_str     0x000134f0      0x71c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.o
+ .debug_str     0x000134f0      0x746 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o
+ .debug_str     0x000134f0      0x2d2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o
+ .debug_str     0x000134f0      0x96e CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o
+ .debug_str     0x000134f0      0x2ba CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o
+ .debug_str     0x000134f0      0x298 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o
+ .debug_str     0x000134f0      0x24b CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o
+ .debug_str     0x000134f0      0x2a1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o
+ .debug_str     0x000134f0     0x1225 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
+ .debug_str     0x000134f0      0x4ed CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o
+ .debug_str     0x000134f0       0x8a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S.o
+ .debug_str     0x000134f0      0x576 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o
+ .debug_str     0x000134f0      0x410 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+ .debug_str     0x000134f0      0x4b7 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o
+ .debug_str     0x000134f0       0x7c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
+ .debug_str     0x000134f0      0x8a0 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o
+ .debug_str     0x000134f0      0xc55 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
+ .debug_str     0x000134f0      0xf67 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
+ .debug_str     0x000134f0     0x105a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+ .debug_str     0x000134f0     0x1109 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
+ .debug_str     0x000134f0      0x29d CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o
+ .debug_str     0x000134f0     0x13db CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
+ .debug_str     0x000134f0      0xbd2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o
+ .debug_str     0x000134f0     0x1c6f CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+ .debug_str     0x000134f0      0x7fd CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o
+ .debug_str     0x000134f0     0x187c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o
+ .debug_str     0x000134f0      0xf6a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o
+ .debug_str     0x000134f0      0xf46 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o
+ .debug_str     0x000134f0      0x62f CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o
+ .debug_str     0x000134f0     0x12f6 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o
+ .debug_str     0x000134f0      0x788 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.o
+ .debug_str     0x000134f0      0x67a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o
+ .debug_str     0x000134f0     0x11c9 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o
+ .debug_str     0x000134f0      0xd92 CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o
+ .debug_str     0x000134f0      0xd12 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
+ .debug_str     0x000134f0      0x200 CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o
+ .debug_str     0x000134f0      0x1e3 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
+ .debug_str     0x000134f0     0x1fb5 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+ .debug_str     0x000134f0     0x15c2 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
+ .debug_str     0x000134f0     0x1ef8 libdrivers.a(HDMI.c.o)
+ .debug_str     0x000134f0       0xbe libdrivers.a(hdmi_scanline.S.o)
+ .debug_str     0x000134f0      0x4f0 libdrivers.a(psram_init.c.o)
+ .debug_str     0x000134f0      0x713 libdrivers.a(psram_allocator.c.o)
+ .debug_str     0x000134f0      0x848 libdrivers.a(audio.c.o)
 
-.debug_frame    0x00000000     0xb270
+.debug_frame    0x00000000     0xb288
  .debug_frame   0x00000000      0x138 CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_frame   0x00000138      0x134 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
  .debug_frame   0x0000026c       0xb8 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
@@ -7603,59 +7608,59 @@ LOAD linker stubs
  .debug_frame   0x00009c14       0x3c CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
  .debug_frame   0x00009c50      0x16c CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .debug_frame   0x00009dbc      0x31c CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
- .debug_frame   0x0000a0d8      0x274 libdrivers.a(HDMI.c.o)
- .debug_frame   0x0000a34c       0x38 libdrivers.a(psram_init.c.o)
- .debug_frame   0x0000a384      0x16c libdrivers.a(psram_allocator.c.o)
- .debug_frame   0x0000a4f0       0xe0 libdrivers.a(audio.c.o)
- .debug_frame   0x0000a5d0       0x44 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_ldivmod.o)
- .debug_frame   0x0000a614       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x0000a640       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_udivmoddi4.o)
- .debug_frame   0x0000a678       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-calloc.o)
- .debug_frame   0x0000a698       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-callocr.o)
- .debug_frame   0x0000a6c4       0x44 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-qsort.o)
- .debug_frame   0x0000a708       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-malloc.o)
- .debug_frame   0x0000a738       0x4c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
- .debug_frame   0x0000a784       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseek.o)
- .debug_frame   0x0000a7c0       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftell.o)
- .debug_frame   0x0000a7f0       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mlock.o)
- .debug_frame   0x0000a820       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-rand.o)
- .debug_frame   0x0000a85c       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fclose.o)
- .debug_frame   0x0000a898       0x70 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fflush.o)
- .debug_frame   0x0000a908      0x13c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
- .debug_frame   0x0000aa44       0x4c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fopen.o)
- .debug_frame   0x0000aa90       0x68 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fread.o)
- .debug_frame   0x0000aaf8       0x64 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseeko.o)
- .debug_frame   0x0000ab5c       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftello.o)
- .debug_frame   0x0000ab98       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcmp.o)
- .debug_frame   0x0000abd0       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memmove.o)
- .debug_frame   0x0000ac00       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memset.o)
- .debug_frame   0x0000ac2c       0x34 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strchr.o)
- .debug_frame   0x0000ac60       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncasecmp.o)
- .debug_frame   0x0000ac8c       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncmp.o)
- .debug_frame   0x0000acc4       0x34 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-time.o)
- .debug_frame   0x0000acf8       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fstatr.o)
- .debug_frame   0x0000ad24       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-gettimeofdayr.o)
- .debug_frame   0x0000ad50       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-openr.o)
- .debug_frame   0x0000ad7c       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sbrkr.o)
- .debug_frame   0x0000ada8       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-errno.o)
- .debug_frame   0x0000adc8       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sysconf.o)
- .debug_frame   0x0000adf0       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strcmp.o)
- .debug_frame   0x0000ae2c       0xb0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
- .debug_frame   0x0000aedc       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcpy.o)
- .debug_frame   0x0000af04       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strlen-stub.o)
- .debug_frame   0x0000af24       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ctype_.o)
- .debug_frame   0x0000af44       0x84 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-freer.o)
- .debug_frame   0x0000afc8       0x34 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fwalk.o)
- .debug_frame   0x0000affc       0x6c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-makebuf.o)
- .debug_frame   0x0000b068       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-refill.o)
- .debug_frame   0x0000b0a4       0x8c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
- .debug_frame   0x0000b130       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-flags.o)
- .debug_frame   0x0000b158       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-closer.o)
- .debug_frame   0x0000b184       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-reent.o)
- .debug_frame   0x0000b1c0       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-isattyr.o)
- .debug_frame   0x0000b1ec       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lseekr.o)
- .debug_frame   0x0000b218       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-readr.o)
- .debug_frame   0x0000b244       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-writer.o)
+ .debug_frame   0x0000a0d8      0x28c libdrivers.a(HDMI.c.o)
+ .debug_frame   0x0000a364       0x38 libdrivers.a(psram_init.c.o)
+ .debug_frame   0x0000a39c      0x16c libdrivers.a(psram_allocator.c.o)
+ .debug_frame   0x0000a508       0xe0 libdrivers.a(audio.c.o)
+ .debug_frame   0x0000a5e8       0x44 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_ldivmod.o)
+ .debug_frame   0x0000a62c       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x0000a658       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x0000a690       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-calloc.o)
+ .debug_frame   0x0000a6b0       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-callocr.o)
+ .debug_frame   0x0000a6dc       0x44 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-qsort.o)
+ .debug_frame   0x0000a720       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-malloc.o)
+ .debug_frame   0x0000a750       0x4c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
+ .debug_frame   0x0000a79c       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseek.o)
+ .debug_frame   0x0000a7d8       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftell.o)
+ .debug_frame   0x0000a808       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mlock.o)
+ .debug_frame   0x0000a838       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-rand.o)
+ .debug_frame   0x0000a874       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fclose.o)
+ .debug_frame   0x0000a8b0       0x70 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fflush.o)
+ .debug_frame   0x0000a920      0x13c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+ .debug_frame   0x0000aa5c       0x4c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fopen.o)
+ .debug_frame   0x0000aaa8       0x68 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fread.o)
+ .debug_frame   0x0000ab10       0x64 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseeko.o)
+ .debug_frame   0x0000ab74       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftello.o)
+ .debug_frame   0x0000abb0       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcmp.o)
+ .debug_frame   0x0000abe8       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memmove.o)
+ .debug_frame   0x0000ac18       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memset.o)
+ .debug_frame   0x0000ac44       0x34 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strchr.o)
+ .debug_frame   0x0000ac78       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncasecmp.o)
+ .debug_frame   0x0000aca4       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncmp.o)
+ .debug_frame   0x0000acdc       0x34 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-time.o)
+ .debug_frame   0x0000ad10       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fstatr.o)
+ .debug_frame   0x0000ad3c       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-gettimeofdayr.o)
+ .debug_frame   0x0000ad68       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-openr.o)
+ .debug_frame   0x0000ad94       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sbrkr.o)
+ .debug_frame   0x0000adc0       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-errno.o)
+ .debug_frame   0x0000ade0       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sysconf.o)
+ .debug_frame   0x0000ae08       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strcmp.o)
+ .debug_frame   0x0000ae44       0xb0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
+ .debug_frame   0x0000aef4       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcpy.o)
+ .debug_frame   0x0000af1c       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strlen-stub.o)
+ .debug_frame   0x0000af3c       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ctype_.o)
+ .debug_frame   0x0000af5c       0x84 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-freer.o)
+ .debug_frame   0x0000afe0       0x34 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fwalk.o)
+ .debug_frame   0x0000b014       0x6c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-makebuf.o)
+ .debug_frame   0x0000b080       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-refill.o)
+ .debug_frame   0x0000b0bc       0x8c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
+ .debug_frame   0x0000b148       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-flags.o)
+ .debug_frame   0x0000b170       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-closer.o)
+ .debug_frame   0x0000b19c       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-reent.o)
+ .debug_frame   0x0000b1d8       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-isattyr.o)
+ .debug_frame   0x0000b204       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lseekr.o)
+ .debug_frame   0x0000b230       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-readr.o)
+ .debug_frame   0x0000b25c       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-writer.o)
 
 .debug_line_str
                 0x00000000      0x2e2
