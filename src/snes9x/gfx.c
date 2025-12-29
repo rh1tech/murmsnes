@@ -2723,11 +2723,13 @@ void S9xUpdateScreen(void)
    if (IPPU.OBJChanged)
       S9xSetupOBJ();
 
+#ifndef NO_WINDOW_CLIPPING
    if (PPU.RecomputeClipWindows)
    {
       ComputeClipWindows();
       PPU.RecomputeClipWindows = false;
    }
+#endif
 
    GFX.StartY = IPPU.PreviousLine;
    if ((GFX.EndY = IPPU.CurrentLine - 1) >= PPU.ScreenHeight)

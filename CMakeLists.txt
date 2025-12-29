@@ -149,6 +149,9 @@ target_compile_definitions(murmsnes PRIVATE
     PICO_AUDIO_I2S_PIO=1
     PICO_AUDIO_I2S_DMA_IRQ=0
     # Snes9x configuration - FAST_LSB_WORD_ACCESS is defined in port.h for ARM
+    # Performance optimizations - disable expensive rendering features
+    NO_WINDOW_CLIPPING=1
+    SIMPLE_COLOR_MATH=1
 )
 
 if(MURMSNES_PROFILE)

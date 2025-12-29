@@ -73,7 +73,8 @@ volatile uint32_t current_buffer = 0;
 //
 // Key goal: keep Core 1 work minimal so HDMI activity doesn't starve audio.
 // Deeper queue for better buffering during CPU spikes (digital sound effects in MK3)
-#define AUDIO_QUEUE_DEPTH 24
+// 80 frames (~1.33s @ 18kHz) - balance between buffering and SRAM usage
+#define AUDIO_QUEUE_DEPTH 80
 // NOTE: With fixed 60Hz emulation producing exactly one audio chunk per frame,
 // the producer cannot stay "ahead" of the consumer by >1 chunk in steady state.
 // Using queue-fill watermarks to decide frame skipping will therefore
@@ -240,7 +241,7 @@ static inline void snes9x_init(void) {
     Settings.HBlankStart = (256 * Settings.H_Max) / SNES_HCOUNTER_MAX;
     Settings.SoundPlaybackRate = AUDIO_SAMPLE_RATE;
     Settings.DisableSoundEcho = true;   // Disable echo to match user request / reduce mixing complexity
-    Settings.InterpolatedSound = true;
+    Settings.InterpolatedSound = false; // Disable for performance - reduces mixing CPU cost
     // Keep APU enabled - some games need it even without audio output
 
     S9xInitDisplay();
@@ -532,7 +533,10 @@ static void __time_critical_func(emulation_loop)(void) {
 
         // Optional stable 30fps cap: render only on every other emulated frame.
         // We still allow lateness-based skipping on top.
-        if (cap30_active && (video_phase & 1u)) {
+        // Force 30fps video rendering while keeping 60Hz emulation for correct game speed
+        if ((video_phase & 1u)) {
+            skip_render = true;
+        } else if (cap30_active && (video_phase & 1u)) {
             skip_render = true;
         }
 
