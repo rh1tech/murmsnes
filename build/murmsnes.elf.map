@@ -1,6 +1,8 @@
 Archive member included to satisfy reference by file (symbol)
 
 libdrivers.a(HDMI.c.o)        CMakeFiles/murmsnes.dir/src/main.c.o (graphics_set_buffer)
+libdrivers.a(hdmi_scanline.S.o)
+                              libdrivers.a(HDMI.c.o) (hdmi_copy_scanline_asm)
 libdrivers.a(psram_init.c.o)  CMakeFiles/murmsnes.dir/src/main.c.o (psram_init)
 libdrivers.a(psram_allocator.c.o)
                               CMakeFiles/murmsnes.dir/src/main.c.o (psram_malloc)
@@ -2344,6 +2346,9 @@ Discarded input sections
                 0x00000000        0x1 libdrivers.a(HDMI.c.o)
  .rodata.video_mode
                 0x00000000       0x10 libdrivers.a(HDMI.c.o)
+ .text          0x00000000        0x0 libdrivers.a(hdmi_scanline.S.o)
+ .data          0x00000000        0x0 libdrivers.a(hdmi_scanline.S.o)
+ .bss           0x00000000        0x0 libdrivers.a(hdmi_scanline.S.o)
  .text          0x00000000        0x0 libdrivers.a(psram_init.c.o)
  .data          0x00000000        0x0 libdrivers.a(psram_init.c.o)
  .bss           0x00000000        0x0 libdrivers.a(psram_init.c.o)
@@ -6230,36 +6235,40 @@ LOAD /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-no
                 0x20080000                        __scratch_x_end__ = .
                 0x100523a8                        __scratch_x_source__ = LOADADDR (.scratch_x)
 
-.scratch_y      0x20081000      0x19c load address 0x100523a8
+.scratch_y      0x20081000      0x240 load address 0x100523a8
                 0x20081000                        __scratch_y_start__ = .
  *(.scratch_y.*)
  .scratch_y.hdmi_driver
-                0x20081000      0x178 libdrivers.a(HDMI.c.o)
- .scratch_y.hdmi_driver.__stub
-                0x20081178       0x10 linker stubs
+                0x20081000      0x14c libdrivers.a(HDMI.c.o)
  .scratch_y.hdmi_ptr_4
-                0x20081188        0x8 libdrivers.a(HDMI.c.o)
+                0x2008114c        0x8 libdrivers.a(HDMI.c.o)
  .scratch_y.hdmi_ptr_3
-                0x20081190        0x8 libdrivers.a(HDMI.c.o)
+                0x20081154        0x8 libdrivers.a(HDMI.c.o)
  .scratch_y.hdmi_ptr
-                0x20081198        0x4 libdrivers.a(HDMI.c.o)
-                0x2008119c                        . = ALIGN (0x4)
-                0x2008119c                        __scratch_y_end__ = .
+                0x2008115c        0x4 libdrivers.a(HDMI.c.o)
+ .scratch_y.hdmi_asm
+                0x20081160       0xd8 libdrivers.a(hdmi_scanline.S.o)
+                0x20081160                hdmi_copy_scanline_asm
+                0x20081210                hdmi_memset_fast
+ .scratch_y.hdmi_asm.__stub
+                0x20081238        0x8 linker stubs
+                0x20081240                        . = ALIGN (0x4)
+                0x20081240                        __scratch_y_end__ = .
                 0x100523a8                        __scratch_y_source__ = LOADADDR (.scratch_y)
 
 .stack1_dummy   0x20080000      0x800
  *(.stack1*)
  .stack1        0x20080000      0x800 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o
 
-.stack_dummy    0x200811a0      0x800
+.stack_dummy    0x20081240      0x800
  *(.stack*)
- .stack         0x200811a0      0x800 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
+ .stack         0x20081240      0x800 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
 
-.flash_end      0x10052544       0x14
+.flash_end      0x100525e8       0x14
  *(.embedded_end_block*)
  .embedded_end_block
-                0x10052544       0x14 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
-                0x10052558                        PROVIDE (__flash_binary_end = .)
+                0x100525e8       0x14 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
+                0x100525fc                        PROVIDE (__flash_binary_end = .)
                 0x20080000                        __StackLimit = (ORIGIN (RAM) + LENGTH (RAM))
                 0x20081000                        __StackOneTop = (ORIGIN (SCRATCH_X) + LENGTH (SCRATCH_X))
                 0x20082000                        __StackTop = (ORIGIN (SCRATCH_Y) + LENGTH (SCRATCH_Y))
@@ -6411,8 +6420,8 @@ LOAD /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-no
 OUTPUT(murmsnes.elf elf32-littlearm)
 LOAD linker stubs
 
-.rel.dyn        0x10052558        0x0
- .rel.iplt      0x10052558        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
+.rel.dyn        0x100525fc        0x0
+ .rel.iplt      0x100525fc        0x0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtbegin.o
 
 .ARM.attributes
                 0x00000000       0x34
@@ -6569,115 +6578,117 @@ LOAD linker stubs
  .ARM.attributes
                 0x00001024       0x38 libdrivers.a(HDMI.c.o)
  .ARM.attributes
-                0x0000105c       0x38 libdrivers.a(psram_init.c.o)
+                0x0000105c       0x24 libdrivers.a(hdmi_scanline.S.o)
  .ARM.attributes
-                0x00001094       0x38 libdrivers.a(psram_allocator.c.o)
+                0x00001080       0x38 libdrivers.a(psram_init.c.o)
  .ARM.attributes
-                0x000010cc       0x38 libdrivers.a(audio.c.o)
+                0x000010b8       0x38 libdrivers.a(psram_allocator.c.o)
  .ARM.attributes
-                0x00001104       0x26 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_ldivmod.o)
+                0x000010f0       0x38 libdrivers.a(audio.c.o)
  .ARM.attributes
-                0x0000112a       0x26 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_uldivmod.o)
+                0x00001128       0x26 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_ldivmod.o)
  .ARM.attributes
-                0x00001150       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_udivmoddi4.o)
+                0x0000114e       0x26 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_uldivmod.o)
  .ARM.attributes
-                0x00001186       0x26 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_dvmd_tls.o)
+                0x00001174       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_udivmoddi4.o)
  .ARM.attributes
-                0x000011ac       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-calloc.o)
+                0x000011aa       0x26 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_dvmd_tls.o)
  .ARM.attributes
-                0x000011e2       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-callocr.o)
+                0x000011d0       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-calloc.o)
  .ARM.attributes
-                0x00001218       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-qsort.o)
+                0x00001206       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-callocr.o)
  .ARM.attributes
-                0x0000124e       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-malloc.o)
+                0x0000123c       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-qsort.o)
  .ARM.attributes
-                0x00001284       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
+                0x00001272       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-malloc.o)
  .ARM.attributes
-                0x000012ba       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseek.o)
+                0x000012a8       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
  .ARM.attributes
-                0x000012f0       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftell.o)
+                0x000012de       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseek.o)
  .ARM.attributes
-                0x00001326       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mlock.o)
+                0x00001314       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftell.o)
  .ARM.attributes
-                0x0000135c       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-rand.o)
+                0x0000134a       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mlock.o)
  .ARM.attributes
-                0x00001392       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fclose.o)
+                0x00001380       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-rand.o)
  .ARM.attributes
-                0x000013c8       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fflush.o)
+                0x000013b6       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fclose.o)
  .ARM.attributes
-                0x000013fe       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+                0x000013ec       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fflush.o)
  .ARM.attributes
-                0x00001434       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fopen.o)
+                0x00001422       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
  .ARM.attributes
-                0x0000146a       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fread.o)
+                0x00001458       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fopen.o)
  .ARM.attributes
-                0x000014a0       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseeko.o)
+                0x0000148e       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fread.o)
  .ARM.attributes
-                0x000014d6       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftello.o)
+                0x000014c4       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseeko.o)
  .ARM.attributes
-                0x0000150c       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcmp.o)
+                0x000014fa       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftello.o)
  .ARM.attributes
-                0x00001542       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memmove.o)
+                0x00001530       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcmp.o)
  .ARM.attributes
-                0x00001578       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memset.o)
+                0x00001566       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memmove.o)
  .ARM.attributes
-                0x000015ae       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strchr.o)
+                0x0000159c       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memset.o)
  .ARM.attributes
-                0x000015e4       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncasecmp.o)
+                0x000015d2       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strchr.o)
  .ARM.attributes
-                0x0000161a       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncmp.o)
+                0x00001608       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncasecmp.o)
  .ARM.attributes
-                0x00001650       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-time.o)
+                0x0000163e       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncmp.o)
  .ARM.attributes
-                0x00001686       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-impure.o)
+                0x00001674       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-time.o)
  .ARM.attributes
-                0x000016bc       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fstatr.o)
+                0x000016aa       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-impure.o)
  .ARM.attributes
-                0x000016f2       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-gettimeofdayr.o)
+                0x000016e0       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fstatr.o)
  .ARM.attributes
-                0x00001728       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-openr.o)
+                0x00001716       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-gettimeofdayr.o)
  .ARM.attributes
-                0x0000175e       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sbrkr.o)
+                0x0000174c       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-openr.o)
  .ARM.attributes
-                0x00001794       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-errno.o)
+                0x00001782       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sbrkr.o)
  .ARM.attributes
-                0x000017ca       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sysconf.o)
+                0x000017b8       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-errno.o)
  .ARM.attributes
-                0x00001800       0x24 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strcmp.o)
+                0x000017ee       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sysconf.o)
  .ARM.attributes
-                0x00001824       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
+                0x00001824       0x24 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strcmp.o)
  .ARM.attributes
-                0x0000185a       0x24 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcpy.o)
+                0x00001848       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
  .ARM.attributes
-                0x0000187e       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strlen-stub.o)
+                0x0000187e       0x24 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcpy.o)
  .ARM.attributes
-                0x000018b4       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ctype_.o)
+                0x000018a2       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strlen-stub.o)
  .ARM.attributes
-                0x000018ea       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-freer.o)
+                0x000018d8       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ctype_.o)
  .ARM.attributes
-                0x00001920       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fwalk.o)
+                0x0000190e       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-freer.o)
  .ARM.attributes
-                0x00001956       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-makebuf.o)
+                0x00001944       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fwalk.o)
  .ARM.attributes
-                0x0000198c       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-refill.o)
+                0x0000197a       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-makebuf.o)
  .ARM.attributes
-                0x000019c2       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
+                0x000019b0       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-refill.o)
  .ARM.attributes
-                0x000019f8       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-flags.o)
+                0x000019e6       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
  .ARM.attributes
-                0x00001a2e       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-closer.o)
+                0x00001a1c       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-flags.o)
  .ARM.attributes
-                0x00001a64       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-reent.o)
+                0x00001a52       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-closer.o)
  .ARM.attributes
-                0x00001a9a       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-isattyr.o)
+                0x00001a88       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-reent.o)
  .ARM.attributes
-                0x00001ad0       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lseekr.o)
+                0x00001abe       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-isattyr.o)
  .ARM.attributes
-                0x00001b06       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-readr.o)
+                0x00001af4       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lseekr.o)
  .ARM.attributes
-                0x00001b3c       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-writer.o)
+                0x00001b2a       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-readr.o)
  .ARM.attributes
-                0x00001b72       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtend.o
+                0x00001b60       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-writer.o)
+ .ARM.attributes
+                0x00001b96       0x36 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/crtend.o
 
 .comment        0x00000000       0x46
  .comment       0x00000000       0x46 CMakeFiles/murmsnes.dir/src/main.c.o
@@ -6756,7 +6767,7 @@ LOAD linker stubs
  .comment       0x00000046       0x47 libdrivers.a(psram_allocator.c.o)
  .comment       0x00000046       0x47 libdrivers.a(audio.c.o)
 
-.debug_info     0x00000000    0x988df
+.debug_info     0x00000000    0x9895b
  .debug_info    0x00000000     0x35f9 CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_info    0x000035f9     0x1ca4 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
  .debug_info    0x0000529d      0x67f CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
@@ -6829,12 +6840,13 @@ LOAD linker stubs
  .debug_info    0x00088a01      0x189 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
  .debug_info    0x00088b8a     0x38a5 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .debug_info    0x0008c42f     0x54e4 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
- .debug_info    0x00091913     0x4e25 libdrivers.a(HDMI.c.o)
- .debug_info    0x00096738      0x48a libdrivers.a(psram_init.c.o)
- .debug_info    0x00096bc2      0xced libdrivers.a(psram_allocator.c.o)
- .debug_info    0x000978af     0x1030 libdrivers.a(audio.c.o)
+ .debug_info    0x00091913     0x4e63 libdrivers.a(HDMI.c.o)
+ .debug_info    0x00096776       0x3e libdrivers.a(hdmi_scanline.S.o)
+ .debug_info    0x000967b4      0x48a libdrivers.a(psram_init.c.o)
+ .debug_info    0x00096c3e      0xced libdrivers.a(psram_allocator.c.o)
+ .debug_info    0x0009792b     0x1030 libdrivers.a(audio.c.o)
 
-.debug_abbrev   0x00000000    0x11501
+.debug_abbrev   0x00000000    0x11520
  .debug_abbrev  0x00000000      0x7c2 CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_abbrev  0x000007c2      0x3e2 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
  .debug_abbrev  0x00000ba4      0x1eb CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
@@ -6907,13 +6919,14 @@ LOAD linker stubs
  .debug_abbrev  0x0000f6e6      0x110 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
  .debug_abbrev  0x0000f7f6      0x656 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .debug_abbrev  0x0000fe4c      0x652 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
- .debug_abbrev  0x0001049e      0x757 libdrivers.a(HDMI.c.o)
- .debug_abbrev  0x00010bf5      0x1ce libdrivers.a(psram_init.c.o)
- .debug_abbrev  0x00010dc3      0x37a libdrivers.a(psram_allocator.c.o)
- .debug_abbrev  0x0001113d      0x3c4 libdrivers.a(audio.c.o)
+ .debug_abbrev  0x0001049e      0x74e libdrivers.a(HDMI.c.o)
+ .debug_abbrev  0x00010bec       0x28 libdrivers.a(hdmi_scanline.S.o)
+ .debug_abbrev  0x00010c14      0x1ce libdrivers.a(psram_init.c.o)
+ .debug_abbrev  0x00010de2      0x37a libdrivers.a(psram_allocator.c.o)
+ .debug_abbrev  0x0001115c      0x3c4 libdrivers.a(audio.c.o)
 
 .debug_loclists
-                0x00000000    0x74a02
+                0x00000000    0x749a9
  .debug_loclists
                 0x00000000      0xcc4 CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_loclists
@@ -7047,15 +7060,15 @@ LOAD linker stubs
  .debug_loclists
                 0x000664ce     0x2a20 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
  .debug_loclists
-                0x00068eee     0xb08c libdrivers.a(HDMI.c.o)
+                0x00068eee     0xb033 libdrivers.a(HDMI.c.o)
  .debug_loclists
-                0x00073f7a      0x13f libdrivers.a(psram_init.c.o)
+                0x00073f21      0x13f libdrivers.a(psram_init.c.o)
  .debug_loclists
-                0x000740b9      0x391 libdrivers.a(psram_allocator.c.o)
+                0x00074060      0x391 libdrivers.a(psram_allocator.c.o)
  .debug_loclists
-                0x0007444a      0x5b8 libdrivers.a(audio.c.o)
+                0x000743f1      0x5b8 libdrivers.a(audio.c.o)
 
-.debug_aranges  0x00000000     0x3358
+.debug_aranges  0x00000000     0x3378
  .debug_aranges
                 0x00000000       0x78 CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_aranges
@@ -7203,14 +7216,16 @@ LOAD linker stubs
  .debug_aranges
                 0x00003180       0xd8 libdrivers.a(HDMI.c.o)
  .debug_aranges
-                0x00003258       0x20 libdrivers.a(psram_init.c.o)
+                0x00003258       0x20 libdrivers.a(hdmi_scanline.S.o)
  .debug_aranges
-                0x00003278       0x88 libdrivers.a(psram_allocator.c.o)
+                0x00003278       0x20 libdrivers.a(psram_init.c.o)
  .debug_aranges
-                0x00003300       0x58 libdrivers.a(audio.c.o)
+                0x00003298       0x88 libdrivers.a(psram_allocator.c.o)
+ .debug_aranges
+                0x00003320       0x58 libdrivers.a(audio.c.o)
 
 .debug_rnglists
-                0x00000000    0x11cbc
+                0x00000000    0x11c9a
  .debug_rnglists
                 0x00000000      0x205 CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_rnglists
@@ -7352,15 +7367,15 @@ LOAD linker stubs
  .debug_rnglists
                 0x000104bf      0xb04 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
  .debug_rnglists
-                0x00010fc3      0xb84 libdrivers.a(HDMI.c.o)
+                0x00010fc3      0xb62 libdrivers.a(HDMI.c.o)
  .debug_rnglists
-                0x00011b47       0x23 libdrivers.a(psram_init.c.o)
+                0x00011b25       0x23 libdrivers.a(psram_init.c.o)
  .debug_rnglists
-                0x00011b6a       0x96 libdrivers.a(psram_allocator.c.o)
+                0x00011b48       0x96 libdrivers.a(psram_allocator.c.o)
  .debug_rnglists
-                0x00011c00       0xbc libdrivers.a(audio.c.o)
+                0x00011bde       0xbc libdrivers.a(audio.c.o)
 
-.debug_line     0x00000000    0xa36b5
+.debug_line     0x00000000    0xa3683
  .debug_line    0x00000000     0x153d CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_line    0x0000153d     0x169e CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
  .debug_line    0x00002bdb      0x9db CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
@@ -7433,91 +7448,93 @@ LOAD linker stubs
  .debug_line    0x000969e2      0x17a CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
  .debug_line    0x00096b5c     0x15b1 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .debug_line    0x0009810d     0x30f3 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
- .debug_line    0x0009b200     0x709f libdrivers.a(HDMI.c.o)
- .debug_line    0x000a229f      0x479 libdrivers.a(psram_init.c.o)
- .debug_line    0x000a2718      0x5b4 libdrivers.a(psram_allocator.c.o)
- .debug_line    0x000a2ccc      0x9e9 libdrivers.a(audio.c.o)
+ .debug_line    0x0009b200     0x6fc2 libdrivers.a(HDMI.c.o)
+ .debug_line    0x000a21c2       0xab libdrivers.a(hdmi_scanline.S.o)
+ .debug_line    0x000a226d      0x479 libdrivers.a(psram_init.c.o)
+ .debug_line    0x000a26e6      0x5b4 libdrivers.a(psram_allocator.c.o)
+ .debug_line    0x000a2c9a      0x9e9 libdrivers.a(audio.c.o)
 
-.debug_str      0x00000000    0x1347a
- .debug_str     0x00000000    0x1347a CMakeFiles/murmsnes.dir/src/main.c.o
+.debug_str      0x00000000    0x134e4
+ .debug_str     0x00000000    0x134e4 CMakeFiles/murmsnes.dir/src/main.c.o
                                0x18f2 (size before relaxing)
- .debug_str     0x0001347a      0xf5c CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
- .debug_str     0x0001347a      0x325 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
- .debug_str     0x0001347a      0x69a CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
- .debug_str     0x0001347a      0x983 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o
- .debug_str     0x0001347a      0x97e CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o
- .debug_str     0x0001347a      0xf7a CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o
- .debug_str     0x0001347a     0x1a1a CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
- .debug_str     0x0001347a     0x1095 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o
- .debug_str     0x0001347a     0x1863 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
- .debug_str     0x0001347a      0x69d CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o
- .debug_str     0x0001347a     0x169c CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
- .debug_str     0x0001347a     0x1444 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
- .debug_str     0x0001347a     0x11d1 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
- .debug_str     0x0001347a      0x3de CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o
- .debug_str     0x0001347a     0x11b1 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o
- .debug_str     0x0001347a      0xf3c CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
- .debug_str     0x0001347a      0x8eb CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o
- .debug_str     0x0001347a      0x861 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o
- .debug_str     0x0001347a      0xb44 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
- .debug_str     0x0001347a      0xd36 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o
- .debug_str     0x0001347a      0x20f CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o
- .debug_str     0x0001347a      0x381 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.o
- .debug_str     0x0001347a      0x32c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o
- .debug_str     0x0001347a      0xbd9 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o
- .debug_str     0x0001347a      0xc58 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
- .debug_str     0x0001347a      0x21e CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.o
- .debug_str     0x0001347a      0x8f2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o
- .debug_str     0x0001347a      0x2f2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.o
- .debug_str     0x0001347a     0x1314 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
- .debug_str     0x0001347a      0xbac CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o
- .debug_str     0x0001347a      0xb9b CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o
- .debug_str     0x0001347a      0x4a5 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o
- .debug_str     0x0001347a      0x71c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.o
- .debug_str     0x0001347a      0x746 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o
- .debug_str     0x0001347a      0x2d2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o
- .debug_str     0x0001347a      0x96e CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o
- .debug_str     0x0001347a      0x2ba CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o
- .debug_str     0x0001347a      0x298 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o
- .debug_str     0x0001347a      0x24b CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o
- .debug_str     0x0001347a      0x2a1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o
- .debug_str     0x0001347a     0x1225 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
- .debug_str     0x0001347a      0x4ed CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o
- .debug_str     0x0001347a       0x8a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S.o
- .debug_str     0x0001347a      0x576 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o
- .debug_str     0x0001347a      0x410 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
- .debug_str     0x0001347a      0x4b7 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o
- .debug_str     0x0001347a       0x7c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
- .debug_str     0x0001347a      0x8a0 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o
- .debug_str     0x0001347a      0xc55 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
- .debug_str     0x0001347a      0xf67 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
- .debug_str     0x0001347a     0x105a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
- .debug_str     0x0001347a     0x1109 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
- .debug_str     0x0001347a      0x29d CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o
- .debug_str     0x0001347a     0x13db CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
- .debug_str     0x0001347a      0xbd2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o
- .debug_str     0x0001347a     0x1c6f CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
- .debug_str     0x0001347a      0x7fd CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o
- .debug_str     0x0001347a     0x187c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o
- .debug_str     0x0001347a      0xf6a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o
- .debug_str     0x0001347a      0xf46 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o
- .debug_str     0x0001347a      0x62f CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o
- .debug_str     0x0001347a     0x12f6 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o
- .debug_str     0x0001347a      0x788 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.o
- .debug_str     0x0001347a      0x67a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o
- .debug_str     0x0001347a     0x11c9 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o
- .debug_str     0x0001347a      0xd92 CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o
- .debug_str     0x0001347a      0xd12 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
- .debug_str     0x0001347a      0x200 CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o
- .debug_str     0x0001347a      0x1e3 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
- .debug_str     0x0001347a     0x1fb5 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
- .debug_str     0x0001347a     0x15c2 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
- .debug_str     0x0001347a     0x1ee0 libdrivers.a(HDMI.c.o)
- .debug_str     0x0001347a      0x4f0 libdrivers.a(psram_init.c.o)
- .debug_str     0x0001347a      0x713 libdrivers.a(psram_allocator.c.o)
- .debug_str     0x0001347a      0x848 libdrivers.a(audio.c.o)
+ .debug_str     0x000134e4      0xf5c CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
+ .debug_str     0x000134e4      0x325 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
+ .debug_str     0x000134e4      0x69a CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
+ .debug_str     0x000134e4      0x983 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o
+ .debug_str     0x000134e4      0x97e CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o
+ .debug_str     0x000134e4      0xf7a CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o
+ .debug_str     0x000134e4     0x1a1a CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o
+ .debug_str     0x000134e4     0x1095 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o
+ .debug_str     0x000134e4     0x1863 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o
+ .debug_str     0x000134e4      0x69d CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o
+ .debug_str     0x000134e4     0x169c CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o
+ .debug_str     0x000134e4     0x1444 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o
+ .debug_str     0x000134e4     0x11d1 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o
+ .debug_str     0x000134e4      0x3de CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o
+ .debug_str     0x000134e4     0x11b1 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o
+ .debug_str     0x000134e4      0xf3c CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o
+ .debug_str     0x000134e4      0x8eb CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o
+ .debug_str     0x000134e4      0x861 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o
+ .debug_str     0x000134e4      0xb44 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o
+ .debug_str     0x000134e4      0xd36 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o
+ .debug_str     0x000134e4      0x20f CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o
+ .debug_str     0x000134e4      0x381 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.o
+ .debug_str     0x000134e4      0x32c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o
+ .debug_str     0x000134e4      0xbd9 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o
+ .debug_str     0x000134e4      0xc58 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
+ .debug_str     0x000134e4      0x21e CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.o
+ .debug_str     0x000134e4      0x8f2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o
+ .debug_str     0x000134e4      0x2f2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.o
+ .debug_str     0x000134e4     0x1314 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o
+ .debug_str     0x000134e4      0xbac CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o
+ .debug_str     0x000134e4      0xb9b CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o
+ .debug_str     0x000134e4      0x4a5 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o
+ .debug_str     0x000134e4      0x71c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.o
+ .debug_str     0x000134e4      0x746 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o
+ .debug_str     0x000134e4      0x2d2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o
+ .debug_str     0x000134e4      0x96e CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o
+ .debug_str     0x000134e4      0x2ba CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o
+ .debug_str     0x000134e4      0x298 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o
+ .debug_str     0x000134e4      0x24b CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o
+ .debug_str     0x000134e4      0x2a1 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o
+ .debug_str     0x000134e4     0x1225 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
+ .debug_str     0x000134e4      0x4ed CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o
+ .debug_str     0x000134e4       0x8a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S.o
+ .debug_str     0x000134e4      0x576 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o
+ .debug_str     0x000134e4      0x410 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+ .debug_str     0x000134e4      0x4b7 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o
+ .debug_str     0x000134e4       0x7c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
+ .debug_str     0x000134e4      0x8a0 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o
+ .debug_str     0x000134e4      0xc55 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
+ .debug_str     0x000134e4      0xf67 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
+ .debug_str     0x000134e4     0x105a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+ .debug_str     0x000134e4     0x1109 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
+ .debug_str     0x000134e4      0x29d CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o
+ .debug_str     0x000134e4     0x13db CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
+ .debug_str     0x000134e4      0xbd2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o
+ .debug_str     0x000134e4     0x1c6f CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+ .debug_str     0x000134e4      0x7fd CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o
+ .debug_str     0x000134e4     0x187c CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o
+ .debug_str     0x000134e4      0xf6a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o
+ .debug_str     0x000134e4      0xf46 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o
+ .debug_str     0x000134e4      0x62f CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o
+ .debug_str     0x000134e4     0x12f6 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o
+ .debug_str     0x000134e4      0x788 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.o
+ .debug_str     0x000134e4      0x67a CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o
+ .debug_str     0x000134e4     0x11c9 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o
+ .debug_str     0x000134e4      0xd92 CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o
+ .debug_str     0x000134e4      0xd12 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o
+ .debug_str     0x000134e4      0x200 CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o
+ .debug_str     0x000134e4      0x1e3 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
+ .debug_str     0x000134e4     0x1fb5 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
+ .debug_str     0x000134e4     0x15c2 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
+ .debug_str     0x000134e4     0x1f08 libdrivers.a(HDMI.c.o)
+ .debug_str     0x000134e4       0xa8 libdrivers.a(hdmi_scanline.S.o)
+ .debug_str     0x000134e4      0x4f0 libdrivers.a(psram_init.c.o)
+ .debug_str     0x000134e4      0x713 libdrivers.a(psram_allocator.c.o)
+ .debug_str     0x000134e4      0x848 libdrivers.a(audio.c.o)
 
-.debug_frame    0x00000000     0xb26c
+.debug_frame    0x00000000     0xb270
  .debug_frame   0x00000000      0x138 CMakeFiles/murmsnes.dir/src/main.c.o
  .debug_frame   0x00000138      0x134 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
  .debug_frame   0x0000026c       0xb8 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
@@ -7586,74 +7603,76 @@ LOAD linker stubs
  .debug_frame   0x00009c14       0x3c CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o
  .debug_frame   0x00009c50      0x16c CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o
  .debug_frame   0x00009dbc      0x31c CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o
- .debug_frame   0x0000a0d8      0x270 libdrivers.a(HDMI.c.o)
- .debug_frame   0x0000a348       0x38 libdrivers.a(psram_init.c.o)
- .debug_frame   0x0000a380      0x16c libdrivers.a(psram_allocator.c.o)
- .debug_frame   0x0000a4ec       0xe0 libdrivers.a(audio.c.o)
- .debug_frame   0x0000a5cc       0x44 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_ldivmod.o)
- .debug_frame   0x0000a610       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x0000a63c       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_udivmoddi4.o)
- .debug_frame   0x0000a674       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-calloc.o)
- .debug_frame   0x0000a694       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-callocr.o)
- .debug_frame   0x0000a6c0       0x44 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-qsort.o)
- .debug_frame   0x0000a704       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-malloc.o)
- .debug_frame   0x0000a734       0x4c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
- .debug_frame   0x0000a780       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseek.o)
- .debug_frame   0x0000a7bc       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftell.o)
- .debug_frame   0x0000a7ec       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mlock.o)
- .debug_frame   0x0000a81c       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-rand.o)
- .debug_frame   0x0000a858       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fclose.o)
- .debug_frame   0x0000a894       0x70 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fflush.o)
- .debug_frame   0x0000a904      0x13c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
- .debug_frame   0x0000aa40       0x4c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fopen.o)
- .debug_frame   0x0000aa8c       0x68 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fread.o)
- .debug_frame   0x0000aaf4       0x64 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseeko.o)
- .debug_frame   0x0000ab58       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftello.o)
- .debug_frame   0x0000ab94       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcmp.o)
- .debug_frame   0x0000abcc       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memmove.o)
- .debug_frame   0x0000abfc       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memset.o)
- .debug_frame   0x0000ac28       0x34 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strchr.o)
- .debug_frame   0x0000ac5c       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncasecmp.o)
- .debug_frame   0x0000ac88       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncmp.o)
- .debug_frame   0x0000acc0       0x34 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-time.o)
- .debug_frame   0x0000acf4       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fstatr.o)
- .debug_frame   0x0000ad20       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-gettimeofdayr.o)
- .debug_frame   0x0000ad4c       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-openr.o)
- .debug_frame   0x0000ad78       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sbrkr.o)
- .debug_frame   0x0000ada4       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-errno.o)
- .debug_frame   0x0000adc4       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sysconf.o)
- .debug_frame   0x0000adec       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strcmp.o)
- .debug_frame   0x0000ae28       0xb0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
- .debug_frame   0x0000aed8       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcpy.o)
- .debug_frame   0x0000af00       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strlen-stub.o)
- .debug_frame   0x0000af20       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ctype_.o)
- .debug_frame   0x0000af40       0x84 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-freer.o)
- .debug_frame   0x0000afc4       0x34 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fwalk.o)
- .debug_frame   0x0000aff8       0x6c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-makebuf.o)
- .debug_frame   0x0000b064       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-refill.o)
- .debug_frame   0x0000b0a0       0x8c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
- .debug_frame   0x0000b12c       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-flags.o)
- .debug_frame   0x0000b154       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-closer.o)
- .debug_frame   0x0000b180       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-reent.o)
- .debug_frame   0x0000b1bc       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-isattyr.o)
- .debug_frame   0x0000b1e8       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lseekr.o)
- .debug_frame   0x0000b214       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-readr.o)
- .debug_frame   0x0000b240       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-writer.o)
+ .debug_frame   0x0000a0d8      0x274 libdrivers.a(HDMI.c.o)
+ .debug_frame   0x0000a34c       0x38 libdrivers.a(psram_init.c.o)
+ .debug_frame   0x0000a384      0x16c libdrivers.a(psram_allocator.c.o)
+ .debug_frame   0x0000a4f0       0xe0 libdrivers.a(audio.c.o)
+ .debug_frame   0x0000a5d0       0x44 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_ldivmod.o)
+ .debug_frame   0x0000a614       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x0000a640       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x0000a678       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-calloc.o)
+ .debug_frame   0x0000a698       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-callocr.o)
+ .debug_frame   0x0000a6c4       0x44 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-qsort.o)
+ .debug_frame   0x0000a708       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-malloc.o)
+ .debug_frame   0x0000a738       0x4c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mallocr.o)
+ .debug_frame   0x0000a784       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseek.o)
+ .debug_frame   0x0000a7c0       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftell.o)
+ .debug_frame   0x0000a7f0       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-mlock.o)
+ .debug_frame   0x0000a820       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-rand.o)
+ .debug_frame   0x0000a85c       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fclose.o)
+ .debug_frame   0x0000a898       0x70 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fflush.o)
+ .debug_frame   0x0000a908      0x13c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-findfp.o)
+ .debug_frame   0x0000aa44       0x4c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fopen.o)
+ .debug_frame   0x0000aa90       0x68 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fread.o)
+ .debug_frame   0x0000aaf8       0x64 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fseeko.o)
+ .debug_frame   0x0000ab5c       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ftello.o)
+ .debug_frame   0x0000ab98       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcmp.o)
+ .debug_frame   0x0000abd0       0x30 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memmove.o)
+ .debug_frame   0x0000ac00       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memset.o)
+ .debug_frame   0x0000ac2c       0x34 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strchr.o)
+ .debug_frame   0x0000ac60       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncasecmp.o)
+ .debug_frame   0x0000ac8c       0x38 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strncmp.o)
+ .debug_frame   0x0000acc4       0x34 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-time.o)
+ .debug_frame   0x0000acf8       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fstatr.o)
+ .debug_frame   0x0000ad24       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-gettimeofdayr.o)
+ .debug_frame   0x0000ad50       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-openr.o)
+ .debug_frame   0x0000ad7c       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sbrkr.o)
+ .debug_frame   0x0000ada8       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-errno.o)
+ .debug_frame   0x0000adc8       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-sysconf.o)
+ .debug_frame   0x0000adf0       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strcmp.o)
+ .debug_frame   0x0000ae2c       0xb0 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lock.o)
+ .debug_frame   0x0000aedc       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcpy.o)
+ .debug_frame   0x0000af04       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strlen-stub.o)
+ .debug_frame   0x0000af24       0x20 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-ctype_.o)
+ .debug_frame   0x0000af44       0x84 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-freer.o)
+ .debug_frame   0x0000afc8       0x34 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-fwalk.o)
+ .debug_frame   0x0000affc       0x6c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-makebuf.o)
+ .debug_frame   0x0000b068       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-refill.o)
+ .debug_frame   0x0000b0a4       0x8c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-stdio.o)
+ .debug_frame   0x0000b130       0x28 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-flags.o)
+ .debug_frame   0x0000b158       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-closer.o)
+ .debug_frame   0x0000b184       0x3c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-reent.o)
+ .debug_frame   0x0000b1c0       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-isattyr.o)
+ .debug_frame   0x0000b1ec       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-lseekr.o)
+ .debug_frame   0x0000b218       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-readr.o)
+ .debug_frame   0x0000b244       0x2c /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-writer.o)
 
 .debug_line_str
-                0x00000000      0x2a0
+                0x00000000      0x2e2
  .debug_line_str
-                0x00000000      0x2a0 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S.o
+                0x00000000      0x2e2 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S.o
                                  0x7c (size before relaxing)
  .debug_line_str
-                0x000002a0       0x6e CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
+                0x000002e2       0x6e CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
  .debug_line_str
-                0x000002a0       0xd8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_ldivmod.o)
+                0x000002e2       0x72 libdrivers.a(hdmi_scanline.S.o)
  .debug_line_str
-                0x000002a0       0xd8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_uldivmod.o)
+                0x000002e2       0xd8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_ldivmod.o)
  .debug_line_str
-                0x000002a0       0xdc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_dvmd_tls.o)
+                0x000002e2       0xd8 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_aeabi_uldivmod.o)
  .debug_line_str
-                0x000002a0       0xf2 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strcmp.o)
+                0x000002e2       0xdc /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v8-m.main+fp/softfp/libgcc.a(_dvmd_tls.o)
  .debug_line_str
-                0x000002a0       0xf2 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcpy.o)
+                0x000002e2       0xf2 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-strcmp.o)
+ .debug_line_str
+                0x000002e2       0xf2 /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/softfp/libg.a(libc_a-memcpy.o)

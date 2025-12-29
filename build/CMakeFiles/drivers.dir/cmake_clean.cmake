@@ -111,6 +111,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/drivers.dir/drivers/HDMI.c.o.d"
   "CMakeFiles/drivers.dir/drivers/audio.c.o"
   "CMakeFiles/drivers.dir/drivers/audio.c.o.d"
+  "CMakeFiles/drivers.dir/drivers/hdmi_scanline.S.o"
   "CMakeFiles/drivers.dir/drivers/psram_allocator.c.o"
   "CMakeFiles/drivers.dir/drivers/psram_allocator.c.o.d"
   "CMakeFiles/drivers.dir/drivers/psram_init.c.o"

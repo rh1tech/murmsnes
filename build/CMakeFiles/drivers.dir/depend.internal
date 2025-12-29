@@ -262,6 +262,8 @@ CMakeFiles/drivers.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/fl
  /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_sections/include/pico/platform/sections.h
  generated/pico_base/pico/config_autogen.h
  generated/pico_base/pico/version.h
+CMakeFiles/drivers.dir/drivers/hdmi_scanline.S.o
+ /Users/A2506402/Documents/GitHub/murmsnes/drivers/hdmi_scanline.S
 CMakeFiles/drivers.dir/pico-extras/src/common/pico_audio/audio_utils.S.o
  /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_audio/audio_utils.S
  /Users/A2506402/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/platform_defs.h

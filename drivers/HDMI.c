@@ -90,6 +90,10 @@ static uint32_t palette[256];
 // Substitute map for HDMI reserved sync-control indices (BASE_HDMI_CTRL_INX..BASE_HDMI_CTRL_INX+3)
 static uint8_t hdmi_color_substitute[4] = {0, 0, 0, 0};
 
+// Assembly-optimized scanline copy function
+extern void hdmi_copy_scanline_asm(uint8_t* dst, const uint16_t* src, uint32_t count, const uint8_t* subst);
+extern void hdmi_memset_fast(uint8_t* dst, uint8_t val, uint32_t count);
+
 // Palette update flag - set by emulator, checked during vblank
 static volatile bool palette_dirty = false;
 static volatile bool full_palette_update_pending = false;  // Request full re-conversion
@@ -289,24 +293,18 @@ static void __scratch_y("hdmi_driver") dma_handler_HDMI() {
         uint8_t* output_buffer = activ_buf + 72; // Align sync
         
         // Fill left margin (32 pixels for centering 256 in 320)
-        memset(output_buffer, 0, 32);
+        hdmi_memset_fast(output_buffer, 0, 32);
         output_buffer += 32;
         
         // Read from the back buffer (not currently being drawn to)
         const uint16_t* input = (uint16_t*)&SCREEN[!current_buffer][(line / 2) * graphics_buffer_width];
         
-        // Copy pixels - low byte of each 16-bit value is the palette index
-        for (int i = graphics_buffer_width; i--;) {
-            uint8_t c = (uint8_t)(*input++);
-            // Substitute HDMI reserved sync-control indices with nearest palette matches
-            if (c >= BASE_HDMI_CTRL_INX && c <= (BASE_HDMI_CTRL_INX + 3)) {
-                c = hdmi_color_substitute[c - BASE_HDMI_CTRL_INX];
-            }
-            *output_buffer++ = c;
-        }
+        // Copy pixels using optimized assembly routine
+        hdmi_copy_scanline_asm(output_buffer, input, graphics_buffer_width, hdmi_color_substitute);
+        output_buffer += graphics_buffer_width;
         
         // Fill right margin
-        memset(output_buffer, 0, 32);
+        hdmi_memset_fast(output_buffer, 0, 32);
 
 
         // memset(activ_buf,2,320);//test
@@ -316,9 +314,9 @@ static void __scratch_y("hdmi_driver") dma_handler_HDMI() {
 
         // --|_|---|_|---|_|----
         //---|___________|-----
-        memset(activ_buf + 48,BASE_HDMI_CTRL_INX, 24);
-        memset(activ_buf,BASE_HDMI_CTRL_INX + 1, 48);
-        memset(activ_buf + 392,BASE_HDMI_CTRL_INX, 8);
+        hdmi_memset_fast(activ_buf + 48, BASE_HDMI_CTRL_INX, 24);
+        hdmi_memset_fast(activ_buf, BASE_HDMI_CTRL_INX + 1, 48);
+        hdmi_memset_fast(activ_buf + 392, BASE_HDMI_CTRL_INX, 8);
 
         //без выравнивания
         // --|_|---|_|---|_|----
@@ -338,8 +336,8 @@ static void __scratch_y("hdmi_driver") dma_handler_HDMI() {
             //для выравнивания синхры
             // --|_|---|_|---|_|----
             //---|___________|-----
-            memset(activ_buf + 48,BASE_HDMI_CTRL_INX + 2, 352);
-            memset(activ_buf,BASE_HDMI_CTRL_INX + 3, 48);
+            hdmi_memset_fast(activ_buf + 48, BASE_HDMI_CTRL_INX + 2, 352);
+            hdmi_memset_fast(activ_buf, BASE_HDMI_CTRL_INX + 3, 48);
             //без выравнивания
             // --|_|---|_|---|_|----
             //-------|___________|----
@@ -352,8 +350,8 @@ static void __scratch_y("hdmi_driver") dma_handler_HDMI() {
             //ССИ без изображения
             //для выравнивания синхры
 
-            memset(activ_buf + 48,BASE_HDMI_CTRL_INX, 352);
-            memset(activ_buf,BASE_HDMI_CTRL_INX + 1, 48);
+            hdmi_memset_fast(activ_buf + 48, BASE_HDMI_CTRL_INX, 352);
+            hdmi_memset_fast(activ_buf, BASE_HDMI_CTRL_INX + 1, 48);
 
             // memset(activ_buf,BASE_HDMI_CTRL_INX,328);
             // memset(activ_buf+328,BASE_HDMI_CTRL_INX+1,48);

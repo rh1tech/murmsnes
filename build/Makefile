@@ -2443,6 +2443,14 @@ drivers/audio.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/drivers.dir/build.make CMakeFiles/drivers.dir/drivers/audio.c.s
 .PHONY : drivers/audio.c.s
 
+drivers/hdmi_scanline.o: drivers/hdmi_scanline.S.o
+.PHONY : drivers/hdmi_scanline.o
+
+# target to build an object file
+drivers/hdmi_scanline.S.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/drivers.dir/build.make CMakeFiles/drivers.dir/drivers/hdmi_scanline.S.o
+.PHONY : drivers/hdmi_scanline.S.o
+
 drivers/psram_allocator.o: drivers/psram_allocator.c.o
 .PHONY : drivers/psram_allocator.o
 
@@ -3498,6 +3506,7 @@ help:
 	@echo "... drivers/audio.o"
 	@echo "... drivers/audio.i"
 	@echo "... drivers/audio.s"
+	@echo "... drivers/hdmi_scanline.o"
 	@echo "... drivers/psram_allocator.o"
 	@echo "... drivers/psram_allocator.i"
 	@echo "... drivers/psram_allocator.s"

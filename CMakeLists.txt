@@ -52,6 +52,7 @@ add_subdirectory(drivers/sdcard)
 # Create a library for drivers
 add_library(drivers
     drivers/HDMI.c
+    drivers/hdmi_scanline.S
     drivers/psram_init.c
     drivers/psram_allocator.c
     drivers/audio.c

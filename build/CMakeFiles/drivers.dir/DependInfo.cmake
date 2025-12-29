@@ -18,6 +18,7 @@ set(CMAKE_DEPENDS_CHECK_ASM
   "/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_common_m33.S" "/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles/drivers.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_common_m33.S.o"
   "/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_conv32_vfp.S" "/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles/drivers.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_conv32_vfp.S.o"
   "/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_sci_m33_vfp.S" "/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles/drivers.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_sci_m33_vfp.S.o"
+  "/Users/A2506402/Documents/GitHub/murmsnes/drivers/hdmi_scanline.S" "/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles/drivers.dir/drivers/hdmi_scanline.S.o"
   "/Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_audio/audio_utils.S" "/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles/drivers.dir/pico-extras/src/common/pico_audio/audio_utils.S.o"
   )
 set(CMAKE_ASM_COMPILER_ID "GNU")

@@ -6,6 +6,8 @@
 
 #IncludeRegexTransform: 
 
+/Users/A2506402/Documents/GitHub/murmsnes/drivers/hdmi_scanline.S
+
 /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_audio/audio_utils.S
 hardware/regs/addressmap.h
 /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_audio/hardware/regs/addressmap.h
