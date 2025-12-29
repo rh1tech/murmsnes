@@ -273,6 +273,9 @@ FETCHCONTENT_QUIET:BOOL=ON
 //Enables UPDATE_DISCONNECTED behavior for all content population
 FETCHCONTENT_UPDATES_DISCONNECTED:BOOL=OFF
 
+//Enable periodic performance profiling output
+MURMSNES_PROFILE:BOOL=OFF
+
 //PICO target board (e.g. pico, pico2)
 PICO_BOARD:STRING=pico2
 

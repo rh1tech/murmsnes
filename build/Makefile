@@ -2725,6 +2725,30 @@ src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/murmsnes.dir/build.make CMakeFiles/murmsnes.dir/src/main.c.s
 .PHONY : src/main.c.s
 
+src/murmsnes_profile.o: src/murmsnes_profile.c.o
+.PHONY : src/murmsnes_profile.o
+
+# target to build an object file
+src/murmsnes_profile.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/murmsnes.dir/build.make CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.o
+.PHONY : src/murmsnes_profile.c.o
+
+src/murmsnes_profile.i: src/murmsnes_profile.c.i
+.PHONY : src/murmsnes_profile.i
+
+# target to preprocess a source file
+src/murmsnes_profile.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/murmsnes.dir/build.make CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.i
+.PHONY : src/murmsnes_profile.c.i
+
+src/murmsnes_profile.s: src/murmsnes_profile.c.s
+.PHONY : src/murmsnes_profile.s
+
+# target to generate assembly for a file
+src/murmsnes_profile.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/murmsnes.dir/build.make CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.s
+.PHONY : src/murmsnes_profile.c.s
+
 src/snes9x/apu.o: src/snes9x/apu.c.o
 .PHONY : src/snes9x/apu.o
 
@@ -3508,6 +3532,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/murmsnes_profile.o"
+	@echo "... src/murmsnes_profile.i"
+	@echo "... src/murmsnes_profile.s"
 	@echo "... src/snes9x/apu.o"
 	@echo "... src/snes9x/apu.i"
 	@echo "... src/snes9x/apu.s"

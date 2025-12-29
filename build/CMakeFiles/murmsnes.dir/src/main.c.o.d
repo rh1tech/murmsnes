@@ -142,6 +142,8 @@ CMakeFiles/murmsnes.dir/src/main.c.o: \
  /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/arm-none-eabi/include/time.h \
  /Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/arm-none-eabi/include/machine/time.h \
  /Users/A2506402/Documents/GitHub/murmsnes/drivers/audio.h \
- /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/rp2_common/pico_audio_i2s/include/pico/audio_i2s.h \
- /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_audio/include/pico/audio.h \
- /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_util_buffer/include/pico/util/buffer.h
+ /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/include/hardware/pio.h \
+ /Users/A2506402/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/pio.h \
+ /Users/A2506402/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/pio.h \
+ /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/include/hardware/pio_instructions.h \
+ /Users/A2506402/Documents/GitHub/murmsnes/build/pico_extras/src/rp2_common/pico_audio_i2s/audio_i2s.pio.h

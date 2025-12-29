@@ -178,6 +178,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o.d"
   "CMakeFiles/murmsnes.dir/src/main.c.o"
   "CMakeFiles/murmsnes.dir/src/main.c.o.d"
+  "CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.o"
+  "CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.o.d"
   "CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o"
   "CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o.d"
   "CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o"

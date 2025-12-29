@@ -86,10 +86,24 @@ CMakeFiles/murmsnes.dir/src/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/main.c.s"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/main.c -o CMakeFiles/murmsnes.dir/src/main.c.s
 
+CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.o: CMakeFiles/murmsnes.dir/flags.make
+CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/murmsnes_profile.c
+CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.o"
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.o -MF CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.o.d -o CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/murmsnes_profile.c
+
+CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.i"
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/A2506402/Documents/GitHub/murmsnes/src/murmsnes_profile.c > CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.i
+
+CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.s"
+	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/A2506402/Documents/GitHub/murmsnes/src/murmsnes_profile.c -o CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.s
+
 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/apu.c
 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/apu.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/apu.c.i: cmake_force
@@ -103,7 +117,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/apu.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4.c
 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/c4.c.i: cmake_force
@@ -117,7 +131,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/c4.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4emu.c
 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/c4emu.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.i: cmake_force
@@ -131,7 +145,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/clip.c
 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/clip.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/clip.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/clip.c.i: cmake_force
@@ -145,7 +159,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/clip.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpu.c
 CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpu.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.i: cmake_force
@@ -159,7 +173,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/cpu.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuexec.c
 CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuexec.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.i: cmake_force
@@ -173,7 +187,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/cpuexec.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuops.c
 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/cpuops.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.i: cmake_force
@@ -187,7 +201,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/cpuops.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dma.c
 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/dma.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dma.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/dma.c.i: cmake_force
@@ -201,7 +215,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/dma.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dsp.c
 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/dsp.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.i: cmake_force
@@ -215,7 +229,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/dsp.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/getset.c
 CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/getset.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/getset.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/getset.c.i: cmake_force
@@ -229,7 +243,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/getset.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/gfx.c
 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/gfx.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.i: cmake_force
@@ -243,7 +257,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/gfx.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/globals.c
 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/globals.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/globals.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/globals.c.i: cmake_force
@@ -257,7 +271,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/globals.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/memmap.c
 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/memmap.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.i: cmake_force
@@ -271,7 +285,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/memmap.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/obc1.c
 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/obc1.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.i: cmake_force
@@ -285,7 +299,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/obc1.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/ppu.c
 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/ppu.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.i: cmake_force
@@ -299,7 +313,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/ppu.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/snapshot.c
 CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/snapshot.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.i: cmake_force
@@ -313,7 +327,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/snapshot.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/soundux.c
 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/soundux.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.i: cmake_force
@@ -327,7 +341,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/soundux.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/spc700.c
 CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/spc700.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.i: cmake_force
@@ -341,7 +355,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/spc700.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/srtc.c
 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/srtc.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.i: cmake_force
@@ -355,7 +369,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/srtc.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/tile.c
 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -O3 -fno-strict-aliasing -funroll-loops -fomit-frame-pointer -MD -MT CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o -MF CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o.d -o CMakeFiles/murmsnes.dir/src/snes9x/tile.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/snes9x/tile.c
 
 CMakeFiles/murmsnes.dir/src/snes9x/tile.c.i: cmake_force
@@ -369,7 +383,7 @@ CMakeFiles/murmsnes.dir/src/snes9x/tile.c.s: cmake_force
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.i: cmake_force
@@ -383,7 +397,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdlib/
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.i: cmake_force
@@ -397,7 +411,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_gpi
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/platform.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/platform.c.o: /Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/platform.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/platform.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/platform.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/platform.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/platform.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/platform.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/platform.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/platform.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/platform.c.i: cmake_force
@@ -411,7 +425,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2350/pico_platform/pl
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_common/common.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_common/common.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_common/common.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_common/common.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_common/common.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_common/common.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_common/common.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_common/common.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_common/common.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_common/common.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_common/common.c.i: cmake_force
@@ -425,7 +439,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platfor
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.i: cmake_force
@@ -439,7 +453,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_platfor
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.o: /Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.o -c /Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/claim.c.i: cmake_force
@@ -453,7 +467,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/hardware_claim/c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.i: cmake_force
@@ -467,7 +481,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_syn
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.i: cmake_force
@@ -481,7 +495,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_syn
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.i: cmake_force
@@ -494,7 +508,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.o   -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.i: cmake_force
@@ -508,7 +522,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_irq
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/sem.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/sem.c.o: /Users/A2506402/pico/pico-sdk/src/common/pico_sync/sem.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/sem.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/sem.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/sem.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/sem.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/sem.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/sem.c.o -c /Users/A2506402/pico/pico-sdk/src/common/pico_sync/sem.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/sem.c.i: cmake_force
@@ -522,7 +536,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/sem.c.
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.o: /Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.o -c /Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_core.c.i: cmake_force
@@ -536,7 +550,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/lock_c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o: /Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.o -c /Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.c.i: cmake_force
@@ -550,7 +564,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/mutex.
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.o: /Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.o -c /Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critical_section.c.i: cmake_force
@@ -564,7 +578,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_sync/critic
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o: /Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.o -c /Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c.i: cmake_force
@@ -578,7 +592,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/time.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/timeout_helper.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/timeout_helper.c.o: /Users/A2506402/pico/pico-sdk/src/common/pico_time/timeout_helper.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/timeout_helper.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/timeout_helper.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/timeout_helper.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/timeout_helper.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/timeout_helper.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/timeout_helper.c.o -c /Users/A2506402/pico/pico-sdk/src/common/pico_time/timeout_helper.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/timeout_helper.c.i: cmake_force
@@ -592,7 +606,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_time/timeou
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.i: cmake_force
@@ -606,7 +620,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_tim
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/datetime.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/datetime.c.o: /Users/A2506402/pico/pico-sdk/src/common/pico_util/datetime.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/datetime.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/datetime.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/datetime.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/datetime.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/datetime.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/datetime.c.o -c /Users/A2506402/pico/pico-sdk/src/common/pico_util/datetime.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/datetime.c.i: cmake_force
@@ -620,7 +634,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/dateti
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/pheap.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/pheap.c.o: /Users/A2506402/pico/pico-sdk/src/common/pico_util/pheap.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/pheap.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/pheap.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/pheap.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/pheap.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/pheap.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/pheap.c.o -c /Users/A2506402/pico/pico-sdk/src/common/pico_util/pheap.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/pheap.c.i: cmake_force
@@ -634,7 +648,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/pheap.
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/queue.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/queue.c.o: /Users/A2506402/pico/pico-sdk/src/common/pico_util/queue.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/queue.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/queue.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/queue.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/queue.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/queue.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/queue.c.o -c /Users/A2506402/pico/pico-sdk/src/common/pico_util/queue.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/queue.c.i: cmake_force
@@ -648,7 +662,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/common/pico_util/queue.
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.i: cmake_force
@@ -662,7 +676,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_uar
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.i: cmake_force
@@ -676,7 +690,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_clo
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.i: cmake_force
@@ -690,7 +704,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pll
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.i: cmake_force
@@ -704,7 +718,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_vre
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.i: cmake_force
@@ -718,7 +732,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_wat
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.i: cmake_force
@@ -732,7 +746,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_tic
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.i: cmake_force
@@ -746,7 +760,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom_lock.c.i: cmake_force
@@ -760,7 +774,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bootrom
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boot_lock/boot_lock.c.i: cmake_force
@@ -774,7 +788,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_boo
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_flash/flash.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_flash/flash.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_flash/flash.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_flash/flash.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_flash/flash.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_flash/flash.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_flash/flash.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_flash/flash.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_flash/flash.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_flash/flash.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_flash/flash.c.i: cmake_force
@@ -788,7 +802,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_flash/f
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.i: cmake_force
@@ -802,7 +816,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xos
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_divider/divider.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_divider/divider.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_divider/divider.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_divider/divider.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_divider/divider.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_divider/divider.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_divider/divider.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_divider/divider.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_divider/divider.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_divider/divider.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_divider/divider.c.i: cmake_force
@@ -816,7 +830,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_div
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.i: cmake_force
@@ -830,7 +844,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.i: cmake_force
@@ -844,7 +858,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.i: cmake_force
@@ -858,7 +872,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_stack_guard.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_stack_guard.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_stack_guard.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_stack_guard.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_stack_guard.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_stack_guard.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_stack_guard.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_stack_guard.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_stack_guard.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_stack_guard.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_stack_guard.c.i: cmake_force
@@ -871,7 +885,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_runtime
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.o   -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.i: cmake_force
@@ -885,7 +899,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_bit_ops
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_divider/divider_compiler.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_divider/divider_compiler.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_divider/divider_compiler.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_divider/divider_compiler.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_divider/divider_compiler.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_divider/divider_compiler.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_divider/divider_compiler.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_divider/divider_compiler.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_divider/divider_compiler.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_divider/divider_compiler.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_divider/divider_compiler.c.i: cmake_force
@@ -899,7 +913,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_divider
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_math.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_math.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.i: cmake_force
@@ -912,7 +926,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_62) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S.o   -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_dcp.S.i: cmake_force
@@ -925,7 +939,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_fma_dcp.S.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_fma_dcp.S.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_fma_dcp.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_62) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_fma_dcp.S.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_63) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_fma_dcp.S.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_fma_dcp.S.o   -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_fma_dcp.S
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_fma_dcp.S.i: cmake_force
@@ -938,7 +952,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_sci_m33.S.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_sci_m33.S.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_sci_m33.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_63) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_sci_m33.S.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_64) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_sci_m33.S.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_sci_m33.S.o   -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_sci_m33.S
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_sci_m33.S.i: cmake_force
@@ -951,7 +965,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_conv_m33.S.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_conv_m33.S.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_conv_m33.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_64) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_conv_m33.S.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_65) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_conv_m33.S.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_conv_m33.S.o   -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_conv_m33.S
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/double_conv_m33.S.i: cmake_force
@@ -965,7 +979,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_double/
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_math.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_65) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_66) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_math.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.i: cmake_force
@@ -978,7 +992,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/f
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_conv32_vfp.S.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_conv32_vfp.S.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_conv32_vfp.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_66) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_conv32_vfp.S.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_67) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_conv32_vfp.S.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_conv32_vfp.S.o   -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_conv32_vfp.S
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_conv32_vfp.S.i: cmake_force
@@ -991,7 +1005,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/f
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_common_m33.S.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_common_m33.S.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_common_m33.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_67) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_common_m33.S.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_68) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_common_m33.S.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_common_m33.S.o   -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_common_m33.S
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_common_m33.S.i: cmake_force
@@ -1004,7 +1018,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/f
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_sci_m33_vfp.S.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_sci_m33_vfp.S.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_sci_m33_vfp.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_68) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_sci_m33_vfp.S.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_69) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_sci_m33_vfp.S.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_sci_m33_vfp.S.o   -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_sci_m33_vfp.S
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/float_sci_m33_vfp.S.i: cmake_force
@@ -1018,7 +1032,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_float/f
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_69) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_70) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.i: cmake_force
@@ -1032,7 +1046,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_malloc/
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_70) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_71) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c.i: cmake_force
@@ -1046,7 +1060,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_atomic/
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_71) "Building CXX object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_72) "Building CXX object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp.o"
 	/opt/homebrew/bin/arm-none-eabi-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp.i: cmake_force
@@ -1060,7 +1074,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_cxx_opt
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_72) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_73) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.i: cmake_force
@@ -1074,7 +1088,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_standar
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_73) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_74) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.i: cmake_force
@@ -1087,7 +1101,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_printf/
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_74) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_75) "Building ASM object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o   -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.i: cmake_force
@@ -1101,7 +1115,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/cr
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_75) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_76) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.i: cmake_force
@@ -1115,7 +1129,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_clib_in
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_76) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_77) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.i: cmake_force
@@ -1129,7 +1143,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio/s
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_77) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_78) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.i: cmake_force
@@ -1143,7 +1157,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_u
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_78) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_79) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.i: cmake_force
@@ -1157,7 +1171,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_u
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_79) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_80) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.i: cmake_force
@@ -1171,7 +1185,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_stdio_u
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_80) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_81) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.i: cmake_force
@@ -1185,7 +1199,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_unique_
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_81) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_82) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.i: cmake_force
@@ -1199,7 +1213,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_fla
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xip_cache/xip_cache.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xip_cache/xip_cache.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xip_cache/xip_cache.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xip_cache/xip_cache.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_82) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xip_cache/xip_cache.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_83) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xip_cache/xip_cache.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xip_cache/xip_cache.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xip_cache/xip_cache.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xip_cache/xip_cache.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xip_cache/xip_cache.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xip_cache/xip_cache.c.i: cmake_force
@@ -1213,7 +1227,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_xip
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_83) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_84) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.i: cmake_force
@@ -1227,7 +1241,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/ra
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_84) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_85) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.i: cmake_force
@@ -1241,7 +1255,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/ra
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_85) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_86) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.i: cmake_force
@@ -1255,7 +1269,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_86) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_87) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.i: cmake_force
@@ -1269,7 +1283,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/device/usbd
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_87) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_88) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.i: cmake_force
@@ -1283,7 +1297,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/audio
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_88) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_89) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.i: cmake_force
@@ -1297,7 +1311,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/cdc/c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_89) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_90) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.i: cmake_force
@@ -1311,7 +1325,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/d
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_90) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_91) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.i: cmake_force
@@ -1325,7 +1339,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/dfu/d
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_91) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_92) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.i: cmake_force
@@ -1339,7 +1353,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/hid/h
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_92) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_93) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.i: cmake_force
@@ -1353,7 +1367,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/midi/
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_93) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_94) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.i: cmake_force
@@ -1367,7 +1381,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/msc/m
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_94) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_95) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.i: cmake_force
@@ -1381,7 +1395,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/e
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_95) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_96) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.i: cmake_force
@@ -1395,7 +1409,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/net/n
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_96) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_97) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.i: cmake_force
@@ -1409,7 +1423,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/usbtm
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_97) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_98) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.i: cmake_force
@@ -1423,7 +1437,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/vendo
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_98) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_99) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.i: cmake_force
@@ -1437,7 +1451,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/class/video
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_99) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_100) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c.i: cmake_force
@@ -1451,7 +1465,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/portable/ra
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_100) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_101) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.i: cmake_force
@@ -1465,7 +1479,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/tusb.c.s: c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o: /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_101) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_102) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o -c /Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.i: cmake_force
@@ -1479,7 +1493,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/lib/tinyusb/src/common/tusb
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_102) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_103) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.i: cmake_force
@@ -1493,7 +1507,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_fix/rp2
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_103) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_104) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.i: cmake_force
@@ -1507,7 +1521,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/pico_multico
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_104) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_105) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.i: cmake_force
@@ -1521,7 +1535,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_spi
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_105) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_106) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.i: cmake_force
@@ -1535,7 +1549,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_dma
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o: /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_106) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_107) "Building C object CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o -MF CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o.d -o CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.o -c /Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c
 
 CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.i: cmake_force
@@ -1549,7 +1563,7 @@ CMakeFiles/murmsnes.dir/Users/A2506402/pico/pico-sdk/src/rp2_common/hardware_pio
 CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o: /Users/A2506402/Documents/GitHub/murmsnes/drivers/sdcard/sdcard.c
 CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_107) "Building C object CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_108) "Building C object CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o -MF CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o.d -o CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/drivers/sdcard/sdcard.c
 
 CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.i: cmake_force
@@ -1563,7 +1577,7 @@ CMakeFiles/murmsnes.dir/drivers/sdcard/sdcard.c.s: cmake_force
 CMakeFiles/murmsnes.dir/drivers/sdcard/pio_spi.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/drivers/sdcard/pio_spi.c.o: /Users/A2506402/Documents/GitHub/murmsnes/drivers/sdcard/pio_spi.c
 CMakeFiles/murmsnes.dir/drivers/sdcard/pio_spi.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_108) "Building C object CMakeFiles/murmsnes.dir/drivers/sdcard/pio_spi.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_109) "Building C object CMakeFiles/murmsnes.dir/drivers/sdcard/pio_spi.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/drivers/sdcard/pio_spi.c.o -MF CMakeFiles/murmsnes.dir/drivers/sdcard/pio_spi.c.o.d -o CMakeFiles/murmsnes.dir/drivers/sdcard/pio_spi.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/drivers/sdcard/pio_spi.c
 
 CMakeFiles/murmsnes.dir/drivers/sdcard/pio_spi.c.i: cmake_force
@@ -1577,7 +1591,7 @@ CMakeFiles/murmsnes.dir/drivers/sdcard/pio_spi.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/fatfs/ff.c
 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_109) "Building C object CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_110) "Building C object CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o -MF CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o.d -o CMakeFiles/murmsnes.dir/src/fatfs/ff.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/fatfs/ff.c
 
 CMakeFiles/murmsnes.dir/src/fatfs/ff.c.i: cmake_force
@@ -1591,7 +1605,7 @@ CMakeFiles/murmsnes.dir/src/fatfs/ff.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/fatfs/ffunicode.c
 CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_110) "Building C object CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_111) "Building C object CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o -MF CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o.d -o CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/fatfs/ffunicode.c
 
 CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.i: cmake_force
@@ -1605,7 +1619,7 @@ CMakeFiles/murmsnes.dir/src/fatfs/ffunicode.c.s: cmake_force
 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o: /Users/A2506402/Documents/GitHub/murmsnes/src/fatfs/ffsystem.c
 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_111) "Building C object CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_112) "Building C object CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o -MF CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o.d -o CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/src/fatfs/ffsystem.c
 
 CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.i: cmake_force
@@ -1619,7 +1633,7 @@ CMakeFiles/murmsnes.dir/src/fatfs/ffsystem.c.s: cmake_force
 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o: /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c
 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_112) "Building C object CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_113) "Building C object CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o -MF CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o.d -o CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c
 
 CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.i: cmake_force
@@ -1633,7 +1647,7 @@ CMakeFiles/murmsnes.dir/pico-extras/src/rp2_common/pico_audio_i2s/audio_i2s.c.s:
 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o: /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_audio/audio.cpp
 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_113) "Building CXX object CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_114) "Building CXX object CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o"
 	/opt/homebrew/bin/arm-none-eabi-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o -MF CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o.d -o CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.o -c /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_audio/audio.cpp
 
 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.i: cmake_force
@@ -1646,7 +1660,7 @@ CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio.cpp.s: cmake_for
 
 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio_utils.S.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio_utils.S.o: /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_audio/audio_utils.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_114) "Building ASM object CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio_utils.S.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_115) "Building ASM object CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio_utils.S.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio_utils.S.o   -c /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_audio/audio_utils.S
 
 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio_utils.S.i: cmake_force
@@ -1660,7 +1674,7 @@ CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_audio/audio_utils.S.s: cmake
 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_util_buffer/buffer.c.o: CMakeFiles/murmsnes.dir/flags.make
 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_util_buffer/buffer.c.o: /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_util_buffer/buffer.c
 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_util_buffer/buffer.c.o: CMakeFiles/murmsnes.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_115) "Building C object CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_util_buffer/buffer.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_116) "Building C object CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_util_buffer/buffer.c.o"
 	/opt/homebrew/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_util_buffer/buffer.c.o -MF CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_util_buffer/buffer.c.o.d -o CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_util_buffer/buffer.c.o -c /Users/A2506402/Documents/GitHub/murmsnes/pico-extras/src/common/pico_util_buffer/buffer.c
 
 CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_util_buffer/buffer.c.i: cmake_force
@@ -1674,6 +1688,7 @@ CMakeFiles/murmsnes.dir/pico-extras/src/common/pico_util_buffer/buffer.c.s: cmak
 # Object files for target murmsnes
 murmsnes_OBJECTS = \
 "CMakeFiles/murmsnes.dir/src/main.c.o" \
+"CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.o" \
 "CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o" \
 "CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o" \
 "CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o" \
@@ -1793,6 +1808,7 @@ murmsnes_OBJECTS = \
 murmsnes_EXTERNAL_OBJECTS =
 
 murmsnes.elf: CMakeFiles/murmsnes.dir/src/main.c.o
+murmsnes.elf: CMakeFiles/murmsnes.dir/src/murmsnes_profile.c.o
 murmsnes.elf: CMakeFiles/murmsnes.dir/src/snes9x/apu.c.o
 murmsnes.elf: CMakeFiles/murmsnes.dir/src/snes9x/c4.c.o
 murmsnes.elf: CMakeFiles/murmsnes.dir/src/snes9x/c4emu.c.o
@@ -1912,7 +1928,7 @@ murmsnes.elf: pico-sdk/src/rp2350/boot_stage2/CMakeFiles/bs2_default_library.dir
 murmsnes.elf: libdrivers.a
 murmsnes.elf: /Users/A2506402/pico/pico-sdk/src/rp2_common/pico_crt0/rp2350/memmap_default.ld
 murmsnes.elf: CMakeFiles/murmsnes.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_116) "Linking CXX executable murmsnes.elf"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/A2506402/Documents/GitHub/murmsnes/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_117) "Linking CXX executable murmsnes.elf"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/murmsnes.dir/link.txt --verbose=$(VERBOSE)
 	/opt/homebrew/bin/arm-none-eabi-objdump -h /Users/A2506402/Documents/GitHub/murmsnes/build/murmsnes.elf > murmsnes.dis
 	/opt/homebrew/bin/arm-none-eabi-objdump -d /Users/A2506402/Documents/GitHub/murmsnes/build/murmsnes.elf >> murmsnes.dis
