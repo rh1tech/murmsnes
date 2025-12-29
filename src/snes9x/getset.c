@@ -5,6 +5,10 @@
 #include "cpuexec.h"
 #include "obc1.h"
 
+/* Undefine assembly redirects so we can define the C versions */
+#undef S9xGetByte
+#undef S9xGetWord
+
 extern uint8_t OpenBus;
 
 uint8_t S9xGetByte(uint32_t Address)
