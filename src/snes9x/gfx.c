@@ -22,6 +22,55 @@
 #include "murmsnes_profile.h"
 #endif
 
+/*
+ * Tile Dirty Tracking System
+ * 
+ * For each screen tile position (32x30 grid), we track:
+ *   - The tile ID + flip flags + palette that was rendered
+ *   - The scroll offset that positioned it
+ * 
+ * Hash key: TileID(10) | Flip(2) | Palette(3) | HScroll(9) | VScroll(8) = 32 bits
+ * 
+ * On each frame:
+ *   1. Compute hash for each tile position
+ *   2. Compare with previous frame's hash
+ *   3. Skip DrawTile if hash matches (pixels already correct from last frame)
+ *   4. Store new hash
+ * 
+ * This works because:
+ *   - With double buffering, each buffer is used every 2 frames
+ *   - We track per-buffer (indexed by current_buffer)
+ *   - Unchanged tiles retain their pixels from 2 frames ago
+ */
+#ifdef MURMSNES_FAST_MODE
+#define TILE_DIRTY_ENABLED 0
+#define BG1_INTERLACED 0
+static uint32_t bg_frame_counter = 0;
+
+/* Screen tile grid dimensions */
+#define DIRTY_TILES_X 32
+#define DIRTY_TILES_Y 30
+#define DIRTY_TILES_PER_BG (DIRTY_TILES_X * DIRTY_TILES_Y)
+
+/* Two sets of dirty buffers - one per screen buffer (double buffering) */
+/* [buffer][bg][tile_index] */
+static uint32_t tile_hash[2][2][DIRTY_TILES_PER_BG];
+
+/* Track if dirty system is valid (invalidate on mode change, palette change) */
+static uint8_t tile_dirty_valid[2] = {0, 0};  /* Per buffer */
+
+/* Current buffer index - set from main.c */
+extern volatile uint32_t current_buffer;
+
+/* Build hash key for a tile - just tile data + VirtAlign (sub-tile offset) */
+#define TILE_HASH_KEY(tile, virtalign) \
+   (((tile) & 0x3FFF) | (((virtalign) & 0x7) << 14))
+
+/* Get tile index in dirty array from screen X,Y */
+#define DIRTY_TILE_INDEX(screen_x, screen_y) \
+   (((screen_y) >> 3) * DIRTY_TILES_X + ((screen_x) >> 3))
+#endif
+
 static const uint8_t BitShifts[8][4] =
 {
    {2, 2, 2, 2}, /* 0 */
@@ -175,6 +224,12 @@ bool S9xInitGFX(void)
    if (!LocalState)
       return false;
 
+#if defined(MURMSNES_FAST_MODE) && BG_CACHE_ENABLED
+   /* Use SubZBuffer as Z-cache - it's unused in FAST_MODE (subscreen disabled) */
+   /* This is set AFTER GFX.SubZBuffer is initialized by caller */
+   bg_cache_zbuffer = GFX.SubZBuffer;
+#endif
+
    GFX.OBJLines = LocalState->OBJLines;
    GFX.RealPitch = GFX.Pitch2 = GFX.Pitch;
    GFX.ZPitch = GFX.Pitch;
@@ -235,6 +290,10 @@ bool S9xInitGFX(void)
 void S9xDeinitGFX(void)
 {
    /* Free any memory allocated in S9xInitGFX */
+#if defined(MURMSNES_FAST_MODE) && BG_CACHE_ENABLED
+   /* bg_cache_zbuffer points to SubZBuffer (not allocated), just NULL it */
+   bg_cache_zbuffer = NULL;
+#endif
    if (GFX.ZERO)
    {
       free(GFX.ZERO);
@@ -296,6 +355,14 @@ void S9xStartScreenRefresh(void)
       PPU.RecomputeClipWindows = true;
       GFX.DepthDelta = GFX.SubZBuffer - GFX.ZBuffer;
       GFX.Delta = (GFX.SubScreen - GFX.Screen) >> 1;
+      
+#if defined(MURMSNES_FAST_MODE) && TILE_DIRTY_ENABLED
+      /* Invalidate tile dirty tracking on palette changes */
+      if (IPPU.ColorsChanged) {
+         tile_dirty_valid[0] = 0;
+         tile_dirty_valid[1] = 0;
+      }
+#endif
    }
 
    if (++IPPU.FrameCount == (uint32_t)Memory.ROMFramesPerSecond)
@@ -354,6 +421,16 @@ void S9xEndScreenRefresh(void)
    {
       FLUSH_REDRAW();
       
+#ifdef MURMSNES_FAST_MODE
+      /* Increment BG frameskip counter after each rendered frame */
+      bg_frame_counter++;
+      
+#if TILE_DIRTY_ENABLED
+      /* Mark current buffer's tile hashes as valid for future comparisons */
+      tile_dirty_valid[current_buffer] = 1;
+#endif
+#endif
+
       if (IPPU.ColorsChanged)
       {
          uint32_t saved = PPU.CGDATA[0];
@@ -747,8 +824,8 @@ static void DrawOBJS(bool OnMain, uint8_t D)
    GFX.Z1 = D + 2;
 
 #ifdef MURMSNES_FAST_MODE
-   /* FAST MODE: Limit to 8 sprites per scanline instead of 32 for ~50% sprite speedup */
-   #define FAST_MODE_MAX_SPRITES 8
+   /* FAST MODE: Limit to 16 sprites per scanline instead of 32 for ~30% sprite speedup */
+   #define FAST_MODE_MAX_SPRITES 16
 #else
    #define FAST_MODE_MAX_SPRITES 32
 #endif
@@ -764,8 +841,6 @@ static void DrawOBJS(bool OnMain, uint8_t D)
          int32_t TileLine;
          int32_t TileX;
          int32_t BaseTile;
-         bool WinStat = true;
-         int32_t WinIdx = 0, NextPos = -1000;
          int32_t t, O;
          int32_t X;
 
@@ -792,6 +867,28 @@ static void DrawOBJS(bool OnMain, uint8_t D)
          X = PPU.OBJ[S].HPos;
          if (X == -256)
             X = 256;
+
+#ifdef MURMSNES_FAST_MODE
+         /* FAST_MODE: Simplified sprite loop - skip window clipping when not needed */
+         if (!clipcount) {
+            /* No window clipping - fast path: just draw all visible tiles */
+            for (t = tiles, O = Offset + X * GFX.PixSize; X <= 256 && X < PPU.OBJ[S].HPos + GFX.OBJWidths[S]; TileX = (TileX + TileInc) & 0x0f, X += 8, O += 8 * GFX.PixSize)
+            {
+               if (X < -7 || --t < 0 || X == 256)
+                  continue;
+               if (X >= 0 && X + 8 <= 256)
+                  (*DrawTilePtr)(BaseTile | TileX, O, TileLine, 1);
+               else if (X >= 0)
+                  (*DrawClippedTilePtr)(BaseTile | TileX, O, 0, 256 - X, TileLine, 1);
+               else
+                  (*DrawClippedTilePtr)(BaseTile | TileX, O, -X, 8 + X, TileLine, 1);
+            }
+         } else
+#endif
+         {
+         /* Standard path with window clipping */
+         bool WinStat = true;
+         int32_t WinIdx = 0, NextPos = -1000;
          for (t = tiles, O = Offset + X * GFX.PixSize; X <= 256 && X < PPU.OBJ[S].HPos + GFX.OBJWidths[S]; TileX = (TileX + TileInc) & 0x0f, X += 8, O += 8 * GFX.PixSize)
          {
             if (X < -7 || --t < 0 || X == 256)
@@ -830,6 +927,7 @@ static void DrawOBJS(bool OnMain, uint8_t D)
                }
             }
          }
+         } /* End of else block for window clipping path */
       }
    }
 }
@@ -1692,6 +1790,21 @@ static void DrawBackground(uint32_t BGMode, uint32_t bg, uint8_t Z1, uint8_t Z2)
       if (Y + Lines > GFX.EndY)
          Lines = GFX.EndY + 1 - Y;
 
+#if defined(MURMSNES_FAST_MODE) && BG1_INTERLACED
+      /* Interlaced BG1: Skip odd scanlines, copy even to odd after loop */
+      /* This variable tracks if we should copy at end of this iteration */
+      int32_t do_interlace_copy = 0;
+      if (bg == 1) {
+         /* If starting on odd line, skip to next even */
+         if (Y & 1) {
+            Lines = 1;
+            continue;  /* Skip this odd line entirely */
+         }
+         /* Render even lines only - we'll copy to odd after */
+         do_interlace_copy = 1;
+      }
+#endif
+
       VirtAlign <<= 3;
       ScreenLine = (VOffset + Y) >> OffsetShift;
 
@@ -1811,6 +1924,87 @@ static void DrawBackground(uint32_t BGMode, uint32_t bg, uint8_t Z1, uint8_t Z2)
          Middle = Count >> 3;
          Count &= 7;
 
+#if defined(MURMSNES_FAST_MODE) && TILE_DIRTY_ENABLED
+         /* FAST_MODE with Tile Dirty Tracking: Skip unchanged tiles */
+         if (BG.TileSize == 8 && bg < 2 && tile_dirty_valid[current_buffer])
+         {
+            uint32_t* hash_buf = tile_hash[current_buffer][bg];
+            uint32_t screen_x = (Left + Count) & 0xFF;  /* Starting X after clipped tile */
+            
+            for (C = Middle; C > 0; s += 8 * GFX.PixSize, Quot++, C--, screen_x += 8)
+            {
+               Tile = READ_2BYTES(t);
+               
+               /* Compute hash for this tile at this position */
+               uint32_t tile_idx = (Y >> 3) * DIRTY_TILES_X + (screen_x >> 3);
+               if (tile_idx < DIRTY_TILES_PER_BG) {
+                  uint32_t hash = TILE_HASH_KEY(Tile, VirtAlign);
+                  
+                  if (hash_buf[tile_idx] == hash) {
+                     /* Tile unchanged - skip drawing, still need to advance */
+                     t++;
+                     if (Quot == 31) t = b2;
+                     else if (Quot == 63) t = b1;
+                     continue;
+                  }
+                  hash_buf[tile_idx] = hash;
+               }
+               
+               GFX.Z1 = GFX.Z2 = depths [(Tile & 0x2000) >> 13];
+               (*DrawTilePtr)(Tile, s, VirtAlign, Lines);
+               t++;
+               if (Quot == 31)
+                  t = b2;
+               else if (Quot == 63)
+                  t = b1;
+            }
+         }
+         else if (BG.TileSize == 8)
+         {
+            /* First frame or BG2+ : draw all, populate hash */
+            uint32_t* hash_buf = (bg < 2) ? tile_hash[current_buffer][bg] : NULL;
+            uint32_t screen_x = (Left + Count) & 0xFF;
+            
+            for (C = Middle; C > 0; s += 8 * GFX.PixSize, Quot++, C--, screen_x += 8)
+            {
+               Tile = READ_2BYTES(t);
+               GFX.Z1 = GFX.Z2 = depths [(Tile & 0x2000) >> 13];
+               (*DrawTilePtr)(Tile, s, VirtAlign, Lines);
+               
+               /* Store hash for next frame comparison */
+               if (hash_buf) {
+                  uint32_t tile_idx = (Y >> 3) * DIRTY_TILES_X + (screen_x >> 3);
+                  if (tile_idx < DIRTY_TILES_PER_BG) {
+                     hash_buf[tile_idx] = TILE_HASH_KEY(Tile, VirtAlign);
+                  }
+               }
+               
+               t++;
+               if (Quot == 31)
+                  t = b2;
+               else if (Quot == 63)
+                  t = b1;
+            }
+         }
+         else
+#elif defined(MURMSNES_FAST_MODE)
+         /* FAST_MODE without dirty tracking: Optimized loop for 8x8 tiles */
+         if (BG.TileSize == 8)
+         {
+            for (C = Middle; C > 0; s += 8 * GFX.PixSize, Quot++, C--)
+            {
+               Tile = READ_2BYTES(t);
+               GFX.Z1 = GFX.Z2 = depths [(Tile & 0x2000) >> 13];
+               (*DrawTilePtr)(Tile, s, VirtAlign, Lines);
+               t++;
+               if (Quot == 31)
+                  t = b2;
+               else if (Quot == 63)
+                  t = b1;
+            }
+         }
+         else
+#endif
          for (C = Middle; C > 0; s += (IPPU.HalfWidthPixels ? 4 : 8) * GFX.PixSize, Quot++, C--)
          {
             Tile = READ_2BYTES(t);
@@ -1874,6 +2068,19 @@ static void DrawBackground(uint32_t BGMode, uint32_t bg, uint8_t Z1, uint8_t Z2)
             }
          }
       }
+      
+#if defined(MURMSNES_FAST_MODE) && BG1_INTERLACED
+      /* After rendering even line(s), copy each to the odd line below */
+      if (do_interlace_copy) {
+         for (int32_t line = Y; line < Y + Lines && line + 1 <= (int32_t)GFX.EndY; line++) {
+            if ((line & 1) == 0) {  /* Even line - copy to odd line below */
+               uint8_t* src = GFX.Screen + line * GFX.PPL * 2;
+               uint8_t* dst = GFX.Screen + (line + 1) * GFX.PPL * 2;
+               memcpy(dst, src, 256 * 2);
+            }
+         }
+      }
+#endif
    }
 }
 
@@ -2521,10 +2728,23 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
    }
 
 #ifdef MURMSNES_FAST_MODE
-   /* FAST MODE: Skip BG2 in Mode 1 - usually status bar/HUD, saves ~1200µs */
+   /* FAST MODE: Skip BG2 in Mode 1 - usually low-priority status/HUD layer */
    if (PPU.BGMode == 1) {
       BG2 = false;
    }
+   
+   /* FAST MODE: Interlaced BG1 rendering - render every other line, duplicate */
+   /* This is handled in DrawBackground by setting a global flag */
+   
+#if BG_CACHE_ENABLED
+   /* BG Cache: Control what gets rendered based on cache phase */
+   if (bg_cache_skip_sprites) {
+      OB = false;  /* Skip sprites - we're caching BG only */
+   }
+   if (bg_cache_skip_bgs) {
+      BG0 = BG1 = BG2 = BG3 = false;  /* Skip BGs - restore from cache */
+   }
+#endif
 #endif
 
    sub |= force_no_add;
@@ -3244,7 +3464,14 @@ void S9xUpdateScreen(void)
       if (PPU.ForcedBlanking)
          back = black;
 
-      if (IPPU.Clip [0].Count[5])
+#if defined(MURMSNES_FAST_MODE) && BG_CACHE_ENABLED
+      /* BG Cache: Skip backdrop fill on skip frames (BG pixels persist from 2 frames ago) */
+      bool skip_backdrop = bg_cache_zbuffer && (PPU.BGMode == 1) && (bg_frame_counter & 2);
+#else
+      bool skip_backdrop = false;
+#endif
+
+      if (IPPU.Clip [0].Count[5] && !skip_backdrop)
       {
    #ifdef MURMSNES_PROFILE
          uint32_t __bd_t0 = time_us_32();
@@ -3276,7 +3503,7 @@ void S9xUpdateScreen(void)
          murmsnes_prof_add_upd_backdrop_us((uint32_t)(time_us_32() - __bd_t0));
 #endif
       }
-      else
+      else if (!skip_backdrop)
       {
 #ifdef MURMSNES_PROFILE
          uint32_t __bd_t0 = time_us_32();
@@ -3309,6 +3536,69 @@ void S9xUpdateScreen(void)
 
          GFX.DB = GFX.ZBuffer;
 
+#if defined(MURMSNES_FAST_MODE) && BG_CACHE_ENABLED
+         /* BG Caching using SRAM (SubZBuffer as Z-cache)
+          * 
+          * 4-frame cycle with double-buffered screens:
+          *   Frame 0,1: Render full (BGs + sprites), cache Z-buffer
+          *   Frame 2,3: Skip BGs (screen has old pixels), restore Z, sprites only
+          *   Frame 4,5: Render full (refresh BGs), cache Z
+          *   ...
+          * 
+          * Each SCREEN buffer keeps BG content from 2 frames ago.
+          */
+         if (bg_cache_zbuffer && PPU.BGMode == 1) {
+            bool is_skip_frame = (bg_frame_counter & 2);  /* Frames 2,3,6,7,... */
+            
+            if (!is_skip_frame) {
+               /* Full render frame: BGs + sprites, then cache Z */
+#ifdef MURMSNES_PROFILE
+               uint32_t __main_t0 = time_us_32();
+#endif
+               RenderScreen(GFX.Screen, false, true, SUB_SCREEN_DEPTH);
+#ifdef MURMSNES_PROFILE
+               murmsnes_prof_add_upd_render_main_us((uint32_t)(time_us_32() - __main_t0));
+#endif
+               
+               /* Cache Z-buffer to SubZBuffer (SRAM, fast) */
+               for (y = starty; y <= endy; y++) {
+                  memcpy(bg_cache_zbuffer + y * BG_CACHE_WIDTH,
+                         GFX.ZBuffer + y * GFX.ZPitch,
+                         IPPU.RenderedScreenWidth);
+               }
+            } else {
+               /* Skip frame: restore Z, render sprites only (BG pixels persist in screen) */
+               
+               /* Restore Z-buffer from cache */
+               for (y = starty; y <= endy; y++) {
+                  memcpy(GFX.ZBuffer + y * GFX.ZPitch,
+                         bg_cache_zbuffer + y * BG_CACHE_WIDTH,
+                         IPPU.RenderedScreenWidth);
+               }
+               
+               /* Render sprites only (BGs skipped - old pixels stay) */
+               bg_cache_skip_bgs = true;
+               
+#ifdef MURMSNES_PROFILE
+               uint32_t __main_t0 = time_us_32();
+#endif
+               RenderScreen(GFX.Screen, false, true, SUB_SCREEN_DEPTH);
+#ifdef MURMSNES_PROFILE
+               murmsnes_prof_add_upd_render_main_us((uint32_t)(time_us_32() - __main_t0));
+#endif
+               bg_cache_skip_bgs = false;
+            }
+         } else {
+            /* Non-Mode1 or no cache: normal render */
+#ifdef MURMSNES_PROFILE
+            uint32_t __main_t0 = time_us_32();
+#endif
+            RenderScreen(GFX.Screen, false, true, SUB_SCREEN_DEPTH);
+#ifdef MURMSNES_PROFILE
+            murmsnes_prof_add_upd_render_main_us((uint32_t)(time_us_32() - __main_t0));
+#endif
+         }
+#else
 #ifdef MURMSNES_PROFILE
          uint32_t __main_t0 = time_us_32();
 #endif
@@ -3316,6 +3606,7 @@ void S9xUpdateScreen(void)
 #ifdef MURMSNES_PROFILE
          murmsnes_prof_add_upd_render_main_us((uint32_t)(time_us_32() - __main_t0));
 #endif
+#endif /* BG_CACHE_ENABLED */
       }
    }
 

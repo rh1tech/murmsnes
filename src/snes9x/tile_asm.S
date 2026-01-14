@@ -10,6 +10,11 @@
 
 /* External symbols */
 .extern GFX
+.extern BG
+.extern Memory
+.extern IPPU
+.extern odd
+.extern even
 
 /* GFX struct offsets (from gfx.h):
  * The GFX struct contains rendering state.
@@ -35,8 +40,178 @@
  */
 .equ GFX_OFF_S, 52          @ Screen buffer (uint8_t* / uint16_t*)
 .equ GFX_OFF_DB, 56         @ Depth buffer (uint8_t*)
+.equ GFX_OFF_PPL, 40        @ Pixels per line
 .equ GFX_OFF_Z1, 64         @ Z1 depth compare (uint8_t)
 .equ GFX_OFF_Z2, 65         @ Z2 depth write (uint8_t)
+
+/*
+ * ConvertTile4bpp_asm - Convert a 4bpp SNES tile to 8bpp pixel cache
+ *
+ * This is the most common tile format (Mode 1 backgrounds).
+ *
+ * Input:
+ *   r0 = pCache (uint8_t*) - destination cache buffer (64 bytes)
+ *   r1 = TileAddr (uint32_t) - address in VRAM
+ *
+ * Output:
+ *   r0 = tile flags (BLANK_TILE=2, or 0x10|depth with optional 0x20 opaque flag)
+ *
+ * C equivalent:
+ *   for (line = 8; line != 0; line--, tp += 2) {
+ *       p1 = odd[0][tp[0]>>4] | even[0][tp[1]>>4] | odd[1][tp[16]>>4] | even[1][tp[17]>>4];
+ *       p2 = odd[0][tp[0]&0xf] | even[0][tp[1]&0xf] | odd[1][tp[16]&0xf] | even[1][tp[17]&0xf];
+ *       *p++ = p1; *p++ = p2;
+ *   }
+ *
+ * Array layout: odd[4][16] and even[4][16] are 2D arrays.
+ * odd[i][j] is at address: odd + (i*16 + j) * 4
+ * So odd[1][j] = odd + (16 + j) * 4 = odd + 64 + j*4
+ */
+.global ConvertTile4bpp_asm
+.type ConvertTile4bpp_asm, %function
+.thumb_func
+ConvertTile4bpp_asm:
+    push    {r4-r11, lr}
+    sub     sp, sp, #12                 @ Local storage for odd1, even1 pointers
+    
+    /* r0 = pCache (output buffer), save it */
+    str     r0, [sp, #0]                @ save pCache
+    
+    /* Get tp = &Memory.VRAM[TileAddr] */
+    ldr     r2, =Memory
+    ldr     r2, [r2]                    @ r2 = Memory.VRAM base
+    add     r1, r2, r1                  @ r1 = tp = &Memory.VRAM[TileAddr]
+    
+    /* Load lookup table base addresses */
+    ldr     r2, =odd                    @ r2 = &odd[0][0]
+    ldr     r3, =even                   @ r3 = &even[0][0]
+    
+    /* Precompute odd[1] and even[1] base addresses */
+    add     r4, r2, #64                 @ r4 = &odd[1][0]
+    add     r5, r3, #64                 @ r5 = &even[1][0]
+    str     r4, [sp, #4]                @ save odd1 base
+    str     r5, [sp, #8]                @ save even1 base
+    
+    /* Accumulators */
+    mov     r4, #0                      @ non_zero = 0
+    mov     r5, #0                      @ has_transparent = 0
+    
+    /* Output pointer */
+    ldr     r0, [sp, #0]                @ r0 = pCache
+    
+    /* Line counter */
+    mov     r12, #8
+    
+.Lconv4_loop:
+    /* Load tile bytes: tp[0], tp[1], tp[16], tp[17] */
+    ldrb    r6, [r1, #0]                @ r6 = tp[0]
+    ldrb    r7, [r1, #1]                @ r7 = tp[1]
+    ldrb    r8, [r1, #16]               @ r8 = tp[16]
+    ldrb    r9, [r1, #17]               @ r9 = tp[17]
+    
+    /* === Calculate p1 (high nibbles) === */
+    
+    /* p1 = odd[0][tp[0] >> 4] */
+    lsr     r10, r6, #4
+    ldr     r11, [r2, r10, lsl #2]      @ r11 = p1 = odd[0][...]
+    
+    /* p1 |= even[0][tp[1] >> 4] */
+    lsr     r10, r7, #4
+    ldr     r10, [r3, r10, lsl #2]
+    orr     r11, r11, r10
+    
+    /* p1 |= odd[1][tp[16] >> 4] */
+    ldr     r10, [sp, #4]               @ r10 = &odd[1][0]
+    lsr     lr, r8, #4                  @ use lr as temp
+    ldr     r10, [r10, lr, lsl #2]
+    orr     r11, r11, r10
+    
+    /* p1 |= even[1][tp[17] >> 4] */
+    ldr     r10, [sp, #8]               @ r10 = &even[1][0]
+    lsr     lr, r9, #4
+    ldr     r10, [r10, lr, lsl #2]
+    orr     r11, r11, r10
+    
+    /* === Calculate p2 (low nibbles) === */
+    
+    /* p2 = odd[0][tp[0] & 0xf] */
+    and     r10, r6, #0xf
+    ldr     r10, [r2, r10, lsl #2]
+    mov     r6, r10                     @ r6 = p2
+    
+    /* p2 |= even[0][tp[1] & 0xf] */
+    and     r10, r7, #0xf
+    ldr     r10, [r3, r10, lsl #2]
+    orr     r6, r6, r10
+    
+    /* p2 |= odd[1][tp[16] & 0xf] */
+    ldr     r10, [sp, #4]
+    and     lr, r8, #0xf
+    ldr     r10, [r10, lr, lsl #2]
+    orr     r6, r6, r10
+    
+    /* p2 |= even[1][tp[17] & 0xf] */
+    ldr     r10, [sp, #8]
+    and     lr, r9, #0xf
+    ldr     r10, [r10, lr, lsl #2]
+    orr     r6, r6, r10
+    
+    /* Store p1, p2 to cache */
+    str     r11, [r0], #4               @ *p++ = p1
+    str     r6, [r0], #4                @ *p++ = p2
+    
+    /* non_zero |= p1 | p2 */
+    orr     r7, r11, r6
+    orr     r4, r4, r7
+    
+    /* has_transparent: check for zero bytes
+     * HAS_ZERO_BYTE(x) = ((x - 0x01010101) & ~x & 0x80808080) != 0
+     */
+    ldr     r7, =0x01010101
+    ldr     r8, =0x80808080
+    
+    /* Check p1 */
+    sub     r9, r11, r7
+    bic     r9, r9, r11
+    and     r9, r9, r8
+    orr     r5, r5, r9
+    
+    /* Check p2 */
+    sub     r9, r6, r7
+    bic     r9, r9, r6
+    and     r9, r9, r8
+    orr     r5, r5, r9
+    
+    /* Advance tp by 2 */
+    add     r1, r1, #2
+    
+    /* Loop */
+    subs    r12, r12, #1
+    bne     .Lconv4_loop
+    
+    /* === Compute return value === */
+    cmp     r4, #0
+    beq     .Lconv4_blank
+    
+    /* Load BG.Depth - offset 36 in SBG struct */
+    ldr     r0, =BG
+    ldrb    r0, [r0, #36]
+    orr     r0, r0, #0x10               @ 0x10 | BG.Depth
+    
+    cmp     r5, #0
+    bne     .Lconv4_has_trans
+    orr     r0, r0, #0x20               @ set opaque flag
+.Lconv4_has_trans:
+    add     sp, sp, #12
+    pop     {r4-r11, pc}
+    
+.Lconv4_blank:
+    mov     r0, #2                      @ BLANK_TILE = 2
+    add     sp, sp, #12
+    pop     {r4-r11, pc}
+
+.size ConvertTile4bpp_asm, .-ConvertTile4bpp_asm
+
 
 /*
  * WRITE_4PIXELS16_OPAQUE_asm - Write 4 opaque pixels with depth test only
@@ -862,6 +1037,539 @@ WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm:
 
     pop     {r4-r11, pc}
 .size WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm, .-WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm
+
+
+/*
+ * DrawTile16_Normal_asm - Draw a complete 8x8 tile (no flip) with depth test
+ *
+ * This is a fully integrated tile renderer that handles all 8 rows
+ * in a single function call, eliminating per-row function call overhead.
+ *
+ * Input:
+ *   r0 = pCache (uint8_t*) - pointer to 64-byte cached tile pixels
+ *   r1 = Offset (int32_t) - starting screen buffer offset
+ *   r2 = ScreenColors (uint16_t*) - palette lookup table
+ *   r3 = StartLine (uint32_t) - starting line within tile (0-56, step 8)
+ *   [sp] = LineCount (uint32_t) - number of lines to draw (1-8)
+ *
+ * Optimizations:
+ *   - Single GFX struct load for all rows
+ *   - Pipelined pixel processing
+ *   - Reduced branch overhead
+ */
+.global DrawTile16_Normal_asm
+.type DrawTile16_Normal_asm, %function
+.thumb_func
+DrawTile16_Normal_asm:
+    push    {r4-r11, lr}
+    
+    /* Load LineCount from stack */
+    ldr     r12, [sp, #36]              @ LineCount (after 9 regs pushed)
+    
+    /* Setup: bp = pCache + StartLine */
+    add     r0, r0, r3                  @ r0 = bp = pCache + StartLine
+    
+    /* Load GFX struct fields once */
+    ldr     r3, =GFX
+    ldr     r4, [r3, #GFX_OFF_S]        @ r4 = GFX.S base
+    ldr     r5, [r3, #GFX_OFF_DB]       @ r5 = GFX.DB base
+    ldr     r11, [r3, #GFX_OFF_PPL]     @ r11 = GFX.PPL
+    ldrb    r6, [r3, #GFX_OFF_Z1]       @ r6 = Z1
+    ldrb    r7, [r3, #GFX_OFF_Z2]       @ r7 = Z2
+    
+    /* Calculate initial screen/depth pointers */
+    add     r5, r5, r1                  @ r5 = Depth = GFX.DB + Offset
+    add     r4, r4, r1, lsl #1          @ r4 = Screen = GFX.S + Offset*2
+    
+.Ldraw_normal_loop:
+    /* Load 8 pixels (two 32-bit loads) */
+    ldm     r0, {r8, r9}                @ r8 = pixels[0-3], r9 = pixels[4-7]
+    
+    /* === Pixels 0-3 (from r8) === */
+    
+    /* Pixel 0 */
+    ldrb    r10, [r5, #0]
+    cmp     r6, r10
+    bls     .Ldn_p0_skip
+    and     r3, r8, #0xFF
+    cbz     r3, .Ldn_p0_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #0]
+    strb    r7, [r5, #0]
+.Ldn_p0_skip:
+
+    /* Pixel 1 */
+    ldrb    r10, [r5, #1]
+    cmp     r6, r10
+    bls     .Ldn_p1_skip
+    ubfx    r3, r8, #8, #8
+    cbz     r3, .Ldn_p1_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #2]
+    strb    r7, [r5, #1]
+.Ldn_p1_skip:
+
+    /* Pixel 2 */
+    ldrb    r10, [r5, #2]
+    cmp     r6, r10
+    bls     .Ldn_p2_skip
+    ubfx    r3, r8, #16, #8
+    cbz     r3, .Ldn_p2_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #4]
+    strb    r7, [r5, #2]
+.Ldn_p2_skip:
+
+    /* Pixel 3 */
+    ldrb    r10, [r5, #3]
+    cmp     r6, r10
+    bls     .Ldn_p3_skip
+    lsr     r3, r8, #24
+    cbz     r3, .Ldn_p3_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #6]
+    strb    r7, [r5, #3]
+.Ldn_p3_skip:
+
+    /* === Pixels 4-7 (from r9) === */
+    
+    /* Pixel 4 */
+    ldrb    r10, [r5, #4]
+    cmp     r6, r10
+    bls     .Ldn_p4_skip
+    and     r3, r9, #0xFF
+    cbz     r3, .Ldn_p4_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #8]
+    strb    r7, [r5, #4]
+.Ldn_p4_skip:
+
+    /* Pixel 5 */
+    ldrb    r10, [r5, #5]
+    cmp     r6, r10
+    bls     .Ldn_p5_skip
+    ubfx    r3, r9, #8, #8
+    cbz     r3, .Ldn_p5_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #10]
+    strb    r7, [r5, #5]
+.Ldn_p5_skip:
+
+    /* Pixel 6 */
+    ldrb    r10, [r5, #6]
+    cmp     r6, r10
+    bls     .Ldn_p6_skip
+    ubfx    r3, r9, #16, #8
+    cbz     r3, .Ldn_p6_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #12]
+    strb    r7, [r5, #6]
+.Ldn_p6_skip:
+
+    /* Pixel 7 */
+    ldrb    r10, [r5, #7]
+    cmp     r6, r10
+    bls     .Ldn_p7_skip
+    lsr     r3, r9, #24
+    cbz     r3, .Ldn_p7_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #14]
+    strb    r7, [r5, #7]
+.Ldn_p7_skip:
+
+    /* Advance to next row */
+    add     r0, r0, #8                  @ bp += 8
+    add     r4, r4, r11, lsl #1         @ Screen += PPL * 2 (16-bit pixels)
+    add     r5, r5, r11                 @ Depth += PPL
+    
+    subs    r12, r12, #1                @ LineCount--
+    bne     .Ldraw_normal_loop
+    
+    pop     {r4-r11, pc}
+.size DrawTile16_Normal_asm, .-DrawTile16_Normal_asm
+
+
+/*
+ * DrawTile16_FlipH_asm - Draw a complete 8x8 tile (H-flipped) with depth test
+ */
+.global DrawTile16_FlipH_asm
+.type DrawTile16_FlipH_asm, %function
+.thumb_func
+DrawTile16_FlipH_asm:
+    push    {r4-r11, lr}
+    
+    ldr     r12, [sp, #36]              @ LineCount
+    add     r0, r0, r3                  @ bp = pCache + StartLine
+    
+    ldr     r3, =GFX
+    ldr     r4, [r3, #GFX_OFF_S]
+    ldr     r5, [r3, #GFX_OFF_DB]
+    ldr     r11, [r3, #GFX_OFF_PPL]
+    ldrb    r6, [r3, #GFX_OFF_Z1]
+    ldrb    r7, [r3, #GFX_OFF_Z2]
+    
+    add     r5, r5, r1
+    add     r4, r4, r1, lsl #1
+    
+.Ldraw_fliph_loop:
+    ldm     r0, {r8, r9}                @ r8 = pixels[0-3], r9 = pixels[4-7]
+    
+    /* Flipped: Screen[0] <- pixels[7], Screen[7] <- pixels[0] */
+    
+    /* Pixel 0 <- pixels[7] */
+    ldrb    r10, [r5, #0]
+    cmp     r6, r10
+    bls     .Ldh_p0_skip
+    lsr     r3, r9, #24
+    cbz     r3, .Ldh_p0_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #0]
+    strb    r7, [r5, #0]
+.Ldh_p0_skip:
+
+    /* Pixel 1 <- pixels[6] */
+    ldrb    r10, [r5, #1]
+    cmp     r6, r10
+    bls     .Ldh_p1_skip
+    ubfx    r3, r9, #16, #8
+    cbz     r3, .Ldh_p1_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #2]
+    strb    r7, [r5, #1]
+.Ldh_p1_skip:
+
+    /* Pixel 2 <- pixels[5] */
+    ldrb    r10, [r5, #2]
+    cmp     r6, r10
+    bls     .Ldh_p2_skip
+    ubfx    r3, r9, #8, #8
+    cbz     r3, .Ldh_p2_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #4]
+    strb    r7, [r5, #2]
+.Ldh_p2_skip:
+
+    /* Pixel 3 <- pixels[4] */
+    ldrb    r10, [r5, #3]
+    cmp     r6, r10
+    bls     .Ldh_p3_skip
+    and     r3, r9, #0xFF
+    cbz     r3, .Ldh_p3_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #6]
+    strb    r7, [r5, #3]
+.Ldh_p3_skip:
+
+    /* Pixel 4 <- pixels[3] */
+    ldrb    r10, [r5, #4]
+    cmp     r6, r10
+    bls     .Ldh_p4_skip
+    lsr     r3, r8, #24
+    cbz     r3, .Ldh_p4_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #8]
+    strb    r7, [r5, #4]
+.Ldh_p4_skip:
+
+    /* Pixel 5 <- pixels[2] */
+    ldrb    r10, [r5, #5]
+    cmp     r6, r10
+    bls     .Ldh_p5_skip
+    ubfx    r3, r8, #16, #8
+    cbz     r3, .Ldh_p5_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #10]
+    strb    r7, [r5, #5]
+.Ldh_p5_skip:
+
+    /* Pixel 6 <- pixels[1] */
+    ldrb    r10, [r5, #6]
+    cmp     r6, r10
+    bls     .Ldh_p6_skip
+    ubfx    r3, r8, #8, #8
+    cbz     r3, .Ldh_p6_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #12]
+    strb    r7, [r5, #6]
+.Ldh_p6_skip:
+
+    /* Pixel 7 <- pixels[0] */
+    ldrb    r10, [r5, #7]
+    cmp     r6, r10
+    bls     .Ldh_p7_skip
+    and     r3, r8, #0xFF
+    cbz     r3, .Ldh_p7_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #14]
+    strb    r7, [r5, #7]
+.Ldh_p7_skip:
+
+    add     r0, r0, #8
+    add     r4, r4, r11, lsl #1
+    add     r5, r5, r11
+    
+    subs    r12, r12, #1
+    bne     .Ldraw_fliph_loop
+    
+    pop     {r4-r11, pc}
+.size DrawTile16_FlipH_asm, .-DrawTile16_FlipH_asm
+
+
+/*
+ * DrawTile16_VFlip_asm - Draw a complete 8x8 tile (V-flipped) with depth test
+ * 
+ * Same as Normal but decrements row pointer instead of incrementing.
+ * StartLine should be 56 - original_StartLine for V_FLIP cases.
+ */
+.global DrawTile16_VFlip_asm
+.type DrawTile16_VFlip_asm, %function
+.thumb_func
+DrawTile16_VFlip_asm:
+    push    {r4-r11, lr}
+    
+    ldr     r12, [sp, #36]              @ LineCount
+    add     r0, r0, r3                  @ bp = pCache + StartLine
+    
+    ldr     r3, =GFX
+    ldr     r4, [r3, #GFX_OFF_S]
+    ldr     r5, [r3, #GFX_OFF_DB]
+    ldr     r11, [r3, #GFX_OFF_PPL]
+    ldrb    r6, [r3, #GFX_OFF_Z1]
+    ldrb    r7, [r3, #GFX_OFF_Z2]
+    
+    add     r5, r5, r1
+    add     r4, r4, r1, lsl #1
+    
+.Ldraw_vflip_loop:
+    ldm     r0, {r8, r9}                @ r8 = pixels[0-3], r9 = pixels[4-7]
+    
+    /* Pixel 0 */
+    ldrb    r10, [r5, #0]
+    cmp     r6, r10
+    bls     .Ldv_p0_skip
+    and     r3, r8, #0xFF
+    cbz     r3, .Ldv_p0_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #0]
+    strb    r7, [r5, #0]
+.Ldv_p0_skip:
+
+    /* Pixel 1 */
+    ldrb    r10, [r5, #1]
+    cmp     r6, r10
+    bls     .Ldv_p1_skip
+    ubfx    r3, r8, #8, #8
+    cbz     r3, .Ldv_p1_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #2]
+    strb    r7, [r5, #1]
+.Ldv_p1_skip:
+
+    /* Pixel 2 */
+    ldrb    r10, [r5, #2]
+    cmp     r6, r10
+    bls     .Ldv_p2_skip
+    ubfx    r3, r8, #16, #8
+    cbz     r3, .Ldv_p2_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #4]
+    strb    r7, [r5, #2]
+.Ldv_p2_skip:
+
+    /* Pixel 3 */
+    ldrb    r10, [r5, #3]
+    cmp     r6, r10
+    bls     .Ldv_p3_skip
+    lsr     r3, r8, #24
+    cbz     r3, .Ldv_p3_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #6]
+    strb    r7, [r5, #3]
+.Ldv_p3_skip:
+
+    /* Pixel 4 */
+    ldrb    r10, [r5, #4]
+    cmp     r6, r10
+    bls     .Ldv_p4_skip
+    and     r3, r9, #0xFF
+    cbz     r3, .Ldv_p4_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #8]
+    strb    r7, [r5, #4]
+.Ldv_p4_skip:
+
+    /* Pixel 5 */
+    ldrb    r10, [r5, #5]
+    cmp     r6, r10
+    bls     .Ldv_p5_skip
+    ubfx    r3, r9, #8, #8
+    cbz     r3, .Ldv_p5_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #10]
+    strb    r7, [r5, #5]
+.Ldv_p5_skip:
+
+    /* Pixel 6 */
+    ldrb    r10, [r5, #6]
+    cmp     r6, r10
+    bls     .Ldv_p6_skip
+    ubfx    r3, r9, #16, #8
+    cbz     r3, .Ldv_p6_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #12]
+    strb    r7, [r5, #6]
+.Ldv_p6_skip:
+
+    /* Pixel 7 */
+    ldrb    r10, [r5, #7]
+    cmp     r6, r10
+    bls     .Ldv_p7_skip
+    lsr     r3, r9, #24
+    cbz     r3, .Ldv_p7_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #14]
+    strb    r7, [r5, #7]
+.Ldv_p7_skip:
+
+    /* V_FLIP: decrement row pointer */
+    sub     r0, r0, #8                  @ bp -= 8
+    add     r4, r4, r11, lsl #1
+    add     r5, r5, r11
+    
+    subs    r12, r12, #1
+    bne     .Ldraw_vflip_loop
+    
+    pop     {r4-r11, pc}
+.size DrawTile16_VFlip_asm, .-DrawTile16_VFlip_asm
+
+
+/*
+ * DrawTile16_FlipHV_asm - Draw a complete 8x8 tile (H+V flipped) with depth test
+ * 
+ * Combines H_FLIP pixel order with V_FLIP row direction.
+ */
+.global DrawTile16_FlipHV_asm
+.type DrawTile16_FlipHV_asm, %function
+.thumb_func
+DrawTile16_FlipHV_asm:
+    push    {r4-r11, lr}
+    
+    ldr     r12, [sp, #36]              @ LineCount
+    add     r0, r0, r3                  @ bp = pCache + StartLine
+    
+    ldr     r3, =GFX
+    ldr     r4, [r3, #GFX_OFF_S]
+    ldr     r5, [r3, #GFX_OFF_DB]
+    ldr     r11, [r3, #GFX_OFF_PPL]
+    ldrb    r6, [r3, #GFX_OFF_Z1]
+    ldrb    r7, [r3, #GFX_OFF_Z2]
+    
+    add     r5, r5, r1
+    add     r4, r4, r1, lsl #1
+    
+.Ldraw_fliphv_loop:
+    ldm     r0, {r8, r9}                @ r8 = pixels[0-3], r9 = pixels[4-7]
+    
+    /* H_FLIP: Screen[0] <- pixels[7], etc */
+    
+    /* Pixel 0 <- pixels[7] */
+    ldrb    r10, [r5, #0]
+    cmp     r6, r10
+    bls     .Ldhv_p0_skip
+    lsr     r3, r9, #24
+    cbz     r3, .Ldhv_p0_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #0]
+    strb    r7, [r5, #0]
+.Ldhv_p0_skip:
+
+    /* Pixel 1 <- pixels[6] */
+    ldrb    r10, [r5, #1]
+    cmp     r6, r10
+    bls     .Ldhv_p1_skip
+    ubfx    r3, r9, #16, #8
+    cbz     r3, .Ldhv_p1_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #2]
+    strb    r7, [r5, #1]
+.Ldhv_p1_skip:
+
+    /* Pixel 2 <- pixels[5] */
+    ldrb    r10, [r5, #2]
+    cmp     r6, r10
+    bls     .Ldhv_p2_skip
+    ubfx    r3, r9, #8, #8
+    cbz     r3, .Ldhv_p2_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #4]
+    strb    r7, [r5, #2]
+.Ldhv_p2_skip:
+
+    /* Pixel 3 <- pixels[4] */
+    ldrb    r10, [r5, #3]
+    cmp     r6, r10
+    bls     .Ldhv_p3_skip
+    and     r3, r9, #0xFF
+    cbz     r3, .Ldhv_p3_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #6]
+    strb    r7, [r5, #3]
+.Ldhv_p3_skip:
+
+    /* Pixel 4 <- pixels[3] */
+    ldrb    r10, [r5, #4]
+    cmp     r6, r10
+    bls     .Ldhv_p4_skip
+    lsr     r3, r8, #24
+    cbz     r3, .Ldhv_p4_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #8]
+    strb    r7, [r5, #4]
+.Ldhv_p4_skip:
+
+    /* Pixel 5 <- pixels[2] */
+    ldrb    r10, [r5, #5]
+    cmp     r6, r10
+    bls     .Ldhv_p5_skip
+    ubfx    r3, r8, #16, #8
+    cbz     r3, .Ldhv_p5_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #10]
+    strb    r7, [r5, #5]
+.Ldhv_p5_skip:
+
+    /* Pixel 6 <- pixels[1] */
+    ldrb    r10, [r5, #6]
+    cmp     r6, r10
+    bls     .Ldhv_p6_skip
+    ubfx    r3, r8, #8, #8
+    cbz     r3, .Ldhv_p6_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #12]
+    strb    r7, [r5, #6]
+.Ldhv_p6_skip:
+
+    /* Pixel 7 <- pixels[0] */
+    ldrb    r10, [r5, #7]
+    cmp     r6, r10
+    bls     .Ldhv_p7_skip
+    and     r3, r8, #0xFF
+    cbz     r3, .Ldhv_p7_skip
+    ldrh    r3, [r2, r3, lsl #1]
+    strh    r3, [r4, #14]
+    strb    r7, [r5, #7]
+.Ldhv_p7_skip:
+
+    /* V_FLIP: decrement row pointer */
+    sub     r0, r0, #8                  @ bp -= 8
+    add     r4, r4, r11, lsl #1
+    add     r5, r5, r11
+    
+    subs    r12, r12, #1
+    bne     .Ldraw_fliphv_loop
+    
+    pop     {r4-r11, pc}
+.size DrawTile16_FlipHV_asm, .-DrawTile16_FlipHV_asm
 
 
 /* End of file */

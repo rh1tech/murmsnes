@@ -14,6 +14,19 @@
 #if PICO_ON_DEVICE
 extern void WRITE_8PIXELS16_OPAQUE_ROW_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 extern void WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+
+/* Full tile renderers - process all LineCount rows in one call */
+extern void DrawTile16_Normal_asm(uint8_t* pCache, int32_t Offset, uint16_t* ScreenColors, 
+                                   uint32_t StartLine, uint32_t LineCount);
+extern void DrawTile16_FlipH_asm(uint8_t* pCache, int32_t Offset, uint16_t* ScreenColors,
+                                  uint32_t StartLine, uint32_t LineCount);
+extern void DrawTile16_VFlip_asm(uint8_t* pCache, int32_t Offset, uint16_t* ScreenColors,
+                                  uint32_t StartLine, uint32_t LineCount);
+extern void DrawTile16_FlipHV_asm(uint8_t* pCache, int32_t Offset, uint16_t* ScreenColors,
+                                   uint32_t StartLine, uint32_t LineCount);
+
+/* 4bpp tile conversion in assembly */
+extern uint8_t ConvertTile4bpp_asm(uint8_t* pCache, uint32_t TileAddr);
 #endif
 
 #define TILE_PREAMBLE_VARS() \
@@ -174,6 +187,37 @@ extern void WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm(int32_t Offset, uint8_t* Pixe
 /* Non-PICO builds use the standard version */
 #define RENDER_TILE_OPAQUE_8PIX(NORMAL, FLIPPED, NORMAL_OPAQUE, FLIPPED_OPAQUE, N) \
     RENDER_TILE_OPAQUE(NORMAL, FLIPPED, NORMAL_OPAQUE, FLIPPED_OPAQUE, N)
+#endif
+
+/*
+ * RENDER_TILE_FULL_ASM - Most optimized tile render for PICO
+ * Uses DrawTile16_*_asm which processes ALL rows in a single call.
+ * 
+ * V_FLIP cases use dedicated _VFlip/_FlipHV variants that decrement row pointer.
+ */
+#if PICO_ON_DEVICE
+#define RENDER_TILE_FULL_ASM() \
+    if (TileOpaque) { \
+       switch (Tile & (V_FLIP | H_FLIP)) \
+       { \
+       case 0: \
+          DrawTile16_Normal_asm(pCache, Offset, ScreenColors, StartLine, LineCount); \
+          break; \
+       case H_FLIP: \
+          DrawTile16_FlipH_asm(pCache, Offset, ScreenColors, StartLine, LineCount); \
+          break; \
+       case H_FLIP | V_FLIP: \
+          DrawTile16_FlipHV_asm(pCache, Offset, ScreenColors, 56 - StartLine, LineCount); \
+          break; \
+       case V_FLIP: \
+          DrawTile16_VFlip_asm(pCache, Offset, ScreenColors, 56 - StartLine, LineCount); \
+          break; \
+       default: \
+          break; \
+       } \
+    } else { \
+       RENDER_TILE(WRITE_4PIXELS16, WRITE_4PIXELS16_FLIPPED, 4) \
+    }
 #endif
 
 #define TILE_CLIP_PREAMBLE_VARS() \

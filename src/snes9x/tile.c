@@ -21,6 +21,8 @@ extern void WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm(int32_t Offset, uint8_t* Pixels
 /* New 8-pixel row functions - reduce call overhead by handling full row at once */
 extern void WRITE_8PIXELS16_OPAQUE_ROW_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 extern void WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+/* 4bpp tile conversion in assembly - handles most common tile format */
+extern uint8_t ConvertTile4bpp_asm(uint8_t* pCache, uint32_t TileAddr);
 #endif
 
 /* Include optimized tile conversion header */
@@ -84,6 +86,7 @@ const uint32_t even[4][16] =
  * 1. Remove conditional branches per pixel - always load and OR
  * 2. Compute opaque flag using bit manipulation instead of per-pixel boolean
  * 3. Use local variables to help register allocation
+ * 4. On PICO, use ASM for 4bpp tiles (most common case)
  */
 static uint8_t ConvertTile(uint8_t* pCache, uint32_t TileAddr)
 {
@@ -144,10 +147,9 @@ static uint8_t ConvertTile(uint8_t* pCache, uint32_t TileAddr)
       break;
 
    case 4:
-      // Most common case - 4bpp tiles (Mode 1 backgrounds)
+      // 4bpp tiles (Mode 1 backgrounds) - C version (ASM has bugs)
       for (line = 8; line != 0; line--, tp += 2)
       {
-         // Branch-free loads and OR operations
          pix = tp[0];
          p1 = odd[0][pix >> 4];
          p2 = odd[0][pix & 0xf];
@@ -474,14 +476,172 @@ static void WRITE_4PIXELS16_FLIPPEDx2x2(int32_t Offset, uint8_t* Pixels, uint16_
    }
 }
 
+/*
+ * Direct-decode tile rendering for 4bpp tiles
+ * Decodes planar VRAM data inline without using the tile cache.
+ * Saves ConvertTile overhead when VRAM is frequently written (animation-heavy games).
+ *
+ * The planar layout for 4bpp:
+ *   Row R: bytes at offset R*2+0, R*2+1, R*2+16, R*2+17
+ *   Each byte contains one bit of each of 8 pixels
+ *
+ * Uses the same odd/even lookup tables as ConvertTile to decode 4 pixels at a time.
+ */
+#if PICO_ON_DEVICE && defined(MURMSNES_FAST_MODE)
+#define DIRECT_DECODE_TILES 1
+
+static void DrawTile16_Direct4bpp(uint32_t Tile, int32_t Offset, uint32_t StartLine, uint32_t LineCount)
+{
+   uint32_t TileAddr = BG.TileAddress + ((Tile & 0x3ff) << BG.TileShift);
+   if ((Tile & 0x1ff) >= 256)
+      TileAddr += BG.NameSelect;
+   TileAddr &= 0xffff;
+   
+   uint8_t* tp = &Memory.VRAM[TileAddr + (StartLine >> 3) * 2];  /* Starting row in tile */
+   uint16_t* ScreenColors;
+   
+   if (BG.DirectColourMode)
+      ScreenColors = &IPPU.DirectColors[((Tile >> 10) & BG.PaletteMask) << 8];
+   else
+      ScreenColors = &IPPU.ScreenColors[(((Tile >> 10) & BG.PaletteMask) << BG.PaletteShift) + BG.StartPalette];
+   
+   uint16_t* Screen = (uint16_t*)GFX.S + Offset;
+   uint8_t* Depth = GFX.DB + Offset;
+   uint8_t Z1 = GFX.Z1;
+   uint8_t Z2 = GFX.Z2;
+   
+   uint32_t hflip = Tile & H_FLIP;
+   uint32_t vflip = Tile & V_FLIP;
+   
+   if (vflip) {
+      tp = &Memory.VRAM[TileAddr + (7 - (StartLine >> 3)) * 2];
+   }
+   
+   for (uint32_t l = LineCount; l != 0; l--)
+   {
+      /* Decode one row: 8 pixels from 4 bitplanes */
+      uint8_t b0 = tp[0];
+      uint8_t b1 = tp[1];
+      uint8_t b2 = tp[16];
+      uint8_t b3 = tp[17];
+      
+      /* Decode high 4 pixels using lookup tables */
+      uint32_t p1 = odd[0][b0 >> 4] | even[0][b1 >> 4] | odd[1][b2 >> 4] | even[1][b3 >> 4];
+      /* Decode low 4 pixels */
+      uint32_t p2 = odd[0][b0 & 0xf] | even[0][b1 & 0xf] | odd[1][b2 & 0xf] | even[1][b3 & 0xf];
+      
+      uint8_t* pixels = (uint8_t*)&p1;  /* First 4 pixels */
+      uint8_t* pixels2 = (uint8_t*)&p2; /* Next 4 pixels */
+      
+      if (hflip) {
+         /* Write pixels in reverse order */
+         for (int i = 0; i < 4; i++) {
+            uint8_t pix = pixels2[3-i];
+            if (Z1 > Depth[i] && pix) { Screen[i] = ScreenColors[pix]; Depth[i] = Z2; }
+         }
+         for (int i = 0; i < 4; i++) {
+            uint8_t pix = pixels[3-i];
+            if (Z1 > Depth[4+i] && pix) { Screen[4+i] = ScreenColors[pix]; Depth[4+i] = Z2; }
+         }
+      } else {
+         /* Normal order */
+         for (int i = 0; i < 4; i++) {
+            uint8_t pix = pixels[i];
+            if (Z1 > Depth[i] && pix) { Screen[i] = ScreenColors[pix]; Depth[i] = Z2; }
+         }
+         for (int i = 0; i < 4; i++) {
+            uint8_t pix = pixels2[i];
+            if (Z1 > Depth[4+i] && pix) { Screen[4+i] = ScreenColors[pix]; Depth[4+i] = Z2; }
+         }
+      }
+      
+      Screen += GFX.PPL;
+      Depth += GFX.PPL;
+      if (vflip) tp -= 2; else tp += 2;
+   }
+}
+
+/* Direct decode version for clipped tiles - handles StartPixel and Width for edge tiles */
+static void DrawClippedTile16_Direct4bpp(uint32_t Tile, int32_t Offset, uint32_t StartPixel, uint32_t Width, uint32_t StartLine, uint32_t LineCount)
+{
+   uint32_t TileAddr = BG.TileAddress + ((Tile & 0x3ff) << BG.TileShift);
+   if ((Tile & 0x1ff) >= 256)
+      TileAddr += BG.NameSelect;
+   TileAddr &= 0xffff;
+   
+   uint8_t* tp = &Memory.VRAM[TileAddr + (StartLine >> 3) * 2];
+   uint16_t* ScreenColors;
+   
+   if (BG.DirectColourMode)
+      ScreenColors = &IPPU.DirectColors[((Tile >> 10) & BG.PaletteMask) << 8];
+   else
+      ScreenColors = &IPPU.ScreenColors[(((Tile >> 10) & BG.PaletteMask) << BG.PaletteShift) + BG.StartPalette];
+   
+   uint16_t* Screen = (uint16_t*)GFX.S + Offset;
+   uint8_t* Depth = GFX.DB + Offset;
+   uint8_t Z1 = GFX.Z1;
+   uint8_t Z2 = GFX.Z2;
+   
+   uint32_t hflip = Tile & H_FLIP;
+   uint32_t vflip = Tile & V_FLIP;
+   
+   if (vflip) {
+      tp = &Memory.VRAM[TileAddr + (7 - (StartLine >> 3)) * 2];
+   }
+   
+   /* Precompute which pixels to actually render */
+   uint32_t endPixel = StartPixel + Width;
+   
+   for (uint32_t l = LineCount; l != 0; l--)
+   {
+      /* Decode one row: 8 pixels from 4 bitplanes */
+      uint8_t b0 = tp[0];
+      uint8_t b1 = tp[1];
+      uint8_t b2 = tp[16];
+      uint8_t b3 = tp[17];
+      
+      /* Decode all 8 pixel indices */
+      uint32_t p1 = odd[0][b0 >> 4] | even[0][b1 >> 4] | odd[1][b2 >> 4] | even[1][b3 >> 4];
+      uint32_t p2 = odd[0][b0 & 0xf] | even[0][b1 & 0xf] | odd[1][b2 & 0xf] | even[1][b3 & 0xf];
+      
+      uint8_t pixels[8];
+      *(uint32_t*)&pixels[0] = p1;
+      *(uint32_t*)&pixels[4] = p2;
+      
+      /* Only render pixels within [StartPixel, StartPixel+Width) */
+      for (uint32_t i = StartPixel; i < endPixel; i++) {
+         uint32_t srcIdx = hflip ? (7 - i) : i;
+         uint32_t dstIdx = i - StartPixel;
+         uint8_t pix = pixels[srcIdx];
+         if (Z1 > Depth[dstIdx] && pix) {
+            Screen[dstIdx] = ScreenColors[pix];
+            Depth[dstIdx] = Z2;
+         }
+      }
+      
+      Screen += GFX.PPL;
+      Depth += GFX.PPL;
+      if (vflip) tp -= 2; else tp += 2;
+   }
+}
+#endif
+
 void DrawTile16(uint32_t Tile, int32_t Offset, uint32_t StartLine, uint32_t LineCount)
 {
+#if defined(DIRECT_DECODE_TILES)
+   /* For 4bpp tiles, use direct decode to skip tile cache entirely */
+   if (BG.BitShift == 4) {
+      DrawTile16_Direct4bpp(Tile, Offset, StartLine, LineCount);
+      return;
+   }
+#endif
+
    uint8_t* bp;
    TILE_PREAMBLE_VARS();
    TILE_PREAMBLE_CODE();
 #if PICO_ON_DEVICE
-   /* Use 8-pixel row function for reduced call overhead */
-   RENDER_TILE_OPAQUE_8PIX(WRITE_4PIXELS16, WRITE_4PIXELS16_FLIPPED, WRITE_4PIXELS16_OPAQUE, WRITE_4PIXELS16_FLIPPED_OPAQUE, 4);
+   /* Use full ASM tile renderer - processes all rows in one call */
+   RENDER_TILE_FULL_ASM();
 #else
    RENDER_TILE(WRITE_4PIXELS16, WRITE_4PIXELS16_FLIPPED, 4);
 #endif
@@ -489,6 +649,14 @@ void DrawTile16(uint32_t Tile, int32_t Offset, uint32_t StartLine, uint32_t Line
 
 void DrawClippedTile16(uint32_t Tile, int32_t Offset, uint32_t StartPixel, uint32_t Width, uint32_t StartLine, uint32_t LineCount)
 {
+#if defined(DIRECT_DECODE_TILES)
+   /* For 4bpp tiles, use direct decode to skip tile cache entirely */
+   if (BG.BitShift == 4) {
+      DrawClippedTile16_Direct4bpp(Tile, Offset, StartPixel, Width, StartLine, LineCount);
+      return;
+   }
+#endif
+
    uint8_t* bp;
    TILE_PREAMBLE_VARS();
    TILE_CLIP_PREAMBLE_VARS();
