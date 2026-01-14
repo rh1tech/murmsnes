@@ -861,6 +861,68 @@ const int32_t* S9xGetMixBuffer(void)
    return MixBuffer;
 }
 
+/**
+ * Mono mixing - mixes to mono output (half the samples of stereo)
+ * This is faster because we only process one channel instead of two.
+ * The output is single-channel; caller duplicates to stereo for I2S.
+ */
+void S9xMixSamplesMono(int16_t* buffer, int32_t sample_count)
+{
+   int32_t J;
+   int32_t I;
+
+   /* sample_count is the number of mono samples we want */
+   int32_t stereo_count = sample_count * 2;
+
+   if (SoundData.echo_enable)
+      memset(EchoBuffer, 0, stereo_count * sizeof(EchoBuffer [0]));
+   memset(MixBuffer, 0, stereo_count * sizeof(MixBuffer [0]));
+   MixStereo(stereo_count);
+
+   /* Mix stereo to mono: average L+R channels */
+   /* Use combined master volume (average of L and R) */
+   int32_t master_vol = (SoundData.master_volume[0] + SoundData.master_volume[1]) / 2;
+
+   if (SoundData.echo_enable && SoundData.echo_buffer_size)
+   {
+      /* With echo - simplified (no filter for speed) */
+      for (J = 0; J < sample_count; J++)
+      {
+         /* Get stereo pair and average to mono */
+         int32_t left = MixBuffer[J * 2];
+         int32_t right = MixBuffer[J * 2 + 1];
+         int32_t mono = (left + right) / 2;
+
+         /* Simple echo handling */
+         int32_t E = Echo[SoundData.echo_ptr];
+         int32_t echo_left = EchoBuffer[J * 2];
+         int32_t echo_right = EchoBuffer[J * 2 + 1];
+         Echo[SoundData.echo_ptr++] = (E * SoundData.echo_feedback) / 128 + (echo_left + echo_right) / 2;
+
+         if (SoundData.echo_ptr >= SoundData.echo_buffer_size)
+            SoundData.echo_ptr = 0;
+
+         int32_t echo_vol = (SoundData.echo_volume[0] + SoundData.echo_volume[1]) / 2;
+         I = (mono * master_vol + E * echo_vol) / VOL_DIV16;
+         CLIP16(I);
+         buffer[J] = I;
+      }
+   }
+   else
+   {
+      /* No echo - fast path */
+      for (J = 0; J < sample_count; J++)
+      {
+         int32_t left = MixBuffer[J * 2];
+         int32_t right = MixBuffer[J * 2 + 1];
+         int32_t mono = (left + right) / 2;
+         I = (mono * master_vol) / VOL_DIV16;
+         CLIP16(I);
+         buffer[J] = I;
+      }
+   }
+}
+
 void S9xMixSamplesLowPass(int16_t* buffer, int32_t sample_count, int32_t low_pass_range)
 {
    int32_t J;

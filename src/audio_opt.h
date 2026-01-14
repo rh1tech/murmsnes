@@ -46,6 +46,20 @@ void audio_pack_opt(uint32_t* dst, const int16_t* src, uint32_t count,
 void audio_mix_noecho_opt(int16_t* buffer, int32_t sample_count,
                            const int32_t* MixBuffer, const int16_t* master_volume);
 
+/**
+ * Pack mono audio to stereo I2S format
+ * Duplicates each mono sample to both L and R channels
+ * 
+ * @param dst Output packed stereo (mono<<16 | mono)
+ * @param src Input int16_t mono samples
+ * @param count Number of mono samples
+ * @param gain_num Gain numerator
+ * @param gain_den Gain denominator
+ * @param use_soft_limit Use soft limiter vs hard clipping
+ */
+void audio_pack_mono_to_stereo(uint32_t* dst, const int16_t* src, uint32_t count,
+                                int gain_num, int gain_den, bool use_soft_limit);
+
 #ifdef __cplusplus
 }
 #endif

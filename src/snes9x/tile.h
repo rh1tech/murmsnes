@@ -10,6 +10,12 @@
 #define MURMSNES_TILE_CONVERT_PROF() do { } while (0)
 #endif
 
+/* Forward declare 8-pixel row functions for PICO builds */
+#if PICO_ON_DEVICE
+extern void WRITE_8PIXELS16_OPAQUE_ROW_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+extern void WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+#endif
+
 #define TILE_PREAMBLE_VARS() \
     uint32_t l; \
     uint16_t *ScreenColors; \
@@ -119,6 +125,56 @@
     } else { \
        RENDER_TILE(NORMAL, FLIPPED, N) \
     }
+
+/* 
+ * RENDER_TILE_OPAQUE_8PIX - Uses 8-pixel row functions to reduce call overhead
+ * For PICO builds only. Handles full tile row in single function call.
+ * This version requires N == 4 (standard 8-pixel tiles).
+ */
+#if PICO_ON_DEVICE
+#define RENDER_TILE_OPAQUE_8PIX(NORMAL, FLIPPED, NORMAL_OPAQUE, FLIPPED_OPAQUE, N) \
+    if (TileOpaque) { \
+       switch (Tile & (V_FLIP | H_FLIP)) \
+       { \
+       case 0: \
+          bp = pCache + StartLine; \
+          for (l = LineCount; l != 0; l--, bp += 8, Offset += GFX.PPL) \
+          { \
+             WRITE_8PIXELS16_OPAQUE_ROW_asm(Offset, bp, ScreenColors); \
+          } \
+          break; \
+       case H_FLIP: \
+          bp = pCache + StartLine; \
+          for (l = LineCount; l != 0; l--, bp += 8, Offset += GFX.PPL) \
+          { \
+             WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm(Offset, bp, ScreenColors); \
+          } \
+          break; \
+       case H_FLIP | V_FLIP: \
+          bp = pCache + 56 - StartLine; \
+          for (l = LineCount; l != 0; l--, bp -= 8, Offset += GFX.PPL) \
+          { \
+             WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm(Offset, bp, ScreenColors); \
+          } \
+          break; \
+       case V_FLIP: \
+          bp = pCache + 56 - StartLine; \
+          for (l = LineCount; l != 0; l--, bp -= 8, Offset += GFX.PPL) \
+          { \
+             WRITE_8PIXELS16_OPAQUE_ROW_asm(Offset, bp, ScreenColors); \
+          } \
+          break; \
+       default: \
+          break; \
+       } \
+    } else { \
+       RENDER_TILE(NORMAL, FLIPPED, N) \
+    }
+#else
+/* Non-PICO builds use the standard version */
+#define RENDER_TILE_OPAQUE_8PIX(NORMAL, FLIPPED, NORMAL_OPAQUE, FLIPPED_OPAQUE, N) \
+    RENDER_TILE_OPAQUE(NORMAL, FLIPPED, NORMAL_OPAQUE, FLIPPED_OPAQUE, N)
+#endif
 
 #define TILE_CLIP_PREAMBLE_VARS() \
     uint32_t d1; \

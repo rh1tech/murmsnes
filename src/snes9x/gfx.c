@@ -746,12 +746,19 @@ static void DrawOBJS(bool OnMain, uint8_t D)
 
    GFX.Z1 = D + 2;
 
+#ifdef MURMSNES_FAST_MODE
+   /* FAST MODE: Limit to 8 sprites per scanline instead of 32 for ~50% sprite speedup */
+   #define FAST_MODE_MAX_SPRITES 8
+#else
+   #define FAST_MODE_MAX_SPRITES 32
+#endif
+
    for (Y = GFX.StartY, Offset = Y * GFX.PPL; Y <= GFX.EndY; Y++, Offset += GFX.PPL)
    {
       int32_t I = 0;
       int32_t tiles = GFX.OBJLines[Y].Tiles;
       int32_t S;
-      for (S = GFX.OBJLines[Y].OBJ[I].Sprite; S >= 0 && I < 32; S = GFX.OBJLines[Y].OBJ[++I].Sprite)
+      for (S = GFX.OBJLines[Y].OBJ[I].Sprite; S >= 0 && I < FAST_MODE_MAX_SPRITES; S = GFX.OBJLines[Y].OBJ[++I].Sprite)
       {
          int32_t TileInc = 1;
          int32_t TileLine;
@@ -2483,6 +2490,17 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
 
    GFX.S = Screen;
 
+#ifdef MURMSNES_FAST_MODE
+   /* FAST MODE: Skip subscreen rendering entirely */
+   if (sub)
+   {
+#ifdef MURMSNES_PROFILE
+      murmsnes_prof_add_render_screen_us((uint32_t)(time_us_32() - __rs_t0));
+#endif
+      return;
+   }
+#endif
+
    if (!sub)
    {
       GFX.pCurrentClip = &IPPU.Clip [0];
@@ -2501,6 +2519,13 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
       BG3 = ON_SUB(3);
       OB  = ON_SUB(4);
    }
+
+#ifdef MURMSNES_FAST_MODE
+   /* FAST MODE: Skip BG2 in Mode 1 - usually status bar/HUD, saves ~1200µs */
+   if (PPU.BGMode == 1) {
+      BG2 = false;
+   }
+#endif
 
    sub |= force_no_add;
 
@@ -2719,6 +2744,14 @@ void S9xUpdateScreen(void)
    GFX.r212d = Memory.FillRAM [0x212d];
    GFX.r2130 = Memory.FillRAM [0x2130];
    GFX.Pseudo = Memory.FillRAM [0x2133] & 8;
+
+#ifdef MURMSNES_FAST_MODE
+   /* FAST MODE: Disable subscreen and color math entirely for maximum speed */
+   GFX.r212d = 0;  /* No subscreen layers */
+   GFX.r2131 = 0;  /* No color math (add/sub) */
+   GFX.r2130 = 0;  /* Disable color window, fixed color subtraction */
+   GFX.Pseudo = 0; /* Disable pseudo hi-res */
+#endif
 
    if (IPPU.OBJChanged)
       S9xSetupOBJ();

@@ -46,9 +46,9 @@
 #define SCREEN_WIDTH     SNES_WIDTH           // 256
 #define SCREEN_HEIGHT    SNES_HEIGHT_EXTENDED // 239
 
-// Reduced from 24kHz to 18kHz for better performance with digital sound effects
+// Audio sample rate
 #define AUDIO_SAMPLE_RATE   (18000)
-// Audio chunk size must match output rate: 60 chunks/sec at 18 kHz => 300 frames/chunk.
+// Audio chunk size must match output rate: 60 chunks/sec
 #define AUDIO_BUFFER_LENGTH (AUDIO_SAMPLE_RATE / 60)
 
 //=============================================================================
@@ -437,36 +437,61 @@ extern void S9xFixColourBrightness(void);
 
 // Auto frame skip - target ~60fps (16.67ms per frame)
 #define TARGET_FRAME_US 16667
-// Only skip rendering when we're *meaningfully* behind schedule.
-// Too small a threshold causes permanent skip oscillation from small jitter.
-#define SKIP_THRESHOLD_US 4000
-// Normal max consecutive frames to skip when slightly behind.
-// Keep this low to avoid video feeling "stuttery" (e.g. 1 => >= ~30fps when overloaded).
-#define MAX_FRAME_SKIP_NORMAL 1
-// If we get meaningfully behind (>1 frame), allow skipping more aggressively
-// to catch up and protect audio.
-#define MAX_FRAME_SKIP_EXTENDED 4
-// Optional automatic video FPS cap: when we detect real overload (late by >1 frame),
-// temporarily cap rendering to 30fps (render every other emulated frame). This
-// provides a stable visual cadence and gives ~33ms budget for heavy render frames.
-// Disabled by default because it can feel like "over-skipping" after a single spike.
-#define VIDEO_CAP_30_ON_OVERLOAD 0
-#define VIDEO_CAP_30_HOLD_US (500u * 1000u)
+
+//=============================================================================
+// Constant Frameskip Configuration (from murmgenesis)
+//=============================================================================
+// Frameskip pattern:
+// - Pattern length is in frames
+// - Bit i (LSB=frame 0) indicates whether to render that frame (1) or skip (0)
+// Configurable via -DFRAMESKIP_LEVEL=N where:
+//   0 = render all frames (60 fps target)
+//   1 = render 5/6 frames (~50 fps)
+//   2 = render 4/6 frames (~40 fps)
+//   3 = render 3/6 frames (~30 fps) - DEFAULT
+//   4 = render 2/6 frames (~20 fps)
+#ifndef FRAMESKIP_LEVEL
+#ifdef MURMSNES_FAST_MODE
+#define FRAMESKIP_LEVEL 2  // Fast mode: 40fps with reduced quality
+#else
+#define FRAMESKIP_LEVEL 3  // Normal mode: 30fps with full quality
+#endif
+#endif
+
+// Frameskip patterns: [len, mask] for each level
+static const uint8_t frameskip_patterns[5][2] = {
+    {1, 0x01},  // 0: none - render every frame (60fps)
+    {6, 0x1F},  // 1: low - render frames 0-4, skip frame 5 (~50fps)
+    {6, 0x15},  // 2: medium - render frames 0,2,4 (~40fps)
+    {6, 0x09},  // 3: high - render frames 0,3 (~30fps) - DEFAULT
+    {6, 0x05},  // 4: extreme - render frames 0,2 (~20fps)
+};
+
+// Runtime frameskip settings
+static uint32_t frameskip_pattern_len = 6;
+static uint32_t frameskip_pattern_mask = 0x09;  // Default: level 3 (30fps)
+
+// Set frameskip level at runtime
+void set_frameskip_level(uint8_t level) {
+    if (level > 4) level = 3;  // Clamp to valid range
+    frameskip_pattern_len = frameskip_patterns[level][0];
+    frameskip_pattern_mask = frameskip_patterns[level][1];
+}
+
+// Safety: always render at least once every N frames even if pattern says skip
+#define FRAMESKIP_MAX_CONSECUTIVE 4
+
 // Don't treat tiny overshoots (scheduler jitter) as being "behind".
-// With busy_wait_us_32 we often wake a few microseconds late; without a
-// tolerance this causes permanent 4/5 frame skipping.
 #define LATE_TOLERANCE_US 1000
-// If we fall too far behind (e.g. due to occasional long frames), resync the
-// deadline instead of letting lateness accumulate for seconds.
+// If we fall too far behind, resync the deadline instead of accumulating lateness.
 #define LATE_RESYNC_US (TARGET_FRAME_US * 4)
 
 static void __time_critical_func(emulation_loop)(void) {
     LOG("Starting emulation loop...\n");
-    LOG("[build] %s %s | TARGET_FRAME_US=%u MAX_FRAME_SKIP=%u/%u LATE_RESYNC_US=%u\n",
+    LOG("[build] %s %s | TARGET_FRAME_US=%u FRAMESKIP_LEVEL=%u LATE_RESYNC_US=%u\n",
         __DATE__, __TIME__,
         (unsigned)TARGET_FRAME_US,
-        (unsigned)MAX_FRAME_SKIP_NORMAL,
-        (unsigned)MAX_FRAME_SKIP_EXTENDED,
+        (unsigned)FRAMESKIP_LEVEL,
         (unsigned)LATE_RESYNC_US);
 #ifdef MURMSNES_PROFILE
     LOG("[perf] enabled\n");
@@ -477,12 +502,15 @@ static void __time_critical_func(emulation_loop)(void) {
     // Fixed-timestep scheduling: keep emulation/audio running at ~60Hz.
     // If rendering is slow, we skip video frames to catch up rather than slowing audio.
     uint32_t next_frame_deadline = time_us_32() + TARGET_FRAME_US;
-    uint32_t frames_skipped = 0;
-    uint32_t video_phase = 0;
+    uint32_t frame_num = 0;
+    uint32_t consecutive_skipped_frames = 0;
 
-#if VIDEO_CAP_30_ON_OVERLOAD
-    uint32_t video_cap_30_until_us = 0;
-#endif
+    // Initialize frameskip from compile-time level
+    set_frameskip_level(FRAMESKIP_LEVEL);
+    static const char* frameskip_level_names[] = {"NONE (60fps)", "LOW (50fps)", "MEDIUM (40fps)", "HIGH (30fps)", "EXTREME (20fps)"};
+    LOG("[frameskip] level=%d (%s) pattern_len=%u mask=0x%02X\n",
+        FRAMESKIP_LEVEL, frameskip_level_names[FRAMESKIP_LEVEL],
+        (unsigned)frameskip_pattern_len, (unsigned)frameskip_pattern_mask);
 
 #ifdef MURMSNES_PROFILE
     perf_reset_window(time_us_32());
@@ -492,24 +520,13 @@ static void __time_critical_func(emulation_loop)(void) {
         uint32_t now = time_us_32();
         int32_t late_us = (int32_t)(now - next_frame_deadline);
 
-#if VIDEO_CAP_30_ON_OVERLOAD
-        // If we ever get more than one full frame behind, engage a temporary
-        // 30fps render cap to stabilize video and avoid repeated overruns.
-        if (late_us > (int32_t)TARGET_FRAME_US) {
-            video_cap_30_until_us = now + (uint32_t)VIDEO_CAP_30_HOLD_US;
-        }
-        bool cap30_active = (now < video_cap_30_until_us);
-#else
-        bool cap30_active = false;
-#endif
-
         // If we're way behind, drop accumulated lateness and realign.
         // This prevents the loop from going into a long "catch up" phase where
         // it never sleeps and video stays permanently in skip mode.
         if (late_us > (int32_t)LATE_RESYNC_US) {
             next_frame_deadline = now + TARGET_FRAME_US;
             late_us = 0;
-            frames_skipped = 0;
+            consecutive_skipped_frames = 0;
         }
 
         // If we're ahead of schedule, wait until it's time for the next emulated frame.
@@ -529,30 +546,18 @@ static void __time_critical_func(emulation_loop)(void) {
         uint32_t q_cons = audio_cons_seq;
         uint32_t q_fill = q_prod - q_cons;
 
-        // Adaptive skipping: when we fall more than one frame behind, allow a higher
-        // consecutive-skip budget to catch up. This protects audio without relying on
-        // queue-fill watermarks (which hover near 0-1 in steady state).
-        uint32_t max_frame_skip = (late_us > (int32_t)TARGET_FRAME_US)
-                                      ? (uint32_t)MAX_FRAME_SKIP_EXTENDED
-                                      : (uint32_t)MAX_FRAME_SKIP_NORMAL;
+        // Deterministic render/skip pattern (from murmgenesis).
+        // Uses constant pattern based on FRAMESKIP_LEVEL setting.
+        bool render_this_frame = true;
+        const uint32_t pat_idx = (frameskip_pattern_len ? (frame_num % frameskip_pattern_len) : 0u);
+        render_this_frame = ((frameskip_pattern_mask >> pat_idx) & 1u) != 0u;
 
-        // If we're behind schedule, skip rendering (but force a render periodically).
-        bool skip_render = (late_us > (int32_t)SKIP_THRESHOLD_US) && (frames_skipped < max_frame_skip);
-
-        // Optional stable 30fps cap: render only on every other emulated frame.
-        // We still allow lateness-based skipping on top.
-        // Force 24fps video rendering (frames 0 and 3 out of every 5) while keeping 60Hz emulation
-        // This spaces rendered frames more evenly: render, skip, skip, render, skip
-        uint32_t phase_mod5 = video_phase % 5;
-        if (phase_mod5 != 0 && phase_mod5 != 3) {
-            skip_render = true;
-        } else if (cap30_active && (video_phase & 1u)) {
-            skip_render = true;
+        // Safety: always render at least once every FRAMESKIP_MAX_CONSECUTIVE frames
+        if (consecutive_skipped_frames >= FRAMESKIP_MAX_CONSECUTIVE) {
+            render_this_frame = true;
         }
 
-        if (frames_skipped >= max_frame_skip) {
-            skip_render = false;
-        }
+        bool skip_render = !render_this_frame;
 
         IPPU.RenderThisFrame = !skip_render;
 
@@ -571,7 +576,12 @@ static void __time_critical_func(emulation_loop)(void) {
     #ifdef MURMSNES_PROFILE
         uint32_t t2 = time_us_32();
     #endif
+    #ifdef MURMSNES_FAST_MODE
+        // FAST MODE: Mix mono only (half the samples), then duplicate to stereo in packing
+        S9xMixSamplesMono((void *)mix16, AUDIO_BUFFER_LENGTH);
+    #else
         S9xMixSamples((void *)mix16, AUDIO_BUFFER_LENGTH * 2);
+    #endif
     #ifdef MURMSNES_PROFILE
         uint32_t t3 = time_us_32();
     #endif
@@ -589,8 +599,13 @@ static void __time_critical_func(emulation_loop)(void) {
 #ifdef MURMSNES_PROFILE
         uint32_t t4 = time_us_32();
 #endif
-        // Use optimized audio packing (Step 1: C implementation)
+        // Use optimized audio packing
+#ifdef MURMSNES_FAST_MODE
+        // FAST MODE: Pack mono to stereo (duplicate each sample)
+        audio_pack_mono_to_stereo(dst32, mix16, AUDIO_BUFFER_LENGTH, gain_num, gain_den, use_soft_limiter);
+#else
         audio_pack_opt(dst32, mix16, AUDIO_BUFFER_LENGTH, gain_num, gain_den, use_soft_limiter);
+#endif
 #ifdef MURMSNES_PROFILE
         uint32_t t5 = time_us_32();
 #endif
@@ -603,9 +618,9 @@ static void __time_critical_func(emulation_loop)(void) {
         }
 
         if (skip_render) {
-            frames_skipped++;
+            consecutive_skipped_frames++;
         } else {
-            frames_skipped = 0;
+            consecutive_skipped_frames = 0;
 
             // Swap display buffers only when we rendered
             current_buffer = !current_buffer;
@@ -618,9 +633,9 @@ static void __time_critical_func(emulation_loop)(void) {
             g_palette_needs_update = false;
         }
 
-        // Advance deadline for the next emulated frame.
+        // Advance deadline and frame counter for the next emulated frame.
         next_frame_deadline += TARGET_FRAME_US;
-        video_phase++;
+        frame_num++;
 
 #ifdef MURMSNES_PROFILE
         // Update stats (keep overhead tiny; print at most once/sec)

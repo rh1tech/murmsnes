@@ -138,6 +138,7 @@ void S9xFixEnvelope(int32_t channel, uint8_t gain, uint8_t adsr1, uint8_t adsr2)
 void S9xStartSample(int32_t channel);
 
 void S9xMixSamples(int16_t* buffer, int32_t sample_count);
+void S9xMixSamplesMono(int16_t* buffer, int32_t sample_count);
 void S9xMixSamplesLowPass(int16_t* buffer, int32_t sample_count, int32_t low_pass_range);
 void S9xSetPlaybackRate(uint32_t rate);
 #endif
