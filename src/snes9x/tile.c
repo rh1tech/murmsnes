@@ -18,6 +18,9 @@ extern void WRITE_4PIXELS16x2_asm(int32_t Offset, uint8_t* Pixels, uint16_t* Scr
 extern void WRITE_4PIXELS16_FLIPPEDx2_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 extern void WRITE_4PIXELS16x2_OPAQUE_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 extern void WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+/* New 8-pixel row functions - reduce call overhead by handling full row at once */
+extern void WRITE_8PIXELS16_OPAQUE_ROW_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
+extern void WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm(int32_t Offset, uint8_t* Pixels, uint16_t* ScreenColors);
 #endif
 
 /* Include optimized tile conversion header */
@@ -483,7 +486,8 @@ void DrawTile16(uint32_t Tile, int32_t Offset, uint32_t StartLine, uint32_t Line
    TILE_PREAMBLE_VARS();
    TILE_PREAMBLE_CODE();
 #if PICO_ON_DEVICE
-   RENDER_TILE_OPAQUE(WRITE_4PIXELS16, WRITE_4PIXELS16_FLIPPED, WRITE_4PIXELS16_OPAQUE, WRITE_4PIXELS16_FLIPPED_OPAQUE, 4);
+   /* Use 8-pixel row function for reduced call overhead */
+   RENDER_TILE_OPAQUE_8PIX(WRITE_4PIXELS16, WRITE_4PIXELS16_FLIPPED, WRITE_4PIXELS16_OPAQUE, WRITE_4PIXELS16_FLIPPED_OPAQUE, 4);
 #else
    RENDER_TILE(WRITE_4PIXELS16, WRITE_4PIXELS16_FLIPPED, 4);
 #endif

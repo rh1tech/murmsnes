@@ -7,13 +7,19 @@ set(PICO_BOARD pico2 CACHE STRING "Pico board type")
 set(BOARD_VARIANT "M1" CACHE STRING "Board variant: M1 or M2")
 
 # CPU overclock configuration (252, 378, 504 MHz)
-set(CPU_SPEED "378" CACHE STRING "CPU clock in MHz: 252, 378, 504")
+set(CPU_SPEED "504" CACHE STRING "CPU clock in MHz: 252, 378, 504")
 
 # PSRAM speed configuration (84, 100, 133, 166 MHz target)
-set(PSRAM_SPEED "133" CACHE STRING "PSRAM max frequency in MHz: 84, 100, 133, 166")
+set(PSRAM_SPEED "166" CACHE STRING "PSRAM max frequency in MHz: 84, 100, 133, 166")
 
 # Lightweight on-device profiling (prints once per second over USB stdio)
 option(MURMSNES_PROFILE "Enable periodic performance profiling output" OFF)
+
+# Fast mode: aggressively reduce quality for higher framerate
+# - Skips subscreen rendering entirely
+# - Limits to single BG layer in Mode 1
+# - Disables color math transparency effects
+option(MURMSNES_FAST_MODE "Enable fast mode (reduced quality for higher FPS)" OFF)
 
 # CPU voltage selection based on speed
 if(CPU_SPEED GREATER_EQUAL 504)
@@ -156,6 +162,11 @@ target_compile_definitions(murmsnes PRIVATE
 
 if(MURMSNES_PROFILE)
     target_compile_definitions(murmsnes PRIVATE MURMSNES_PROFILE=1)
+endif()
+
+if(MURMSNES_FAST_MODE)
+    target_compile_definitions(murmsnes PRIVATE MURMSNES_FAST_MODE=1)
+    message(STATUS "FAST MODE enabled - reduced quality for higher FPS")
 endif()
 
 # Set peripheral pins based on board variant

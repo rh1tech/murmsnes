@@ -41,6 +41,41 @@ void audio_pack_opt(uint32_t* dst, const int16_t* src, uint32_t count,
         dst[i] = ((uint32_t)(uint16_t)left << 16) | (uint16_t)right;
     }
 }
+
+void audio_pack_mono_to_stereo(uint32_t* dst, const int16_t* src, uint32_t count,
+                                int gain_num, int gain_den, bool use_soft_limit)
+{
+    for (uint32_t i = 0; i < count; i++) {
+        int32_t mono = (src[i] * gain_num) / gain_den;
+        
+        if (use_soft_limit) {
+            mono = soft_limit16(mono);
+        } else {
+            mono = clamp16(mono);
+        }
+        
+        // Duplicate mono to both L and R channels
+        dst[i] = ((uint32_t)(uint16_t)mono << 16) | (uint16_t)mono;
+    }
+}
+#else
+// Device implementation - use the assembly version or this C fallback
+void audio_pack_mono_to_stereo(uint32_t* dst, const int16_t* src, uint32_t count,
+                                int gain_num, int gain_den, bool use_soft_limit)
+{
+    for (uint32_t i = 0; i < count; i++) {
+        int32_t mono = (src[i] * gain_num) / gain_den;
+        
+        if (use_soft_limit) {
+            mono = soft_limit16(mono);
+        } else {
+            mono = clamp16(mono);
+        }
+        
+        // Duplicate mono to both L and R channels
+        dst[i] = ((uint32_t)(uint16_t)mono << 16) | (uint16_t)mono;
+    }
+}
 #endif
 
 /**
