@@ -77,19 +77,25 @@ const uint32_t even[4][16] =
 #endif
 };
 
+/*
+ * Optimized tile conversion - branch-free version for better pipeline efficiency
+ * 
+ * Key optimizations:
+ * 1. Remove conditional branches per pixel - always load and OR
+ * 2. Compute opaque flag using bit manipulation instead of per-pixel boolean
+ * 3. Use local variables to help register allocation
+ */
 static uint8_t ConvertTile(uint8_t* pCache, uint32_t TileAddr)
 {
    uint8_t* tp = &Memory.VRAM[TileAddr];
    uint32_t* p = (uint32_t*) pCache;
    uint32_t non_zero = 0;
-   bool opaque = true;
+   uint32_t has_transparent = 0;
    uint8_t line;
-   uint32_t p1;
-   uint32_t p2;
+   uint32_t p1, p2;
    uint8_t pix;
 
-   // Detect zero bytes in a 32-bit word (classic bit trick).
-   // Each cached pixel is one byte; a zero byte implies transparent pixel.
+   // Detect zero bytes in a 32-bit word (classic bit trick)
    #define HAS_ZERO_BYTE(x) (((x) - 0x01010101u) & ~(x) & 0x80808080u)
 
    switch (BG.BitShift)
@@ -97,110 +103,98 @@ static uint8_t ConvertTile(uint8_t* pCache, uint32_t TileAddr)
    case 8:
       for (line = 8; line != 0; line--, tp += 2)
       {
-         p1 = p2 = 0;
-         if((pix = tp[0]))
-         {
-            p1 |= odd[0][pix >> 4];
-            p2 |= odd[0][pix & 0xf];
-         }
-         if((pix = tp[1]))
-         {
-            p1 |= even[0][pix >> 4];
-            p2 |= even[0][pix & 0xf];
-         }
-         if((pix = tp[16]))
-         {
-            p1 |= odd[1][pix >> 4];
-            p2 |= odd[1][pix & 0xf];
-         }
-         if((pix = tp[17]))
-         {
-            p1 |= even[1][pix >> 4];
-            p2 |= even[1][pix & 0xf];
-         }
-         if((pix = tp[32]))
-         {
-            p1 |= odd[2][pix >> 4];
-            p2 |= odd[2][pix & 0xf];
-         }
-         if((pix = tp[33]))
-         {
-            p1 |= even[2][pix >> 4];
-            p2 |= even[2][pix & 0xf];
-         }
-         if((pix = tp[48]))
-         {
-            p1 |= odd[3][pix >> 4];
-            p2 |= odd[3][pix & 0xf];
-         }
-         if((pix = tp[49]))
-         {
-            p1 |= even[3][pix >> 4];
-            p2 |= even[3][pix & 0xf];
-         }
+         // Branch-free: always load and OR, zero entries in tables produce 0
+         pix = tp[0];
+         p1 = odd[0][pix >> 4];
+         p2 = odd[0][pix & 0xf];
+         
+         pix = tp[1];
+         p1 |= even[0][pix >> 4];
+         p2 |= even[0][pix & 0xf];
+         
+         pix = tp[16];
+         p1 |= odd[1][pix >> 4];
+         p2 |= odd[1][pix & 0xf];
+         
+         pix = tp[17];
+         p1 |= even[1][pix >> 4];
+         p2 |= even[1][pix & 0xf];
+         
+         pix = tp[32];
+         p1 |= odd[2][pix >> 4];
+         p2 |= odd[2][pix & 0xf];
+         
+         pix = tp[33];
+         p1 |= even[2][pix >> 4];
+         p2 |= even[2][pix & 0xf];
+         
+         pix = tp[48];
+         p1 |= odd[3][pix >> 4];
+         p2 |= odd[3][pix & 0xf];
+         
+         pix = tp[49];
+         p1 |= even[3][pix >> 4];
+         p2 |= even[3][pix & 0xf];
+         
          *p++ = p1;
          *p++ = p2;
          non_zero |= p1 | p2;
-         opaque = opaque && !HAS_ZERO_BYTE(p1) && !HAS_ZERO_BYTE(p2);
+         has_transparent |= HAS_ZERO_BYTE(p1) | HAS_ZERO_BYTE(p2);
       }
       break;
+
    case 4:
+      // Most common case - 4bpp tiles (Mode 1 backgrounds)
       for (line = 8; line != 0; line--, tp += 2)
       {
-         p1 = p2 = 0;
-         if((pix = tp[0]))
-         {
-            p1 |= odd[0][pix >> 4];
-            p2 |= odd[0][pix & 0xf];
-         }
-         if((pix = tp[1]))
-         {
-            p1 |= even[0][pix >> 4];
-            p2 |= even[0][pix & 0xf];
-         }
-         if((pix = tp[16]))
-         {
-            p1 |= odd[1][pix >> 4];
-            p2 |= odd[1][pix & 0xf];
-         }
-         if((pix = tp[17]))
-         {
-            p1 |= even[1][pix >> 4];
-            p2 |= even[1][pix & 0xf];
-         }
+         // Branch-free loads and OR operations
+         pix = tp[0];
+         p1 = odd[0][pix >> 4];
+         p2 = odd[0][pix & 0xf];
+         
+         pix = tp[1];
+         p1 |= even[0][pix >> 4];
+         p2 |= even[0][pix & 0xf];
+         
+         pix = tp[16];
+         p1 |= odd[1][pix >> 4];
+         p2 |= odd[1][pix & 0xf];
+         
+         pix = tp[17];
+         p1 |= even[1][pix >> 4];
+         p2 |= even[1][pix & 0xf];
+         
          *p++ = p1;
          *p++ = p2;
          non_zero |= p1 | p2;
-         opaque = opaque && !HAS_ZERO_BYTE(p1) && !HAS_ZERO_BYTE(p2);
+         has_transparent |= HAS_ZERO_BYTE(p1) | HAS_ZERO_BYTE(p2);
       }
       break;
+
    case 2:
       for (line = 8; line != 0; line--, tp += 2)
       {
-         p1 = p2 = 0;
-         if((pix = tp[0]))
-         {
-            p1 |= odd[0][pix >> 4];
-            p2 |= odd[0][pix & 0xf];
-         }
-         if((pix = tp[1]))
-         {
-            p1 |= even[0][pix >> 4];
-            p2 |= even[0][pix & 0xf];
-         }
+         pix = tp[0];
+         p1 = odd[0][pix >> 4];
+         p2 = odd[0][pix & 0xf];
+         
+         pix = tp[1];
+         p1 |= even[0][pix >> 4];
+         p2 |= even[0][pix & 0xf];
+         
          *p++ = p1;
          *p++ = p2;
          non_zero |= p1 | p2;
-         opaque = opaque && !HAS_ZERO_BYTE(p1) && !HAS_ZERO_BYTE(p2);
+         has_transparent |= HAS_ZERO_BYTE(p1) | HAS_ZERO_BYTE(p2);
       }
       break;
    }
    #undef HAS_ZERO_BYTE
 
-   // Low 5 bits are the legacy validity/depth encoding; bit 0x20 marks opaque tiles.
+   // Low 5 bits are the legacy validity/depth encoding; bit 0x20 marks opaque tiles
    if (!non_zero)
       return BLANK_TILE;
-   return (0x10 | BG.Depth) | (opaque ? 0x20 : 0);
+   return (0x10 | BG.Depth) | (has_transparent ? 0 : 0x20);
 }
 
 #define PLOT_PIXEL(screen, pixel) (pixel)
