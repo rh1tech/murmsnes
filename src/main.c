@@ -46,8 +46,10 @@
 #define SCREEN_WIDTH     SNES_WIDTH           // 256
 #define SCREEN_HEIGHT    SNES_HEIGHT_EXTENDED // 239
 
-// Audio sample rate
-#define AUDIO_SAMPLE_RATE   (18000)
+// Audio sample rate - lower = less CPU for mixing (quality tradeoff)
+// 18000 Hz = full quality, 12000 Hz = medium, 9000 Hz = low
+// Tempo stays correct regardless of rate
+#define AUDIO_SAMPLE_RATE   (12000)
 // Audio chunk size must match output rate: 60 chunks/sec
 #define AUDIO_BUFFER_LENGTH (AUDIO_SAMPLE_RATE / 60)
 
