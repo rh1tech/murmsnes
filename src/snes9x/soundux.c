@@ -62,9 +62,9 @@ static struct {
 } *LocalState;
 
 // Optional kill switch for SNES noise generator (vinyl-like hiss/scratch)
-static bool g_disable_noise = true;
+static bool g_disable_noise = false;
 // Per-channel mute mask for debugging; bit i mutes channel i (0..7)
-static uint8_t g_channel_mute_mask = 0x08; // mute only channel 3 (identified clicking channel)
+static uint8_t g_channel_mute_mask = 0x00; // 0 = all channels enabled
 
 #define wave LocalState->wave
 #define Echo LocalState->Echo

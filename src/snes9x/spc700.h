@@ -64,13 +64,28 @@ typedef struct
 
 void APUExecute(void);
 
+/* Batched APU execution - run until target cycles reached
+ * This is more efficient than calling APUExecute() in a tight loop
+ * because it keeps all working variables in registers.
+ */
+void APUExecuteBatch(int32_t target_cycles);
+
 #define APU_EXECUTE1() \
 APUExecute();
 
+/* Batched APU execution for better performance
+ * Instead of while loop calling APUExecute(), use batch function
+ */
+#if defined(PICO_ON_DEVICE) && defined(MURMSNES_FAST_MODE)
+#define APU_EXECUTE() \
+if (IAPU.APUExecuting && APU.Cycles <= CPU.Cycles) \
+    APUExecuteBatch(CPU.Cycles);
+#else
 #define APU_EXECUTE() \
 if (IAPU.APUExecuting) \
     while (APU.Cycles <= CPU.Cycles) \
       APUExecute();
+#endif
 
 #endif
 #endif

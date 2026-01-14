@@ -341,8 +341,6 @@ void APUExecute(void/*int32_t target_cycles*/)
    uint16_t Work16;
    uint32_t Work32;
 
-   // while (APU.Cycles <= target_cycles)
-   // {
       uint8_t opcode = *IAPU.PC;
 
       APU.Cycles += S9xAPUCycles[opcode];
@@ -1805,6 +1803,208 @@ void APUExecute(void/*int32_t target_cycles*/)
          Settings.APUEnabled = false; /* re-enabled on next APU reset */
          break;
       }
-   // }
+}
+
+/* Batched APU execution - runs instructions until target_cycles reached.
+ * This just wraps APUExecute in a loop but the call is inside the loop
+ * rather than the loop being inside the macro, reducing overhead.
+ */
+void __attribute__((noinline)) APUExecuteBatch(int32_t target_cycles)
+{
+   /* Execute APU instructions in a batch until we've caught up with CPU.
+    * The key optimization is avoiding the macro expansion and keeping
+    * the loop tight. For maximum performance, we inline common opcodes. */
+   int8_t   Int8;
+   int16_t  Int16;
+   int32_t  Int32;
+   uint8_t  Work8, W1;
+   uint16_t Work16;
+   uint32_t Work32;
+
+   while (APU.Cycles <= target_cycles && IAPU.APUExecuting)
+   {
+      uint8_t opcode = *IAPU.PC;
+      APU.Cycles += S9xAPUCycles[opcode];
+
+      /* Inline the most common opcodes for speed */
+      switch (opcode)
+      {
+      /* MOV instructions - most common */
+      case 0xE8: /* MOV A,#imm */
+         IAPU.Registers.YA.B.A = OP1;
+         APUSetZN8(IAPU.Registers.YA.B.A);
+         IAPU.PC += 2;
+         break;
+      case 0xCD: /* MOV X,#imm */
+         IAPU.Registers.X = OP1;
+         APUSetZN8(IAPU.Registers.X);
+         IAPU.PC += 2;
+         break;
+      case 0x8D: /* MOV Y,#imm */
+         IAPU.Registers.YA.B.Y = OP1;
+         APUSetZN8(IAPU.Registers.YA.B.Y);
+         IAPU.PC += 2;
+         break;
+      case 0xE4: /* MOV A,dp */
+         IAPU.Registers.YA.B.A = S9xAPUGetByteZ(OP1);
+         APUSetZN8(IAPU.Registers.YA.B.A);
+         IAPU.PC += 2;
+         break;
+      case 0xF8: /* MOV X,dp */
+         IAPU.Registers.X = S9xAPUGetByteZ(OP1);
+         APUSetZN8(IAPU.Registers.X);
+         IAPU.PC += 2;
+         break;
+      case 0xEB: /* MOV Y,dp */
+         IAPU.Registers.YA.B.Y = S9xAPUGetByteZ(OP1);
+         APUSetZN8(IAPU.Registers.YA.B.Y);
+         IAPU.PC += 2;
+         break;
+      case 0xC4: /* MOV dp,A */
+         S9xAPUSetByteZ(IAPU.Registers.YA.B.A, OP1);
+         IAPU.PC += 2;
+         break;
+      case 0xD8: /* MOV dp,X */
+         S9xAPUSetByteZ(IAPU.Registers.X, OP1);
+         IAPU.PC += 2;
+         break;
+      case 0xCB: /* MOV dp,Y */
+         S9xAPUSetByteZ(IAPU.Registers.YA.B.Y, OP1);
+         IAPU.PC += 2;
+         break;
+      case 0x7D: /* MOV A,X */
+         IAPU.Registers.YA.B.A = IAPU.Registers.X;
+         APUSetZN8(IAPU.Registers.YA.B.A);
+         IAPU.PC++;
+         break;
+      case 0xDD: /* MOV A,Y */
+         IAPU.Registers.YA.B.A = IAPU.Registers.YA.B.Y;
+         APUSetZN8(IAPU.Registers.YA.B.A);
+         IAPU.PC++;
+         break;
+      case 0x5D: /* MOV X,A */
+         IAPU.Registers.X = IAPU.Registers.YA.B.A;
+         APUSetZN8(IAPU.Registers.X);
+         IAPU.PC++;
+         break;
+      case 0xFD: /* MOV Y,A */
+         IAPU.Registers.YA.B.Y = IAPU.Registers.YA.B.A;
+         APUSetZN8(IAPU.Registers.YA.B.Y);
+         IAPU.PC++;
+         break;
+      /* Branch instructions - very common */
+      case 0x2F: /* BRA rel */
+         Relative();
+         IAPU.PC = IAPU.RAM + (uint16_t) Int16;
+         break;
+      case 0xF0: /* BEQ rel */
+         Relative();
+         if (APUCheckZero())
+         {
+            IAPU.PC = IAPU.RAM + (uint16_t) Int16;
+            APU.Cycles += IAPU.TwoCycles;
+         }
+         else
+            IAPU.PC += 2;
+         break;
+      case 0xD0: /* BNE rel */
+         Relative();
+         if (!APUCheckZero())
+         {
+            IAPU.PC = IAPU.RAM + (uint16_t) Int16;
+            APU.Cycles += IAPU.TwoCycles;
+         }
+         else
+            IAPU.PC += 2;
+         break;
+      case 0x10: /* BPL rel */
+         Relative();
+         if (!APUCheckNegative())
+         {
+            IAPU.PC = IAPU.RAM + (uint16_t) Int16;
+            APU.Cycles += IAPU.TwoCycles;
+         }
+         else
+            IAPU.PC += 2;
+         break;
+      case 0x30: /* BMI rel */
+         Relative();
+         if (APUCheckNegative())
+         {
+            IAPU.PC = IAPU.RAM + (uint16_t) Int16;
+            APU.Cycles += IAPU.TwoCycles;
+         }
+         else
+            IAPU.PC += 2;
+         break;
+      /* CMP instructions */
+      case 0x68: /* CMP A,#imm */
+         Work8 = OP1;
+         CMP(IAPU.Registers.YA.B.A, Work8);
+         IAPU.PC += 2;
+         break;
+      case 0x64: /* CMP A,dp */
+         Work8 = S9xAPUGetByteZ(OP1);
+         CMP(IAPU.Registers.YA.B.A, Work8);
+         IAPU.PC += 2;
+         break;
+      case 0xC8: /* CMP X,#imm */
+         Work8 = OP1;
+         CMP(IAPU.Registers.X, Work8);
+         IAPU.PC += 2;
+         break;
+      case 0xAD: /* CMP Y,#imm */
+         Work8 = OP1;
+         CMP(IAPU.Registers.YA.B.Y, Work8);
+         IAPU.PC += 2;
+         break;
+      /* INC/DEC */
+      case 0xBC: /* INC A */
+         IAPU.Registers.YA.B.A++;
+         APUSetZN8(IAPU.Registers.YA.B.A);
+         IAPU.WaitCounter++;
+         IAPU.PC++;
+         break;
+      case 0x9C: /* DEC A */
+         IAPU.Registers.YA.B.A--;
+         APUSetZN8(IAPU.Registers.YA.B.A);
+         IAPU.WaitCounter++;
+         IAPU.PC++;
+         break;
+      case 0x3D: /* INC X */
+         IAPU.Registers.X++;
+         APUSetZN8(IAPU.Registers.X);
+         IAPU.WaitCounter++;
+         IAPU.PC++;
+         break;
+      case 0x1D: /* DEC X */
+         IAPU.Registers.X--;
+         APUSetZN8(IAPU.Registers.X);
+         IAPU.WaitCounter++;
+         IAPU.PC++;
+         break;
+      case 0xFC: /* INC Y */
+         IAPU.Registers.YA.B.Y++;
+         APUSetZN8(IAPU.Registers.YA.B.Y);
+         IAPU.WaitCounter++;
+         IAPU.PC++;
+         break;
+      case 0xDC: /* DEC Y */
+         IAPU.Registers.YA.B.Y--;
+         APUSetZN8(IAPU.Registers.YA.B.Y);
+         IAPU.WaitCounter++;
+         IAPU.PC++;
+         break;
+      /* NOP and SLEEP */
+      case 0x00: /* NOP */
+         IAPU.PC++;
+         break;
+      /* All other opcodes - fall back to APUExecute */
+      default:
+         APU.Cycles -= S9xAPUCycles[opcode];
+         APUExecute();
+         break;
+      }
+   }
 }
 #endif
