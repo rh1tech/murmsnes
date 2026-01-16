@@ -29,6 +29,9 @@
 #include "snes9x/cpuexec.h"
 #include "snes9x/srtc.h"
 
+// APU on Core 1
+#include "snes9x/apu_core1.h"
+
 // Audio driver (exact copy from pico-snes-master)
 #include "audio.h"
 
@@ -341,6 +344,11 @@ void __time_critical_func(render_core)(void) {
         test_tone[i * 2 + 1] = sample;  // Right
     }
     
+    // Initialize APU Core 1 support
+#if APU_ON_CORE1
+    apu_core1_init();
+#endif
+    
     // Initialize audio
     static i2s_config_t i2s_config;
     i2s_config = i2s_get_default_config();
@@ -367,6 +375,11 @@ void __time_critical_func(render_core)(void) {
     const uint32_t fade_frames = 128;
     uint32_t last_displayed_buffer = 0;
     while (true) {
+        // Run APU batch on Core 1 - catch up to CPU target cycles
+#if APU_ON_CORE1
+        apu_core1_run_batch();
+#endif
+
         // Update HDMI buffer pointer if Core 0 swapped buffers (double buffering sync)
         uint32_t current_buf = current_buffer;
         if (current_buf != last_displayed_buffer) {
