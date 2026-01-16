@@ -91,6 +91,7 @@ target_link_libraries(drivers pico_stdlib hardware_dma hardware_pio hardware_spi
 # Snes9x emulator sources
 set(SNES9X_SOURCES
     src/snes9x/apu.c
+    src/snes9x/apu_core1.c
     src/snes9x/c4.c
     src/snes9x/c4emu.c
     src/snes9x/clip.c
