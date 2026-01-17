@@ -45,6 +45,14 @@
 #ifdef MURMSNES_FAST_MODE
 #define TILE_DIRTY_ENABLED 0
 #define BG1_INTERLACED 0
+
+/* Debug: Set to 0 to disable individual background layers */
+#define DEBUG_BG0_ENABLED 0
+#define DEBUG_BG1_ENABLED 0
+#define DEBUG_BG2_ENABLED 0
+#define DEBUG_BG3_ENABLED 0
+#define DEBUG_OBJ_ENABLED 1  /* Sprites */
+
 static uint32_t bg_frame_counter = 0;
 
 /* Screen tile grid dimensions */
@@ -2728,6 +2736,23 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
    }
 
 #ifdef MURMSNES_FAST_MODE
+   /* DEBUG: Force-disable individual background layers for testing */
+#if !DEBUG_BG0_ENABLED
+   BG0 = false;
+#endif
+#if !DEBUG_BG1_ENABLED
+   BG1 = false;
+#endif
+#if !DEBUG_BG2_ENABLED
+   BG2 = false;
+#endif
+#if !DEBUG_BG3_ENABLED
+   BG3 = false;
+#endif
+#if !DEBUG_OBJ_ENABLED
+   OB = false;
+#endif
+
    /* FAST MODE: Skip BG2 in Mode 1 - usually low-priority status/HUD layer */
    if (PPU.BGMode == 1) {
       BG2 = false;
