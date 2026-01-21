@@ -47,10 +47,10 @@
 #define BG1_INTERLACED 0
 
 /* Debug: Set to 0 to disable individual background layers */
-#define DEBUG_BG0_ENABLED 0
-#define DEBUG_BG1_ENABLED 0
-#define DEBUG_BG2_ENABLED 0
-#define DEBUG_BG3_ENABLED 0
+#define DEBUG_BG0_ENABLED 1
+#define DEBUG_BG1_ENABLED 1
+#define DEBUG_BG2_ENABLED 1
+#define DEBUG_BG3_ENABLED 1
 #define DEBUG_OBJ_ENABLED 1  /* Sprites */
 
 static uint32_t bg_frame_counter = 0;
@@ -2753,11 +2753,6 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
    OB = false;
 #endif
 
-   /* FAST MODE: Skip BG2 in Mode 1 - usually low-priority status/HUD layer */
-   if (PPU.BGMode == 1) {
-      BG2 = false;
-   }
-   
    /* FAST MODE: Interlaced BG1 rendering - render every other line, duplicate */
    /* This is handled in DrawBackground by setting a global flag */
    
