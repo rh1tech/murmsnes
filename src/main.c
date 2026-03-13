@@ -38,6 +38,18 @@
 // Audio optimizations
 #include "audio_opt.h"
 
+// Input drivers
+#include "nespad/nespad.h"
+#include "ps2kbd/ps2kbd_wrapper.h"
+#ifdef USB_HID_ENABLED
+#include "usbhid/usbhid.h"
+#endif
+
+// ROM selector and settings
+#include "rom_selector.h"
+#include "settings.h"
+#include "menu_ui.h"
+
 #ifdef MURMSNES_PROFILE
 #include "murmsnes_profile.h"
 #endif
@@ -210,11 +222,79 @@ void S9xDeinitDisplay(void) {
 }
 
 uint32_t S9xReadJoypad(const int32_t port) {
-    if (port != 0)
-        return 0;
-    
-    // TODO: Implement gamepad reading
+    // Read input devices
+    nespad_read();
+    ps2kbd_tick();
+#ifdef USB_HID_ENABLED
+    usbhid_task();
+#endif
+
+    // Get gamepad state for this port
+    uint32_t nespad = (port == 0) ? nespad_state : nespad_state2;
+
+    // Map NES/SNES controller buttons to SNES format
     uint32_t joypad = 0;
+    if (nespad & DPAD_UP)     joypad |= SNES_UP_MASK;
+    if (nespad & DPAD_DOWN)   joypad |= SNES_DOWN_MASK;
+    if (nespad & DPAD_LEFT)   joypad |= SNES_LEFT_MASK;
+    if (nespad & DPAD_RIGHT)  joypad |= SNES_RIGHT_MASK;
+    if (nespad & DPAD_A)      joypad |= SNES_A_MASK;
+    if (nespad & DPAD_B)      joypad |= SNES_B_MASK;
+    if (nespad & DPAD_X)      joypad |= SNES_X_MASK;
+    if (nespad & DPAD_Y)      joypad |= SNES_Y_MASK;
+    if (nespad & DPAD_LT)     joypad |= SNES_TL_MASK;
+    if (nespad & DPAD_RT)     joypad |= SNES_TR_MASK;
+    if (nespad & DPAD_START)  joypad |= SNES_START_MASK;
+    if (nespad & DPAD_SELECT) joypad |= SNES_SELECT_MASK;
+
+    // Merge keyboard input for port 0 (unless gamepad2_mode redirects keyboard to port 1)
+    bool kbd_controls_this_port = (port == 0 && g_settings.gamepad2_mode != GAMEPAD2_MODE_KEYBOARD) ||
+                                   (port == 1 && g_settings.gamepad2_mode == GAMEPAD2_MODE_KEYBOARD);
+    if (kbd_controls_this_port) {
+        uint16_t kbd_state = ps2kbd_get_state();
+#ifdef USB_HID_ENABLED
+        kbd_state |= usbhid_get_kbd_state();
+#endif
+        if (kbd_state & KBD_STATE_UP)     joypad |= SNES_UP_MASK;
+        if (kbd_state & KBD_STATE_DOWN)   joypad |= SNES_DOWN_MASK;
+        if (kbd_state & KBD_STATE_LEFT)   joypad |= SNES_LEFT_MASK;
+        if (kbd_state & KBD_STATE_RIGHT)  joypad |= SNES_RIGHT_MASK;
+        if (kbd_state & KBD_STATE_A)      joypad |= SNES_A_MASK;
+        if (kbd_state & KBD_STATE_B)      joypad |= SNES_B_MASK;
+        if (kbd_state & KBD_STATE_X)      joypad |= SNES_X_MASK;
+        if (kbd_state & KBD_STATE_Y)      joypad |= SNES_Y_MASK;
+        if (kbd_state & KBD_STATE_L)      joypad |= SNES_TL_MASK;
+        if (kbd_state & KBD_STATE_R)      joypad |= SNES_TR_MASK;
+        if (kbd_state & KBD_STATE_START)  joypad |= SNES_START_MASK;
+        if (kbd_state & KBD_STATE_SELECT) joypad |= SNES_SELECT_MASK;
+    }
+
+#ifdef USB_HID_ENABLED
+    // Merge USB gamepad for port based on gamepad2_mode
+    bool usb_controls_this_port = (port == 0 && g_settings.gamepad2_mode != GAMEPAD2_MODE_USB) ||
+                                   (port == 1 && g_settings.gamepad2_mode == GAMEPAD2_MODE_USB);
+    if (usb_controls_this_port && usbhid_gamepad_connected()) {
+        usbhid_gamepad_state_t gp;
+        usbhid_get_gamepad_state(&gp);
+
+        // Merge D-pad
+        if (gp.dpad & 0x01) joypad |= SNES_UP_MASK;
+        if (gp.dpad & 0x02) joypad |= SNES_DOWN_MASK;
+        if (gp.dpad & 0x04) joypad |= SNES_LEFT_MASK;
+        if (gp.dpad & 0x08) joypad |= SNES_RIGHT_MASK;
+
+        // Merge buttons (using common USB gamepad mapping)
+        if (gp.buttons & 0x0001) joypad |= SNES_A_MASK;     // A
+        if (gp.buttons & 0x0002) joypad |= SNES_B_MASK;     // B
+        if (gp.buttons & 0x0004) joypad |= SNES_X_MASK;     // X
+        if (gp.buttons & 0x0008) joypad |= SNES_Y_MASK;     // Y
+        if (gp.buttons & 0x0010) joypad |= SNES_TL_MASK;    // L
+        if (gp.buttons & 0x0020) joypad |= SNES_TR_MASK;    // R
+        if (gp.buttons & 0x0040) joypad |= SNES_START_MASK; // Start
+        if (gp.buttons & 0x0080) joypad |= SNES_SELECT_MASK;// Select
+    }
+#endif
+
     return joypad;
 }
 
@@ -349,21 +429,15 @@ void __time_critical_func(render_core)(void) {
     apu_core1_init();
 #endif
     
-    // Initialize audio
+    // Initialize audio on Core 1
     static i2s_config_t i2s_config;
     i2s_config = i2s_get_default_config();
     i2s_config.sample_freq = AUDIO_SAMPLE_RATE;
     i2s_config.dma_trans_count = AUDIO_BUFFER_LENGTH;
     i2s_volume(&i2s_config, 0);
     i2s_init(&i2s_config);
-    
-    // Initialize HDMI AFTER audio
-    graphics_init(g_out_HDMI);
-    graphics_set_buffer((uint8_t *)SCREEN[0]);
-    graphics_set_res(SCREEN_WIDTH, SCREEN_HEIGHT);
-    graphics_set_shift(32, 0);
-    graphics_set_mode(GRAPHICSMODE_DEFAULT);
-    
+
+    // HDMI is already initialized on Core 0
     // Signal ready with memory barrier
     __dmb();
     core1_ready = true;
@@ -924,10 +998,28 @@ int main(void) {
         }
     }
     LOG("SD card mounted\n");
-    
-    // Launch Core 1 (HDMI + Audio)
-    // HDMI DMA IRQ runs on Core 1, freeing Core 0 for emulation
-    LOG("Starting render core (HDMI + Audio)...\n");
+
+    // Load settings from SD card
+    LOG("Loading settings...\n");
+    settings_load();
+    LOG("Settings loaded (cpu=%d, psram=%d, frameskip=%d)\n",
+        g_settings.cpu_freq, g_settings.psram_freq, g_settings.frameskip);
+
+    // Clear screen buffer BEFORE HDMI init - DMA starts scanning immediately
+    // Use palette index 1 instead of 0 to avoid HDMI issues
+    memset(SCREEN, 1, sizeof(SCREEN));
+
+    // Initialize HDMI on Core 0 (like murmgenesis) - critical for ROM selector display
+    LOG("Initializing HDMI...\n");
+    graphics_init(g_out_HDMI);
+    graphics_set_buffer((uint8_t *)SCREEN[0]);
+    graphics_set_res(SCREEN_WIDTH, SCREEN_HEIGHT);
+    graphics_set_shift(32, 0);
+    graphics_set_mode(GRAPHICSMODE_DEFAULT);
+    LOG("HDMI initialized\n");
+
+    // Launch Core 1 (Audio + APU)
+    LOG("Starting render core (Audio)...\n");
     multicore_launch_core1(render_core);
     
     // Wait for Core 1 to initialize HDMI and audio
@@ -936,33 +1028,65 @@ int main(void) {
         tight_loop_contents();
     }
     LOG("[Core0] Render core started (HDMI + Audio on Core 1)\n");
-    
-    // Try to load ROM from SD card
-    LOG("Loading ROM...\n");
-    bool rom_loaded = false;
-    
-    // Try various paths and extensions
-    const char *rom_paths[] = {
-        "/snes/test.smc",
-        "/snes/test.sfc",
-        "/SNES/test.smc",
-        "/SNES/test.sfc",
-        "/test.smc",
-        "/test.sfc",
-        NULL
-    };
-    
-    for (const char **path = rom_paths; *path != NULL; path++) {
-        if (load_rom_from_sd(*path)) {
-            rom_loaded = true;
-            break;
-        }
+
+    // Initialize input devices
+    LOG("Initializing input devices...\n");
+#ifdef NESPAD_GPIO_CLK
+    if (nespad_begin(clock_get_hz(clk_sys) / 1000, NESPAD_GPIO_CLK, NESPAD_GPIO_DATA, NESPAD_GPIO_LATCH)) {
+        LOG("NES/SNES gamepad initialized (CLK=%d, DATA=%d, LATCH=%d)\n",
+            NESPAD_GPIO_CLK, NESPAD_GPIO_DATA, NESPAD_GPIO_LATCH);
+    } else {
+        LOG("Failed to initialize NES/SNES gamepad\n");
     }
-    
+#else
+    LOG("NES/SNES gamepad not configured (NESPAD_GPIO_CLK not defined)\n");
+#endif
+
+    // Initialize PS/2 keyboard
+    ps2kbd_init();
+    LOG("PS/2 keyboard initialized\n");
+
+#ifdef USB_HID_ENABLED
+    // Initialize USB HID
+    usbhid_init();
+    LOG("USB HID initialized\n");
+#endif
+
+    // Initialize menu palette for ROM selector
+    menu_ui_init_palette();
+
+    // HDMI reads from SCREEN[!current_buffer], so set current_buffer=1
+    // so that HDMI reads from SCREEN[0] where ROM selector draws
+    current_buffer = 1;
+
+    // Show ROM selector
+    LOG("Starting ROM selector...\n");
+    char rom_path[MAX_ROM_PATH];
+    bool rom_selected = rom_selector_show(rom_path, sizeof(rom_path), SCREEN[0]);
+
+    if (!rom_selected) {
+        LOG("No ROM selected!\n");
+        // Show SD error screen if no ROMs found
+        rom_selector_show_sd_error(SCREEN[0], 0);
+        // This function never returns
+    }
+
+    LOG("ROM selected: %s\n", rom_path);
+
+    // Clear both screen buffers to remove ROM selector artifacts
+    memset(SCREEN[0], 0, sizeof(SCREEN[0]));
+    memset(SCREEN[1], 0, sizeof(SCREEN[1]));
+
+    // Reset current_buffer for proper double-buffering during emulation
+    current_buffer = 0;
+
+    // Load ROM from SD card
+    LOG("Loading ROM...\n");
+    bool rom_loaded = load_rom_from_sd(rom_path);
+
     if (!rom_loaded) {
-        LOG("Could not find ROM file!\n");
-        LOG("Please place a ROM at /snes/test.smc or /snes/test.sfc\n");
-        // Blink LED slowly to indicate no ROM
+        LOG("Could not load ROM file!\n");
+        // Blink LED slowly to indicate error
         while (1) {
             gpio_put(PICO_DEFAULT_LED_PIN, 1);
             sleep_ms(500);

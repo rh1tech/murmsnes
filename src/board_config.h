@@ -17,11 +17,13 @@
  * M1 GPIO Layout:
  *   HDMI: CLKN=6, CLKP=7, D0N=8, D0P=9, D1N=10, D1P=11, D2N=12, D2P=13
  *   SD:   CLK=2, CMD=3, DAT0=4, DAT3=5
+ *   PS/2: CLK=0, DATA=1
  *   I2S:  DATA=26, CLK=27, LRCK=28
- * 
+ *
  * M2 GPIO Layout:
  *   HDMI: CLKN=12, CLKP=13, D0N=14, D0P=15, D1N=16, D1P=17, D2N=18, D2P=19
  *   SD:   CLK=6, CMD=7, DAT0=4, DAT3=5
+ *   PS/2: CLK=2, DATA=3
  *   I2S:  DATA=9, CLK=10, LRCK=11
  *
  * CPU/PSRAM Speed (set via CMake -DCPU_SPEED=xxx -DPSRAM_SPEED=xxx):
@@ -100,6 +102,10 @@ static inline uint get_psram_pin(void) {
 #define SDCARD_PIN_D0     4
 #define SDCARD_PIN_D3     5
 
+// PS/2 Keyboard Pins
+#define PS2_PIN_CLK  0
+#define PS2_PIN_DATA 1
+
 // I2S Audio Pins
 #define I2S_DATA_PIN       26
 #define I2S_CLOCK_PIN_BASE 27
@@ -128,6 +134,10 @@ static inline uint get_psram_pin(void) {
 #define SDCARD_PIN_CMD    7
 #define SDCARD_PIN_D0     4
 #define SDCARD_PIN_D3     5
+
+// PS/2 Keyboard Pins
+#define PS2_PIN_CLK  2
+#define PS2_PIN_DATA 3
 
 // I2S Audio Pins
 #define I2S_DATA_PIN       9
