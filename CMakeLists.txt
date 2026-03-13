@@ -34,26 +34,22 @@ message(STATUS "Board: ${BOARD_VARIANT}, CPU: ${CPU_SPEED} MHz, PSRAM: ${PSRAM_S
 
 include(pico_sdk_import.cmake)
 
-# Import pico-extras for audio_i2s library (git submodule)
-set(PICO_EXTRAS_PATH ${CMAKE_CURRENT_LIST_DIR}/pico-extras CACHE PATH "Path to pico-extras")
-include(${PICO_EXTRAS_PATH}/external/pico_extras_import.cmake)
-
 project(murmsnes C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
 pico_sdk_init()
 
-# Initialize pico-extras if available
-if(COMMAND pico_extras_init)
-    pico_extras_init()
-endif()
-
 # Add fatfs
 add_subdirectory(src/fatfs)
 
 # Add sdcard driver
 add_subdirectory(drivers/sdcard)
+
+# Add input drivers
+add_subdirectory(drivers/nespad)
+add_subdirectory(drivers/ps2kbd)
+add_subdirectory(drivers/usbhid)
 
 # Create a library for drivers
 add_library(drivers
@@ -68,25 +64,12 @@ target_include_directories(drivers PUBLIC drivers src)
 target_compile_definitions(drivers PRIVATE
     BOARD_${BOARD_VARIANT}
     PSRAM_MAX_FREQ_MHZ=${PSRAM_SPEED}
-    # I2S Audio configuration - use PIO1 (HDMI uses PIO0)
-    PICO_AUDIO_I2S_PIO=1
-    PICO_AUDIO_I2S_DMA_IRQ=0
 )
 
-# Set I2S pins based on board variant for drivers lib
-if(BOARD_VARIANT STREQUAL "M1")
-    target_compile_definitions(drivers PRIVATE
-        PICO_AUDIO_I2S_DATA_PIN=26
-        PICO_AUDIO_I2S_CLOCK_PIN_BASE=27
-    )
-elseif(BOARD_VARIANT STREQUAL "M2")
-    target_compile_definitions(drivers PRIVATE
-        PICO_AUDIO_I2S_DATA_PIN=9
-        PICO_AUDIO_I2S_CLOCK_PIN_BASE=10
-    )
-endif()
+# Generate PIO header for I2S audio
+pico_generate_pio_header(drivers ${CMAKE_CURRENT_LIST_DIR}/drivers/audio_i2s.pio)
 
-target_link_libraries(drivers pico_stdlib hardware_dma hardware_pio hardware_spi pico_audio_i2s)
+target_link_libraries(drivers pico_stdlib hardware_dma hardware_pio hardware_spi hardware_gpio)
 
 # Snes9x emulator sources
 set(SNES9X_SOURCES
@@ -123,11 +106,19 @@ set(ASM_OPT_SOURCES
     src/asm/audio_pack_asm.S
 )
 
+# UI sources (ROM selector, settings menu)
+set(UI_SOURCES
+    src/menu_ui.c
+    src/rom_selector.c
+    src/settings.c
+)
+
 add_executable(murmsnes
     src/main.c
     src/murmsnes_profile.c
     ${SNES9X_SOURCES}
     ${ASM_OPT_SOURCES}
+    ${UI_SOURCES}
 )
 
 # Enable aggressive optimization for SNES9x hot path
@@ -144,6 +135,10 @@ target_include_directories(murmsnes PRIVATE
     src/fatfs
     drivers
     drivers/sdcard
+    drivers/nespad
+    drivers/ps2kbd
+    # NOTE: drivers/usbhid excluded - its tusb_config.h conflicts with USB stdio
+    # USB HID is disabled by default; enable with -DUSB_HID_ENABLED=1
 )
 
 target_compile_definitions(murmsnes PRIVATE
@@ -152,9 +147,6 @@ target_compile_definitions(murmsnes PRIVATE
     CPU_VOLTAGE=${CPU_VOLTAGE}
     PSRAM_MAX_FREQ_MHZ=${PSRAM_SPEED}
     PICO_ON_DEVICE=1
-    # I2S Audio configuration - use PIO1 (HDMI uses PIO0)
-    PICO_AUDIO_I2S_PIO=1
-    PICO_AUDIO_I2S_DMA_IRQ=0
     # Snes9x configuration - FAST_LSB_WORD_ACCESS is defined in port.h for ARM
     # Performance optimizations - disable expensive rendering features
     NO_WINDOW_CLIPPING=1
@@ -173,25 +165,27 @@ endif()
 # Set peripheral pins based on board variant
 if(BOARD_VARIANT STREQUAL "M1")
     target_compile_definitions(murmsnes PRIVATE
-        # I2S Audio
-        PICO_AUDIO_I2S_DATA_PIN=26
-        PICO_AUDIO_I2S_CLOCK_PIN_BASE=27
         # SD Card
         SDCARD_PIN_SPI0_CS=5
         SDCARD_PIN_SPI0_SCK=2
         SDCARD_PIN_SPI0_MOSI=3
         SDCARD_PIN_SPI0_MISO=4
+        # NES/SNES Gamepad
+        NESPAD_GPIO_CLK=14
+        NESPAD_GPIO_LATCH=15
+        NESPAD_GPIO_DATA=16
     )
 elseif(BOARD_VARIANT STREQUAL "M2")
     target_compile_definitions(murmsnes PRIVATE
-        # I2S Audio
-        PICO_AUDIO_I2S_DATA_PIN=9
-        PICO_AUDIO_I2S_CLOCK_PIN_BASE=10
         # SD Card
         SDCARD_PIN_SPI0_CS=5
         SDCARD_PIN_SPI0_SCK=6
         SDCARD_PIN_SPI0_MOSI=7
         SDCARD_PIN_SPI0_MISO=4
+        # NES/SNES Gamepad
+        NESPAD_GPIO_CLK=20
+        NESPAD_GPIO_LATCH=21
+        NESPAD_GPIO_DATA=26
     )
 endif()
 
@@ -206,6 +200,9 @@ target_link_libraries(murmsnes
     sdcard
     fatfs
     drivers
+    nespad
+    ps2kbd
+    usbhid
 )
 
 # Use USB for stdio output

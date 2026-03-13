@@ -3,10 +3,12 @@ rm -rf ./build
 mkdir build
 cd build
 
-# Optional build-time overrides (defaults match CMakeLists.txt cache defaults)
-: "${BOARD_VARIANT:=M1}"
-: "${CPU_SPEED:=504}"
-: "${PSRAM_SPEED:=166}"
+# Board variant: M1 or M2 (required, no default - must be explicit)
+BOARD_VARIANT="${1:?Usage: ./build.sh <M1|M2> [CPU_SPEED] [PSRAM_SPEED]}"
+
+# Optional build-time overrides
+: "${CPU_SPEED:=${2:-504}}"
+: "${PSRAM_SPEED:=${3:-166}}"
 : "${MURMSNES_PROFILE:=ON}"
 : "${MURMSNES_FAST_MODE:=ON}"
 
@@ -18,4 +20,4 @@ cmake \
 	-DCPU_SPEED=${CPU_SPEED} \
 	-DPSRAM_SPEED=${PSRAM_SPEED} \
 	..
-make -j4
+make -j$(sysctl -n hw.ncpu 2>/dev/null || nproc)
