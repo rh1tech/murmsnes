@@ -74,15 +74,12 @@
 //=============================================================================
 
 // HDMI display buffer in SRAM - HDMI DMA reads from here
-uint16_t __attribute__((aligned(4))) SCREEN[1][SNES_WIDTH * SNES_HEIGHT_EXTENDED];
-// Shadow render buffer in PSRAM - emulator writes here, copied to SCREEN at VBlank
-static uint16_t *shadow_screen = NULL;
-#define SHADOW_SCREEN_SIZE (SNES_WIDTH * SNES_HEIGHT_EXTENDED * sizeof(uint16_t))
+uint16_t __attribute__((aligned(4))) SCREEN[2][SNES_WIDTH * SNES_HEIGHT_EXTENDED];
 
 static uint8_t __attribute__((aligned(4))) ZBuffer[SNES_WIDTH * SNES_HEIGHT_EXTENDED];
 static uint8_t __attribute__((aligned(4))) SubZBuffer[SNES_WIDTH * SNES_HEIGHT_EXTENDED];
 
-// Current display buffer - kept for gfx.c compatibility (always 0)
+// Current display buffer - kept for gfx.c compatibility
 volatile uint32_t current_buffer = 0;
 
 //=============================================================================
@@ -95,8 +92,8 @@ volatile uint32_t current_buffer = 0;
 //
 // Key goal: keep Core 1 work minimal so HDMI activity doesn't starve audio.
 // Deeper queue for better buffering during CPU spikes (digital sound effects in MK3)
-// 80 frames (~1.33s @ 18kHz) - balance between buffering and SRAM usage
-#define AUDIO_QUEUE_DEPTH 80
+// 20 frames (~333ms @ 18kHz) - balance between buffering and SRAM usage
+#define AUDIO_QUEUE_DEPTH 20
 // NOTE: With fixed 60Hz emulation producing exactly one audio chunk per frame,
 // the producer cannot stay "ahead" of the consumer by >1 chunk in steady state.
 // Using queue-fill watermarks to decide frame skipping will therefore
@@ -216,17 +213,8 @@ static inline void perf_min_u32(uint32_t *dst, uint32_t v) {
 bool S9xInitDisplay(void) {
     GFX.Pitch = SNES_WIDTH * sizeof(uint16_t);
     GFX.ZPitch = SNES_WIDTH;
-    // Allocate shadow render buffer in PSRAM
-    if (!shadow_screen) {
-        shadow_screen = (uint16_t *)psram_malloc(SHADOW_SCREEN_SIZE);
-        if (shadow_screen)
-            memset(shadow_screen, 0, SHADOW_SCREEN_SIZE);
-    }
-    // Emulator renders to shadow buffer (PSRAM), HDMI reads from SCREEN[0] (SRAM)
-    if (shadow_screen)
-        GFX.SubScreen = GFX.Screen = (uint8_t *)shadow_screen;
-    else
-        GFX.SubScreen = GFX.Screen = (uint8_t *)SCREEN[0];
+
+    GFX.SubScreen = GFX.Screen = (uint8_t *)SCREEN[0];
     GFX.ZBuffer = (uint8_t *)ZBuffer;
     GFX.SubZBuffer = (uint8_t *)SubZBuffer;
     return true;
@@ -469,7 +457,7 @@ void __time_critical_func(render_core)(void) {
         apu_core1_run_batch();
 #endif
 
-        // Single buffer - HDMI always reads from SCREEN[0]
+        // Double buffer - HDMI reads from whichever was most recently pushed from Core 0
 
         // Consume next mixed chunk if available; otherwise replay the last chunk.
         uint32_t prod = audio_prod_seq;
@@ -661,14 +649,25 @@ static void __time_critical_func(emulation_loop)(void) {
 
         IPPU.RenderThisFrame = !skip_render;
 
+if (!skip_render) {
+            // Flip buffer for drawing the next frame
+            current_buffer = 1 - current_buffer;
+            GFX.SubScreen = GFX.Screen = (uint8_t *)SCREEN[current_buffer];
+        }
+
         // Run one SNES frame of emulation.
-    #ifdef MURMSNES_PROFILE
+#ifdef MURMSNES_PROFILE
         uint32_t t0 = time_us_32();
-    #endif
+#endif
         S9xMainLoop();
-    #ifdef MURMSNES_PROFILE
+#ifdef MURMSNES_PROFILE
         uint32_t t1 = time_us_32();
-    #endif
+#endif
+
+        if (!skip_render) {
+            // Tell HDMI to display the buffer we just finished rendering
+            graphics_set_buffer((uint8_t *)SCREEN[current_buffer]);
+        }
 
         // Mix audio on Core 0 (always, even when skipping render), then apply
         // gain/limiting and pack to 32-bit stereo frames.
@@ -721,14 +720,6 @@ static void __time_critical_func(emulation_loop)(void) {
             consecutive_skipped_frames++;
         } else {
             consecutive_skipped_frames = 0;
-
-            // Wait for VBlank then copy shadow (PSRAM) -> SCREEN (SRAM)
-            if (shadow_screen) {
-                while (!hdmi_vblank_flag)
-                    tight_loop_contents();
-                hdmi_vblank_flag = false;
-                memcpy(SCREEN[0], shadow_screen, SHADOW_SCREEN_SIZE);
-            }
         }
 
         // Update palette if brightness changed during frame
@@ -739,6 +730,16 @@ static void __time_critical_func(emulation_loop)(void) {
 
         // Advance deadline and frame counter for the next emulated frame.
         next_frame_deadline += TARGET_FRAME_US;
+
+        extern volatile uint16_t hdmi_current_line;
+        int32_t error = (int32_t)hdmi_current_line - 30; // Target HDMI line 30 at end of SNES frame
+        if (error > 262) error -= 525;
+        if (error < -262) error += 525;
+        if (error > 100) error = 100;
+        if (error < -100) error = -100;
+        int32_t drift = error * 2; // Gentle PLL correction
+        next_frame_deadline -= drift;
+
         frame_num++;
 
 #ifdef MURMSNES_PROFILE
@@ -997,7 +998,7 @@ int main(void) {
     psram_init(psram_pin);
     psram_reset();
     LOG("PSRAM initialized (8 MB)\n");
-    
+
     // Mount SD card
     LOG("Mounting SD card...\n");
     FRESULT res = f_mount(&fs, "", 1);

@@ -20,12 +20,14 @@ enum graphics_mode_t hdmi_graphics_mode = GRAPHICSMODE_DEFAULT;
 
 // Graphics buffer pointer in scratch memory for fast DMA handler access
 static uint8_t * __scratch_y("hdmi_ptr") graphics_buffer = NULL;
+static uint8_t * __scratch_y("hdmi_ptr") pending_graphics_buffer = NULL;
 
 // VBlank flag - set at start of vblank, cleared by consumer
 volatile bool hdmi_vblank_flag = false;
 
 void graphics_set_buffer(uint8_t *buffer) {
-    graphics_buffer = buffer;
+    pending_graphics_buffer = buffer;
+    if (!graphics_buffer) graphics_buffer = buffer; // First time init
 }
 
 uint8_t* graphics_get_buffer(void) {
@@ -315,23 +317,23 @@ static void pio_set_x(PIO pio, const int sm, uint32_t v) {
     pio_sm_exec(pio, sm, instr_mov);
 }
 
+volatile uint16_t hdmi_current_line = 0;
 static void __scratch_y("hdmi_driver") dma_handler_HDMI() {
     static uint32_t inx_buf_dma;
-    static uint line = 0;
     irq_inx++;
 
     dma_hw->ints0 = 1u << dma_chan_ctrl;
     dma_channel_set_read_addr(dma_chan_ctrl, &DMA_BUF_ADDR[inx_buf_dma & 1], false);
 
     // Increment line counter with wrap at 524 (same as pico-snes-master)
-    line = line >= 524 ? 0 : line + 1;
+    hdmi_current_line = hdmi_current_line >= 524 ? 0 : hdmi_current_line + 1;
 
-    if ((line & 1) == 0) return;
+    if ((hdmi_current_line & 1) == 0) return;
     inx_buf_dma++;
 
     uint8_t* activ_buf = (uint8_t *)dma_lines[inx_buf_dma & 1];
 
-    if (line < (239*2) ) {
+    if (hdmi_current_line < (239*2) ) {
         // Active video region - render SNES screen
         uint8_t* output_buffer = activ_buf + 72; // Align sync
         
@@ -339,8 +341,8 @@ static void __scratch_y("hdmi_driver") dma_handler_HDMI() {
         hdmi_memset_fast(output_buffer, 0, 32);
         output_buffer += 32;
         
-        // Read from screen buffer (single buffer mode)
-        const uint16_t* input = (uint16_t*)&SCREEN[0][(line / 2) * graphics_buffer_width];
+        // Read from screen buffer
+        const uint16_t* input = (uint16_t*)&((uint16_t*)graphics_buffer)[(hdmi_current_line / 2) * graphics_buffer_width];
         
         // Copy pixels using optimized assembly routine
         hdmi_copy_scanline_asm(output_buffer, input, graphics_buffer_width, hdmi_color_substitute);
@@ -370,12 +372,15 @@ static void __scratch_y("hdmi_driver") dma_handler_HDMI() {
     }
     else {
         // VBlank area - apply pending palette at start of vblank
-        if (line == (239*2 + 1)) {
+        if (hdmi_current_line == (239*2 + 1)) {
             apply_pending_palette();
+            if (pending_graphics_buffer) {
+                graphics_buffer = pending_graphics_buffer;
+            }
             hdmi_vblank_flag = true;
         }
         
-        if ((line >= 490) && (line < 492)) {
+        if ((hdmi_current_line >= 490) && (hdmi_current_line < 492)) {
             //кадровый синхроимпульс
             //для выравнивания синхры
             // --|_|---|_|---|_|----
