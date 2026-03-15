@@ -328,7 +328,6 @@ static inline void snes9x_init(void) {
     Settings.SoundPlaybackRate = AUDIO_SAMPLE_RATE;
     Settings.DisableSoundEcho = true;   // Disable echo to match user request / reduce mixing complexity
     Settings.InterpolatedSound = false; // Disable for performance - reduces mixing CPU cost
-    // Keep APU enabled - some games need it even without audio output
 
     S9xInitDisplay();
     S9xInitMemory();
@@ -460,7 +459,7 @@ void __time_critical_func(render_core)(void) {
             graphics_set_buffer((uint8_t *)SCREEN[current_buf]);
             last_displayed_buffer = current_buf;
         }
-        
+
         // Consume next mixed chunk if available; otherwise replay the last chunk.
         uint32_t prod = audio_prod_seq;
         uint32_t cons = audio_cons_seq;

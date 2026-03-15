@@ -19,7 +19,7 @@ option(MURMSNES_PROFILE "Enable periodic performance profiling output" OFF)
 # - Skips subscreen rendering entirely
 # - Limits to single BG layer in Mode 1
 # - Disables color math transparency effects
-option(MURMSNES_FAST_MODE "Enable fast mode (reduced quality for higher FPS)" OFF)
+option(MURMSNES_FAST_MODE "Enable fast mode (reduced quality for higher FPS)" ON)
 
 # CPU voltage selection based on speed
 if(CPU_SPEED GREATER_EQUAL 504)
