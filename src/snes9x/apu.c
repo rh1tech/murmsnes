@@ -2,7 +2,7 @@
 
 #ifndef USE_BLARGG_APU
 
-// Use PSRAM allocator on device - MUST be before any stdlib includes
+/* Use PSRAM allocator on device - MUST be before any stdlib includes */
 #ifdef PICO_ON_DEVICE
 #include "snes_alloc.h"
 #define malloc snes_malloc
@@ -13,10 +13,11 @@
 #include "snes9x.h"
 #include "spc700.h"
 #include "apu.h"
+#include "apumem.h"
 #include "soundux.h"
 #include "cpuexec.h"
 
-extern const int32_t NoiseFreq[32];
+extern int32_t NoiseFreq[32];
 
 bool S9xInitAPU()
 {

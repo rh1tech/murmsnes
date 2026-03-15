@@ -73,12 +73,16 @@
 // Screen Buffers
 //=============================================================================
 
-// Screen buffers - 256x239 16-bit (low byte is palette index)
-uint16_t __attribute__((aligned(4))) SCREEN[2][SNES_WIDTH * SNES_HEIGHT_EXTENDED];
+// HDMI display buffer in SRAM - HDMI DMA reads from here
+uint16_t __attribute__((aligned(4))) SCREEN[1][SNES_WIDTH * SNES_HEIGHT_EXTENDED];
+// Shadow render buffer in PSRAM - emulator writes here, copied to SCREEN at VBlank
+static uint16_t *shadow_screen = NULL;
+#define SHADOW_SCREEN_SIZE (SNES_WIDTH * SNES_HEIGHT_EXTENDED * sizeof(uint16_t))
+
 static uint8_t __attribute__((aligned(4))) ZBuffer[SNES_WIDTH * SNES_HEIGHT_EXTENDED];
 static uint8_t __attribute__((aligned(4))) SubZBuffer[SNES_WIDTH * SNES_HEIGHT_EXTENDED];
 
-// Current display buffer (double buffering) - accessed by HDMI driver
+// Current display buffer - kept for gfx.c compatibility (always 0)
 volatile uint32_t current_buffer = 0;
 
 //=============================================================================
@@ -212,7 +216,17 @@ static inline void perf_min_u32(uint32_t *dst, uint32_t v) {
 bool S9xInitDisplay(void) {
     GFX.Pitch = SNES_WIDTH * sizeof(uint16_t);
     GFX.ZPitch = SNES_WIDTH;
-    GFX.SubScreen = GFX.Screen = (uint8_t *)SCREEN[current_buffer];
+    // Allocate shadow render buffer in PSRAM
+    if (!shadow_screen) {
+        shadow_screen = (uint16_t *)psram_malloc(SHADOW_SCREEN_SIZE);
+        if (shadow_screen)
+            memset(shadow_screen, 0, SHADOW_SCREEN_SIZE);
+    }
+    // Emulator renders to shadow buffer (PSRAM), HDMI reads from SCREEN[0] (SRAM)
+    if (shadow_screen)
+        GFX.SubScreen = GFX.Screen = (uint8_t *)shadow_screen;
+    else
+        GFX.SubScreen = GFX.Screen = (uint8_t *)SCREEN[0];
     GFX.ZBuffer = (uint8_t *)ZBuffer;
     GFX.SubZBuffer = (uint8_t *)SubZBuffer;
     return true;
@@ -437,28 +451,25 @@ void __time_critical_func(render_core)(void) {
     i2s_init(&i2s_config);
 
     // HDMI is already initialized on Core 0
+    // Set buffer pointer from Core 1 (HDMI scanline IRQ runs here)
+    graphics_set_buffer((uint8_t *)SCREEN[0]);
+
     // Signal ready with memory barrier
     __dmb();
     core1_ready = true;
     __dmb();
-    
+
     // Audio playback - continuously play from read buffer
     static uint32_t __attribute__((aligned(32))) replay_buf[AUDIO_BUFFER_LENGTH];
     static bool replay_is_silence = true;
     const uint32_t fade_frames = 128;
-    uint32_t last_displayed_buffer = 0;
     while (true) {
         // Run APU batch on Core 1 - catch up to CPU target cycles
 #if APU_ON_CORE1
         apu_core1_run_batch();
 #endif
 
-        // Update HDMI buffer pointer if Core 0 swapped buffers (double buffering sync)
-        uint32_t current_buf = current_buffer;
-        if (current_buf != last_displayed_buffer) {
-            graphics_set_buffer((uint8_t *)SCREEN[current_buf]);
-            last_displayed_buffer = current_buf;
-        }
+        // Single buffer - HDMI always reads from SCREEN[0]
 
         // Consume next mixed chunk if available; otherwise replay the last chunk.
         uint32_t prod = audio_prod_seq;
@@ -711,9 +722,13 @@ static void __time_critical_func(emulation_loop)(void) {
         } else {
             consecutive_skipped_frames = 0;
 
-            // Swap display buffers only when we rendered
-            current_buffer = !current_buffer;
-            GFX.SubScreen = GFX.Screen = (uint8_t *)SCREEN[current_buffer];
+            // Wait for VBlank then copy shadow (PSRAM) -> SCREEN (SRAM)
+            if (shadow_screen) {
+                while (!hdmi_vblank_flag)
+                    tight_loop_contents();
+                hdmi_vblank_flag = false;
+                memcpy(SCREEN[0], shadow_screen, SHADOW_SCREEN_SIZE);
+            }
         }
 
         // Update palette if brightness changed during frame
@@ -1054,11 +1069,7 @@ int main(void) {
     // Initialize menu palette for ROM selector
     menu_ui_init_palette();
 
-    // HDMI reads from SCREEN[!current_buffer], so set current_buffer=1
-    // so that HDMI reads from SCREEN[0] where ROM selector draws
-    current_buffer = 1;
-
-    // Show ROM selector
+    // Show ROM selector (single buffer - HDMI reads directly from SCREEN[0])
     LOG("Starting ROM selector...\n");
     char rom_path[MAX_ROM_PATH];
     bool rom_selected = rom_selector_show(rom_path, sizeof(rom_path), SCREEN[0]);
@@ -1072,12 +1083,8 @@ int main(void) {
 
     LOG("ROM selected: %s\n", rom_path);
 
-    // Clear both screen buffers to remove ROM selector artifacts
+    // Clear screen buffer to remove ROM selector artifacts
     memset(SCREEN[0], 0, sizeof(SCREEN[0]));
-    memset(SCREEN[1], 0, sizeof(SCREEN[1]));
-
-    // Reset current_buffer for proper double-buffering during emulation
-    current_buffer = 0;
 
     // Load ROM from SD card
     LOG("Loading ROM...\n");

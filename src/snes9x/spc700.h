@@ -62,8 +62,6 @@ typedef struct
 /* Needed by ILLUSION OF GAIA */
 #define ONE_APU_CYCLE 21
 
-void APUExecute(void);
-
 /* APU execution - can run on Core 0 (default) or Core 1 (parallel) */
 #if defined(PICO_ON_DEVICE) && defined(APU_ON_CORE1) && APU_ON_CORE1
 #include "apu_core1.h"
@@ -71,14 +69,17 @@ void APUExecute(void);
 #define APU_EXECUTE1() APU_EXECUTE1_CORE1()
 #define APU_EXECUTE()  APU_EXECUTE_CORE1()
 #else
-/* Default: run APU on Core 0 synchronously */
+/* Default: run APU on Core 0 synchronously using function pointer table */
 #define APU_EXECUTE1() \
-APUExecute();
+{ \
+    APU.Cycles += S9xAPUCycles [*IAPU.PC]; \
+    (*S9xApuOpcodes[*IAPU.PC]) (); \
+}
 
 #define APU_EXECUTE() \
 if (IAPU.APUExecuting) \
     while (APU.Cycles <= CPU.Cycles) \
-      APUExecute();
+       APU_EXECUTE1();
 #endif
 
 #endif

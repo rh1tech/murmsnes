@@ -2,11 +2,10 @@
 
 #ifndef USE_BLARGG_APU
 
-// Use PSRAM allocator on device - MUST be before any stdlib includes
+/* Use PSRAM allocator on device */
 #ifdef PICO_ON_DEVICE
 #include "snes_alloc.h"
 #define malloc snes_malloc
-#define calloc snes_calloc
 #define free snes_free
 #endif
 
@@ -14,17 +13,11 @@
 #include <string.h>
 #include <errno.h>
 
-
 #include "snes9x.h"
 #include "soundux.h"
 #include "apu.h"
 #include "memmap.h"
 #include "cpuexec.h"
-
-// Step 2: Include audio optimizations
-#ifdef PICO_ON_DEVICE
-#include "../audio_opt.h"
-#endif
 
 #define CLIP16(v) \
 (v) = (((v) <= -32768) ? -32768 : (((v) >= 32767) ? 32767 : (v)))
@@ -32,70 +25,30 @@
 #define CLIP8(v) \
 (v) = (((v) <= -128) ? -128 : (((v) >= 127) ? 127 : (v)))
 
-static struct {
-   int32_t wave[SOUND_BUFFER_SIZE];
-   int32_t Echo [24000];
-   int32_t MixBuffer [SOUND_BUFFER_SIZE];
-   int32_t EchoBuffer [SOUND_BUFFER_SIZE];
-   int32_t FilterTaps [8];
-   uint8_t FilterTapDefinitionBitfield;
-   /* In the above, bit I is set if FilterTaps[I] is non-zero. */
-   uint32_t Z;
-   int32_t Loop [16];
+extern int32_t *Echo;
+extern int32_t *MixBuffer;
+extern int32_t *EchoBuffer;
+#define ECHO_BUFFER_SIZE 9000
+extern int32_t FilterTaps [8];
+static uint8_t FilterTapDefinitionBitfield;
+/* In the above, bit I is set if FilterTaps[I] is non-zero. */
+extern uint32_t Z;
+extern int32_t Loop [16];
 
-   /* precalculated env rates for S9xSetEnvRate */
-   uint32_t AttackERate     [16][10];
-   uint32_t DecayERate       [8][10];
-   uint32_t SustainERate    [32][10];
-   uint32_t IncreaseERate   [32][10];
-   uint32_t DecreaseERateExp[32][10];
-   uint32_t KeyOffERate         [10];
-
-   /* Used by S9xMixSamplesLowPass() to store the
-   * last output samples for the next iteration
-   * of the low pass filter. This should go in
-   * the SSoundData struct, but doing so would
-   * break compatibility with existing save
-   * states (with little in the way of tangible
-   * benefits) */
-   int32_t MixOutputPrev[2];
-} *LocalState;
-
-// Optional kill switch for SNES noise generator (vinyl-like hiss/scratch)
-static bool g_disable_noise = false;
-// Per-channel mute mask for debugging; bit i mutes channel i (0..7)
-static uint8_t g_channel_mute_mask = 0x00; // 0 = all channels enabled
-
-#define wave LocalState->wave
-#define Echo LocalState->Echo
-#define MixBuffer LocalState->MixBuffer
-#define EchoBuffer LocalState->EchoBuffer
-#define FilterTaps LocalState->FilterTaps
-#define FilterTapDefinitionBitfield LocalState->FilterTapDefinitionBitfield
-#define Z LocalState->Z
-#define Loop LocalState->Loop
-#define AttackERate LocalState->AttackERate
-#define DecayERate LocalState->DecayERate
-#define SustainERate LocalState->SustainERate
-#define IncreaseERate LocalState->IncreaseERate
-#define DecreaseERateExp LocalState->DecreaseERateExp
-#define KeyOffERate LocalState->KeyOffERate
-#define MixOutputPrev LocalState->MixOutputPrev
-
-extern const int32_t NoiseFreq [32];
-
-static const uint32_t AttackRate [16] =
+extern int32_t FilterValues[4][2];
+extern int32_t NoiseFreq [32];
+uint32_t AttackRate [16] =
 {
    4100, 2600, 1500, 1000, 640, 380, 260, 160,
    96,   64,   40,   24,   16,  10,  6,   1
 };
 
-static const uint32_t DecayRate [8] =
+uint32_t DecayRate [8] =
 {
    1200, 740, 440, 290, 180, 110, 74, 37
 };
 
-static const uint32_t DecreaseRateExp [32] =
+uint32_t DecreaseRateExp [32] =
 {
    0xFFFFFFFF, 38000, 28000, 24000, 19000, 14000, 12000, 9400,
    7100,       5900,  4700,  3500,  2900,  2400,  1800,  1500,
@@ -103,7 +56,7 @@ static const uint32_t DecreaseRateExp [32] =
    180,        150,   110,   92,    74,    55,    37,    18
 };
 
-static const uint32_t IncreaseRate [32] =
+uint32_t IncreaseRate [32] =
 {
    0xFFFFFFFF, 4100, 3100, 2600, 2000, 1500, 1300, 1000,
    770,        640,  510,  380,  320,  260,  190,  160,
@@ -112,6 +65,14 @@ static const uint32_t IncreaseRate [32] =
 };
 
 #define SustainRate DecreaseRateExp
+
+/* precalculated env rates for S9xSetEnvRate */
+uint32_t AttackERate     [16][10];
+uint32_t DecayERate       [8][10];
+uint32_t SustainERate    [32][10];
+uint32_t IncreaseERate   [32][10];
+uint32_t DecreaseERateExp[32][10];
+uint32_t KeyOffERate         [10];
 
 #define FIXED_POINT 0x10000UL
 #define FIXED_POINT_REMAINDER 0xffffUL
@@ -126,6 +87,15 @@ static const uint32_t IncreaseRate [32] =
 
 #define LAST_SAMPLE 0xffffff
 #define JUST_PLAYED_LAST_SAMPLE(c) ((c)->sample_pointer >= LAST_SAMPLE)
+
+/* Used by S9xMixSamplesLowPass() to store the
+ * last output samples for the next iteration
+ * of the low pass filter. This should go in
+ * the SSoundData struct, but doing so would
+ * break compatibility with existing save
+ * states (with little in the way of tangible
+ * benefits) */
+static int32_t MixOutputPrev[2];
 
 static INLINE uint8_t* S9xGetSampleAddress(int32_t sample_number)
 {
@@ -227,7 +197,7 @@ void S9xSetEchoEnable(uint8_t byte)
       byte = 0;
    if (byte && !SoundData.echo_enable)
    {
-      memset(Echo, 0, sizeof(Echo));
+      memset(Echo, 0, ECHO_BUFFER_SIZE * sizeof(int32_t));
       memset(Loop, 0, sizeof(Loop));
    }
 
@@ -488,6 +458,8 @@ void DecodeBlock(Channel* ch)
 
 static INLINE void MixStereo(int32_t sample_count)
 {
+   static int32_t wave[SOUND_BUFFER_SIZE];
+
    int32_t pitch_mod = SoundData.pitch_mod & ~APU.DSP[APU_NON];
 
    uint32_t J;
@@ -498,12 +470,6 @@ static INLINE void MixStereo(int32_t sample_count)
       uint32_t freq0;
       uint8_t mod;
       Channel* ch = &SoundData.channels[J];
-
-      if ((g_channel_mute_mask & (1u << J)) != 0)
-         continue;
-
-      if (g_disable_noise && (ch->type == SOUND_NOISE || ch->type == SOUND_EXTRA_NOISE))
-         continue;
 
       if (ch->state == SOUND_SILENT)
          continue;
@@ -780,7 +746,6 @@ stereo_exit:;
 
 void S9xMixSamples(int16_t* buffer, int32_t sample_count)
 {
-
    int32_t J;
    int32_t I;
 
@@ -841,82 +806,9 @@ void S9xMixSamples(int16_t* buffer, int32_t sample_count)
    else
    {
       /* 16-bit mono or stereo sound, no echo */
-#ifdef PICO_ON_DEVICE
-      // Step 2: Use optimized no-echo mixing
-      audio_mix_noecho_opt(buffer, sample_count, MixBuffer, SoundData.master_volume);
-#else
       for (J = 0; J < sample_count; J++)
       {
          I = (MixBuffer[J] * SoundData.master_volume [J & 1]) / VOL_DIV16;
-         CLIP16(I);
-         buffer[J] = I;
-      }
-#endif
-   }
-}
-
-/* Get internal MixBuffer for optimized mixing */
-const int32_t* S9xGetMixBuffer(void)
-{
-   return MixBuffer;
-}
-
-/**
- * Mono mixing - mixes to mono output (half the samples of stereo)
- * This is faster because we only process one channel instead of two.
- * The output is single-channel; caller duplicates to stereo for I2S.
- */
-void S9xMixSamplesMono(int16_t* buffer, int32_t sample_count)
-{
-   int32_t J;
-   int32_t I;
-
-   /* sample_count is the number of mono samples we want */
-   int32_t stereo_count = sample_count * 2;
-
-   if (SoundData.echo_enable)
-      memset(EchoBuffer, 0, stereo_count * sizeof(EchoBuffer [0]));
-   memset(MixBuffer, 0, stereo_count * sizeof(MixBuffer [0]));
-   MixStereo(stereo_count);
-
-   /* Mix stereo to mono: average L+R channels */
-   /* Use combined master volume (average of L and R) */
-   int32_t master_vol = (SoundData.master_volume[0] + SoundData.master_volume[1]) / 2;
-
-   if (SoundData.echo_enable && SoundData.echo_buffer_size)
-   {
-      /* With echo - simplified (no filter for speed) */
-      for (J = 0; J < sample_count; J++)
-      {
-         /* Get stereo pair and average to mono */
-         int32_t left = MixBuffer[J * 2];
-         int32_t right = MixBuffer[J * 2 + 1];
-         int32_t mono = (left + right) / 2;
-
-         /* Simple echo handling */
-         int32_t E = Echo[SoundData.echo_ptr];
-         int32_t echo_left = EchoBuffer[J * 2];
-         int32_t echo_right = EchoBuffer[J * 2 + 1];
-         Echo[SoundData.echo_ptr++] = (E * SoundData.echo_feedback) / 128 + (echo_left + echo_right) / 2;
-
-         if (SoundData.echo_ptr >= SoundData.echo_buffer_size)
-            SoundData.echo_ptr = 0;
-
-         int32_t echo_vol = (SoundData.echo_volume[0] + SoundData.echo_volume[1]) / 2;
-         I = (mono * master_vol + E * echo_vol) / VOL_DIV16;
-         CLIP16(I);
-         buffer[J] = I;
-      }
-   }
-   else
-   {
-      /* No echo - fast path */
-      for (J = 0; J < sample_count; J++)
-      {
-         int32_t left = MixBuffer[J * 2];
-         int32_t right = MixBuffer[J * 2 + 1];
-         int32_t mono = (left + right) / 2;
-         I = (mono * master_vol) / VOL_DIV16;
          CLIP16(I);
          buffer[J] = I;
       }
@@ -1019,6 +911,54 @@ void S9xMixSamplesLowPass(int16_t* buffer, int32_t sample_count, int32_t low_pas
    }
 }
 
+void S9xMixSamplesMono(int16_t* buffer, int32_t sample_count)
+{
+   int32_t J;
+   int32_t I;
+
+   /* sample_count is number of MONO output samples.
+    * Internally we mix stereo (sample_count*2) then average L+R. */
+   int32_t stereo_count = sample_count * 2;
+
+   if (SoundData.echo_enable)
+      memset(EchoBuffer, 0, stereo_count * sizeof(EchoBuffer [0]));
+   memset(MixBuffer, 0, stereo_count * sizeof(MixBuffer [0]));
+   MixStereo(stereo_count);
+
+   /* Mix stereo to mono by averaging L+R */
+   if (SoundData.echo_enable && SoundData.echo_buffer_size)
+   {
+      for (J = 0; J < stereo_count; J += 2)
+      {
+         int32_t EL = Echo [SoundData.echo_ptr];
+         int32_t ER = Echo [SoundData.echo_ptr + 1 < SoundData.echo_buffer_size ? SoundData.echo_ptr + 1 : 0];
+         Echo[SoundData.echo_ptr++] = (EL * SoundData.echo_feedback) / 128 + EchoBuffer [J];
+         if (SoundData.echo_ptr >= SoundData.echo_buffer_size)
+            SoundData.echo_ptr = 0;
+         Echo[SoundData.echo_ptr++] = (ER * SoundData.echo_feedback) / 128 + EchoBuffer [J + 1];
+         if (SoundData.echo_ptr >= SoundData.echo_buffer_size)
+            SoundData.echo_ptr = 0;
+
+         int32_t L = (MixBuffer[J] * SoundData.master_volume [0] + EL * SoundData.echo_volume [0]) / VOL_DIV16;
+         int32_t R = (MixBuffer[J+1] * SoundData.master_volume [1] + ER * SoundData.echo_volume [1]) / VOL_DIV16;
+         I = (L + R) / 2;
+         CLIP16(I);
+         buffer[J / 2] = I;
+      }
+   }
+   else
+   {
+      for (J = 0; J < stereo_count; J += 2)
+      {
+         int32_t L = (MixBuffer[J] * SoundData.master_volume [0]) / VOL_DIV16;
+         int32_t R = (MixBuffer[J+1] * SoundData.master_volume [1]) / VOL_DIV16;
+         I = (L + R) / 2;
+         CLIP16(I);
+         buffer[J / 2] = I;
+      }
+   }
+}
+
 void S9xResetSound(bool full)
 {
    int32_t i;
@@ -1090,7 +1030,10 @@ void S9xSetPlaybackRate(uint32_t playback_rate)
 
    if (playback_rate)
    {
-      int32_t steps [] = {0, 64, 619, 619, 128, 1, 64, 55, 64, 619};
+      static int32_t steps [] =
+      {
+         0, 64, 619, 619, 128, 1, 64, 55, 64, 619
+      };
       int32_t i, u;
 
       /* notaz: calculate a value (let's call it freqbase) to simplify channel freq calculations later. */
@@ -1125,9 +1068,19 @@ void S9xSetPlaybackRate(uint32_t playback_rate)
 
 bool S9xInitSound(int32_t buffer_ms, int32_t lag_ms)
 {
-   LocalState = calloc(1, sizeof(*LocalState));
-   if (!LocalState)
-      return false;
+   /* Allocate large audio buffers (goes to PSRAM on device) */
+   if (!Echo) {
+      Echo = (int32_t *) malloc(ECHO_BUFFER_SIZE * sizeof(int32_t));
+      memset(Echo, 0, ECHO_BUFFER_SIZE * sizeof(int32_t));
+   }
+   if (!MixBuffer) {
+      MixBuffer = (int32_t *) malloc(SOUND_BUFFER_SIZE * sizeof(int32_t));
+      memset(MixBuffer, 0, SOUND_BUFFER_SIZE * sizeof(int32_t));
+   }
+   if (!EchoBuffer) {
+      EchoBuffer = (int32_t *) malloc(SOUND_BUFFER_SIZE * sizeof(int32_t));
+      memset(EchoBuffer, 0, SOUND_BUFFER_SIZE * sizeof(int32_t));
+   }
    so.playback_rate = 0;
    S9xResetSound(true);
    return true;

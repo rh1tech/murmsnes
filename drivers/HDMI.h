@@ -69,6 +69,9 @@ void graphics_set_mode(enum graphics_mode_t mode);
 struct video_mode_t graphics_get_video_mode(int mode);
 void graphics_set_bgcolor(uint32_t color888);
 
+// VBlank synchronization - set by HDMI IRQ at start of vblank
+extern volatile bool hdmi_vblank_flag;
+
 
 static const uint32_t tab_color[11][16] =
 {

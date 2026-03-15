@@ -21,6 +21,9 @@ enum graphics_mode_t hdmi_graphics_mode = GRAPHICSMODE_DEFAULT;
 // Graphics buffer pointer in scratch memory for fast DMA handler access
 static uint8_t * __scratch_y("hdmi_ptr") graphics_buffer = NULL;
 
+// VBlank flag - set at start of vblank, cleared by consumer
+volatile bool hdmi_vblank_flag = false;
+
 void graphics_set_buffer(uint8_t *buffer) {
     graphics_buffer = buffer;
 }
@@ -336,8 +339,8 @@ static void __scratch_y("hdmi_driver") dma_handler_HDMI() {
         hdmi_memset_fast(output_buffer, 0, 32);
         output_buffer += 32;
         
-        // Read from the back buffer (not currently being drawn to)
-        const uint16_t* input = (uint16_t*)&SCREEN[!current_buffer][(line / 2) * graphics_buffer_width];
+        // Read from screen buffer (single buffer mode)
+        const uint16_t* input = (uint16_t*)&SCREEN[0][(line / 2) * graphics_buffer_width];
         
         // Copy pixels using optimized assembly routine
         hdmi_copy_scanline_asm(output_buffer, input, graphics_buffer_width, hdmi_color_substitute);
@@ -369,6 +372,7 @@ static void __scratch_y("hdmi_driver") dma_handler_HDMI() {
         // VBlank area - apply pending palette at start of vblank
         if (line == (239*2 + 1)) {
             apply_pending_palette();
+            hdmi_vblank_flag = true;
         }
         
         if ((line >= 490) && (line < 492)) {

@@ -18,6 +18,7 @@ SAPU APU;
 SIAPU IAPU;
 SSoundData SoundData;
 SoundStatus so;
+uint8_t W4;
 #endif
 
 SSettings Settings;
@@ -40,7 +41,24 @@ SBG BG;
 
 SGFX GFX;
 
-const int32_t NoiseFreq [32] =
+#ifndef USE_BLARGG_APU
+/* Large audio buffers - allocated in PSRAM on device via S9xInitSound() */
+int32_t *Echo;
+int32_t *MixBuffer;
+int32_t *EchoBuffer;
+int32_t FilterTaps [8];
+uint32_t Z = 0;
+int32_t Loop [16];
+
+int32_t FilterValues[4][2] =
+{
+   {0,    0},
+   {240,  0},
+   {488, -240},
+   {460, -208}
+};
+
+int32_t NoiseFreq [32] =
 {
    0, 16, 21, 25, 31, 42, 50, 63, 84, 100, 125, 167, 200, 250, 333,
    400, 500, 667, 800, 1000, 1300, 1600, 2000, 2700, 3200, 4000,
@@ -54,6 +72,7 @@ const uint8_t APUROM [64] =
    0xCB, 0xF4, 0xD7, 0x00, 0xFC, 0xD0, 0xF3, 0xAB, 0x01, 0x10, 0xEF, 0x7E, 0xF4, 0x10, 0xEB, 0xBA,
    0xF6, 0xDA, 0x00, 0xBA, 0xF4, 0xC4, 0xF4, 0xDD, 0x5D, 0xD0, 0xDB, 0x1F, 0x00, 0x00, 0xC0, 0xFF
 };
+#endif
 
 /* Raw SPC700 instruction cycle lengths */
 const uint8_t S9xAPUCycleLengths [256] =
