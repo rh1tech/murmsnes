@@ -58,8 +58,8 @@
 // Configuration
 //=============================================================================
 
-#define SCREEN_WIDTH     SNES_WIDTH           // 256
-#define SCREEN_HEIGHT    SNES_HEIGHT_EXTENDED // 239
+#define SCREEN_WIDTH     SNES_WIDTH    // 256
+#define SCREEN_HEIGHT    SNES_HEIGHT   // 224
 
 // Audio sample rate - lower = less CPU for mixing (quality tradeoff)
 // 18000 Hz = full quality, 12000 Hz = medium, 9000 Hz = low
@@ -73,10 +73,10 @@
 // Screen Buffers
 //=============================================================================
 
-// Screen buffers - 256x239 16-bit (low byte is palette index)
-uint16_t __attribute__((aligned(4))) SCREEN[2][SNES_WIDTH * SNES_HEIGHT_EXTENDED];
-static uint8_t __attribute__((aligned(4))) ZBuffer[SNES_WIDTH * SNES_HEIGHT_EXTENDED];
-static uint8_t __attribute__((aligned(4))) SubZBuffer[SNES_WIDTH * SNES_HEIGHT_EXTENDED];
+// Screen buffers - 256x224 8-bit palette-indexed (HDMI driver maps index to color)
+uint8_t __attribute__((aligned(4))) SCREEN[2][SNES_WIDTH * SNES_HEIGHT];
+static uint8_t __attribute__((aligned(4))) ZBuffer[SNES_WIDTH * SNES_HEIGHT];
+static uint8_t __attribute__((aligned(4))) SubZBuffer[SNES_WIDTH * SNES_HEIGHT];
 
 // Current display buffer (double buffering) - accessed by HDMI driver
 volatile uint32_t current_buffer = 0;
@@ -210,9 +210,9 @@ static inline void perf_min_u32(uint32_t *dst, uint32_t v) {
 //=============================================================================
 
 bool S9xInitDisplay(void) {
-    GFX.Pitch = SNES_WIDTH * sizeof(uint16_t);
+    GFX.Pitch = SNES_WIDTH;  // 8-bit pixels: 1 byte per pixel
     GFX.ZPitch = SNES_WIDTH;
-    GFX.SubScreen = GFX.Screen = (uint8_t *)SCREEN[current_buffer];
+    GFX.SubScreen = GFX.Screen = SCREEN[current_buffer];
     GFX.ZBuffer = (uint8_t *)ZBuffer;
     GFX.SubZBuffer = (uint8_t *)SubZBuffer;
     return true;
@@ -456,7 +456,7 @@ void __time_critical_func(render_core)(void) {
         // Update HDMI buffer pointer if Core 0 swapped buffers (double buffering sync)
         uint32_t current_buf = current_buffer;
         if (current_buf != last_displayed_buffer) {
-            graphics_set_buffer((uint8_t *)SCREEN[current_buf]);
+            graphics_set_buffer(SCREEN[current_buf]);
             last_displayed_buffer = current_buf;
         }
 
@@ -713,7 +713,7 @@ static void __time_critical_func(emulation_loop)(void) {
 
             // Swap display buffers only when we rendered
             current_buffer = !current_buffer;
-            GFX.SubScreen = GFX.Screen = (uint8_t *)SCREEN[current_buffer];
+            GFX.SubScreen = GFX.Screen = SCREEN[current_buffer];
         }
 
         // Update palette if brightness changed during frame
@@ -1011,7 +1011,7 @@ int main(void) {
     // Initialize HDMI on Core 0 (like murmgenesis) - critical for ROM selector display
     LOG("Initializing HDMI...\n");
     graphics_init(g_out_HDMI);
-    graphics_set_buffer((uint8_t *)SCREEN[0]);
+    graphics_set_buffer(SCREEN[0]);
     graphics_set_res(SCREEN_WIDTH, SCREEN_HEIGHT);
     graphics_set_shift(32, 0);
     graphics_set_mode(GRAPHICSMODE_DEFAULT);

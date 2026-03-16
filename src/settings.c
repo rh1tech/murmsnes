@@ -59,7 +59,7 @@ static const char *menu_labels[MENU_ITEM_COUNT] = {
 #define SETTINGS_LINE_HEIGHT 16
 #define SETTINGS_VALUE_X 180
 
-static void draw_menu_item(uint16_t *screen, int item, int selected) {
+static void draw_menu_item(uint8_t *screen, int item, int selected) {
     int y = SETTINGS_MENU_Y + item * SETTINGS_LINE_HEIGHT;
     bool is_selected = (item == selected);
 
@@ -70,7 +70,7 @@ static void draw_menu_item(uint16_t *screen, int item, int selected) {
         menu_fill_rect(screen, 8, y - 2, MENU_SCREEN_WIDTH - 16, SETTINGS_LINE_HEIGHT, COLOR_BLACK);
     }
 
-    uint16_t text_color = is_selected ? COLOR_BLACK : COLOR_WHITE;
+    uint8_t text_color = is_selected ? COLOR_BLACK : COLOR_WHITE;
 
     // Draw label
     menu_draw_text(screen, 12, y, menu_labels[item], text_color);
@@ -115,7 +115,7 @@ static void draw_menu_item(uint16_t *screen, int item, int selected) {
     }
 }
 
-static void draw_settings_menu(uint16_t *screen, int selected) {
+static void draw_settings_menu(uint8_t *screen, int selected) {
     // Clear screen
     menu_clear_screen(screen, COLOR_BLACK);
 
@@ -279,7 +279,7 @@ void settings_apply_runtime(void) {
     // This is a placeholder - actual implementation depends on emulator integration
 }
 
-settings_result_t settings_menu_show(uint16_t *screen_buffer) {
+settings_result_t settings_menu_show(uint8_t *screen_buffer) {
     int selected = 0;
     uint32_t prev_buttons = 0;
 

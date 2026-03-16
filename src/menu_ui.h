@@ -10,7 +10,7 @@
 
 // Screen dimensions for SNES
 #define MENU_SCREEN_WIDTH  256
-#define MENU_SCREEN_HEIGHT 239
+#define MENU_SCREEN_HEIGHT 224
 
 // Palette index definitions - must match palette setup in main.c
 // Use same indices as murmgenesis for compatibility
@@ -39,32 +39,32 @@ void menu_ui_init_palette(void);
 /**
  * Draw a single character at (x, y) using the 5x7 font
  */
-void menu_draw_char(uint16_t *screen, int x, int y, char ch, uint16_t color);
+void menu_draw_char(uint8_t *screen, int x, int y, char ch, uint8_t color);
 
 /**
  * Draw text string at (x, y)
  */
-void menu_draw_text(uint16_t *screen, int x, int y, const char *text, uint16_t color);
+void menu_draw_text(uint8_t *screen, int x, int y, const char *text, uint8_t color);
 
 /**
  * Draw bold character at (x, y) using the 7x9 font
  */
-void menu_draw_char_bold(uint16_t *screen, int x, int y, char ch, uint16_t color);
+void menu_draw_char_bold(uint8_t *screen, int x, int y, char ch, uint8_t color);
 
 /**
  * Draw bold text string at (x, y)
  */
-void menu_draw_text_bold(uint16_t *screen, int x, int y, const char *text, uint16_t color);
+void menu_draw_text_bold(uint8_t *screen, int x, int y, const char *text, uint8_t color);
 
 /**
  * Fill rectangle with color
  */
-void menu_fill_rect(uint16_t *screen, int x, int y, int w, int h, uint16_t color);
+void menu_fill_rect(uint8_t *screen, int x, int y, int w, int h, uint8_t color);
 
 /**
  * Clear entire screen to a color
  */
-void menu_clear_screen(uint16_t *screen, uint16_t color);
+void menu_clear_screen(uint8_t *screen, uint8_t color);
 
 /**
  * Get text width in pixels
@@ -79,11 +79,11 @@ int menu_text_width_bold(const char *text);
 /**
  * Draw centered text
  */
-void menu_draw_text_centered(uint16_t *screen, int y, const char *text, uint16_t color);
+void menu_draw_text_centered(uint8_t *screen, int y, const char *text, uint8_t color);
 
 /**
  * Draw centered bold text
  */
-void menu_draw_text_bold_centered(uint16_t *screen, int y, const char *text, uint16_t color);
+void menu_draw_text_bold_centered(uint8_t *screen, int y, const char *text, uint8_t color);
 
 #endif // MENU_UI_H

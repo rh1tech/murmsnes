@@ -91,7 +91,7 @@ static uint32_t palette[256];
 static uint8_t hdmi_color_substitute[4] = {0, 0, 0, 0};
 
 // Assembly-optimized functions
-extern void hdmi_copy_scanline_asm(uint8_t* dst, const uint16_t* src, uint32_t count, const uint8_t* subst);
+extern void hdmi_copy_scanline_asm(uint8_t* dst, const uint8_t* src, uint32_t count, const uint8_t* subst);
 extern void hdmi_memset_fast(uint8_t* dst, uint8_t val, uint32_t count);
 extern uint64_t get_ser_diff_data_asm(uint16_t dataR, uint16_t dataG, uint16_t dataB);
 
@@ -171,7 +171,7 @@ alignas(4096) uint32_t conv_color[1224];
 static uint32_t irq_inx = 0;
 
 // External screen buffer and double-buffer index from main.c
-extern uint16_t SCREEN[2][256 * 239];
+extern uint8_t SCREEN[2][256 * 224];
 extern volatile uint32_t current_buffer;
 
 //функции и константы HDMI
@@ -328,46 +328,41 @@ static void __scratch_y("hdmi_driver") dma_handler_HDMI() {
 
     uint8_t* activ_buf = (uint8_t *)dma_lines[inx_buf_dma & 1];
 
-    if (line < (239*2) ) {
-        // Active video region - render SNES screen
+    // 224 SNES lines centered in 240 active lines: 16 blank scanlines top, 448 content, 16 blank bottom
+    #define VMARGIN_SCANLINES 16
+    #define CONTENT_SCANLINES (224*2)
+    if (line < (VMARGIN_SCANLINES + CONTENT_SCANLINES + VMARGIN_SCANLINES) ) {
+        // Active video region
         uint8_t* output_buffer = activ_buf + 72; // Align sync
-        
+
         // Fill left margin (32 pixels for centering 256 in 320)
         hdmi_memset_fast(output_buffer, 0, 32);
         output_buffer += 32;
-        
-        // Read from the back buffer (not currently being drawn to)
-        const uint16_t* input = (uint16_t*)&SCREEN[!current_buffer][(line / 2) * graphics_buffer_width];
-        
-        // Copy pixels using optimized assembly routine
-        hdmi_copy_scanline_asm(output_buffer, input, graphics_buffer_width, hdmi_color_substitute);
+
+        int snes_scanline = (int)line - VMARGIN_SCANLINES;
+        if (snes_scanline >= 0 && snes_scanline < CONTENT_SCANLINES) {
+            // Read from the front buffer (not currently being drawn to)
+            const uint8_t* input = &SCREEN[!current_buffer][(snes_scanline / 2) * graphics_buffer_width];
+
+            // Copy pixels using optimized assembly routine
+            hdmi_copy_scanline_asm(output_buffer, input, graphics_buffer_width, hdmi_color_substitute);
+        } else {
+            // Top/bottom margin: black
+            hdmi_memset_fast(output_buffer, 0, graphics_buffer_width);
+        }
         output_buffer += graphics_buffer_width;
-        
+
         // Fill right margin
         hdmi_memset_fast(output_buffer, 0, 32);
 
-
-        // memset(activ_buf,2,320);//test
-
-        //ССИ
-        //для выравнивания синхры
-
-        // --|_|---|_|---|_|----
-        //---|___________|-----
+        // Sync pulses
         hdmi_memset_fast(activ_buf + 48, BASE_HDMI_CTRL_INX, 24);
         hdmi_memset_fast(activ_buf, BASE_HDMI_CTRL_INX + 1, 48);
         hdmi_memset_fast(activ_buf + 392, BASE_HDMI_CTRL_INX, 8);
-
-        //без выравнивания
-        // --|_|---|_|---|_|----
-        //------|___________|----
-        //   memset(activ_buf+320,BASE_HDMI_CTRL_INX,8);
-        //   memset(activ_buf+328,BASE_HDMI_CTRL_INX+1,48);
-        //   memset(activ_buf+376,BASE_HDMI_CTRL_INX,24);
     }
     else {
         // VBlank area - apply pending palette at start of vblank
-        if (line == (239*2 + 1)) {
+        if (line == (VMARGIN_SCANLINES + CONTENT_SCANLINES + VMARGIN_SCANLINES + 1)) {
             apply_pending_palette();
         }
         

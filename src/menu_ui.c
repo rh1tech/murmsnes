@@ -149,7 +149,7 @@ static const uint8_t *glyph_bold(char ch) {
     }
 }
 
-void menu_draw_char(uint16_t *screen, int x, int y, char ch, uint16_t color) {
+void menu_draw_char(uint8_t *screen, int x, int y, char ch, uint8_t color) {
     const uint8_t *rows = glyph_5x7(ch);
     for (int row = 0; row < FONT_HEIGHT; ++row) {
         int yy = y + row;
@@ -165,14 +165,14 @@ void menu_draw_char(uint16_t *screen, int x, int y, char ch, uint16_t color) {
     }
 }
 
-void menu_draw_text(uint16_t *screen, int x, int y, const char *text, uint16_t color) {
+void menu_draw_text(uint8_t *screen, int x, int y, const char *text, uint8_t color) {
     for (const char *p = text; *p; ++p) {
         menu_draw_char(screen, x, y, *p, color);
         x += FONT_WIDTH;
     }
 }
 
-void menu_draw_char_bold(uint16_t *screen, int x, int y, char ch, uint16_t color) {
+void menu_draw_char_bold(uint8_t *screen, int x, int y, char ch, uint8_t color) {
     const uint8_t *rows = glyph_bold(ch);
     for (int row = 0; row < BOLD_FONT_HEIGHT; ++row) {
         int yy = y + row;
@@ -188,14 +188,14 @@ void menu_draw_char_bold(uint16_t *screen, int x, int y, char ch, uint16_t color
     }
 }
 
-void menu_draw_text_bold(uint16_t *screen, int x, int y, const char *text, uint16_t color) {
+void menu_draw_text_bold(uint8_t *screen, int x, int y, const char *text, uint8_t color) {
     for (const char *p = text; *p; ++p) {
         menu_draw_char_bold(screen, x, y, *p, color);
         x += BOLD_FONT_WIDTH;
     }
 }
 
-void menu_fill_rect(uint16_t *screen, int x, int y, int w, int h, uint16_t color) {
+void menu_fill_rect(uint8_t *screen, int x, int y, int w, int h, uint8_t color) {
     if (w <= 0 || h <= 0) return;
     if (x < 0) { w += x; x = 0; }
     if (y < 0) { h += y; y = 0; }
@@ -204,14 +204,14 @@ void menu_fill_rect(uint16_t *screen, int x, int y, int w, int h, uint16_t color
     if (w <= 0 || h <= 0) return;
 
     for (int yy = y; yy < y + h; ++yy) {
-        uint16_t *row = &screen[yy * MENU_SCREEN_WIDTH + x];
+        uint8_t *row = &screen[yy * MENU_SCREEN_WIDTH + x];
         for (int xx = 0; xx < w; ++xx) {
             row[xx] = color;
         }
     }
 }
 
-void menu_clear_screen(uint16_t *screen, uint16_t color) {
+void menu_clear_screen(uint8_t *screen, uint8_t color) {
     for (int i = 0; i < MENU_SCREEN_WIDTH * MENU_SCREEN_HEIGHT; ++i) {
         screen[i] = color;
     }
@@ -225,14 +225,14 @@ int menu_text_width_bold(const char *text) {
     return (int)strlen(text) * BOLD_FONT_WIDTH;
 }
 
-void menu_draw_text_centered(uint16_t *screen, int y, const char *text, uint16_t color) {
+void menu_draw_text_centered(uint8_t *screen, int y, const char *text, uint8_t color) {
     int w = menu_text_width(text);
     int x = (MENU_SCREEN_WIDTH - w) / 2;
     if (x < 0) x = 0;
     menu_draw_text(screen, x, y, text, color);
 }
 
-void menu_draw_text_bold_centered(uint16_t *screen, int y, const char *text, uint16_t color) {
+void menu_draw_text_bold_centered(uint8_t *screen, int y, const char *text, uint8_t color) {
     int w = menu_text_width_bold(text);
     int x = (MENU_SCREEN_WIDTH - w) / 2;
     if (x < 0) x = 0;

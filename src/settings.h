@@ -55,10 +55,10 @@ void settings_apply_runtime(void);
 
 /**
  * Display settings menu and wait for user interaction
- * @param screen_buffer Pointer to screen buffer (256x239 16-bit RGB565)
+ * @param screen_buffer Pointer to screen buffer (256x224 8-bit palette-indexed)
  * @return Result indicating what action to take
  */
-settings_result_t settings_menu_show(uint16_t *screen_buffer);
+settings_result_t settings_menu_show(uint8_t *screen_buffer);
 
 /**
  * Check if Start+Select is pressed (call this during emulation loop)

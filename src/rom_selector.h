@@ -16,16 +16,16 @@
  * Display ROM selection screen and wait for user to select a ROM
  * @param selected_rom_path Buffer to store the selected ROM path
  * @param buffer_size Size of the buffer
- * @param screen_buffer Pointer to the screen buffer (256x239 16-bit RGB565)
+ * @param screen_buffer Pointer to the screen buffer (256x224 8-bit palette-indexed)
  * @return true if ROM was selected, false if user canceled or no ROMs found
  */
-bool rom_selector_show(char *selected_rom_path, size_t buffer_size, uint16_t *screen_buffer);
+bool rom_selector_show(char *selected_rom_path, size_t buffer_size, uint8_t *screen_buffer);
 
 /**
  * Display SD card error screen (blocks forever)
- * @param screen_buffer Pointer to the screen buffer (256x239 16-bit RGB565)
+ * @param screen_buffer Pointer to the screen buffer (256x224 8-bit palette-indexed)
  * @param error_code The FRESULT error code from f_mount
  */
-void rom_selector_show_sd_error(uint16_t *screen_buffer, int error_code);
+void rom_selector_show_sd_error(uint8_t *screen_buffer, int error_code);
 
 #endif // ROM_SELECTOR_H

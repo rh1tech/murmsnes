@@ -36,7 +36,7 @@ static int graphics_buffer_shift_y = 0;
 //текстовый буфер
 uint8_t* text_buffer = NULL;
 
-extern uint16_t __attribute__((aligned (4))) SCREEN[2][256*239];
+extern uint8_t __attribute__((aligned (4))) SCREEN[2][256*224];
 extern volatile uint32_t current_buffer;
 //DMA каналы
 //каналы работы с первичным графическим буфером

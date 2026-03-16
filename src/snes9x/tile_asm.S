@@ -241,7 +241,7 @@ WRITE_4PIXELS16_OPAQUE_asm:
     
     /* Calculate buffer addresses: Screen = GFX.S + Offset*2, Depth = GFX.DB + Offset */
     add     r5, r5, r0                  @ r5 = Depth = GFX.DB + Offset
-    add     r4, r4, r0, lsl #1          @ r4 = Screen = GFX.S + Offset*2
+    add     r4, r4, r0                  @ r4 = Screen = GFX.S + Offset
     
     /* Load all 4 pixel indices at once */
     ldr     r3, [r1]                    @ r3 = Pixels[0-3] packed
@@ -251,8 +251,8 @@ WRITE_4PIXELS16_OPAQUE_asm:
     cmp     r6, r12                     @ Z1 > Depth[0]?
     bls     .Lp0_skip
     and     r0, r3, #0xFF               @ r0 = Pixels[0]
-    ldrh    r0, [r2, r0, lsl #1]        @ r0 = ScreenColors[Pixels[0]]
-    strh    r0, [r4, #0]                @ Screen[0] = color
+    ldrb    r0, [r2, r0, lsl #1]        @ r0 = (uint8_t)ScreenColors[Pixels[0]]
+    strb    r0, [r4, #0]                @ Screen[0] = color
     strb    r7, [r5, #0]                @ Depth[0] = Z2
 .Lp0_skip:
 
@@ -261,8 +261,8 @@ WRITE_4PIXELS16_OPAQUE_asm:
     cmp     r6, r12                     @ Z1 > Depth[1]?
     bls     .Lp1_skip
     ubfx    r0, r3, #8, #8              @ r0 = Pixels[1]
-    ldrh    r0, [r2, r0, lsl #1]        @ r0 = ScreenColors[Pixels[1]]
-    strh    r0, [r4, #2]                @ Screen[1] = color
+    ldrb    r0, [r2, r0, lsl #1]        @ r0 = (uint8_t)ScreenColors[Pixels[1]]
+    strb    r0, [r4, #1]                @ Screen[1] = color
     strb    r7, [r5, #1]                @ Depth[1] = Z2
 .Lp1_skip:
 
@@ -271,8 +271,8 @@ WRITE_4PIXELS16_OPAQUE_asm:
     cmp     r6, r12                     @ Z1 > Depth[2]?
     bls     .Lp2_skip
     ubfx    r0, r3, #16, #8             @ r0 = Pixels[2]
-    ldrh    r0, [r2, r0, lsl #1]        @ r0 = ScreenColors[Pixels[2]]
-    strh    r0, [r4, #4]                @ Screen[2] = color
+    ldrb    r0, [r2, r0, lsl #1]        @ r0 = (uint8_t)ScreenColors[Pixels[2]]
+    strb    r0, [r4, #2]                @ Screen[2] = color
     strb    r7, [r5, #2]                @ Depth[2] = Z2
 .Lp2_skip:
 
@@ -281,8 +281,8 @@ WRITE_4PIXELS16_OPAQUE_asm:
     cmp     r6, r12                     @ Z1 > Depth[3]?
     bls     .Lp3_skip
     lsr     r0, r3, #24                 @ r0 = Pixels[3]
-    ldrh    r0, [r2, r0, lsl #1]        @ r0 = ScreenColors[Pixels[3]]
-    strh    r0, [r4, #6]                @ Screen[3] = color
+    ldrb    r0, [r2, r0, lsl #1]        @ r0 = (uint8_t)ScreenColors[Pixels[3]]
+    strb    r0, [r4, #3]                @ Screen[3] = color
     strb    r7, [r5, #3]                @ Depth[3] = Z2
 .Lp3_skip:
 
@@ -315,7 +315,7 @@ WRITE_4PIXELS16_FLIPPED_OPAQUE_asm:
     
     /* Calculate buffer addresses */
     add     r5, r5, r0                  @ r5 = Depth = GFX.DB + Offset
-    add     r4, r4, r0, lsl #1          @ r4 = Screen = GFX.S + Offset*2
+    add     r4, r4, r0                  @ r4 = Screen = GFX.S + Offset
     
     /* Load all 4 pixel indices at once */
     ldr     r3, [r1]                    @ r3 = Pixels[0-3] packed
@@ -325,8 +325,8 @@ WRITE_4PIXELS16_FLIPPED_OPAQUE_asm:
     cmp     r6, r12
     bls     .Lf0_skip
     lsr     r0, r3, #24                 @ r0 = Pixels[3]
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #0]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #0]
     strb    r7, [r5, #0]
 .Lf0_skip:
 
@@ -335,8 +335,8 @@ WRITE_4PIXELS16_FLIPPED_OPAQUE_asm:
     cmp     r6, r12
     bls     .Lf1_skip
     ubfx    r0, r3, #16, #8             @ r0 = Pixels[2]
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #2]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #1]
     strb    r7, [r5, #1]
 .Lf1_skip:
 
@@ -345,8 +345,8 @@ WRITE_4PIXELS16_FLIPPED_OPAQUE_asm:
     cmp     r6, r12
     bls     .Lf2_skip
     ubfx    r0, r3, #8, #8              @ r0 = Pixels[1]
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #4]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #2]
     strb    r7, [r5, #2]
 .Lf2_skip:
 
@@ -355,8 +355,8 @@ WRITE_4PIXELS16_FLIPPED_OPAQUE_asm:
     cmp     r6, r12
     bls     .Lf3_skip
     and     r0, r3, #0xFF               @ r0 = Pixels[0]
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #6]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #3]
     strb    r7, [r5, #3]
 .Lf3_skip:
 
@@ -388,7 +388,7 @@ WRITE_4PIXELS16_asm:
     ldrb    r7, [r3, #GFX_OFF_Z2]       @ r7 = Z2
     
     add     r5, r5, r0                  @ r5 = Depth
-    add     r4, r4, r0, lsl #1          @ r4 = Screen
+    add     r4, r4, r0                  @ r4 = Screen
     
     ldr     r3, [r1]                    @ r3 = Pixels[0-3] packed
     
@@ -398,8 +398,8 @@ WRITE_4PIXELS16_asm:
     ldrb    r12, [r5, #0]
     cmp     r6, r12
     bls     .Lt0_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #0]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #0]
     strb    r7, [r5, #0]
 .Lt0_skip:
 
@@ -409,8 +409,8 @@ WRITE_4PIXELS16_asm:
     ldrb    r12, [r5, #1]
     cmp     r6, r12
     bls     .Lt1_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #2]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #1]
     strb    r7, [r5, #1]
 .Lt1_skip:
 
@@ -420,8 +420,8 @@ WRITE_4PIXELS16_asm:
     ldrb    r12, [r5, #2]
     cmp     r6, r12
     bls     .Lt2_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #4]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #2]
     strb    r7, [r5, #2]
 .Lt2_skip:
 
@@ -431,8 +431,8 @@ WRITE_4PIXELS16_asm:
     ldrb    r12, [r5, #3]
     cmp     r6, r12
     bls     .Lt3_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #6]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #3]
     strb    r7, [r5, #3]
 .Lt3_skip:
 
@@ -456,7 +456,7 @@ WRITE_4PIXELS16_FLIPPED_asm:
     ldrb    r7, [r3, #GFX_OFF_Z2]
     
     add     r5, r5, r0
-    add     r4, r4, r0, lsl #1
+    add     r4, r4, r0                  @ Screen = GFX.S + Offset (8-bit)
     
     ldr     r3, [r1]                    @ r3 = Pixels[0-3] packed
     
@@ -466,8 +466,8 @@ WRITE_4PIXELS16_FLIPPED_asm:
     ldrb    r12, [r5, #0]
     cmp     r6, r12
     bls     .Ltf0_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #0]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #0]
     strb    r7, [r5, #0]
 .Ltf0_skip:
 
@@ -477,8 +477,8 @@ WRITE_4PIXELS16_FLIPPED_asm:
     ldrb    r12, [r5, #1]
     cmp     r6, r12
     bls     .Ltf1_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #2]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #1]
     strb    r7, [r5, #1]
 .Ltf1_skip:
 
@@ -488,8 +488,8 @@ WRITE_4PIXELS16_FLIPPED_asm:
     ldrb    r12, [r5, #2]
     cmp     r6, r12
     bls     .Ltf2_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #4]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #2]
     strb    r7, [r5, #2]
 .Ltf2_skip:
 
@@ -499,8 +499,8 @@ WRITE_4PIXELS16_FLIPPED_asm:
     ldrb    r12, [r5, #3]
     cmp     r6, r12
     bls     .Ltf3_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #6]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #3]
     strb    r7, [r5, #3]
 .Ltf3_skip:
 
@@ -527,7 +527,7 @@ WRITE_4PIXELS16x2_OPAQUE_asm:
     ldrb    r7, [r3, #GFX_OFF_Z2]
     
     add     r5, r5, r0                  @ r5 = Depth
-    add     r4, r4, r0, lsl #1          @ r4 = Screen
+    add     r4, r4, r0                  @ r4 = Screen
     
     ldr     r3, [r1]                    @ r3 = Pixels[0-3] packed
     
@@ -536,9 +536,9 @@ WRITE_4PIXELS16x2_OPAQUE_asm:
     cmp     r6, r12
     bls     .Lx0_skip
     and     r0, r3, #0xFF
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #0]
-    strh    r0, [r4, #2]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #0]
+    strb    r0, [r4, #1]
     strb    r7, [r5, #0]
     strb    r7, [r5, #1]
 .Lx0_skip:
@@ -548,9 +548,9 @@ WRITE_4PIXELS16x2_OPAQUE_asm:
     cmp     r6, r12
     bls     .Lx1_skip
     ubfx    r0, r3, #8, #8
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #4]
-    strh    r0, [r4, #6]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #2]
+    strb    r0, [r4, #3]
     strb    r7, [r5, #2]
     strb    r7, [r5, #3]
 .Lx1_skip:
@@ -560,9 +560,9 @@ WRITE_4PIXELS16x2_OPAQUE_asm:
     cmp     r6, r12
     bls     .Lx2_skip
     ubfx    r0, r3, #16, #8
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #8]
-    strh    r0, [r4, #10]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #4]
+    strb    r0, [r4, #5]
     strb    r7, [r5, #4]
     strb    r7, [r5, #5]
 .Lx2_skip:
@@ -572,9 +572,9 @@ WRITE_4PIXELS16x2_OPAQUE_asm:
     cmp     r6, r12
     bls     .Lx3_skip
     lsr     r0, r3, #24
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #12]
-    strh    r0, [r4, #14]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #6]
+    strb    r0, [r4, #7]
     strb    r7, [r5, #6]
     strb    r7, [r5, #7]
 .Lx3_skip:
@@ -599,7 +599,7 @@ WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm:
     ldrb    r7, [r3, #GFX_OFF_Z2]
     
     add     r5, r5, r0
-    add     r4, r4, r0, lsl #1
+    add     r4, r4, r0                  @ Screen = GFX.S + Offset (8-bit)
     
     ldr     r3, [r1]
     
@@ -608,9 +608,9 @@ WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm:
     cmp     r6, r12
     bls     .Lxf0_skip
     lsr     r0, r3, #24
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #0]
-    strh    r0, [r4, #2]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #0]
+    strb    r0, [r4, #1]
     strb    r7, [r5, #0]
     strb    r7, [r5, #1]
 .Lxf0_skip:
@@ -620,9 +620,9 @@ WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm:
     cmp     r6, r12
     bls     .Lxf1_skip
     ubfx    r0, r3, #16, #8
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #4]
-    strh    r0, [r4, #6]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #2]
+    strb    r0, [r4, #3]
     strb    r7, [r5, #2]
     strb    r7, [r5, #3]
 .Lxf1_skip:
@@ -632,9 +632,9 @@ WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm:
     cmp     r6, r12
     bls     .Lxf2_skip
     ubfx    r0, r3, #8, #8
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #8]
-    strh    r0, [r4, #10]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #4]
+    strb    r0, [r4, #5]
     strb    r7, [r5, #4]
     strb    r7, [r5, #5]
 .Lxf2_skip:
@@ -644,9 +644,9 @@ WRITE_4PIXELS16_FLIPPEDx2_OPAQUE_asm:
     cmp     r6, r12
     bls     .Lxf3_skip
     and     r0, r3, #0xFF
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #12]
-    strh    r0, [r4, #14]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #6]
+    strb    r0, [r4, #7]
     strb    r7, [r5, #6]
     strb    r7, [r5, #7]
 .Lxf3_skip:
@@ -674,7 +674,7 @@ WRITE_4PIXELS16x2_asm:
     ldrb    r7, [r3, #GFX_OFF_Z2]
     
     add     r5, r5, r0                  @ r5 = Depth
-    add     r4, r4, r0, lsl #1          @ r4 = Screen
+    add     r4, r4, r0                  @ r4 = Screen
     
     ldr     r3, [r1]                    @ r3 = Pixels[0-3] packed
     
@@ -684,9 +684,9 @@ WRITE_4PIXELS16x2_asm:
     ldrb    r12, [r5, #0]
     cmp     r6, r12
     bls     .Lx2t0_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #0]
-    strh    r0, [r4, #2]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #0]
+    strb    r0, [r4, #1]
     strb    r7, [r5, #0]
     strb    r7, [r5, #1]
 .Lx2t0_skip:
@@ -697,9 +697,9 @@ WRITE_4PIXELS16x2_asm:
     ldrb    r12, [r5, #2]
     cmp     r6, r12
     bls     .Lx2t1_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #4]
-    strh    r0, [r4, #6]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #2]
+    strb    r0, [r4, #3]
     strb    r7, [r5, #2]
     strb    r7, [r5, #3]
 .Lx2t1_skip:
@@ -710,9 +710,9 @@ WRITE_4PIXELS16x2_asm:
     ldrb    r12, [r5, #4]
     cmp     r6, r12
     bls     .Lx2t2_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #8]
-    strh    r0, [r4, #10]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #4]
+    strb    r0, [r4, #5]
     strb    r7, [r5, #4]
     strb    r7, [r5, #5]
 .Lx2t2_skip:
@@ -723,9 +723,9 @@ WRITE_4PIXELS16x2_asm:
     ldrb    r12, [r5, #6]
     cmp     r6, r12
     bls     .Lx2t3_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #12]
-    strh    r0, [r4, #14]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #6]
+    strb    r0, [r4, #7]
     strb    r7, [r5, #6]
     strb    r7, [r5, #7]
 .Lx2t3_skip:
@@ -750,7 +750,7 @@ WRITE_4PIXELS16_FLIPPEDx2_asm:
     ldrb    r7, [r3, #GFX_OFF_Z2]
     
     add     r5, r5, r0
-    add     r4, r4, r0, lsl #1
+    add     r4, r4, r0                  @ Screen = GFX.S + Offset (8-bit)
     
     ldr     r3, [r1]                    @ r3 = Pixels[0-3] packed
     
@@ -760,9 +760,9 @@ WRITE_4PIXELS16_FLIPPEDx2_asm:
     ldrb    r12, [r5, #0]
     cmp     r6, r12
     bls     .Lx2tf0_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #0]
-    strh    r0, [r4, #2]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #0]
+    strb    r0, [r4, #1]
     strb    r7, [r5, #0]
     strb    r7, [r5, #1]
 .Lx2tf0_skip:
@@ -773,9 +773,9 @@ WRITE_4PIXELS16_FLIPPEDx2_asm:
     ldrb    r12, [r5, #2]
     cmp     r6, r12
     bls     .Lx2tf1_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #4]
-    strh    r0, [r4, #6]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #2]
+    strb    r0, [r4, #3]
     strb    r7, [r5, #2]
     strb    r7, [r5, #3]
 .Lx2tf1_skip:
@@ -786,9 +786,9 @@ WRITE_4PIXELS16_FLIPPEDx2_asm:
     ldrb    r12, [r5, #4]
     cmp     r6, r12
     bls     .Lx2tf2_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #8]
-    strh    r0, [r4, #10]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #4]
+    strb    r0, [r4, #5]
     strb    r7, [r5, #4]
     strb    r7, [r5, #5]
 .Lx2tf2_skip:
@@ -799,9 +799,9 @@ WRITE_4PIXELS16_FLIPPEDx2_asm:
     ldrb    r12, [r5, #6]
     cmp     r6, r12
     bls     .Lx2tf3_skip
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #12]
-    strh    r0, [r4, #14]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #6]
+    strb    r0, [r4, #7]
     strb    r7, [r5, #6]
     strb    r7, [r5, #7]
 .Lx2tf3_skip:
@@ -838,7 +838,7 @@ WRITE_8PIXELS16_OPAQUE_ROW_asm:
     
     /* Calculate buffer addresses */
     add     r5, r5, r0                  @ r5 = Depth = GFX.DB + Offset
-    add     r4, r4, r0, lsl #1          @ r4 = Screen = GFX.S + Offset*2
+    add     r4, r4, r0                  @ r4 = Screen = GFX.S + Offset
     
     /* Load all 8 pixel indices (two 32-bit loads) */
     ldm     r1, {r8, r9}                @ r8 = Pixels[0-3], r9 = Pixels[4-7]
@@ -850,8 +850,8 @@ WRITE_8PIXELS16_OPAQUE_ROW_asm:
     cmp     r6, r10                     @ Z1 > Depth[0]?
     bls     .L8o_p0_skip
     and     r0, r8, #0xFF               @ r0 = Pixels[0]
-    ldrh    r0, [r2, r0, lsl #1]        @ r0 = ScreenColors[Pixels[0]]
-    strh    r0, [r4, #0]                @ Screen[0] = color
+    ldrb    r0, [r2, r0, lsl #1]        @ r0 = (uint8_t)ScreenColors[Pixels[0]]
+    strb    r0, [r4, #0]                @ Screen[0] = color
     strb    r7, [r5, #0]                @ Depth[0] = Z2
 .L8o_p0_skip:
 
@@ -860,8 +860,8 @@ WRITE_8PIXELS16_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8o_p1_skip
     ubfx    r0, r8, #8, #8              @ r0 = Pixels[1]
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #2]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #1]
     strb    r7, [r5, #1]
 .L8o_p1_skip:
 
@@ -870,8 +870,8 @@ WRITE_8PIXELS16_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8o_p2_skip
     ubfx    r0, r8, #16, #8
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #4]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #2]
     strb    r7, [r5, #2]
 .L8o_p2_skip:
 
@@ -880,8 +880,8 @@ WRITE_8PIXELS16_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8o_p3_skip
     lsr     r0, r8, #24
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #6]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #3]
     strb    r7, [r5, #3]
 .L8o_p3_skip:
 
@@ -892,8 +892,8 @@ WRITE_8PIXELS16_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8o_p4_skip
     and     r0, r9, #0xFF
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #8]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #4]
     strb    r7, [r5, #4]
 .L8o_p4_skip:
 
@@ -902,8 +902,8 @@ WRITE_8PIXELS16_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8o_p5_skip
     ubfx    r0, r9, #8, #8
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #10]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #5]
     strb    r7, [r5, #5]
 .L8o_p5_skip:
 
@@ -912,8 +912,8 @@ WRITE_8PIXELS16_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8o_p6_skip
     ubfx    r0, r9, #16, #8
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #12]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #6]
     strb    r7, [r5, #6]
 .L8o_p6_skip:
 
@@ -922,8 +922,8 @@ WRITE_8PIXELS16_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8o_p7_skip
     lsr     r0, r9, #24
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #14]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #7]
     strb    r7, [r5, #7]
 .L8o_p7_skip:
 
@@ -949,7 +949,7 @@ WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm:
     ldrb    r7, [r3, #GFX_OFF_Z2]
     
     add     r5, r5, r0
-    add     r4, r4, r0, lsl #1
+    add     r4, r4, r0                  @ Screen = GFX.S + Offset (8-bit)
     
     ldm     r1, {r8, r9}                @ r8 = Pixels[0-3], r9 = Pixels[4-7]
     
@@ -960,8 +960,8 @@ WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8of_p0_skip
     lsr     r0, r9, #24
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #0]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #0]
     strb    r7, [r5, #0]
 .L8of_p0_skip:
 
@@ -970,8 +970,8 @@ WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8of_p1_skip
     ubfx    r0, r9, #16, #8
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #2]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #1]
     strb    r7, [r5, #1]
 .L8of_p1_skip:
 
@@ -980,8 +980,8 @@ WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8of_p2_skip
     ubfx    r0, r9, #8, #8
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #4]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #2]
     strb    r7, [r5, #2]
 .L8of_p2_skip:
 
@@ -990,8 +990,8 @@ WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8of_p3_skip
     and     r0, r9, #0xFF
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #6]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #3]
     strb    r7, [r5, #3]
 .L8of_p3_skip:
 
@@ -1000,8 +1000,8 @@ WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8of_p4_skip
     lsr     r0, r8, #24
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #8]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #4]
     strb    r7, [r5, #4]
 .L8of_p4_skip:
 
@@ -1010,8 +1010,8 @@ WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8of_p5_skip
     ubfx    r0, r8, #16, #8
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #10]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #5]
     strb    r7, [r5, #5]
 .L8of_p5_skip:
 
@@ -1020,8 +1020,8 @@ WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8of_p6_skip
     ubfx    r0, r8, #8, #8
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #12]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #6]
     strb    r7, [r5, #6]
 .L8of_p6_skip:
 
@@ -1030,8 +1030,8 @@ WRITE_8PIXELS16_FLIPPED_OPAQUE_ROW_asm:
     cmp     r6, r10
     bls     .L8of_p7_skip
     and     r0, r8, #0xFF
-    ldrh    r0, [r2, r0, lsl #1]
-    strh    r0, [r4, #14]
+    ldrb    r0, [r2, r0, lsl #1]
+    strb    r0, [r4, #7]
     strb    r7, [r5, #7]
 .L8of_p7_skip:
 
@@ -1079,7 +1079,7 @@ DrawTile16_Normal_asm:
     
     /* Calculate initial screen/depth pointers */
     add     r5, r5, r1                  @ r5 = Depth = GFX.DB + Offset
-    add     r4, r4, r1, lsl #1          @ r4 = Screen = GFX.S + Offset*2
+    add     r4, r4, r1                  @ r4 = Screen = GFX.S + Offset
     
 .Ldraw_normal_loop:
     /* Load 8 pixels (two 32-bit loads) */
@@ -1093,8 +1093,8 @@ DrawTile16_Normal_asm:
     bls     .Ldn_p0_skip
     and     r3, r8, #0xFF
     cbz     r3, .Ldn_p0_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #0]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #0]
     strb    r7, [r5, #0]
 .Ldn_p0_skip:
 
@@ -1104,8 +1104,8 @@ DrawTile16_Normal_asm:
     bls     .Ldn_p1_skip
     ubfx    r3, r8, #8, #8
     cbz     r3, .Ldn_p1_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #2]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #1]
     strb    r7, [r5, #1]
 .Ldn_p1_skip:
 
@@ -1115,8 +1115,8 @@ DrawTile16_Normal_asm:
     bls     .Ldn_p2_skip
     ubfx    r3, r8, #16, #8
     cbz     r3, .Ldn_p2_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #4]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #2]
     strb    r7, [r5, #2]
 .Ldn_p2_skip:
 
@@ -1126,8 +1126,8 @@ DrawTile16_Normal_asm:
     bls     .Ldn_p3_skip
     lsr     r3, r8, #24
     cbz     r3, .Ldn_p3_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #6]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #3]
     strb    r7, [r5, #3]
 .Ldn_p3_skip:
 
@@ -1139,8 +1139,8 @@ DrawTile16_Normal_asm:
     bls     .Ldn_p4_skip
     and     r3, r9, #0xFF
     cbz     r3, .Ldn_p4_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #8]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #4]
     strb    r7, [r5, #4]
 .Ldn_p4_skip:
 
@@ -1150,8 +1150,8 @@ DrawTile16_Normal_asm:
     bls     .Ldn_p5_skip
     ubfx    r3, r9, #8, #8
     cbz     r3, .Ldn_p5_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #10]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #5]
     strb    r7, [r5, #5]
 .Ldn_p5_skip:
 
@@ -1161,8 +1161,8 @@ DrawTile16_Normal_asm:
     bls     .Ldn_p6_skip
     ubfx    r3, r9, #16, #8
     cbz     r3, .Ldn_p6_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #12]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #6]
     strb    r7, [r5, #6]
 .Ldn_p6_skip:
 
@@ -1172,14 +1172,14 @@ DrawTile16_Normal_asm:
     bls     .Ldn_p7_skip
     lsr     r3, r9, #24
     cbz     r3, .Ldn_p7_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #14]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #7]
     strb    r7, [r5, #7]
 .Ldn_p7_skip:
 
     /* Advance to next row */
     add     r0, r0, #8                  @ bp += 8
-    add     r4, r4, r11, lsl #1         @ Screen += PPL * 2 (16-bit pixels)
+    add     r4, r4, r11                 @ Screen += PPL (8-bit pixels)
     add     r5, r5, r11                 @ Depth += PPL
     
     subs    r12, r12, #1                @ LineCount--
@@ -1209,7 +1209,7 @@ DrawTile16_FlipH_asm:
     ldrb    r7, [r3, #GFX_OFF_Z2]
     
     add     r5, r5, r1
-    add     r4, r4, r1, lsl #1
+    add     r4, r4, r1                  @ Screen = GFX.S + Offset (8-bit)
     
 .Ldraw_fliph_loop:
     ldm     r0, {r8, r9}                @ r8 = pixels[0-3], r9 = pixels[4-7]
@@ -1222,8 +1222,8 @@ DrawTile16_FlipH_asm:
     bls     .Ldh_p0_skip
     lsr     r3, r9, #24
     cbz     r3, .Ldh_p0_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #0]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #0]
     strb    r7, [r5, #0]
 .Ldh_p0_skip:
 
@@ -1233,8 +1233,8 @@ DrawTile16_FlipH_asm:
     bls     .Ldh_p1_skip
     ubfx    r3, r9, #16, #8
     cbz     r3, .Ldh_p1_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #2]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #1]
     strb    r7, [r5, #1]
 .Ldh_p1_skip:
 
@@ -1244,8 +1244,8 @@ DrawTile16_FlipH_asm:
     bls     .Ldh_p2_skip
     ubfx    r3, r9, #8, #8
     cbz     r3, .Ldh_p2_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #4]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #2]
     strb    r7, [r5, #2]
 .Ldh_p2_skip:
 
@@ -1255,8 +1255,8 @@ DrawTile16_FlipH_asm:
     bls     .Ldh_p3_skip
     and     r3, r9, #0xFF
     cbz     r3, .Ldh_p3_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #6]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #3]
     strb    r7, [r5, #3]
 .Ldh_p3_skip:
 
@@ -1266,8 +1266,8 @@ DrawTile16_FlipH_asm:
     bls     .Ldh_p4_skip
     lsr     r3, r8, #24
     cbz     r3, .Ldh_p4_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #8]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #4]
     strb    r7, [r5, #4]
 .Ldh_p4_skip:
 
@@ -1277,8 +1277,8 @@ DrawTile16_FlipH_asm:
     bls     .Ldh_p5_skip
     ubfx    r3, r8, #16, #8
     cbz     r3, .Ldh_p5_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #10]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #5]
     strb    r7, [r5, #5]
 .Ldh_p5_skip:
 
@@ -1288,8 +1288,8 @@ DrawTile16_FlipH_asm:
     bls     .Ldh_p6_skip
     ubfx    r3, r8, #8, #8
     cbz     r3, .Ldh_p6_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #12]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #6]
     strb    r7, [r5, #6]
 .Ldh_p6_skip:
 
@@ -1299,13 +1299,13 @@ DrawTile16_FlipH_asm:
     bls     .Ldh_p7_skip
     and     r3, r8, #0xFF
     cbz     r3, .Ldh_p7_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #14]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #7]
     strb    r7, [r5, #7]
 .Ldh_p7_skip:
 
     add     r0, r0, #8
-    add     r4, r4, r11, lsl #1
+    add     r4, r4, r11                 @ Screen += PPL (8-bit pixels)
     add     r5, r5, r11
     
     subs    r12, r12, #1
@@ -1338,7 +1338,7 @@ DrawTile16_VFlip_asm:
     ldrb    r7, [r3, #GFX_OFF_Z2]
     
     add     r5, r5, r1
-    add     r4, r4, r1, lsl #1
+    add     r4, r4, r1                  @ Screen = GFX.S + Offset (8-bit)
     
 .Ldraw_vflip_loop:
     ldm     r0, {r8, r9}                @ r8 = pixels[0-3], r9 = pixels[4-7]
@@ -1349,8 +1349,8 @@ DrawTile16_VFlip_asm:
     bls     .Ldv_p0_skip
     and     r3, r8, #0xFF
     cbz     r3, .Ldv_p0_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #0]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #0]
     strb    r7, [r5, #0]
 .Ldv_p0_skip:
 
@@ -1360,8 +1360,8 @@ DrawTile16_VFlip_asm:
     bls     .Ldv_p1_skip
     ubfx    r3, r8, #8, #8
     cbz     r3, .Ldv_p1_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #2]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #1]
     strb    r7, [r5, #1]
 .Ldv_p1_skip:
 
@@ -1371,8 +1371,8 @@ DrawTile16_VFlip_asm:
     bls     .Ldv_p2_skip
     ubfx    r3, r8, #16, #8
     cbz     r3, .Ldv_p2_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #4]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #2]
     strb    r7, [r5, #2]
 .Ldv_p2_skip:
 
@@ -1382,8 +1382,8 @@ DrawTile16_VFlip_asm:
     bls     .Ldv_p3_skip
     lsr     r3, r8, #24
     cbz     r3, .Ldv_p3_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #6]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #3]
     strb    r7, [r5, #3]
 .Ldv_p3_skip:
 
@@ -1393,8 +1393,8 @@ DrawTile16_VFlip_asm:
     bls     .Ldv_p4_skip
     and     r3, r9, #0xFF
     cbz     r3, .Ldv_p4_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #8]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #4]
     strb    r7, [r5, #4]
 .Ldv_p4_skip:
 
@@ -1404,8 +1404,8 @@ DrawTile16_VFlip_asm:
     bls     .Ldv_p5_skip
     ubfx    r3, r9, #8, #8
     cbz     r3, .Ldv_p5_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #10]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #5]
     strb    r7, [r5, #5]
 .Ldv_p5_skip:
 
@@ -1415,8 +1415,8 @@ DrawTile16_VFlip_asm:
     bls     .Ldv_p6_skip
     ubfx    r3, r9, #16, #8
     cbz     r3, .Ldv_p6_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #12]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #6]
     strb    r7, [r5, #6]
 .Ldv_p6_skip:
 
@@ -1426,14 +1426,14 @@ DrawTile16_VFlip_asm:
     bls     .Ldv_p7_skip
     lsr     r3, r9, #24
     cbz     r3, .Ldv_p7_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #14]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #7]
     strb    r7, [r5, #7]
 .Ldv_p7_skip:
 
     /* V_FLIP: decrement row pointer */
     sub     r0, r0, #8                  @ bp -= 8
-    add     r4, r4, r11, lsl #1
+    add     r4, r4, r11                 @ Screen += PPL (8-bit pixels)
     add     r5, r5, r11
     
     subs    r12, r12, #1
@@ -1465,7 +1465,7 @@ DrawTile16_FlipHV_asm:
     ldrb    r7, [r3, #GFX_OFF_Z2]
     
     add     r5, r5, r1
-    add     r4, r4, r1, lsl #1
+    add     r4, r4, r1                  @ Screen = GFX.S + Offset (8-bit)
     
 .Ldraw_fliphv_loop:
     ldm     r0, {r8, r9}                @ r8 = pixels[0-3], r9 = pixels[4-7]
@@ -1478,8 +1478,8 @@ DrawTile16_FlipHV_asm:
     bls     .Ldhv_p0_skip
     lsr     r3, r9, #24
     cbz     r3, .Ldhv_p0_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #0]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #0]
     strb    r7, [r5, #0]
 .Ldhv_p0_skip:
 
@@ -1489,8 +1489,8 @@ DrawTile16_FlipHV_asm:
     bls     .Ldhv_p1_skip
     ubfx    r3, r9, #16, #8
     cbz     r3, .Ldhv_p1_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #2]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #1]
     strb    r7, [r5, #1]
 .Ldhv_p1_skip:
 
@@ -1500,8 +1500,8 @@ DrawTile16_FlipHV_asm:
     bls     .Ldhv_p2_skip
     ubfx    r3, r9, #8, #8
     cbz     r3, .Ldhv_p2_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #4]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #2]
     strb    r7, [r5, #2]
 .Ldhv_p2_skip:
 
@@ -1511,8 +1511,8 @@ DrawTile16_FlipHV_asm:
     bls     .Ldhv_p3_skip
     and     r3, r9, #0xFF
     cbz     r3, .Ldhv_p3_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #6]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #3]
     strb    r7, [r5, #3]
 .Ldhv_p3_skip:
 
@@ -1522,8 +1522,8 @@ DrawTile16_FlipHV_asm:
     bls     .Ldhv_p4_skip
     lsr     r3, r8, #24
     cbz     r3, .Ldhv_p4_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #8]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #4]
     strb    r7, [r5, #4]
 .Ldhv_p4_skip:
 
@@ -1533,8 +1533,8 @@ DrawTile16_FlipHV_asm:
     bls     .Ldhv_p5_skip
     ubfx    r3, r8, #16, #8
     cbz     r3, .Ldhv_p5_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #10]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #5]
     strb    r7, [r5, #5]
 .Ldhv_p5_skip:
 
@@ -1544,8 +1544,8 @@ DrawTile16_FlipHV_asm:
     bls     .Ldhv_p6_skip
     ubfx    r3, r8, #8, #8
     cbz     r3, .Ldhv_p6_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #12]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #6]
     strb    r7, [r5, #6]
 .Ldhv_p6_skip:
 
@@ -1555,14 +1555,14 @@ DrawTile16_FlipHV_asm:
     bls     .Ldhv_p7_skip
     and     r3, r8, #0xFF
     cbz     r3, .Ldhv_p7_skip
-    ldrh    r3, [r2, r3, lsl #1]
-    strh    r3, [r4, #14]
+    ldrb    r3, [r2, r3, lsl #1]
+    strb    r3, [r4, #7]
     strb    r7, [r5, #7]
 .Ldhv_p7_skip:
 
     /* V_FLIP: decrement row pointer */
     sub     r0, r0, #8                  @ bp -= 8
-    add     r4, r4, r11, lsl #1
+    add     r4, r4, r11                 @ Screen += PPL (8-bit pixels)
     add     r5, r5, r11
     
     subs    r12, r12, #1

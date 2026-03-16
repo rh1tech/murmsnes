@@ -64,7 +64,7 @@ static int cursor_target_y = 0;
 static int prev_scroll_offset = -1;
 static int prev_cursor_y = -1;
 
-static void draw_demostyle_header(uint16_t *screen, uint32_t phase) {
+static void draw_demostyle_header(uint8_t *screen, uint32_t phase) {
     // Calculate title dimensions
     const char *title = "MURMSNES";
     int title_width = menu_text_width_bold(title);
@@ -89,25 +89,18 @@ static void draw_demostyle_header(uint16_t *screen, uint32_t phase) {
             uint8_t wave = (uint8_t)(((x * 3) + phase) & 0x3F);
             uint8_t intensity = (uint8_t)(8 + ((wave + (row_phase >> 1)) & 0x1F));
             if (intensity > 31) intensity = 31;
-            // Create RGB565 color (purple/blue gradient)
-            uint16_t color = ((intensity >> 1) << 11) | (intensity << 5) | intensity;
-            screen[yy * MENU_SCREEN_WIDTH + x] = color;
+            // Use palette index directly (dark range for gradient effect)
+            screen[yy * MENU_SCREEN_WIDTH + x] = (uint8_t)(intensity >> 1);
         }
 
-        // Horizontal stripes
+        // Horizontal stripes - brighten slightly
         if ((y & 3) == 0) {
-            uint16_t *row = &screen[yy * MENU_SCREEN_WIDTH];
+            uint8_t *row = &screen[yy * MENU_SCREEN_WIDTH];
             for (int x = 0; x < MENU_SCREEN_WIDTH; ++x) {
                 if (yy >= title_top && yy < title_bottom && x >= title_left && x < title_right) continue;
-                uint16_t c = row[x];
-                // Brighten by adding to each channel
-                uint16_t r = ((c >> 11) & 0x1F) + 4;
-                uint16_t g = ((c >> 5) & 0x3F) + 8;
-                uint16_t b = (c & 0x1F) + 4;
-                if (r > 31) r = 31;
-                if (g > 63) g = 63;
-                if (b > 31) b = 31;
-                row[x] = (r << 11) | (g << 5) | b;
+                uint8_t c = row[x];
+                if (c < 250) c += 4;
+                row[x] = c;
             }
         }
     }
@@ -120,7 +113,7 @@ static void draw_demostyle_header(uint16_t *screen, uint32_t phase) {
     menu_draw_text_bold(screen, title_x, title_y, title, COLOR_WHITE);
 }
 
-static void draw_info_text(uint16_t *screen) {
+static void draw_info_text(uint8_t *screen) {
     char info_str[64];
 
     // Board label
@@ -142,12 +135,12 @@ static void draw_info_text(uint16_t *screen) {
     menu_draw_text_centered(screen, INFO_BASE_Y - LINE_HEIGHT, info_str, COLOR_WHITE);
 }
 
-static void draw_help_text(uint16_t *screen) {
+static void draw_help_text(uint8_t *screen) {
     const char *help = "D-PAD:SELECT  A/START:OK";
     menu_draw_text_centered(screen, INFO_BASE_Y, help, COLOR_WHITE);
 }
 
-static void draw_footer(uint16_t *screen) {
+static void draw_footer(uint8_t *screen) {
     const char *footer = "CODED BY MIKHAIL MATVEEV";
     menu_draw_text_centered(screen, FOOTER_Y, footer, COLOR_WHITE);
 }
@@ -204,7 +197,7 @@ static void scan_roms(void) {
 }
 
 // Draw scrollbar with smooth animation
-static void draw_scrollbar(uint16_t *screen, int scroll_offset, bool animate) {
+static void draw_scrollbar(uint8_t *screen, int scroll_offset, bool animate) {
     if (rom_count <= VISIBLE_LINES) return;
 
     // Calculate scrollbar thumb position and size
@@ -239,7 +232,7 @@ static bool animation_in_progress(void) {
 }
 
 // Draw a single ROM row at a given Y position
-static void draw_single_row(uint16_t *screen, int row_idx, int scroll_offset, int cursor_y) {
+static void draw_single_row(uint8_t *screen, int row_idx, int scroll_offset, int cursor_y) {
     int rom_idx = scroll_offset + row_idx;
     if (rom_idx >= rom_count || row_idx < 0 || row_idx >= VISIBLE_LINES) return;
 
@@ -279,7 +272,7 @@ static void draw_single_row(uint16_t *screen, int row_idx, int scroll_offset, in
 }
 
 // Render ROM menu with smooth cursor
-static void render_rom_menu(uint16_t *screen, int selected, int scroll_offset, bool selection_changed) {
+static void render_rom_menu(uint8_t *screen, int selected, int scroll_offset, bool selection_changed) {
     if (rom_count == 0) {
         if (selection_changed) {
             menu_fill_rect(screen, MENU_X - 2, MENU_Y - 2, MENU_WIDTH + 4, (VISIBLE_LINES * LINE_HEIGHT) + 4, COLOR_BLACK);
@@ -361,7 +354,7 @@ static void render_rom_menu(uint16_t *screen, int selected, int scroll_offset, b
     draw_footer(screen);
 }
 
-void rom_selector_show_sd_error(uint16_t *screen_buffer, int error_code) {
+void rom_selector_show_sd_error(uint8_t *screen_buffer, int error_code) {
     // Clear screen
     menu_clear_screen(screen_buffer, COLOR_BLACK);
 
@@ -390,7 +383,7 @@ void rom_selector_show_sd_error(uint16_t *screen_buffer, int error_code) {
     }
 }
 
-bool rom_selector_show(char *selected_rom_path, size_t buffer_size, uint16_t *screen_buffer) {
+bool rom_selector_show(char *selected_rom_path, size_t buffer_size, uint8_t *screen_buffer) {
 #if ENABLE_LOGGING
     printf("ROM Selector: Starting...\n");
 #endif
