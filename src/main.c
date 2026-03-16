@@ -61,11 +61,9 @@
 #define SCREEN_WIDTH     SNES_WIDTH    // 256
 #define SCREEN_HEIGHT    SNES_HEIGHT   // 224
 
-// Audio sample rate - lower = less CPU for mixing (quality tradeoff)
-// 18000 Hz = full quality, 12000 Hz = medium, 9000 Hz = low
-// Tempo stays correct regardless of rate
-// NOTE: 12kHz causes high-pitched aliasing beep in some games
-#define AUDIO_SAMPLE_RATE   (18000)
+// Audio sample rate - SNES native is 32000 Hz
+// Higher = better quality but more CPU for mixing
+#define AUDIO_SAMPLE_RATE   (32000)
 // Audio chunk size must match output rate: 60 chunks/sec
 #define AUDIO_BUFFER_LENGTH (AUDIO_SAMPLE_RATE / 60)
 
@@ -90,9 +88,8 @@ volatile uint32_t current_buffer = 0;
 // streams these packed frames to pico_audio_i2s.
 //
 // Key goal: keep Core 1 work minimal so HDMI activity doesn't starve audio.
-// Deeper queue for better buffering during CPU spikes (digital sound effects in MK3)
-// 80 frames (~1.33s @ 18kHz) - balance between buffering and SRAM usage
-#define AUDIO_QUEUE_DEPTH 80
+// 8 frames (~133ms) - enough to absorb CPU spikes without excessive latency
+#define AUDIO_QUEUE_DEPTH 8
 // NOTE: With fixed 60Hz emulation producing exactly one audio chunk per frame,
 // the producer cannot stay "ahead" of the consumer by >1 chunk in steady state.
 // Using queue-fill watermarks to decide frame skipping will therefore
@@ -326,8 +323,8 @@ static inline void snes9x_init(void) {
     Settings.ControllerOption = SNES_JOYPAD;
     Settings.HBlankStart = (256 * Settings.H_Max) / SNES_HCOUNTER_MAX;
     Settings.SoundPlaybackRate = AUDIO_SAMPLE_RATE;
-    Settings.DisableSoundEcho = true;   // Disable echo to match user request / reduce mixing complexity
-    Settings.InterpolatedSound = false; // Disable for performance - reduces mixing CPU cost
+    Settings.DisableSoundEcho = false;  // Enable echo for full SNES audio fidelity
+    Settings.InterpolatedSound = true;  // Enable sample interpolation for smoother sound
 
     S9xInitDisplay();
     S9xInitMemory();
@@ -680,8 +677,8 @@ static void __time_critical_func(emulation_loop)(void) {
         bool ring_full = (prod - cons) >= AUDIO_QUEUE_DEPTH;
         uint32_t *dst32 = ring_full ? audio_packed_discard : audio_packed_buffer[prod % AUDIO_QUEUE_DEPTH];
 
-        // Gain factor ~1.6x (8/5) with soft limiter
-        const int gain_num = 8;
+        // Gain factor 1.0x (no amplification - prevents clipping)
+        const int gain_num = 5;
         const int gain_den = 5;
         // When we're late or audio is low, avoid the more expensive soft limiter.
         const bool use_soft_limiter = (late_us <= (int32_t)LATE_TOLERANCE_US) && (q_fill >= AUDIO_LOW_WATERMARK);

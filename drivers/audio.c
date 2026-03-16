@@ -41,8 +41,8 @@
 
 #define DMA_BUFFER_COUNT 2
 // Max buffer size in stereo frames (32-bit words).
-// SNES at 18kHz/60fps = 300 frames; generous headroom.
-#define DMA_BUFFER_MAX_SAMPLES 512
+// SNES at 32kHz/60fps = 533 frames; generous headroom.
+#define DMA_BUFFER_MAX_SAMPLES 600
 
 static uint32_t __attribute__((aligned(4))) dma_buffers[DMA_BUFFER_COUNT][DMA_BUFFER_MAX_SAMPLES];
 

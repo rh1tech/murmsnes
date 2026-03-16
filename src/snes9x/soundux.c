@@ -32,7 +32,7 @@
 #define CLIP8(v) \
 (v) = (((v) <= -128) ? -128 : (((v) >= 127) ? 127 : (v)))
 
-static struct {
+static struct LocalStateStruct {
    int32_t wave[SOUND_BUFFER_SIZE];
    int32_t Echo [24000];
    int32_t MixBuffer [SOUND_BUFFER_SIZE];
@@ -59,7 +59,8 @@ static struct {
    * states (with little in the way of tangible
    * benefits) */
    int32_t MixOutputPrev[2];
-} *LocalState;
+} LocalStateStorage;
+static struct LocalStateStruct *LocalState = &LocalStateStorage;
 
 // Optional kill switch for SNES noise generator (vinyl-like hiss/scratch)
 static bool g_disable_noise = false;
@@ -1125,9 +1126,7 @@ void S9xSetPlaybackRate(uint32_t playback_rate)
 
 bool S9xInitSound(int32_t buffer_ms, int32_t lag_ms)
 {
-   LocalState = calloc(1, sizeof(*LocalState));
-   if (!LocalState)
-      return false;
+   memset(&LocalStateStorage, 0, sizeof(LocalStateStorage));
    so.playback_rate = 0;
    S9xResetSound(true);
    return true;
