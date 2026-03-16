@@ -88,8 +88,8 @@ volatile uint32_t current_buffer = 0;
 // streams these packed frames to pico_audio_i2s.
 //
 // Key goal: keep Core 1 work minimal so HDMI activity doesn't starve audio.
-// 8 frames (~133ms) - enough to absorb CPU spikes without excessive latency
-#define AUDIO_QUEUE_DEPTH 8
+// 16 frames (~267ms) - absorbs CPU spikes during scene transitions
+#define AUDIO_QUEUE_DEPTH 16
 // NOTE: With fixed 60Hz emulation producing exactly one audio chunk per frame,
 // the producer cannot stay "ahead" of the consumer by >1 chunk in steady state.
 // Using queue-fill watermarks to decide frame skipping will therefore
@@ -439,10 +439,9 @@ void __time_critical_func(render_core)(void) {
     core1_ready = true;
     __dmb();
     
-    // Audio playback - continuously play from read buffer
-    static uint32_t __attribute__((aligned(32))) replay_buf[AUDIO_BUFFER_LENGTH];
-    static bool replay_is_silence = true;
-    const uint32_t fade_frames = 128;
+    // Audio playback - continuously stream from ring buffer to DMA
+    static uint32_t __attribute__((aligned(32))) silence_buf[AUDIO_BUFFER_LENGTH];
+    memset(silence_buf, 0, sizeof(silence_buf));
     uint32_t last_displayed_buffer = 0;
     while (true) {
         // Run APU batch on Core 1 - catch up to CPU target cycles
@@ -457,59 +456,29 @@ void __time_critical_func(render_core)(void) {
             last_displayed_buffer = current_buf;
         }
 
-        // Consume next mixed chunk if available; otherwise replay the last chunk.
+        // Consume next mixed chunk if available; output silence on underrun.
         uint32_t prod = audio_prod_seq;
         uint32_t cons = audio_cons_seq;
+        const uint32_t *audio_src;
         if (prod != cons) {
             uint32_t idx = cons % AUDIO_QUEUE_DEPTH;
-            // Ensure we see the producer's writes before copying.
             __dmb();
-            memcpy(replay_buf, audio_packed_buffer[idx], sizeof(replay_buf));
-            __dmb();
-            audio_cons_seq = cons + 1;
-
-            // If we were in underrun-silence mode, fade in the first few samples
-            // to avoid a click when audio resumes.
-            if (replay_is_silence) {
-                uint32_t n = AUDIO_BUFFER_LENGTH;
-                uint32_t f = fade_frames;
-                if (f > n) f = n;
-                for (uint32_t i = 0; i < f; i++) {
-                    int32_t g = (int32_t)i; // 0 .. f-1
-                    uint32_t v = replay_buf[i];
-                    int16_t l = (int16_t)(v >> 16);
-                    int16_t r = (int16_t)(v & 0xFFFF);
-                    l = (int16_t)(((int32_t)l * g) / (int32_t)f);
-                    r = (int16_t)(((int32_t)r * g) / (int32_t)f);
-                    replay_buf[i] = ((uint32_t)(uint16_t)l << 16) | (uint16_t)r;
-                }
-                replay_is_silence = false;
-            }
+            audio_src = audio_packed_buffer[idx];
+            // Publish consumption AFTER we start using the pointer
+            // (i2s_dma_write will copy from it)
         } else {
-            // Underrun: do NOT repeat old audio (can sound like slowdown).
-            // Instead, fade out to silence (once) and then output silence.
-            if (!replay_is_silence) {
-                uint32_t n = AUDIO_BUFFER_LENGTH;
-                uint32_t f = fade_frames;
-                if (f > n) f = n;
-                for (uint32_t i = 0; i < f; i++) {
-                    int32_t g = (int32_t)(f - 1 - i); // f-1 .. 0
-                    uint32_t v = replay_buf[i];
-                    int16_t l = (int16_t)(v >> 16);
-                    int16_t r = (int16_t)(v & 0xFFFF);
-                    l = (int16_t)(((int32_t)l * g) / (int32_t)f);
-                    r = (int16_t)(((int32_t)r * g) / (int32_t)f);
-                    replay_buf[i] = ((uint32_t)(uint16_t)l << 16) | (uint16_t)r;
-                }
-                memset(&replay_buf[f], 0, (AUDIO_BUFFER_LENGTH - f) * sizeof(replay_buf[0]));
-                replay_is_silence = true;
-            } else {
-                memset(replay_buf, 0, sizeof(replay_buf));
-            }
+            // Underrun: immediate silence (no fade, no replay)
+            audio_src = silence_buf;
         }
 
-        // Stream packed stereo frames directly to I2S.
-        i2s_dma_write(&i2s_config, (const int16_t *)replay_buf);
+        // Stream to I2S DMA (blocks until a DMA buffer is free)
+        i2s_dma_write(&i2s_config, (const int16_t *)audio_src);
+
+        // Advance consumer AFTER DMA copy is complete
+        if (audio_src != silence_buf) {
+            __dmb();
+            audio_cons_seq = cons + 1;
+        }
     }
 }
 
