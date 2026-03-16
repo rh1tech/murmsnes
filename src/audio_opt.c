@@ -13,10 +13,18 @@ static inline int16_t clamp16(int32_t v) {
 }
 
 static inline int16_t soft_limit16(int32_t v) {
+    // Two-stage soft limiter for smooth compression at high gain
+    // Stage 1: gentle compression above ±24000
+    if (v > 24000) {
+        v = 24000 + ((v - 24000) >> 2);
+    } else if (v < -24000) {
+        v = -24000 + ((v + 24000) >> 2);
+    }
+    // Stage 2: harder compression above ±30000
     if (v > 30000) {
-        v = 30000 + ((v - 30000) >> 2);
+        v = 30000 + ((v - 30000) >> 3);
     } else if (v < -30000) {
-        v = -30000 + ((v + 30000) >> 2);
+        v = -30000 + ((v + 30000) >> 3);
     }
     return clamp16(v);
 }
@@ -98,7 +106,7 @@ void audio_mix_noecho_opt(int16_t* buffer, int32_t sample_count,
     int32_t i = 0;
     for (; i < sample_count - 1; i += 2) {
         // Left channel (even index)
-        int32_t val = (MixBuffer[i] * left_vol) >> 8;  // Divide by 256
+        int32_t val = (MixBuffer[i] * left_vol) >> 7;  // Divide by 128 (VOL_DIV16)
         if (val < -32768) val = -32768;
         if (val > 32767) val = 32767;
         buffer[i] = val;

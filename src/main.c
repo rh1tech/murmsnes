@@ -323,7 +323,7 @@ static inline void snes9x_init(void) {
     Settings.ControllerOption = SNES_JOYPAD;
     Settings.HBlankStart = (256 * Settings.H_Max) / SNES_HCOUNTER_MAX;
     Settings.SoundPlaybackRate = AUDIO_SAMPLE_RATE;
-    Settings.DisableSoundEcho = false;  // Enable echo for full SNES audio fidelity
+    Settings.DisableSoundEcho = true;   // Disable echo (mono mixer has echo bugs, saves CPU)
     Settings.InterpolatedSound = true;  // Enable sample interpolation for smoother sound
 
     S9xInitDisplay();
@@ -677,12 +677,12 @@ static void __time_critical_func(emulation_loop)(void) {
         bool ring_full = (prod - cons) >= AUDIO_QUEUE_DEPTH;
         uint32_t *dst32 = ring_full ? audio_packed_discard : audio_packed_buffer[prod % AUDIO_QUEUE_DEPTH];
 
-        // Gain 2.0x compensates for halved mix volume (VOL_DIV16=256)
-        // Net effect: same final volume, but less inter-channel clipping
-        const int gain_num = 10;
+        // Gain 4x compensates for per-channel >>2 attenuation in MixStereo.
+        // Net effect: same final volume, but no inter-channel clipping in MixBuffer.
+        const int gain_num = 20;
         const int gain_den = 5;
-        // When we're late or audio is low, avoid the more expensive soft limiter.
-        const bool use_soft_limiter = (late_us <= (int32_t)LATE_TOLERANCE_US) && (q_fill >= AUDIO_LOW_WATERMARK);
+        // Always use soft limiter for smooth audio (no hard clipping artifacts)
+        const bool use_soft_limiter = true;
 #ifdef MURMSNES_PROFILE
         uint32_t t4 = time_us_32();
 #endif

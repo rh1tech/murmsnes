@@ -118,7 +118,7 @@ static const uint32_t IncreaseRate [32] =
 #define FIXED_POINT_REMAINDER 0xffffUL
 #define FIXED_POINT_SHIFT 16
 
-#define VOL_DIV16 0x0100  // 256: halve mix volume to prevent inter-channel clipping
+#define VOL_DIV16 0x0080  // 128: standard snes9x value (clipping handled at channel level)
 #define ENVX_SHIFT 24
 
 /* F is channel's current frequency and M is the 16-bit modulation waveform
@@ -766,14 +766,14 @@ static INLINE void MixStereo(int32_t sample_count)
          if (pitch_mod & (1 << (J + 1)))
             wave [I / 2] = ch->sample * ch->envx;
 
-         MixBuffer [I    ] += VL;
-         MixBuffer [I + 1] += VR;
+         MixBuffer [I    ] += VL >> 2;  // Attenuate per-channel to prevent mix clipping
+         MixBuffer [I + 1] += VR >> 2;
 
          if (!ch->echo_buf_ptr)
             continue;
 
-         ch->echo_buf_ptr [I    ] += VL;
-         ch->echo_buf_ptr [I + 1] += VR;
+         ch->echo_buf_ptr [I    ] += VL >> 2;
+         ch->echo_buf_ptr [I + 1] += VR >> 2;
       }
 stereo_exit:;
    }
