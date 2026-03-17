@@ -18,26 +18,19 @@
 
 extern int32_t NoiseFreq[32];
 
+/* APU RAM in SRAM (not PSRAM) — PSRAM read latency at 504MHz/166MHz
+ * can cause SPC700 to read corrupted data during tight port handshakes */
+static uint8_t __attribute__((aligned(4))) iapu_ram_sram[0x10000];
+
 bool S9xInitAPU()
 {
-   IAPU.RAM = (uint8_t*) malloc(0x10000);
-
-   if (!IAPU.RAM)
-   {
-      S9xDeinitAPU();
-      return false;
-   }
-
+   IAPU.RAM = iapu_ram_sram;
    return true;
 }
 
 void S9xDeinitAPU()
 {
-   if (IAPU.RAM)
-   {
-      free(IAPU.RAM);
-      IAPU.RAM = NULL;
-   }
+   IAPU.RAM = NULL;
 }
 
 void S9xResetAPU()
