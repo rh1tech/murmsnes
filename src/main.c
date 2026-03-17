@@ -618,6 +618,91 @@ static void __time_critical_func(emulation_loop)(void) {
 
         { extern volatile uint32_t dsp_log_frame; dsp_log_frame++; }
 
+        /* Detect SPC700 hang: no DSP writes for 120 frames = 2 seconds */
+        {
+            extern volatile uint32_t dsp_write_count;
+            extern volatile uint32_t dsp_log_frame;
+            static uint32_t last_dsp_writes = 0;
+            static uint32_t quiet_frames = 0;
+            static bool hang_reported = false;
+            uint32_t cur = dsp_write_count;
+            if (cur == last_dsp_writes) {
+                quiet_frames++;
+                if (quiet_frames == 120 && !hang_reported) {
+                    hang_reported = true;
+                    {
+                        uint16_t pc = (uint16_t)(IAPU.PC - IAPU.RAM);
+                        uint8_t sp = IAPU.Registers.S;
+                        uint8_t a = IAPU.Registers.YA.B.A;
+                        uint8_t y = IAPU.Registers.YA.B.Y;
+                        uint8_t x = IAPU.Registers.X;
+                        uint8_t psw = IAPU.Registers.P;
+
+                        /* Registers + ports */
+                        LOG("[HANG] f=%u PC=%04X A=%02X Y=%02X X=%02X SP=%02X PSW=%02X\n",
+                            (unsigned)dsp_log_frame, pc, a, y, x, sp, psw);
+                        LOG("[HANG] ports: F4=%02X F5=%02X F6=%02X F7=%02X out: %02X %02X %02X %02X\n",
+                            IAPU.RAM[0xf4], IAPU.RAM[0xf5], IAPU.RAM[0xf6], IAPU.RAM[0xf7],
+                            APU.OutPorts[0], APU.OutPorts[1], APU.OutPorts[2], APU.OutPorts[3]);
+                        LOG("[HANG] APUExec=%d WaitCnt=%d timers=%d/%d/%d T0=%u T1=%u T2=%u\n",
+                            IAPU.APUExecuting, IAPU.WaitCounter,
+                            APU.TimerEnabled[0], APU.TimerEnabled[1], APU.TimerEnabled[2],
+                            (unsigned)IAPU.RAM[0xfd], (unsigned)IAPU.RAM[0xfe], (unsigned)IAPU.RAM[0xff]);
+                        LOG("[HANG] DSP: KON=%02X KOFF=%02X ENDX=%02X FLG=%02X\n",
+                            APU.DSP[0x4C], APU.DSP[0x5C], APU.DSP[0x7C], APU.DSP[0x6C]);
+                        LOG("[HANG] WaitAddr1=%04X WaitAddr2=%04X\n",
+                            (unsigned)(IAPU.WaitAddress1 ? (IAPU.WaitAddress1 - IAPU.RAM) : 0xFFFF),
+                            (unsigned)(IAPU.WaitAddress2 ? (IAPU.WaitAddress2 - IAPU.RAM) : 0xFFFF));
+
+                        /* Code at PC: 32 bytes for disassembly context */
+                        LOG("[HANG] code@%04X:", pc);
+                        for (int _b = 0; _b < 32; _b++)
+                            LOG(" %02X", IAPU.RAM[(pc + _b) & 0xFFFF]);
+                        LOG("\n");
+
+                        /* Code BEFORE PC: 16 bytes to see what led here */
+                        LOG("[HANG] code@%04X:", (pc - 16) & 0xFFFF);
+                        for (int _b = -16; _b < 0; _b++)
+                            LOG(" %02X", IAPU.RAM[(pc + _b) & 0xFFFF]);
+                        LOG("\n");
+
+                        /* Stack: top 16 bytes */
+                        LOG("[HANG] stack@01%02X:", sp);
+                        for (int _b = 1; _b <= 16; _b++)
+                            LOG(" %02X", IAPU.RAM[0x100 + ((sp + _b) & 0xFF)]);
+                        LOG("\n");
+
+                        /* Direct page 0xF0-0xFF (control registers) */
+                        LOG("[HANG] ctrl@F0:");
+                        for (int _b = 0xF0; _b < 0x100; _b++)
+                            LOG(" %02X", IAPU.RAM[_b]);
+                        LOG("\n");
+
+                        /* All 8 channels: state, envx, mode */
+                        LOG("[HANG] channels:");
+                        for (int _c = 0; _c < 8; _c++)
+                            LOG(" ch%d(st=%d envx=%d mode=%d)", _c,
+                                SoundData.channels[_c].state,
+                                SoundData.channels[_c].envx,
+                                SoundData.channels[_c].mode);
+                        LOG("\n");
+
+                        /* All DSP registers (128 bytes) */
+                        LOG("[HANG] DSP regs:");
+                        for (int _b = 0; _b < 128; _b++) {
+                            if (_b % 16 == 0) LOG("\n  %02X:", _b);
+                            LOG(" %02X", APU.DSP[_b]);
+                        }
+                        LOG("\n");
+                    }
+                }
+            } else {
+                last_dsp_writes = cur;
+                quiet_frames = 0;
+                hang_reported = false;
+            }
+        }
+
         // Run one SNES frame of emulation.
     #ifdef MURMSNES_PROFILE
         uint32_t t0 = time_us_32();

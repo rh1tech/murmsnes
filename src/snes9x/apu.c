@@ -132,10 +132,12 @@ void S9xAPUWritePort(int32_t Address, uint8_t Byte)
 }
 
 volatile uint32_t dsp_log_frame = 0;
+volatile uint32_t dsp_write_count = 0; /* total DSP writes — for hang detection */
 
 void S9xSetAPUDSP(uint8_t byte)
 {
    uint8_t reg = IAPU.RAM [0xf2];
+   dsp_write_count++;
    static uint8_t KeyOn;
    static uint8_t KeyOnPrev;
    int32_t i;
