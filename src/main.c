@@ -646,10 +646,10 @@ static void __time_critical_func(emulation_loop)(void) {
         bool ring_full = (prod - cons) >= AUDIO_QUEUE_DEPTH;
         uint32_t *dst32 = ring_full ? audio_packed_discard : audio_packed_buffer[prod % AUDIO_QUEUE_DEPTH];
 
-        // Unity gain - soft limiting is applied in the mixer output stage
-        const int gain_num = 5;
+        // Reduce gain to 1/5 to prevent clipping (8 channels summed)
+        const int gain_num = 1;
         const int gain_den = 5;
-        const bool use_soft_limiter = false;
+        const bool use_soft_limiter = true;
 #ifdef MURMSNES_PROFILE
         uint32_t t4 = time_us_32();
 #endif

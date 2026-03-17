@@ -83,20 +83,20 @@ static uint8_t g_channel_mute_mask = 0x00; // 0 = all channels enabled
 #define KeyOffERate LocalState->KeyOffERate
 #define MixOutputPrev LocalState->MixOutputPrev
 
-extern const int32_t NoiseFreq [32];
+extern int32_t NoiseFreq [32];
 
-static const uint32_t AttackRate [16] =
+static uint32_t AttackRate [16] =
 {
    4100, 2600, 1500, 1000, 640, 380, 260, 160,
    96,   64,   40,   24,   16,  10,  6,   1
 };
 
-static const uint32_t DecayRate [8] =
+static uint32_t DecayRate [8] =
 {
    1200, 740, 440, 290, 180, 110, 74, 37
 };
 
-static const uint32_t DecreaseRateExp [32] =
+static uint32_t DecreaseRateExp [32] =
 {
    0xFFFFFFFF, 38000, 28000, 24000, 19000, 14000, 12000, 9400,
    7100,       5900,  4700,  3500,  2900,  2400,  1800,  1500,
@@ -104,7 +104,7 @@ static const uint32_t DecreaseRateExp [32] =
    180,        150,   110,   92,    74,    55,    37,    18
 };
 
-static const uint32_t IncreaseRate [32] =
+static uint32_t IncreaseRate [32] =
 {
    0xFFFFFFFF, 4100, 3100, 2600, 2000, 1500, 1300, 1000,
    770,        640,  510,  380,  320,  260,  190,  160,

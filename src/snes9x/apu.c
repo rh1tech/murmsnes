@@ -16,7 +16,7 @@
 #include "soundux.h"
 #include "cpuexec.h"
 
-extern const int32_t NoiseFreq[32];
+extern int32_t NoiseFreq[32];
 
 bool S9xInitAPU()
 {

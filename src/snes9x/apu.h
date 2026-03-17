@@ -8,7 +8,7 @@
 #include "port.h"
 #include "spc700.h"
 
-extern const uint8_t APUROM[64];
+extern uint8_t APUROM[64];
 
 typedef struct
 {
