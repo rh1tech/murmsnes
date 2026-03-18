@@ -29,6 +29,7 @@ typedef struct
    uint32_t      UNUSED2;
    int32_t       OneCycle;
    int32_t       TwoCycles;
+   bool          Hung;       /* SPC700 confirmed crashed — stop executing */
 } SIAPU;
 
 typedef struct

@@ -66,6 +66,7 @@ void S9xResetAPU()
    IAPU.WaitAddress1 = NULL;
    IAPU.WaitAddress2 = NULL;
    IAPU.WaitCounter = 1;
+   IAPU.Hung = false;
    APU.ShowROM = true;
    IAPU.RAM [0xf1] = 0x80;
 
