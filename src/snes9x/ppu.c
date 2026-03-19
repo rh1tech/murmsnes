@@ -118,7 +118,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x2100: /* Brightness and screen blank bit */
          if (Byte != Memory.FillRAM [0x2100])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             if (PPU.Brightness != (Byte & 0xF))
             {
                IPPU.ColorsChanged = true;
@@ -350,7 +350,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x2123: /* Window 1 and 2 enable for backgrounds 1 and 2 */
          if (Byte != Memory.FillRAM [0x2123])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             PPU.ClipWindow1Enable [0] = !!(Byte & 0x02);
             PPU.ClipWindow1Enable [1] = !!(Byte & 0x20);
             PPU.ClipWindow2Enable [0] = !!(Byte & 0x08);
@@ -365,7 +365,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x2124: /* Window 1 and 2 enable for backgrounds 3 and 4 */
          if (Byte != Memory.FillRAM [0x2124])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             PPU.ClipWindow1Enable [2] = !!(Byte & 0x02);
             PPU.ClipWindow1Enable [3] = !!(Byte & 0x20);
             PPU.ClipWindow2Enable [2] = !!(Byte & 0x08);
@@ -380,7 +380,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x2125: /* Window 1 and 2 enable for objects and colour window */
          if (Byte != Memory.FillRAM [0x2125])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             PPU.ClipWindow1Enable [4] = !!(Byte & 0x02);
             PPU.ClipWindow1Enable [5] = !!(Byte & 0x20);
             PPU.ClipWindow2Enable [4] = !!(Byte & 0x08);
@@ -395,7 +395,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x2126: /* Window 1 left position */
          if (Byte != Memory.FillRAM [0x2126])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             PPU.Window1Left = Byte;
             PPU.RecomputeClipWindows = true;
          }
@@ -403,7 +403,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x2127: /* Window 1 right position */
          if (Byte != Memory.FillRAM [0x2127])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             PPU.Window1Right = Byte;
             PPU.RecomputeClipWindows = true;
          }
@@ -411,7 +411,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x2128: /* Window 2 left position */
          if (Byte != Memory.FillRAM [0x2128])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             PPU.Window2Left = Byte;
             PPU.RecomputeClipWindows = true;
          }
@@ -419,7 +419,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x2129: /* Window 2 right position */
          if (Byte != Memory.FillRAM [0x2129])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             PPU.Window2Right = Byte;
             PPU.RecomputeClipWindows = true;
          }
@@ -427,7 +427,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x212a: /* Windows 1 & 2 overlap logic for backgrounds 1 - 4 */
          if (Byte != Memory.FillRAM [0x212a])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             PPU.ClipWindowOverlapLogic [0] = (Byte & 0x03);
             PPU.ClipWindowOverlapLogic [1] = (Byte & 0x0c) >> 2;
             PPU.ClipWindowOverlapLogic [2] = (Byte & 0x30) >> 4;
@@ -438,7 +438,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x212b: /* Windows 1 & 2 overlap logic for objects and colour window */
          if (Byte != Memory.FillRAM [0x212b])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             PPU.ClipWindowOverlapLogic [4] = Byte & 0x03;
             PPU.ClipWindowOverlapLogic [5] = (Byte & 0x0c) >> 2;
             PPU.RecomputeClipWindows = true;
@@ -456,7 +456,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x212d: /* Sub-screen designation (backgrounds 1 - 4 and objects) */
          if (Byte != Memory.FillRAM [0x212d])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             PPU.RecomputeClipWindows = true;
             Memory.FillRAM [Address] = Byte;
             return;
@@ -467,14 +467,14 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x2130: /* Fixed colour addition or screen addition */
          if (Byte != Memory.FillRAM [Address])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             PPU.RecomputeClipWindows = true;
          }
          break;
       case 0x2131: /* Colour addition or subtraction select */
          if (Byte != Memory.FillRAM[0x2131])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             /* Backgrounds 1 - 4, objects and backdrop colour add/sub enable */
             Memory.FillRAM[0x2131] = Byte;
          }
@@ -482,7 +482,7 @@ void S9xSetPPU(uint8_t Byte, uint16_t Address)
       case 0x2132:
          if (Byte != Memory.FillRAM [0x2132])
          {
-            FLUSH_REDRAW();
+            FLUSH_REDRAW_EFFECT();
             /* Colour data for fixed colour addition/subtraction */
             if (Byte & 0x80)
                PPU.FixedColourBlue = Byte & 0x1f;

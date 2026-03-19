@@ -17,10 +17,20 @@
 #include "gfx.h"
 #include "apu.h"
 
-#ifdef MURMSNES_PROFILE
+#ifdef PICO_ON_DEVICE
 #include "pico/stdlib.h"
+#endif
+#ifdef MURMSNES_PROFILE
 #include "murmsnes_profile.h"
 #endif
+
+/* Diagnostic: track S9xUpdateScreen calls and render time per frame */
+uint32_t g_upd_screen_calls = 0;
+uint32_t g_render_us = 0;
+uint32_t g_render_obj_us = 0;
+uint32_t g_render_bg_us[4] = {0,0,0,0};
+static uint32_t upd_screen_max_calls = 0;
+extern volatile uint32_t dsp_log_frame;
 
 /*
  * Tile Dirty Tracking System
@@ -315,6 +325,18 @@ void S9xDeinitGFX(void)
 
 void S9xStartScreenRefresh(void)
 {
+   /* Report and reset S9xUpdateScreen call counter */
+   if (g_upd_screen_calls > upd_screen_max_calls) {
+      upd_screen_max_calls = g_upd_screen_calls;
+      extern int printf(const char*, ...);
+      printf("[GFX] f=%u UpdateScreen calls=%u (new max)\n",
+         (unsigned)dsp_log_frame, (unsigned)g_upd_screen_calls);
+   }
+   g_upd_screen_calls = 0;
+   g_render_us = 0;
+   g_render_obj_us = 0;
+   g_render_bg_us[0] = g_render_bg_us[1] = g_render_bg_us[2] = g_render_bg_us[3] = 0;
+
    if (IPPU.RenderThisFrame)
    {
       IPPU.PreviousLine = IPPU.CurrentLine = 0;
@@ -830,18 +852,33 @@ static void DrawOBJS(bool OnMain, uint8_t D)
    GFX.Z1 = D + 2;
 
 #ifdef MURMSNES_FAST_MODE
-   /* FAST MODE: Limit to 16 sprites per scanline instead of 32 for ~30% sprite speedup */
-   #define FAST_MODE_MAX_SPRITES 16
+   /* FAST MODE: Adaptive sprite reduction.
+    * Normal: 16 sprites/scanline on every line (full quality).
+    * Heavy (prev frame obj > 2ms): interlace + 8 sprites/line.
+    * This makes effects like Contra III's beam nearly invisible
+    * but keeps the game running smoothly. */
+   #define OBJ_INTERLACE_THRESH_US 2000
+   static uint32_t _obj_interlace_phase = 0;
+   static bool _obj_interlace_active = false;
+   bool _do_interlace = _obj_interlace_active;
+   int32_t _max_sprites = _do_interlace ? 8 : 16;
+   uint32_t _obj_phase = _obj_interlace_phase;
+   if (_do_interlace)
+      _obj_interlace_phase ^= 1;
 #else
-   #define FAST_MODE_MAX_SPRITES 32
+   int32_t _max_sprites = 32;
 #endif
 
    for (Y = GFX.StartY, Offset = Y * GFX.PPL; Y <= GFX.EndY; Y++, Offset += GFX.PPL)
    {
+#ifdef MURMSNES_FAST_MODE
+      if (_do_interlace && (Y & 1) == _obj_phase)
+         continue;
+#endif
       int32_t I = 0;
       int32_t tiles = GFX.OBJLines[Y].Tiles;
       int32_t S;
-      for (S = GFX.OBJLines[Y].OBJ[I].Sprite; S >= 0 && I < FAST_MODE_MAX_SPRITES; S = GFX.OBJLines[Y].OBJ[++I].Sprite)
+      for (S = GFX.OBJLines[Y].OBJ[I].Sprite; S >= 0 && I < _max_sprites; S = GFX.OBJLines[Y].OBJ[++I].Sprite)
       {
          int32_t TileInc = 1;
          int32_t TileLine;
@@ -936,6 +973,11 @@ static void DrawOBJS(bool OnMain, uint8_t D)
          } /* End of else block for window clipping path */
       }
    }
+
+#ifdef MURMSNES_FAST_MODE
+   /* Update adaptive interlacing state for next frame based on current cost */
+   _obj_interlace_active = (g_render_obj_us >= OBJ_INTERLACE_THRESH_US);
+#endif
 }
 
 static void DrawBackgroundMosaic(uint32_t BGMode, uint32_t bg, uint8_t Z1, uint8_t Z2)
@@ -2774,52 +2816,52 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
          if (OB)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(4));
-#ifdef MURMSNES_PROFILE
-            uint32_t __t0 = time_us_32();
+#ifdef PICO_ON_DEVICE
+            uint32_t _obj_t0 = time_us_32();
 #endif
             DrawOBJS(!sub, D);
-#ifdef MURMSNES_PROFILE
-            murmsnes_prof_add_rs_obj_us((uint32_t)(time_us_32() - __t0));
+#ifdef PICO_ON_DEVICE
+            g_render_obj_us += (time_us_32() - _obj_t0);
 #endif
          }
          if (BG0)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(0));
-#ifdef MURMSNES_PROFILE
-            uint32_t __t0 = time_us_32();
+#ifdef PICO_ON_DEVICE
+            uint32_t _bg0_t0 = time_us_32();
 #endif
             DrawBackground(PPU.BGMode, 0, D + 10, D + 14);
-#ifdef MURMSNES_PROFILE
-            murmsnes_prof_add_rs_bg0_us((uint32_t)(time_us_32() - __t0));
+#ifdef PICO_ON_DEVICE
+            g_render_bg_us[0] += (time_us_32() - _bg0_t0);
 #endif
          }
          if (BG1)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(1));
-#ifdef MURMSNES_PROFILE
-            uint32_t __t0 = time_us_32();
+#ifdef PICO_ON_DEVICE
+            uint32_t _bg1_t0 = time_us_32();
 #endif
             DrawBackground(PPU.BGMode, 1, D + 9, D + 13);
-#ifdef MURMSNES_PROFILE
-            murmsnes_prof_add_rs_bg1_us((uint32_t)(time_us_32() - __t0));
+#ifdef PICO_ON_DEVICE
+            g_render_bg_us[1] += (time_us_32() - _bg1_t0);
 #endif
          }
          if (BG2)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(2));
-#ifdef MURMSNES_PROFILE
-            uint32_t __t0 = time_us_32();
+#ifdef PICO_ON_DEVICE
+            uint32_t _bg2_t0 = time_us_32();
 #endif
             DrawBackground(PPU.BGMode, 2, D + 3, PPU.BG3Priority ? D + 17 : D + 6);
-#ifdef MURMSNES_PROFILE
-            murmsnes_prof_add_rs_bg2_us((uint32_t)(time_us_32() - __t0));
+#ifdef PICO_ON_DEVICE
+            g_render_bg_us[2] += (time_us_32() - _bg2_t0);
 #endif
          }
          if (BG3)
          {
             SelectTileRenderer(sub || !SUB_OR_ADD(3));
-#ifdef MURMSNES_PROFILE
-            uint32_t __t0 = time_us_32();
+#ifdef PICO_ON_DEVICE
+            uint32_t _bg3_t0 = time_us_32();
 #endif
             /* Mode 0: BG3 is 2bpp at priorities D+2 and D+5
              * Mode 1: BG3 is 2bpp, priority depends on BG3Priority bit */
@@ -2827,8 +2869,8 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
                DrawBackground(PPU.BGMode, 3, D + 2, D + 5);
             else
                DrawBackground(PPU.BGMode, 3, D + 2, PPU.BG3Priority ? D + 17 : D + 5);
-#ifdef MURMSNES_PROFILE
-            murmsnes_prof_add_rs_bg3_us((uint32_t)(time_us_32() - __t0));
+#ifdef PICO_ON_DEVICE
+            g_render_bg_us[3] += (time_us_32() - _bg3_t0);
 #endif
          }
          break;
@@ -2975,8 +3017,12 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
 
 void S9xUpdateScreen(void)
 {
+   g_upd_screen_calls++;
+#ifdef PICO_ON_DEVICE
+   uint32_t _render_t0 = time_us_32();
+#endif
 #ifdef MURMSNES_PROFILE
-   uint32_t __us_t0 = time_us_32();
+   uint32_t __us_t0 = _render_t0;
 #endif
    int32_t x2 = 1;
    uint32_t starty, endy, black;
@@ -3665,6 +3711,9 @@ void S9xUpdateScreen(void)
 
    IPPU.PreviousLine = IPPU.CurrentLine;
 
+#ifdef PICO_ON_DEVICE
+   g_render_us += (time_us_32() - _render_t0);
+#endif
 #ifdef MURMSNES_PROFILE
    murmsnes_prof_add_update_screen_us((uint32_t)(time_us_32() - __us_t0));
 #endif

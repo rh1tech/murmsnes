@@ -248,6 +248,16 @@ static INLINE void FLUSH_REDRAW(void)
       S9xUpdateScreen();
 }
 
+/* In FAST_MODE, color math / subscreen / windows are disabled, so HDMA
+ * writes to those PPU registers don't affect rendered pixels.  Skipping
+ * the flush avoids catastrophic per-scanline S9xUpdateScreen overhead
+ * (e.g. Contra III beam weapon HDMA → 224 flushes/frame → ~5 FPS). */
+#ifdef MURMSNES_FAST_MODE
+#define FLUSH_REDRAW_EFFECT() ((void)0)
+#else
+#define FLUSH_REDRAW_EFFECT() FLUSH_REDRAW()
+#endif
+
 static INLINE void REGISTER_2104(uint8_t byte)
 {
    if (PPU.OAMAddr & 0x100)
@@ -454,7 +464,7 @@ static INLINE void REGISTER_2122(uint8_t Byte)
    {
       if ((Byte & 0x7f) != (PPU.CGDATA[PPU.CGADD] >> 8))
       {
-         FLUSH_REDRAW();
+         FLUSH_REDRAW_EFFECT();
          PPU.CGDATA[PPU.CGADD] &= 0x00FF;
          PPU.CGDATA[PPU.CGADD] |= (Byte & 0x7f) << 8;
          IPPU.ColorsChanged = true;
@@ -466,7 +476,7 @@ static INLINE void REGISTER_2122(uint8_t Byte)
    }
    else if (Byte != (uint8_t)(PPU.CGDATA[PPU.CGADD] & 0xff))
    {
-      FLUSH_REDRAW();
+      FLUSH_REDRAW_EFFECT();
       PPU.CGDATA[PPU.CGADD] &= 0x7F00;
       PPU.CGDATA[PPU.CGADD] |= Byte;
       IPPU.ColorsChanged = true;

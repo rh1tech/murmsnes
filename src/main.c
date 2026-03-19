@@ -690,6 +690,16 @@ static void __time_critical_func(emulation_loop)(void) {
         const uint32_t pat_idx = (frameskip_pattern_len ? (frame_num % frameskip_pattern_len) : 0u);
         render_this_frame = ((frameskip_pattern_mask >> pat_idx) & 1u) != 0u;
 
+        // Dynamic frameskip: when emulation is too slow, accumulate "overrun"
+        // time and skip renders until we've recovered.  This adapts to any
+        // TARGET_FRAME_US / frameskip level and prevents ANY perceptible
+        // slowdown during heavy scenes (e.g. Contra III beam weapon).
+        static int32_t emu_overrun_us = 0;
+        if (render_this_frame && emu_overrun_us > 0) {
+            render_this_frame = false;
+            emu_overrun_us -= (int32_t)TARGET_FRAME_US;  // recover one frame worth
+        }
+
         // Safety: always render at least once every FRAMESKIP_MAX_CONSECUTIVE frames
         if (consecutive_skipped_frames >= FRAMESKIP_MAX_CONSECUTIVE) {
             render_this_frame = true;
@@ -702,13 +712,53 @@ static void __time_critical_func(emulation_loop)(void) {
         { extern volatile uint32_t dsp_log_frame; dsp_log_frame++; }
 
         // Run one SNES frame of emulation.
+        uint32_t _diag_t0 = time_us_32();
     #ifdef MURMSNES_PROFILE
-        uint32_t t0 = time_us_32();
+        uint32_t t0 = _diag_t0;
     #endif
         S9xMainLoop();
+        uint32_t _diag_t1 = time_us_32();
     #ifdef MURMSNES_PROFILE
-        uint32_t t1 = time_us_32();
+        uint32_t t1 = _diag_t1;
     #endif
+        /* Feed dynamic frameskip: if this frame exceeded the budget, accumulate overrun */
+        {
+            uint32_t this_emu_us = _diag_t1 - _diag_t0;
+            if (this_emu_us > TARGET_FRAME_US) {
+                emu_overrun_us += (int32_t)(this_emu_us - TARGET_FRAME_US);
+            } else {
+                /* Good frame: drain overrun (but don't go below 0) */
+                emu_overrun_us -= (int32_t)(TARGET_FRAME_US - this_emu_us);
+                if (emu_overrun_us < 0) emu_overrun_us = 0;
+            }
+        }
+
+        /* Diagnostic: warn when a frame takes too long */
+        {
+            extern uint32_t g_upd_screen_calls;
+            extern uint32_t g_render_us;
+            extern uint32_t g_render_obj_us;
+            extern uint32_t g_render_bg_us[4];
+            extern volatile uint32_t dsp_log_frame;
+            uint32_t emu_us = _diag_t1 - _diag_t0;
+            static uint32_t slow_streak = 0;
+            if (emu_us > 18000) {
+                slow_streak++;
+                if (slow_streak <= 5 || (slow_streak % 30) == 0) {
+                    LOG("[SLOW] f=%u emu=%u cpu=%u rend=%u obj=%u bg=%u/%u/%u/%u\n",
+                        (unsigned)dsp_log_frame, (unsigned)emu_us,
+                        (unsigned)(emu_us - g_render_us), (unsigned)g_render_us,
+                        (unsigned)g_render_obj_us,
+                        (unsigned)g_render_bg_us[0], (unsigned)g_render_bg_us[1],
+                        (unsigned)g_render_bg_us[2], (unsigned)g_render_bg_us[3]);
+                }
+            } else {
+                if (slow_streak > 5) {
+                    LOG("[SLOW] streak ended after %u frames\n", (unsigned)slow_streak);
+                }
+                slow_streak = 0;
+            }
+        }
 
         // Auto-release SFX channels triggered by button presses
         S9xSFXAutoReleaseTick();
