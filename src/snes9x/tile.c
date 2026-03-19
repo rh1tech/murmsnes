@@ -611,11 +611,10 @@ static void DrawClippedTile16_Direct4bpp(uint32_t Tile, int32_t Offset, uint32_t
       /* Only render pixels within [StartPixel, StartPixel+Width) */
       for (uint32_t i = StartPixel; i < endPixel; i++) {
          uint32_t srcIdx = hflip ? (7 - i) : i;
-         uint32_t dstIdx = i - StartPixel;
          uint8_t pix = pixels[srcIdx];
-         if (Z1 > Depth[dstIdx] && pix) {
-            Screen[dstIdx] = ScreenColors[pix];
-            Depth[dstIdx] = Z2;
+         if (Z1 > Depth[i] && pix) {
+            Screen[i] = ScreenColors[pix];
+            Depth[i] = Z2;
          }
       }
       
