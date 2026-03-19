@@ -577,8 +577,8 @@ extern void S9xFixColourBrightness(void);
 // Configurable via -DFRAMESKIP_LEVEL=N where:
 //   0 = render all frames (60 fps target)
 //   1 = render 5/6 frames (~50 fps)
-//   2 = render 4/6 frames (~40 fps)
-//   3 = render 3/6 frames (~30 fps) - DEFAULT
+//   2 = render 3/6 frames (~30 fps) with blink-friendly pattern
+//   3 = render 2/6 frames (~20 fps) - DEFAULT
 //   4 = render 2/6 frames (~20 fps)
 #ifndef FRAMESKIP_LEVEL
 #ifdef MURMSNES_FAST_MODE
@@ -592,14 +592,14 @@ extern void S9xFixColourBrightness(void);
 static const uint8_t frameskip_patterns[5][2] = {
     {1, 0x01},  // 0: none - render every frame (60fps)
     {6, 0x1F},  // 1: low - render frames 0-4, skip frame 5 (~50fps)
-    {6, 0x15},  // 2: medium - render frames 0,2,4 (~40fps)
-    {6, 0x09},  // 3: high - render frames 0,3 (~30fps) - DEFAULT
-    {6, 0x05},  // 4: extreme - render frames 0,2 (~20fps)
+    {6, 0x19},  // 2: medium - render frames 0,3,4 (~30fps), consecutive pair for blink visibility
+    {6, 0x09},  // 3: high - render frames 0,3 (~20fps)
+    {6, 0x03},  // 4: extreme - render frames 0,1 (~20fps)
 };
 
 // Runtime frameskip settings
 static uint32_t frameskip_pattern_len = 6;
-static uint32_t frameskip_pattern_mask = 0x09;  // Default: level 3 (30fps)
+static uint32_t frameskip_pattern_mask = 0x09;  // Default: level 3 (20fps)
 
 // Set frameskip level at runtime
 void set_frameskip_level(uint8_t level) {
@@ -637,7 +637,7 @@ static void __time_critical_func(emulation_loop)(void) {
 
     // Initialize frameskip from compile-time level
     set_frameskip_level(FRAMESKIP_LEVEL);
-    static const char* frameskip_level_names[] = {"NONE (60fps)", "LOW (50fps)", "MEDIUM (40fps)", "HIGH (30fps)", "EXTREME (20fps)"};
+    static const char* frameskip_level_names[] = {"NONE (60fps)", "LOW (50fps)", "MEDIUM (30fps)", "HIGH (20fps)", "EXTREME (20fps)"};
     LOG("[frameskip] level=%d (%s) pattern_len=%u mask=0x%02X\n",
         FRAMESKIP_LEVEL, frameskip_level_names[FRAMESKIP_LEVEL],
         (unsigned)frameskip_pattern_len, (unsigned)frameskip_pattern_mask);
