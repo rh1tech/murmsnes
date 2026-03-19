@@ -283,6 +283,7 @@ void S9xSetAPUDSP(uint8_t byte)
             APU.DSP [APU_KOFF] &= ~mask;
             APU.DSP [APU_ENDX] &= ~mask;
             S9xPlaySample(c);
+            S9xSFXCheckKON(c);
          }
       }
 
@@ -306,6 +307,7 @@ void S9xSetAPUDSP(uint8_t byte)
                   APU.KeyedChannels |= mask;
                   APU.DSP [APU_ENDX] &= ~mask;
                   S9xPlaySample(c);
+                  S9xSFXCheckKON(c);
                }
                else
                   KeyOn |= mask;

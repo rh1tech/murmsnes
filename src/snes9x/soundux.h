@@ -139,7 +139,32 @@ void S9xFixEnvelope(int32_t channel, uint8_t gain, uint8_t adsr1, uint8_t adsr2)
 void S9xStartSample(int32_t channel);
 
 void S9xMixSamples(int16_t* buffer, int32_t sample_count);
+
+/* Cycle-accurate KON/KOFF event queue */
+#define DSP_EVENT_KON  0
+#define DSP_EVENT_KOFF 1
+#define DSP_EVENT_MAX  32
+
+typedef struct {
+   uint8_t  type;    /* DSP_EVENT_KON or DSP_EVENT_KOFF */
+   uint8_t  data;    /* bitmask of channels */
+   int32_t  cycle;   /* CPU.Cycles when event occurred */
+} DSPEvent;
+
+extern DSPEvent dsp_events[DSP_EVENT_MAX];
+extern uint8_t  dsp_event_count;
+extern int32_t  dsp_frame_start_cycle;
+
+void S9xDSPQueueEvent(uint8_t type, uint8_t data, int32_t cycle);
+void S9xDSPSetFrameStart(int32_t cycle);
 void S9xMixSamplesMono(int16_t* buffer, int32_t sample_count);
+
+/* SFX auto-release: channels KON'd near a button press auto-release
+ * after a timeout, since some audio engines don't send KOFF for SFX. */
+#define SFX_RELEASE_FRAMES 8
+void S9xNotifyButtonPress(void);
+void S9xSFXAutoReleaseTick(void);
+void S9xSFXCheckKON(int channel);
 void S9xMixSamplesLowPass(int16_t* buffer, int32_t sample_count, int32_t low_pass_range);
 void S9xSetPlaybackRate(uint32_t rate);
 #endif

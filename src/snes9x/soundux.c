@@ -85,6 +85,85 @@ static uint8_t g_channel_mute_mask = 0x00; // 0 = all channels enabled
 
 extern int32_t NoiseFreq [32];
 
+/* Cycle-accurate KON/KOFF event queue */
+DSPEvent dsp_events[DSP_EVENT_MAX];
+uint8_t  dsp_event_count = 0;
+int32_t  dsp_frame_start_cycle = 0;
+
+void S9xDSPQueueEvent(uint8_t type, uint8_t data, int32_t cycle)
+{
+   if (dsp_event_count < DSP_EVENT_MAX)
+   {
+      dsp_events[dsp_event_count].type  = type;
+      dsp_events[dsp_event_count].data  = data;
+      dsp_events[dsp_event_count].cycle = cycle;
+      dsp_event_count++;
+   }
+}
+
+void S9xDSPSetFrameStart(int32_t cycle)
+{
+   dsp_frame_start_cycle = cycle;
+   dsp_event_count = 0;
+}
+
+/* SFX auto-release state */
+static uint8_t  sfx_btn_pending = 0;    /* frames since last button press */
+static uint8_t  sfx_channel_mask = 0;   /* channels KON'd during button window */
+static uint8_t  sfx_timer[8] = {0};     /* per-channel frames since SFX KON */
+
+void S9xNotifyButtonPress(void)
+{
+   sfx_btn_pending = 15;  /* watch for KON in the next 15 frames */
+}
+
+void S9xSFXAutoReleaseTick(void)
+{
+   /* Decrement button window */
+   if (sfx_btn_pending > 0)
+      sfx_btn_pending--;
+
+   /* Check each SFX-marked channel */
+   uint8_t mask = 1;
+   for (int c = 0; c < 8; c++, mask <<= 1)
+   {
+      if (sfx_channel_mask & mask)
+      {
+         sfx_timer[c]++;
+         if (sfx_timer[c] >= SFX_RELEASE_FRAMES)
+         {
+            /* Auto-release this SFX channel */
+            if (SoundData.channels[c].state != SOUND_SILENT &&
+                SoundData.channels[c].state != SOUND_RELEASE)
+            {
+               extern int printf(const char*, ...);
+               extern volatile uint32_t dsp_log_frame;
+               printf("[SFX-OFF] f=%u ch%d srcn=%02X\n",
+                  (unsigned)dsp_log_frame, c, SoundData.channels[c].sample_number);
+               S9xSetSoundKeyOff(c);
+            }
+            sfx_channel_mask &= ~mask;
+            sfx_timer[c] = 0;
+         }
+      }
+   }
+}
+
+/* Called from apu.c when KON happens — check if it's during button window */
+void S9xSFXCheckKON(int channel)
+{
+   if (sfx_btn_pending > 0)
+   {
+      sfx_channel_mask |= (1 << channel);
+      sfx_timer[channel] = 0;
+   }
+   else
+   {
+      /* Not a button-triggered KON — clear SFX mark if channel is reused */
+      sfx_channel_mask &= ~(1 << channel);
+   }
+}
+
 static uint32_t AttackRate [16] =
 {
    4100, 2600, 1500, 1000, 640, 380, 260, 160,
@@ -545,7 +624,7 @@ void DecodeBlock(Channel* ch)
    ch->block_pointer += 9;
 }
 
-static INLINE void MixStereo(int32_t sample_count)
+static INLINE void MixStereoSegment(int32_t buf_offset, int32_t sample_count)
 {
    int32_t pitch_mod = SoundData.pitch_mod & ~APU.DSP[APU_NON];
 
@@ -592,7 +671,7 @@ static INLINE void MixStereo(int32_t sample_count)
       VL = (ch->sample * ch-> left_vol_level) / 128;
       VR = (ch->sample * ch->right_vol_level) / 128;
 
-      for (I = 0; I < (uint32_t) sample_count; I += 2)
+      for (I = (uint32_t) buf_offset; I < (uint32_t)(buf_offset + sample_count); I += 2)
       {
          uint32_t freq = freq0;
 
@@ -777,6 +856,13 @@ static INLINE void MixStereo(int32_t sample_count)
                         ch->last_block = false;
                         dir = S9xGetSampleAddress(ch->sample_number);
                         ch->block_pointer = READ_WORD(dir + 2);
+
+                        if (sfx_channel_mask & (1 << J)) {
+                           extern int printf(const char*, ...);
+                           extern volatile uint32_t dsp_log_frame;
+                           printf("LOOP FOUND f=%u ch%u srcn=%02X\n",
+                              (unsigned)dsp_log_frame, J, ch->sample_number);
+                        }
                      }
                   }
                   DecodeBlock(ch);
@@ -839,6 +925,11 @@ static INLINE void MixStereo(int32_t sample_count)
       }
 stereo_exit:;
    }
+}
+
+static INLINE void MixStereo(int32_t sample_count)
+{
+   MixStereoSegment(0, sample_count);
 }
 
 void S9xMixSamples(int16_t* buffer, int32_t sample_count)
@@ -986,6 +1077,65 @@ void S9xMixSamplesMono(int16_t* buffer, int32_t sample_count)
    }
 }
 
+/* Save/restore minimal channel state for event replay */
+typedef struct {
+   int32_t  state;
+   int32_t  mode;
+   int32_t  envx;
+   int32_t  envxx;
+   uint32_t env_error;
+   uint32_t erate;
+   int32_t  direction;
+   int16_t  envx_target;
+   int16_t  left_vol_level;
+   int16_t  right_vol_level;
+} ChannelSnapshot;
+
+static void SaveChannelState(int c, ChannelSnapshot *snap)
+{
+   Channel *ch = &SoundData.channels[c];
+   snap->state = ch->state;
+   snap->mode = ch->mode;
+   snap->envx = ch->envx;
+   snap->envxx = ch->envxx;
+   snap->env_error = ch->env_error;
+   snap->erate = ch->erate;
+   snap->direction = ch->direction;
+   snap->envx_target = ch->envx_target;
+   snap->left_vol_level = ch->left_vol_level;
+   snap->right_vol_level = ch->right_vol_level;
+}
+
+static void RestoreChannelState(int c, const ChannelSnapshot *snap)
+{
+   Channel *ch = &SoundData.channels[c];
+   ch->state = snap->state;
+   ch->mode = snap->mode;
+   ch->envx = snap->envx;
+   ch->envxx = snap->envxx;
+   ch->env_error = snap->env_error;
+   ch->erate = snap->erate;
+   ch->direction = snap->direction;
+   ch->envx_target = snap->envx_target;
+   ch->left_vol_level = snap->left_vol_level;
+   ch->right_vol_level = snap->right_vol_level;
+}
+
+static void ApplyDSPEvent(const DSPEvent *ev)
+{
+   uint8_t mask = 1;
+   for (int c = 0; c < 8; c++, mask <<= 1)
+   {
+      if (ev->data & mask)
+      {
+         if (ev->type == DSP_EVENT_KON)
+            S9xPlaySample(c);
+         else
+            S9xSetSoundKeyOff(c);
+      }
+   }
+}
+
 void S9xMixSamplesLowPass(int16_t* buffer, int32_t sample_count, int32_t low_pass_range)
 {
    int32_t J;
@@ -998,6 +1148,7 @@ void S9xMixSamplesLowPass(int16_t* buffer, int32_t sample_count, int32_t low_pas
    if (SoundData.echo_enable)
       memset(EchoBuffer, 0, sample_count * sizeof(EchoBuffer [0]));
    memset(MixBuffer, 0, sample_count * sizeof(MixBuffer [0]));
+
    MixStereo(sample_count);
 
    /* Mix and convert waveforms */

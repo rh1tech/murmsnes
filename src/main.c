@@ -244,7 +244,14 @@ uint32_t S9xReadJoypad(const int32_t port) {
     if (nespad & DPAD_START)  joypad |= SNES_START_MASK;
     if (nespad & DPAD_SELECT) joypad |= SNES_SELECT_MASK;
 
-    /* AUTO-PRESS: disabled (was used for crash repro testing) */
+    /* Detect new button presses — notify SFX auto-release system */
+    if (port == 0) {
+        static uint32_t prev_joypad = 0;
+        uint32_t new_buttons = joypad & ~prev_joypad;
+        if (new_buttons)
+            S9xNotifyButtonPress();
+        prev_joypad = joypad;
+    }
 
     // Merge keyboard input for port 0 (unless gamepad2_mode redirects keyboard to port 1)
     bool kbd_controls_this_port = (port == 0 && g_settings.gamepad2_mode != GAMEPAD2_MODE_KEYBOARD) ||
@@ -469,15 +476,18 @@ void __time_critical_func(render_core)(void) {
             audio_src = audio_packed_buffer[idx];
             underrun_count = 0;
         } else {
-            // Underrun: fade out the last buffer to avoid pops.
-            // Each consecutive underrun halves the volume.
-            if (underrun_count < 4) {
-                uint8_t shift = underrun_count + 1;
+            // Underrun: ramp from last sample to zero (no buffer replay).
+            // This avoids re-playing sound effects that were in the last buffer.
+            if (underrun_count == 0) {
                 int16_t *fade = (int16_t *)fadeout_buf;
-                for (uint32_t i = 0; i < AUDIO_BUFFER_LENGTH * 2; i++) {
-                    // Progressive fade within buffer: louder at start, quieter at end
-                    int32_t s = fade[i];
-                    fade[i] = (int16_t)(s >> 1);
+                // Get last L/R values from the previous buffer
+                int16_t last_l = fade[(AUDIO_BUFFER_LENGTH - 1) * 2];
+                int16_t last_r = fade[(AUDIO_BUFFER_LENGTH - 1) * 2 + 1];
+                // Generate a smooth ramp to zero
+                for (uint32_t i = 0; i < AUDIO_BUFFER_LENGTH; i++) {
+                    int32_t t = AUDIO_BUFFER_LENGTH - i;
+                    fade[i * 2]     = (int16_t)((last_l * t) / (int32_t)AUDIO_BUFFER_LENGTH);
+                    fade[i * 2 + 1] = (int16_t)((last_r * t) / (int32_t)AUDIO_BUFFER_LENGTH);
                 }
                 underrun_count++;
             } else {
@@ -633,9 +643,7 @@ static void __time_critical_func(emulation_loop)(void) {
 
         IPPU.RenderThisFrame = !skip_render;
 
-#ifdef MURMSNES_DSP_LOG
         { extern volatile uint32_t dsp_log_frame; dsp_log_frame++; }
-#endif
 
         // Run one SNES frame of emulation.
     #ifdef MURMSNES_PROFILE
@@ -645,6 +653,9 @@ static void __time_critical_func(emulation_loop)(void) {
     #ifdef MURMSNES_PROFILE
         uint32_t t1 = time_us_32();
     #endif
+
+        // Auto-release SFX channels triggered by button presses
+        S9xSFXAutoReleaseTick();
 
         // Mix audio on Core 0 (always, even when skipping render), then apply
         // gain/limiting and pack to 32-bit stereo frames.
@@ -656,9 +667,6 @@ static void __time_critical_func(emulation_loop)(void) {
         // FAST MODE: Mix mono only (half the samples), then duplicate to stereo in packing
         S9xMixSamplesMono((void *)mix16, AUDIO_BUFFER_LENGTH);
     #else
-        // Low-pass filter smooths BRR decoding artifacts (replaces the
-        // analog filter that real SNES hardware has after the DAC).
-        // 0xC000 = ~75% previous + ~25% new — gentle rolloff above ~8kHz.
         S9xMixSamplesLowPass((void *)mix16, AUDIO_BUFFER_LENGTH * 2, 0xC000);
     #endif
     #ifdef MURMSNES_PROFILE
