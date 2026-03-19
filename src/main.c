@@ -89,7 +89,7 @@ volatile uint32_t current_buffer = 0;
 //
 // Key goal: keep Core 1 work minimal so HDMI activity doesn't starve audio.
 // 16 frames (~267ms) - absorbs CPU spikes during scene transitions
-#define AUDIO_QUEUE_DEPTH 6
+#define AUDIO_QUEUE_DEPTH 8
 // NOTE: With fixed 60Hz emulation producing exactly one audio chunk per frame,
 // the producer cannot stay "ahead" of the consumer by >1 chunk in steady state.
 // Using queue-fill watermarks to decide frame skipping will therefore
@@ -635,6 +635,14 @@ static void __time_critical_func(emulation_loop)(void) {
     uint32_t frame_num = 0;
     uint32_t consecutive_skipped_frames = 0;
 
+    // Wall-clock audio accumulator: tracks how much real time has elapsed
+    // that hasn't been "covered" by an audio chunk yet.  Each TARGET_FRAME_US
+    // of accumulated time = one chunk owed.  The normal per-frame mix covers
+    // one; any remainder triggers extra S9xMixSamples calls so the I2S output
+    // never starves even when emulation runs below 60 fps.
+    uint32_t audio_acc_us = 0;
+    uint32_t audio_last_us = time_us_32();
+
     // Initialize frameskip from compile-time level
     set_frameskip_level(FRAMESKIP_LEVEL);
     static const char* frameskip_level_names[] = {"NONE (60fps)", "LOW (50fps)", "MEDIUM (30fps)", "HIGH (20fps)", "EXTREME (20fps)"};
@@ -751,6 +759,51 @@ static void __time_critical_func(emulation_loop)(void) {
             __dmb();
             audio_prod_seq = prod + 1;
             __dmb();
+        }
+
+        // Wall-clock audio catch-up: produce extra chunks so I2S never starves.
+        // Accumulate real elapsed time; each TARGET_FRAME_US owes one chunk.
+        // The normal mix above already covered one chunk worth of time.
+        #define AUDIO_CATCHUP_MAX 6  // cap burst after long stall
+        {
+            uint32_t now_ac = time_us_32();
+            audio_acc_us += (now_ac - audio_last_us);
+            audio_last_us = now_ac;
+
+            // The normal mix covered one chunk's worth of time
+            if (audio_acc_us >= TARGET_FRAME_US)
+                audio_acc_us -= TARGET_FRAME_US;
+            else
+                audio_acc_us = 0;
+
+            // Soft-cap: after a very long stall (loading, pause) don't burst
+            // dozens of chunks — just refill a modest amount.
+            if (audio_acc_us > TARGET_FRAME_US * AUDIO_CATCHUP_MAX)
+                audio_acc_us = TARGET_FRAME_US * 2;
+
+            // Produce extra chunks for the remaining accumulated time
+            uint32_t extra = 0;
+            while (audio_acc_us >= TARGET_FRAME_US && extra < AUDIO_CATCHUP_MAX) {
+                uint32_t p2 = audio_prod_seq;
+                if ((p2 - audio_cons_seq) >= AUDIO_QUEUE_DEPTH)
+                    break;
+#ifdef MURMSNES_FAST_MODE
+                S9xMixSamplesMono((void *)mix16, AUDIO_BUFFER_LENGTH);
+#else
+                S9xMixSamples((void *)mix16, AUDIO_BUFFER_LENGTH * 2);
+#endif
+                uint32_t *edst = audio_packed_buffer[p2 % AUDIO_QUEUE_DEPTH];
+#ifdef MURMSNES_FAST_MODE
+                audio_pack_mono_to_stereo(edst, mix16, AUDIO_BUFFER_LENGTH, gain_num, gain_den, use_soft_limiter);
+#else
+                audio_pack_opt(edst, mix16, AUDIO_BUFFER_LENGTH, gain_num, gain_den, use_soft_limiter);
+#endif
+                __dmb();
+                audio_prod_seq = p2 + 1;
+                __dmb();
+                audio_acc_us -= TARGET_FRAME_US;
+                extra++;
+            }
         }
 
         if (skip_render) {
