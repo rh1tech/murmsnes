@@ -1,0 +1,97 @@
+MurmSNES - SNES Emulator for RP2350
+Copyright (c) 2026 Mikhail Matveev <xtreme@rh1.tech>
+https://rh1.tech
+
+================================================================================
+PROJECT LICENSE
+================================================================================
+
+All original MurmSNES code (ROM selector, settings menu, HDMI driver, audio
+driver, board configuration, input drivers, build system) is licensed under
+the GNU General Public License v3.0 or later:
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+================================================================================
+SNES9X EMULATOR CORE (src/snes9x/)
+================================================================================
+
+The SNES emulation core is based on Snes9x, which has its own license that
+restricts commercial use. The Snes9x license applies to all files under
+src/snes9x/ and takes precedence over the GPL-3.0 for those files.
+
+The full Snes9x license is reproduced below:
+
+  Snes9x - Portable Super Nintendo Entertainment System (TM) emulator.
+
+  (c) Copyright 1996 - 2002  Gary Henderson (gary.henderson@ntlworld.com),
+                              Jerremy Koot (jkoot@snes9x.com)
+  (c) Copyright 2002 - 2004  Matthew Kendora
+  (c) Copyright 2002 - 2005  Peter Bortas (peter@bortas.org)
+  (c) Copyright 2004 - 2005  Joel Yliluoma (http://iki.fi/bisqwit/)
+  (c) Copyright 2001 - 2006  John Weidman (jweidman@slip.net)
+  (c) Copyright 2002 - 2006  funkyass (funkyass@spam.shaw.ca),
+                              Kris Bleakley (codeviolation@hotmail.com)
+  (c) Copyright 2002 - 2010  Brad Jorsch (anomie@users.sourceforge.net),
+                              Nach (n-a-c-h@users.sourceforge.net),
+                              zones (kasumitokoduck@yahoo.com)
+  (c) Copyright 2006 - 2007  nitsuja
+  (c) Copyright 2009 - 2010  BearOso, OV2
+  (c) Copyright 2010 - 2016  Daniel De Matteis
+
+  Permission to use, copy, modify and/or distribute Snes9x in both binary
+  and source form, for non-commercial purposes, is hereby granted without
+  fee, providing that this license information and copyright notice appear
+  with all copies and any derived work.
+
+  This software is provided 'as-is', without any express or implied
+  warranty. In no event shall the authors be held liable for any damages
+  arising from the use of this software or it's derivatives.
+
+  Snes9x is freeware for PERSONAL USE only. Commercial users should
+  seek permission of the copyright holders first. Commercial use includes,
+  but is not limited to, charging money for Snes9x or software derived from
+  Snes9x, including Snes9x or derivatives in commercial game bundles, and/or
+  using Snes9x as a promotion for your commercial product.
+
+================================================================================
+THIRD-PARTY COMPONENTS
+================================================================================
+
+FatFS (src/fatfs/)
+  Copyright (c) 2022, ChaN
+  License: BSD-like (see src/fatfs/ff.h)
+
+SD Card Driver (drivers/sdcard/)
+  Copyright (c) 2020-2021, Elehobica
+  License: BSD-2-Clause (see drivers/sdcard/LICENSE)
+
+PIO SPI (drivers/sdcard/pio_spi.c)
+  Copyright (c) 2020, Raspberry Pi (Trading) Ltd.
+  License: BSD-3-Clause
+
+PS/2 Keyboard Driver (drivers/ps2kbd/)
+  License: GPL-2.0-or-later
+
+USB HID Driver (drivers/usbhid/)
+  Copyright (c) 2018, hathach (tinyusb.org)
+  License: MIT
+
+Raspberry Pi Pico SDK
+  Copyright (c) 2020, Raspberry Pi (Trading) Ltd.
+  License: BSD-3-Clause
+
+TinyUSB
+  Copyright (c) 2018, hathach (tinyusb.org)
+  License: MIT
