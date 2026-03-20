@@ -922,10 +922,10 @@ static bool __time_critical_func(emulation_loop)(void) {  /* returns true if use
         uint32_t *dst32 = ring_full ? audio_packed_discard : audio_packed_buffer[prod % AUDIO_QUEUE_DEPTH];
 
         // Mixer attenuates by >>11 (÷2048) to prevent hard clipping.
-        // Boost 4x here with soft limiter to restore volume.
-        // Worst case: 16K × 4 = 64K → soft-limited smoothly instead of hard-clipped.
-        const int gain_num = 4;
-        const int gain_den = 1;
+        // Boost with soft limiter to restore volume, scaled by volume setting.
+        // At volume=100: gain = 400/100 = 4x (full). At volume=50: 2x. At volume=10: 0.4x.
+        const int gain_num = g_settings.volume * 4;
+        const int gain_den = 100;
         const bool use_soft_limiter = true;
 #ifdef MURMSNES_PROFILE
         uint32_t t4 = time_us_32();

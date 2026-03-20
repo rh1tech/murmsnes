@@ -8,6 +8,7 @@
 #include "gfx.h"
 #include "apu.h"
 #include "dma.h"
+#include "../settings.h"
 
 /* Mark main loop as hot for RAM execution on Pico */
 #ifdef PICO_ON_DEVICE
@@ -106,7 +107,7 @@ void S9xDoHBlankProcessing()
    switch (CPU.WhichEvent)
    {
    case HBLANK_START_EVENT:
-      if (IPPU.HDMA && CPU.V_Counter <= PPU.ScreenHeight)
+      if (g_settings.hdma_enabled && IPPU.HDMA && CPU.V_Counter <= PPU.ScreenHeight)
          IPPU.HDMA = S9xDoHDMA(IPPU.HDMA);
       break;
    case HBLANK_END_EVENT:
@@ -138,7 +139,8 @@ void S9xDoHBlankProcessing()
          CPU.NMIActive = false;
          ICPU.Frame++;
          CPU.Flags |= SCAN_KEYS_FLAG;
-         S9xStartHDMA();
+         if (g_settings.hdma_enabled)
+            S9xStartHDMA();
       }
 
       if (PPU.VTimerEnabled && !PPU.HTimerEnabled && CPU.V_Counter == PPU.IRQVBeamPos)
