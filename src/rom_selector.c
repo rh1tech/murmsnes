@@ -16,6 +16,8 @@
 #include <string.h>
 #include <stdio.h>
 
+extern volatile uint32_t current_buffer;
+
 #ifndef MURMSNES_VERSION
 #define MURMSNES_VERSION "?"
 #endif
@@ -524,15 +526,11 @@ bool rom_selector_show(char *selected_rom_path, size_t buffer_size, uint8_t *scr
                 sleep_ms(50);
             }
 
-            // Show settings menu
-            settings_result_t result = settings_menu_show(screen_buffer);
+            // Show settings menu (not in game)
+            settings_menu_show(screen_buffer, false);
 
-            if (result == SETTINGS_RESULT_RESET) {
-                watchdog_reboot(0, 0, 10);
-                while(1) tight_loop_contents();
-            }
-
-            // Restore ROM selector palette and redraw
+            // Restore ROM selector: HDMI shows SCREEN[0] where we draw
+            current_buffer = 1;
             menu_ui_init_palette();
             menu_clear_screen(screen_buffer, COLOR_BLACK);
             draw_demostyle_header(screen_buffer, header_phase);

@@ -50,7 +50,7 @@ extern settings_t g_settings;
 
 typedef enum {
     SETTINGS_RESULT_EXIT,         // Back to game / back to ROM selector
-    SETTINGS_RESULT_RESET,        // Back to ROM selector (reboot)
+    SETTINGS_RESULT_ROM_SELECT,   // Return to ROM selector (no reboot)
 } settings_result_t;
 
 /**
@@ -79,8 +79,9 @@ bool settings_check_hotkey(void);
 /**
  * Display settings menu and block until user exits.
  * @param screen_buffer 256x224 byte buffer for menu rendering
- * @return SETTINGS_RESULT_EXIT or SETTINGS_RESULT_RESET
+ * @param in_game true when called from emulation, false from ROM selector
+ * @return SETTINGS_RESULT_EXIT or SETTINGS_RESULT_ROM_SELECT
  */
-settings_result_t settings_menu_show(uint8_t *screen_buffer);
+settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game);
 
 #endif // SETTINGS_H

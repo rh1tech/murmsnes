@@ -109,6 +109,7 @@ static settings_t edit;
 /* Current page and selection */
 static menu_page_t current_page;
 static int selected;
+static bool menu_in_game;  /* true = called from emulation */
 
 /* Input mode names */
 static const char *input_mode_names[] = {
@@ -325,8 +326,15 @@ static bool is_separator_main(int item) {
     return item == MAIN_SEP1 || item == MAIN_SEP2 || item == MAIN_SEP3;
 }
 
+static bool is_hidden_main(int item) {
+    /* Hide "Back to Game" when not in a game */
+    return !menu_in_game && item == MAIN_BACK_GAME;
+}
+
 static bool is_selectable_main(int item) {
-    return !is_separator_main(item);
+    if (is_separator_main(item)) return false;
+    if (is_hidden_main(item)) return false;
+    return true;
 }
 
 static const char *main_label(int item) {
@@ -339,7 +347,7 @@ static const char *main_label(int item) {
         case MAIN_VIDEO:     return "VIDEO SETTINGS...";
         case MAIN_AUDIO:     return "AUDIO SETTINGS...";
         case MAIN_BACK_GAME: return "BACK TO GAME";
-        case MAIN_BACK_ROM:  return "BACK TO ROM SELECTOR";
+        case MAIN_BACK_ROM:  return menu_in_game ? "CHANGE ROM" : "BACK";
         default:             return "";
     }
 }
@@ -522,7 +530,7 @@ static int next_selectable(int sel, int dir, int count, is_selectable_fn fn) {
 
 static void draw_menu(uint8_t *screen, const char *title, int item_count,
                       const char *(*get_label)(int), const char *(*get_value)(int),
-                      bool (*is_sep)(int), int sel)
+                      bool (*is_sep)(int), bool (*is_hidden)(int), int sel)
 {
     /* Clear screen */
     memset(screen, PAL_BG, SCREEN_WIDTH * SCREEN_HEIGHT);
@@ -534,6 +542,7 @@ static void draw_menu(uint8_t *screen, const char *title, int item_count,
     /* Menu items */
     int y = MENU_START_Y;
     for (int i = 0; i < item_count; i++) {
+        if (is_hidden && is_hidden(i)) continue;
         if (is_sep(i)) {
             draw_hline(screen, MENU_X, y + LINE_HEIGHT / 2, SCREEN_WIDTH - 2 * MENU_X, PAL_GRAY);
             y += LINE_HEIGHT;
@@ -697,8 +706,10 @@ bool settings_check_hotkey(void) {
 extern uint8_t SCREEN[2][256 * 224];
 extern volatile uint32_t current_buffer;
 
-settings_result_t settings_menu_show(uint8_t *screen_buffer) {
+settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
     (void)screen_buffer;  /* We use SCREEN[0]/SCREEN[1] directly for double-buffering */
+
+    menu_in_game = in_game;
 
     /* Copy settings for editing */
     edit = g_settings;
@@ -721,7 +732,7 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer) {
     /* Draw initial frame into buf 0, display it.
      * DMA displays SCREEN[!current_buffer], so set current_buffer=1 to show SCREEN[0]. */
     draw_menu(SCREEN[0], "SETTINGS", MAIN_ITEM_COUNT,
-              main_label, main_value, is_separator_main, selected);
+              main_label, main_value, is_separator_main, is_hidden_main, selected);
     current_buffer = 1;
     draw_buf = 1;  /* next draw goes into buf 1 */
 
@@ -806,7 +817,7 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer) {
                 } else if (selected == MAIN_BACK_ROM) {
                     g_settings = edit;
                     settings_save();
-                    result = SETTINGS_RESULT_RESET;
+                    result = SETTINGS_RESULT_ROM_SELECT;
                     break;
                 } else {
                     /* For value items, A/Start cycles forward */
@@ -851,15 +862,15 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer) {
         switch (current_page) {
             case PAGE_VIDEO:
                 draw_menu(back, "VIDEO SETTINGS", VIDEO_ITEM_COUNT,
-                          video_label, video_value, is_separator_video, selected);
+                          video_label, video_value, is_separator_video, NULL, selected);
                 break;
             case PAGE_AUDIO:
                 draw_menu(back, "AUDIO SETTINGS", AUDIO_ITEM_COUNT,
-                          audio_label, audio_value, is_separator_audio, selected);
+                          audio_label, audio_value, is_separator_audio, NULL, selected);
                 break;
             default:
                 draw_menu(back, "SETTINGS", MAIN_ITEM_COUNT,
-                          main_label, main_value, is_separator_main, selected);
+                          main_label, main_value, is_separator_main, is_hidden_main, selected);
                 break;
         }
 

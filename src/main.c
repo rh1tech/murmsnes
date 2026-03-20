@@ -671,7 +671,7 @@ void set_frameskip_level(uint8_t level) {
 // If we fall too far behind, resync the deadline instead of accumulating lateness.
 #define LATE_RESYNC_US (TARGET_FRAME_US * 4)
 
-static void __time_critical_func(emulation_loop)(void) {
+static bool __time_critical_func(emulation_loop)(void) {  /* returns true if user wants ROM selector */
     LOG("Starting emulation loop...\n");
     LOG("[build] %s %s | TARGET_FRAME_US=%u FRAMESKIP_LEVEL=%u LATE_RESYNC_US=%u\n",
         __DATE__, __TIME__,
@@ -937,11 +937,13 @@ static void __time_critical_func(emulation_loop)(void) {
             // Use SCREEN[0] for menu drawing, tell HDMI to display it
             graphics_set_buffer(SCREEN[0]);
 
-            settings_result_t sresult = settings_menu_show(SCREEN[0]);
+            settings_result_t sresult = settings_menu_show(SCREEN[0], true);
 
-            if (sresult == SETTINGS_RESULT_RESET) {
-                watchdog_reboot(0, 0, 10);
-                while(1) tight_loop_contents();
+            if (sresult == SETTINGS_RESULT_ROM_SELECT) {
+                // Re-enable Core 1 before returning
+                __dmb();
+                menu_active = false;
+                return true;
             }
 
             // Apply runtime settings (frameskip, echo, etc.)
@@ -1297,73 +1299,86 @@ int main(void) {
     LOG("USB HID initialized\n");
 #endif
 
-    // Initialize menu palette for ROM selector
-    menu_ui_init_palette();
-
-    // HDMI reads from SCREEN[!current_buffer], so set current_buffer=1
-    // so that HDMI reads from SCREEN[0] where ROM selector draws
-    current_buffer = 1;
-
-    // Show ROM selector
-    LOG("Starting ROM selector...\n");
+    // Main loop: ROM selector -> load -> emulate -> repeat
     char rom_path[MAX_ROM_PATH];
-    bool rom_selected = rom_selector_show(rom_path, sizeof(rom_path), SCREEN[0]);
 
-    if (!rom_selected) {
-        LOG("No ROM selected!\n");
-        // Show SD error screen if no ROMs found
-        rom_selector_show_sd_error(SCREEN[0], 0);
-        // This function never returns
-    }
+    while (true) {
+        // Initialize menu palette for ROM selector
+        menu_ui_init_palette();
 
-    LOG("ROM selected: %s\n", rom_path);
+        // HDMI reads from SCREEN[!current_buffer], so set current_buffer=1
+        // so that HDMI reads from SCREEN[0] where ROM selector draws
+        current_buffer = 1;
 
-    // Clear both screen buffers to remove ROM selector artifacts
-    memset(SCREEN[0], 0, sizeof(SCREEN[0]));
-    memset(SCREEN[1], 0, sizeof(SCREEN[1]));
+        // Show ROM selector
+        LOG("Starting ROM selector...\n");
+        bool rom_selected = rom_selector_show(rom_path, sizeof(rom_path), SCREEN[0]);
 
-    // Reset current_buffer for proper double-buffering during emulation
-    current_buffer = 0;
+        if (!rom_selected) {
+            LOG("No ROM selected!\n");
+            rom_selector_show_sd_error(SCREEN[0], 0);
+            // This function never returns
+        }
 
-    // Load ROM from SD card
-    LOG("Loading ROM...\n");
-    bool rom_loaded = load_rom_from_sd(rom_path);
+        LOG("ROM selected: %s\n", rom_path);
 
-    if (!rom_loaded) {
-        LOG("Could not load ROM file!\n");
-        // Blink LED slowly to indicate error
-        while (1) {
-            gpio_put(PICO_DEFAULT_LED_PIN, 1);
-            sleep_ms(500);
-            gpio_put(PICO_DEFAULT_LED_PIN, 0);
-            sleep_ms(500);
+        // Clear both screen buffers
+        memset(SCREEN[0], 0, sizeof(SCREEN[0]));
+        memset(SCREEN[1], 0, sizeof(SCREEN[1]));
+        current_buffer = 0;
+
+        // Mark PSRAM so we can restore after emulation
+        psram_mark_session();
+
+        // Load ROM from SD card
+        LOG("Loading ROM...\n");
+        bool rom_loaded = load_rom_from_sd(rom_path);
+
+        if (!rom_loaded) {
+            LOG("Could not load ROM file!\n");
+            psram_restore_session();
+            continue;  // Back to ROM selector
+        }
+
+        // Initialize SNES emulator
+        LOG("Initializing SNES emulator...\n");
+        snes9x_init();
+
+        // Load the ROM into SNES memory map
+        LOG("Setting up ROM mapping...\n");
+        if (!LoadROM(NULL)) {
+            LOG("Failed to initialize ROM!\n");
+            psram_restore_session();
+            continue;  // Back to ROM selector
+        }
+
+        LOG("ROM loaded successfully!\n");
+        LOG("ROM Name: %s\n", Memory.ROMName);
+        LOG("ROM Size: %lu KB\n", (unsigned long)(Memory.CalculatedSize / 1024));
+
+        gpio_put(PICO_DEFAULT_LED_PIN, 0);  // LED off = running
+
+        // Run emulation (returns true if user wants ROM selector)
+        bool back_to_selector = emulation_loop();
+
+        if (back_to_selector) {
+            LOG("Returning to ROM selector...\n");
+
+            // Free all PSRAM allocated during this session
+            psram_restore_session();
+
+            // Clear emulator state pointers (memory was freed by psram_restore)
+            Memory.ROM = NULL;
+            Memory.RAM = NULL;
+            Memory.VRAM = NULL;
+            Memory.SRAM = NULL;
+            Memory.FillRAM = NULL;
+
+            // Clear screen buffers
+            memset(SCREEN[0], 0, sizeof(SCREEN[0]));
+            memset(SCREEN[1], 0, sizeof(SCREEN[1]));
         }
     }
-    
-    // Initialize SNES emulator
-    LOG("Initializing SNES emulator...\n");
-    snes9x_init();
-    
-    // Load the ROM into SNES memory map
-    LOG("Setting up ROM mapping...\n");
-    if (!LoadROM(NULL)) {
-        LOG("Failed to initialize ROM!\n");
-        while (1) {
-            gpio_put(PICO_DEFAULT_LED_PIN, 1);
-            sleep_ms(200);
-            gpio_put(PICO_DEFAULT_LED_PIN, 0);
-            sleep_ms(200);
-        }
-    }
-    
-    LOG("ROM loaded successfully!\n");
-    LOG("ROM Name: %s\n", Memory.ROMName);
-    LOG("ROM Size: %lu KB\n", (unsigned long)(Memory.CalculatedSize / 1024));
-    
-    gpio_put(PICO_DEFAULT_LED_PIN, 0);  // LED off = running
-    
-    // Run emulation
-    emulation_loop();
-    
+
     return 0;
 }
