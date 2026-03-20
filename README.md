@@ -62,114 +62,57 @@ MurmSNES requires 8MB PSRAM to run. You can obtain PSRAM-equipped hardware in se
 
 ## Pin Assignment
 
-### M1 Layout
+Two GPIO layouts are supported: **M1** and **M2**. The PSRAM pin is auto-detected based on chip package:
 
-<details>
-<summary>Click to expand M1 pinout</summary>
+- **RP2350B**: GPIO47 (both M1 and M2)
+- **RP2350A**: GPIO19 (M1) or GPIO8 (M2)
 
-#### HDMI (via 270 Ohm resistors)
+### HDMI (via 270 Ohm resistors)
 
-| Signal | GPIO |
-|--------|------|
-| CLK-   | 6    |
-| CLK+   | 7    |
-| D0-    | 8    |
-| D0+    | 9    |
-| D1-    | 10   |
-| D1+    | 11   |
-| D2-    | 12   |
-| D2+    | 13   |
+| Signal | M1 GPIO | M2 GPIO |
+|--------|---------|---------|
+| CLK-   | 6       | 12      |
+| CLK+   | 7       | 13      |
+| D0-    | 8       | 14      |
+| D0+    | 9       | 15      |
+| D1-    | 10      | 16      |
+| D1+    | 11      | 17      |
+| D2-    | 12      | 18      |
+| D2+    | 13      | 19      |
 
-#### SD Card (SPI mode)
+### SD Card (SPI mode)
 
-| Signal  | GPIO |
-|---------|------|
-| CLK     | 2    |
-| MOSI    | 3    |
-| MISO    | 4    |
-| CS      | 5    |
+| Signal  | M1 GPIO | M2 GPIO |
+|---------|---------|---------|
+| CLK     | 2       | 6       |
+| CMD     | 3       | 7       |
+| DAT0    | 4       | 4       |
+| DAT3/CS | 5       | 5       |
 
-#### NES/SNES Gamepad
+### NES/SNES Gamepad
 
-| Signal | GPIO |
-|--------|------|
-| CLK    | 14   |
-| LATCH  | 15   |
-| DATA 1 | 16   |
-
-#### I2S Audio
-
-| Signal | GPIO |
-|--------|------|
-| DATA   | 26   |
-| BCLK   | 27   |
-| LRCLK  | 28   |
-
-#### PS/2 Keyboard
-
-| Signal | GPIO |
-|--------|------|
-| CLK    | 0    |
-| DATA   | 1    |
-
-</details>
-
-### M2 Layout
-
-#### HDMI (via 270 Ohm resistors)
-
-| Signal | GPIO |
-|--------|------|
-| CLK-   | 12   |
-| CLK+   | 13   |
-| D0-    | 14   |
-| D0+    | 15   |
-| D1-    | 16   |
-| D1+    | 17   |
-| D2-    | 18   |
-| D2+    | 19   |
-
-#### SD Card (SPI mode)
-
-| Signal  | GPIO |
-|---------|------|
-| CLK     | 6    |
-| MOSI    | 7    |
-| MISO    | 4    |
-| CS      | 5    |
-
-#### NES/SNES Gamepad
-
-| Signal | GPIO |
-|--------|------|
-| CLK    | 20   |
-| LATCH  | 21   |
-| DATA 1 | 26   |
+| Signal | M1 GPIO | M2 GPIO |
+|--------|---------|---------|
+| CLK    | 14      | 20      |
+| LATCH  | 15      | 21      |
+| DATA 1 | 16      | 26      |
 
 > **Note:** Gamepad 2 uses the same CLK and LATCH as Gamepad 1, only the DATA pin differs.
 
-#### I2S Audio
+### I2S Audio
 
-| Signal | GPIO |
-|--------|------|
-| DATA   | 9    |
-| BCLK   | 10   |
-| LRCLK  | 11   |
+| Signal | M1 GPIO | M2 GPIO |
+|--------|---------|---------|
+| DATA   | 26      | 9       |
+| BCLK   | 27      | 10      |
+| LRCLK  | 28      | 11      |
 
-#### PS/2 Keyboard
+### PS/2 Keyboard
 
-| Signal | GPIO |
-|--------|------|
-| CLK    | 2    |
-| DATA   | 3    |
-
-### PSRAM (auto-detected)
-
-| Chip Package | GPIO |
-|--------------|------|
-| RP2350B      | 47   |
-| RP2350A (M2) | 8    |
-| RP2350A (M1) | 19   |
+| Signal | M1 GPIO | M2 GPIO |
+|--------|---------|---------|
+| CLK    | 0       | 2       |
+| DATA   | 1       | 3       |
 
 ## How to Use
 
