@@ -608,14 +608,8 @@ void __time_critical_func(render_core)(void) {
             audio_cons_seq = cons + 1;
         }
 
-        // Log underrun stats every ~5 seconds (~300 chunks at 60Hz)
+        // Reset underrun stats periodically (logging disabled)
         if (++diag_timer >= 300) {
-            uint32_t pct10 = total_chunks ? (total_underruns * 1000 / total_chunks) : 0;
-            printf("[AUDIO] underruns=%lu/%lu (%lu.%lu%%) max_gap=%luus q_fill=%lu\n",
-                   (unsigned long)total_underruns, (unsigned long)total_chunks,
-                   (unsigned long)(pct10 / 10), (unsigned long)(pct10 % 10),
-                   (unsigned long)max_gap_us,
-                   (unsigned long)(audio_prod_seq - audio_cons_seq));
             total_underruns = 0;
             total_chunks = 0;
             max_gap_us = 0;
@@ -870,30 +864,21 @@ static bool __time_critical_func(emulation_loop)(void) {  /* returns true if use
             }
         }
 
-        /* Diagnostic: warn when a frame takes too long */
+        /* Simple FPS counter */
         {
-            extern uint32_t g_upd_screen_calls;
-            extern uint32_t g_render_us;
-            extern uint32_t g_render_obj_us;
-            extern uint32_t g_render_bg_us[4];
-            extern volatile uint32_t dsp_log_frame;
-            uint32_t emu_us = _diag_t1 - _diag_t0;
-            static uint32_t slow_streak = 0;
-            if (emu_us > 18000) {
-                slow_streak++;
-                if (slow_streak <= 5 || (slow_streak % 30) == 0) {
-                    LOG("[SLOW] f=%u emu=%u cpu=%u rend=%u obj=%u bg=%u/%u/%u/%u\n",
-                        (unsigned)dsp_log_frame, (unsigned)emu_us,
-                        (unsigned)(emu_us - g_render_us), (unsigned)g_render_us,
-                        (unsigned)g_render_obj_us,
-                        (unsigned)g_render_bg_us[0], (unsigned)g_render_bg_us[1],
-                        (unsigned)g_render_bg_us[2], (unsigned)g_render_bg_us[3]);
-                }
-            } else {
-                if (slow_streak > 5) {
-                    LOG("[SLOW] streak ended after %u frames\n", (unsigned)slow_streak);
-                }
-                slow_streak = 0;
+            static uint32_t fps_frames = 0;
+            static uint32_t fps_rendered = 0;
+            static uint32_t fps_last_us = 0;
+            if (fps_last_us == 0) fps_last_us = _diag_t1;
+            fps_frames++;
+            if (!skip_render) fps_rendered++;
+            uint32_t elapsed = _diag_t1 - fps_last_us;
+            if (elapsed >= 1000000u) {
+                LOG("[FPS] emu=%lu render=%lu\n",
+                    (unsigned long)fps_frames, (unsigned long)fps_rendered);
+                fps_frames = 0;
+                fps_rendered = 0;
+                fps_last_us = _diag_t1;
             }
         }
 
@@ -1342,14 +1327,7 @@ int main(void) {
     char rom_path[MAX_ROM_PATH];
 
     while (true) {
-        // Initialize menu palette for ROM selector
-        menu_ui_init_palette();
-
-        // HDMI reads from SCREEN[!current_buffer], so set current_buffer=1
-        // so that HDMI reads from SCREEN[0] where ROM selector draws
-        current_buffer = 1;
-
-        // Show ROM selector
+        // Show ROM selector (sets up its own palette and buffer management)
         LOG("Starting ROM selector...\n");
         bool rom_selected = rom_selector_show(rom_path, sizeof(rom_path), SCREEN[0]);
 

@@ -60,8 +60,8 @@ typedef enum {
     MAIN_VIDEO,
     MAIN_AUDIO,
     MAIN_SEP3,
-    MAIN_BACK_GAME,
     MAIN_BACK_ROM,
+    MAIN_BACK_GAME,
     MAIN_ITEM_COUNT
 } main_item_t;
 

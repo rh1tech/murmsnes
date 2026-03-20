@@ -149,7 +149,7 @@ static uint16_t key_to_state_bit(uint8_t key) {
 }
 
 extern "C" void ps2kbd_init(void) {
-    kbd = new Ps2Kbd_Mrmltr(pio0, PS2_PIN_CLK, key_handler);
+    kbd = new Ps2Kbd_Mrmltr(pio1, PS2_PIN_CLK, key_handler);
     kbd->init_gpio();
     g_kbd_state = 0;
 }
