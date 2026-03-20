@@ -6,9 +6,10 @@ Based on [Snes9x](https://github.com/snes9xgit/snes9x) / [snes9x2010](https://gi
 
 ## Screenshots
 
-| | |
+| Welcome | ROM Selector |
 |:---:|:---:|
 | ![Welcome](screenshots/screen1.png) | ![ROM Selector](screenshots/screen2.png) |
+| **Gameplay** | **Settings** |
 | ![Gameplay](screenshots/screen3.png) | ![Settings](screenshots/screen4.png) |
 
 ## Supported Boards
