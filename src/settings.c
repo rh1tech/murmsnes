@@ -13,6 +13,7 @@
 #include "nespad/nespad.h"
 #include "ps2kbd/ps2kbd_wrapper.h"
 #include "ff.h"
+#include "snes9x/snapshot.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -60,9 +61,12 @@ typedef enum {
     MAIN_PLAYER1,
     MAIN_PLAYER2,
     MAIN_SEP2,
+    MAIN_SAVE_GAME,
+    MAIN_LOAD_GAME,
+    MAIN_SEP3,
     MAIN_VIDEO,
     MAIN_AUDIO,
-    MAIN_SEP3,
+    MAIN_SEP4,
     MAIN_BACK_ROM,
     MAIN_BACK_GAME,
     MAIN_ITEM_COUNT
@@ -261,6 +265,74 @@ static void setup_menu_palette(void) {
     graphics_restore_sync_colors();
 }
 
+/* ─── Save state (SD card) ────────────────────────────────────────── */
+
+static bool save_exists = false;
+static const char *status_msg = NULL;
+static int status_frames = 0;
+static const char *save_error = NULL;
+
+static void get_save_path(char *path, size_t path_size) {
+    snprintf(path, path_size, "/snes/.save/%s.sav", g_rom_name);
+}
+
+static bool check_save_exists(void) {
+    if (g_rom_name[0] == '\0') return false;
+    char path[128];
+    get_save_path(path, sizeof(path));
+    FILINFO fno;
+    return (f_stat(path, &fno) == FR_OK);
+}
+
+/* Reuse the FatFS FATFS object from main.c (already mounted during emulation) */
+extern FATFS fs;
+
+static bool do_save_game(void) {
+    save_error = NULL;
+    if (g_rom_name[0] == '\0') { save_error = "NO ROM NAME"; return false; }
+
+    char path[128];
+    get_save_path(path, sizeof(path));
+    printf("do_save: saving to %s\n", path);
+
+    /* Try open first; only mkdir if it fails (avoids extra LFN mallocs) */
+    FIL file;
+    FRESULT fr = f_open(&file, path, FA_WRITE | FA_CREATE_ALWAYS);
+    if (fr != FR_OK) {
+        f_mkdir("/snes");
+        f_mkdir("/snes/.save");
+        fr = f_open(&file, path, FA_WRITE | FA_CREATE_ALWAYS);
+    }
+    if (fr != FR_OK) {
+        save_error = "FILE OPEN FAIL";
+        printf("do_save: f_open failed (%d)\n", fr);
+        return false;
+    }
+
+    bool ok = S9xSaveState(&file);
+    f_close(&file);
+
+    if (!ok) { save_error = "STATE FAILED"; return false; }
+    printf("do_save: OK\n");
+    return true;
+}
+
+static bool do_load_game(void) {
+    if (g_rom_name[0] == '\0') return false;
+
+    char path[128];
+    get_save_path(path, sizeof(path));
+    printf("do_load: loading from %s\n", path);
+
+    FIL file;
+    if (f_open(&file, path, FA_READ) != FR_OK) return false;
+
+    bool ok = S9xLoadState(&file);
+    f_close(&file);
+    printf("do_load: %s\n", ok ? "OK" : "FAILED");
+    return ok;
+}
+
 /* ─── Input reading (merge all sources) ───────────────────────────── */
 
 #define BTN_UP    0x10
@@ -326,17 +398,21 @@ static int read_menu_buttons(void) {
 /* ─── Item helpers (main menu) ────────────────────────────────────── */
 
 static bool is_separator_main(int item) {
-    return item == MAIN_SEP1 || item == MAIN_SEP2 || item == MAIN_SEP3;
+    return item == MAIN_SEP1 || item == MAIN_SEP2 || item == MAIN_SEP3 || item == MAIN_SEP4;
 }
 
 static bool is_hidden_main(int item) {
     /* Hide "Back to Game" when not in a game */
-    return !menu_in_game && item == MAIN_BACK_GAME;
+    if (!menu_in_game && item == MAIN_BACK_GAME) return true;
+    /* Hide save/load when not in a game */
+    if (!menu_in_game && (item == MAIN_SAVE_GAME || item == MAIN_LOAD_GAME || item == MAIN_SEP3)) return true;
+    return false;
 }
 
 static bool is_selectable_main(int item) {
     if (is_separator_main(item)) return false;
     if (is_hidden_main(item)) return false;
+    if (item == MAIN_LOAD_GAME && !save_exists) return false;
     return true;
 }
 
@@ -347,6 +423,8 @@ static const char *main_label(int item) {
         case MAIN_FRAMESKIP: return "FRAMESKIP";
         case MAIN_PLAYER1:   return "GAMEPAD 1";
         case MAIN_PLAYER2:   return "GAMEPAD 2";
+        case MAIN_SAVE_GAME: return (status_frames > 0) ? status_msg : "SAVE GAME";
+        case MAIN_LOAD_GAME: return save_exists ? "LOAD GAME" : "LOAD GAME (-)";
         case MAIN_VIDEO:     return "VIDEO SETTINGS...";
         case MAIN_AUDIO:     return "AUDIO SETTINGS...";
         case MAIN_BACK_GAME: return "BACK TO GAME";
@@ -527,7 +605,8 @@ static int next_selectable(int sel, int dir, int count, is_selectable_fn fn) {
 
 static void draw_menu(uint8_t *screen, const char *title, int item_count,
                       const char *(*get_label)(int), const char *(*get_value)(int),
-                      bool (*is_sep)(int), bool (*is_hidden)(int), int sel)
+                      bool (*is_sep)(int), bool (*is_hidden)(int),
+                      is_selectable_fn is_sel, int sel)
 {
     /* Clear screen */
     memset(screen, PAL_BG, SCREEN_WIDTH * SCREEN_HEIGHT);
@@ -536,17 +615,53 @@ static void draw_menu(uint8_t *screen, const char *title, int item_count,
     draw_text_centered(screen, MENU_TITLE_Y, title, PAL_WHITE);
     draw_hline(screen, MENU_X, MENU_TITLE_Y + FONT_HEIGHT + 3, SCREEN_WIDTH - 2 * MENU_X, PAL_GRAY);
 
-    /* Menu items */
-    int y = MENU_START_Y;
+    /* Help text (always at bottom) */
+    const int help_y = SCREEN_HEIGHT - 14;
+    draw_text_centered(screen, help_y, "D-PAD:NAV  L/R:CHANGE  B:BACK", PAL_GRAY);
+
+    /* Compute visible area for menu items */
+    const int vis_top = MENU_START_Y;
+    const int vis_bottom = help_y - 4;  /* leave gap above help */
+    const int vis_height = vis_bottom - vis_top;
+
+    /* Count total height and find selected item's position */
+    int total_height = 0;
+    int sel_y_start = 0;
     for (int i = 0; i < item_count; i++) {
         if (is_hidden && is_hidden(i)) continue;
+        if (i == sel) sel_y_start = total_height;
+        total_height += LINE_HEIGHT;
+    }
+
+    /* Compute scroll offset so selected item is visible */
+    static int scroll_offset = 0;
+    if (sel_y_start < scroll_offset)
+        scroll_offset = sel_y_start;
+    if (sel_y_start + LINE_HEIGHT > scroll_offset + vis_height)
+        scroll_offset = sel_y_start + LINE_HEIGHT - vis_height;
+    if (scroll_offset < 0) scroll_offset = 0;
+    if (total_height <= vis_height) scroll_offset = 0;
+
+    /* Draw menu items with scroll offset */
+    int y = vis_top - scroll_offset;
+    for (int i = 0; i < item_count; i++) {
+        if (is_hidden && is_hidden(i)) continue;
+
+        /* Skip items fully outside visible area */
+        if (y + LINE_HEIGHT <= vis_top) { y += LINE_HEIGHT; continue; }
+        if (y >= vis_bottom) break;
+
         if (is_sep(i)) {
             draw_hline(screen, MENU_X, y + LINE_HEIGHT / 2, SCREEN_WIDTH - 2 * MENU_X, PAL_GRAY);
             y += LINE_HEIGHT;
             continue;
         }
 
-        uint8_t color = (i == sel) ? PAL_YELLOW : PAL_WHITE;
+        uint8_t color;
+        if (is_sel && !is_sel(i))
+            color = PAL_GRAY;
+        else
+            color = (i == sel) ? PAL_YELLOW : PAL_WHITE;
 
         /* Selection indicator */
         if (i == sel)
@@ -565,9 +680,6 @@ static void draw_menu(uint8_t *screen, const char *title, int item_count,
 
         y += LINE_HEIGHT;
     }
-
-    /* Help text */
-    draw_text_centered(screen, SCREEN_HEIGHT - 14, "D-PAD:NAV  L/R:CHANGE  B:BACK", PAL_GRAY);
 }
 
 /* ─── Settings persistence ────────────────────────────────────────── */
@@ -713,6 +825,10 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
     /* Copy settings for editing */
     edit = g_settings;
 
+    /* Check if a save file exists for this ROM */
+    save_exists = in_game ? check_save_exists() : false;
+    status_frames = 0;
+
     /* Set up palette */
     setup_menu_palette();
 
@@ -731,7 +847,8 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
     /* Draw initial frame into buf 0, display it.
      * DMA displays SCREEN[!current_buffer], so set current_buffer=1 to show SCREEN[0]. */
     draw_menu(SCREEN[0], "SETTINGS", MAIN_ITEM_COUNT,
-              main_label, main_value, is_separator_main, is_hidden_main, selected);
+              main_label, main_value, is_separator_main, is_hidden_main,
+              is_selectable_main, selected);
     current_buffer = 1;
     draw_buf = 1;  /* next draw goes into buf 1 */
 
@@ -808,6 +925,21 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
                 } else if (selected == MAIN_AUDIO) {
                     current_page = PAGE_AUDIO;
                     selected = AUDIO_ECHO;
+                } else if (selected == MAIN_SAVE_GAME) {
+                    bool ok = do_save_game();
+                    if (ok) {
+                        save_exists = true;
+                        status_msg = "SAVED.";
+                    } else {
+                        status_msg = save_error ? save_error : "SAVE FAILED.";
+                    }
+                    status_frames = 120;
+                } else if (selected == MAIN_LOAD_GAME && save_exists) {
+                    do_load_game();
+                    g_settings = edit;
+                    settings_save();
+                    result = SETTINGS_RESULT_EXIT;
+                    break;
                 } else if (selected == MAIN_BACK_GAME) {
                     g_settings = edit;
                     settings_save();
@@ -818,23 +950,16 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
                     settings_save();
                     result = SETTINGS_RESULT_ROM_SELECT;
                     break;
-                } else {
-                    /* For value items, A/Start cycles forward */
-                    main_change_value(selected, 1);
                 }
             } else if (current_page == PAGE_VIDEO) {
                 if (selected == VIDEO_BACK) {
                     current_page = PAGE_MAIN;
                     selected = MAIN_VIDEO;
-                } else {
-                    video_change_value(selected, 1);
                 }
             } else if (current_page == PAGE_AUDIO) {
                 if (selected == AUDIO_BACK) {
                     current_page = PAGE_MAIN;
                     selected = MAIN_AUDIO;
-                } else {
-                    audio_change_value(selected, 1);
                 }
             }
         }
@@ -856,20 +981,24 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
             }
         }
 
+        /* Tick status message countdown */
+        if (status_frames > 0) status_frames--;
+
         /* Draw into back buffer, then swap to front */
         uint8_t *back = SCREEN[draw_buf];
         switch (current_page) {
             case PAGE_VIDEO:
                 draw_menu(back, "VIDEO SETTINGS", VIDEO_ITEM_COUNT,
-                          video_label, video_value, is_separator_video, NULL, selected);
+                          video_label, video_value, is_separator_video, NULL, NULL, selected);
                 break;
             case PAGE_AUDIO:
                 draw_menu(back, "AUDIO SETTINGS", AUDIO_ITEM_COUNT,
-                          audio_label, audio_value, is_separator_audio, NULL, selected);
+                          audio_label, audio_value, is_separator_audio, NULL, NULL, selected);
                 break;
             default:
                 draw_menu(back, "SETTINGS", MAIN_ITEM_COUNT,
-                          main_label, main_value, is_separator_main, is_hidden_main, selected);
+                          main_label, main_value, is_separator_main, is_hidden_main,
+                          is_selectable_main, selected);
                 break;
         }
 

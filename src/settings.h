@@ -46,6 +46,9 @@ typedef struct {
 
 extern settings_t g_settings;
 
+/* Current ROM name (no path/extension) - set by main.c during ROM load */
+extern char g_rom_name[64];
+
 typedef enum {
     SETTINGS_RESULT_EXIT,         // Back to game / back to ROM selector
     SETTINGS_RESULT_ROM_SELECT,   // Return to ROM selector (no reboot)

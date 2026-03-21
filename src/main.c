@@ -118,6 +118,9 @@ static volatile bool menu_active = false;  // When true, Core 1 stops overriding
 //=============================================================================
 static FATFS fs;
 
+/* ROM name for save state file paths (set after ROM loads) */
+char g_rom_name[64];
+
 //=============================================================================
 // Flash timing configuration for overclocking
 //=============================================================================
@@ -1363,6 +1366,23 @@ int main(void) {
         LOG("ROM loaded successfully!\n");
         LOG("ROM Name: %s\n", Memory.ROMName);
         LOG("ROM Size: %lu KB\n", (unsigned long)(Memory.CalculatedSize / 1024));
+
+        /* Set g_rom_name for save state file paths */
+        {
+            const char *src = Memory.ROMName;
+            int j = 0;
+            for (int i = 0; src[i] && j < (int)sizeof(g_rom_name) - 1; i++) {
+                char c = src[i];
+                if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||
+                    (c >= '0' && c <= '9') || c == '-' || c == '_')
+                    g_rom_name[j++] = c;
+                else if (c == ' ' && j > 0 && g_rom_name[j-1] != '_')
+                    g_rom_name[j++] = '_';
+            }
+            while (j > 0 && g_rom_name[j-1] == '_') j--;
+            g_rom_name[j] = '\0';
+            if (j == 0) strncpy(g_rom_name, "unknown", sizeof(g_rom_name));
+        }
 
         gpio_put(PICO_DEFAULT_LED_PIN, 0);  // LED off = running
 

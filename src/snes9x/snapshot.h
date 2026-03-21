@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "ff.h"
 
-bool S9xSaveState(const char *filename);
-bool S9xLoadState(const char *filename);
+bool S9xSaveState(FIL *fp);
+bool S9xLoadState(FIL *fp);

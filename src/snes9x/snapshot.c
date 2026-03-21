@@ -10,76 +10,110 @@
 #include "srtc.h"
 #include "soundux.h"
 
+#include "ff.h"
 #include <stdio.h>
+#include <string.h>
 
 static const char header[16] = "SNES9X_000000002";
 
+/*
+ * PSRAM-safe write: Memory.VRAM/RAM/SRAM/FillRAM and IAPU.RAM live in PSRAM
+ * (XIP-mapped). The SD card's PIO SPI uses DMA which cannot read from PSRAM
+ * XIP space, causing hard faults. We copy through a small SRAM bounce buffer.
+ */
+#define BOUNCE_SIZE 512
 
-bool S9xSaveState(const char *filename)
+static bool write_chunk(FIL *fp, const void *data, UINT size) {
+   uint8_t bounce[BOUNCE_SIZE];
+   const uint8_t *src = (const uint8_t *)data;
+   UINT remaining = size;
+
+   while (remaining > 0) {
+      UINT chunk = (remaining > BOUNCE_SIZE) ? BOUNCE_SIZE : remaining;
+      memcpy(bounce, src, chunk);
+      UINT bw;
+      FRESULT fr = f_write(fp, bounce, chunk, &bw);
+      if (fr != FR_OK || bw != chunk)
+         return false;
+      src += chunk;
+      remaining -= chunk;
+   }
+   return true;
+}
+
+static bool read_chunk(FIL *fp, void *data, UINT size) {
+   uint8_t bounce[BOUNCE_SIZE];
+   uint8_t *dst = (uint8_t *)data;
+   UINT remaining = size;
+
+   while (remaining > 0) {
+      UINT chunk = (remaining > BOUNCE_SIZE) ? BOUNCE_SIZE : remaining;
+      UINT br;
+      FRESULT fr = f_read(fp, bounce, chunk, &br);
+      if (fr != FR_OK || br != chunk)
+         return false;
+      memcpy(dst, bounce, chunk);
+      dst += chunk;
+      remaining -= chunk;
+   }
+   return true;
+}
+
+bool S9xSaveState(FIL *fp)
 {
    int chunks = 0;
-   FILE *fp = NULL;
 
-   if (!(fp = fopen(filename, "wb")))
-      return false;
-
-   chunks += fwrite(&header, sizeof(header), 1, fp);
-   chunks += fwrite(&CPU, sizeof(CPU), 1, fp);
-   chunks += fwrite(&ICPU, sizeof(ICPU), 1, fp);
-   chunks += fwrite(&PPU, sizeof(PPU), 1, fp);
-   chunks += fwrite(&DMA, sizeof(DMA), 1, fp);
-   chunks += fwrite(Memory.VRAM, VRAM_SIZE, 1, fp);
-   chunks += fwrite(Memory.RAM, RAM_SIZE, 1, fp);
-   chunks += fwrite(Memory.SRAM, SRAM_SIZE, 1, fp);
-   chunks += fwrite(Memory.FillRAM, FILLRAM_SIZE, 1, fp);
-   chunks += fwrite(&APU, sizeof(APU), 1, fp);
-   chunks += fwrite(&IAPU, sizeof(IAPU), 1, fp);
-   chunks += fwrite(IAPU.RAM, 0x10000, 1, fp);
-   chunks += fwrite(&SoundData, sizeof(SoundData), 1, fp);
+   chunks += write_chunk(fp, header, sizeof(header));
+   chunks += write_chunk(fp, &CPU, sizeof(CPU));
+   chunks += write_chunk(fp, &ICPU, sizeof(ICPU));
+   chunks += write_chunk(fp, &PPU, sizeof(PPU));
+   chunks += write_chunk(fp, &DMA, sizeof(DMA));
+   chunks += write_chunk(fp, Memory.VRAM, VRAM_SIZE);
+   chunks += write_chunk(fp, Memory.RAM, RAM_SIZE);
+   chunks += write_chunk(fp, Memory.SRAM, SRAM_SIZE);
+   chunks += write_chunk(fp, Memory.FillRAM, FILLRAM_SIZE);
+   chunks += write_chunk(fp, &APU, sizeof(APU));
+   chunks += write_chunk(fp, &IAPU, sizeof(IAPU));
+   chunks += write_chunk(fp, IAPU.RAM, 0x10000);
+   chunks += write_chunk(fp, &SoundData, sizeof(SoundData));
 
    printf("Saved chunks = %d\n", chunks);
-
-   fclose(fp);
 
    return chunks == 13;
 }
 
-bool S9xLoadState(const char *filename)
+bool S9xLoadState(FIL *fp)
 {
-   uint8_t buffer[512];
+   uint8_t buf[16];
    int chunks = 0;
-   FILE *fp = NULL;
 
-   if (!(fp = fopen(filename, "rb")))
-      return false;
-
-   if (!fread(buffer, 16, 1, fp) || memcmp(header, buffer, sizeof(header)) != 0)
+   if (!read_chunk(fp, buf, 16) || memcmp(header, buf, sizeof(header)) != 0)
    {
       printf("Wrong header found\n");
-      goto fail;
+      return false;
    }
 
-   // At this point we can't go back and a failure will corrupt the state anyway
+   /* At this point we can't go back and a failure will corrupt the state anyway */
    S9xReset();
 
    uint8_t *IAPU_RAM = IAPU.RAM;
 
-   chunks += fread(&CPU, sizeof(CPU), 1, fp);
-   chunks += fread(&ICPU, sizeof(ICPU), 1, fp);
-   chunks += fread(&PPU, sizeof(PPU), 1, fp);
-   chunks += fread(&DMA, sizeof(DMA), 1, fp);
-   chunks += fread(Memory.VRAM, VRAM_SIZE, 1, fp);
-   chunks += fread(Memory.RAM, RAM_SIZE, 1, fp);
-   chunks += fread(Memory.SRAM, SRAM_SIZE, 1, fp);
-   chunks += fread(Memory.FillRAM, FILLRAM_SIZE, 1, fp);
-   chunks += fread(&APU, sizeof(APU), 1, fp);
-   chunks += fread(&IAPU, sizeof(IAPU), 1, fp);
-   chunks += fread(IAPU.RAM, 0x10000, 1, fp);
-   chunks += fread(&SoundData, sizeof(SoundData), 1, fp);
+   chunks += read_chunk(fp, &CPU, sizeof(CPU));
+   chunks += read_chunk(fp, &ICPU, sizeof(ICPU));
+   chunks += read_chunk(fp, &PPU, sizeof(PPU));
+   chunks += read_chunk(fp, &DMA, sizeof(DMA));
+   chunks += read_chunk(fp, Memory.VRAM, VRAM_SIZE);
+   chunks += read_chunk(fp, Memory.RAM, RAM_SIZE);
+   chunks += read_chunk(fp, Memory.SRAM, SRAM_SIZE);
+   chunks += read_chunk(fp, Memory.FillRAM, FILLRAM_SIZE);
+   chunks += read_chunk(fp, &APU, sizeof(APU));
+   chunks += read_chunk(fp, &IAPU, sizeof(IAPU));
+   chunks += read_chunk(fp, IAPU.RAM, 0x10000);
+   chunks += read_chunk(fp, &SoundData, sizeof(SoundData));
 
    printf("Loaded chunks = %d\n", chunks);
 
-   // Fixing up registers and pointers:
+   /* Fixing up registers and pointers: */
 
    IAPU.PC = IAPU.PC - IAPU.RAM + IAPU_RAM;
    IAPU.DirectPage = IAPU.DirectPage - IAPU.RAM + IAPU_RAM;
@@ -101,10 +135,5 @@ bool S9xLoadState(const char *filename)
    S9xFixCycles();
    S9xReschedule();
 
-   fclose(fp);
    return true;
-
-fail:
-   fclose(fp);
-   return false;
 }
