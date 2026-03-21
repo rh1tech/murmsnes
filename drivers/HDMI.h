@@ -71,6 +71,8 @@ void graphics_set_bgcolor(uint32_t color888);
 
 void graphics_set_crt_active(bool active);
 bool graphics_get_crt_active(void);
+void graphics_set_greyscale(bool active);
+bool graphics_get_greyscale(void);
 
 
 static const uint32_t tab_color[11][16] =

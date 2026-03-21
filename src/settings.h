@@ -31,6 +31,7 @@ typedef struct {
     uint8_t p2_mode;              // Player 2 input mode (INPUT_MODE_*)
     uint8_t volume;               // Master volume 0-100 (0=OFF)
     bool    crt_effect;           // CRT scanline effect ON/OFF
+    bool    greyscale;            // Black & white palette mode
     uint8_t frameskip;            // 0=none, 1=low, 2=medium, 3=high, 4=extreme
 
     // Video settings

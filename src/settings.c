@@ -56,6 +56,7 @@ typedef enum {
 typedef enum {
     MAIN_VOLUME,
     MAIN_CRT,
+    MAIN_BW,
     MAIN_FRAMESKIP,
     MAIN_SEP1,
     MAIN_PLAYER1,
@@ -101,6 +102,7 @@ settings_t g_settings = {
     .p2_mode = INPUT_MODE_DISABLED,
     .volume = 100,
     .crt_effect = false,
+    .greyscale = false,
     .frameskip = 2,  /* medium */
     .bg_enabled = 0x0F,  /* all BGs on */
     .sprites_enabled = true,
@@ -420,6 +422,7 @@ static const char *main_label(int item) {
     switch (item) {
         case MAIN_VOLUME:    return "VOLUME";
         case MAIN_CRT:       return "CRT EFFECT";
+        case MAIN_BW:        return "BLACK & WHITE";
         case MAIN_FRAMESKIP: return "FRAMESKIP";
         case MAIN_PLAYER1:   return "GAMEPAD 1";
         case MAIN_PLAYER2:   return "GAMEPAD 2";
@@ -443,6 +446,8 @@ static const char *main_value(int item) {
             return value_buf;
         case MAIN_CRT:
             return edit.crt_effect ? "ON" : "OFF";
+        case MAIN_BW:
+            return edit.greyscale ? "ON" : "OFF";
         case MAIN_FRAMESKIP:
             return frameskip_names[edit.frameskip];
         case MAIN_PLAYER1:
@@ -471,6 +476,9 @@ static void main_change_value(int item, int dir) {
         }
         case MAIN_CRT:
             edit.crt_effect = !edit.crt_effect;
+            break;
+        case MAIN_BW:
+            edit.greyscale = !edit.greyscale;
             break;
         case MAIN_FRAMESKIP:
             if (dir > 0) { if (edit.frameskip < 4) edit.frameskip++; else edit.frameskip = 0; }
@@ -717,6 +725,8 @@ void settings_load(void) {
             if (v >= VOLUME_MIN && v <= VOLUME_MAX) g_settings.volume = (uint8_t)v;
         } else if (strcmp(key, "crt_effect") == 0) {
             g_settings.crt_effect = (atoi(value) != 0);
+        } else if (strcmp(key, "greyscale") == 0) {
+            g_settings.greyscale = (atoi(value) != 0);
         } else if (strcmp(key, "frameskip") == 0) {
             int v = atoi(value);
             if (v >= 0 && v <= 4) g_settings.frameskip = (uint8_t)v;
@@ -753,6 +763,7 @@ bool settings_save(void) {
     f_printf(&file, "p2_mode=%d\n", g_settings.p2_mode);
     f_printf(&file, "volume=%d\n", g_settings.volume);
     f_printf(&file, "crt_effect=%d\n", g_settings.crt_effect ? 1 : 0);
+    f_printf(&file, "greyscale=%d\n", g_settings.greyscale ? 1 : 0);
     f_printf(&file, "frameskip=%d\n", g_settings.frameskip);
     f_printf(&file, "bg_enabled=%d\n", g_settings.bg_enabled);
     f_printf(&file, "sprites=%d\n", g_settings.sprites_enabled ? 1 : 0);
@@ -784,6 +795,9 @@ void settings_apply_runtime(void) {
 
     /* CRT effect */
     graphics_set_crt_active(g_settings.crt_effect);
+
+    /* Black & white mode */
+    graphics_set_greyscale(g_settings.greyscale);
 }
 
 /* ─── Hotkey detection ────────────────────────────────────────────── */

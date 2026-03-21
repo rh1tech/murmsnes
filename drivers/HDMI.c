@@ -32,6 +32,31 @@ bool graphics_get_crt_active(void) {
     return crt_active;
 }
 
+// Black & white mode: when active, palette colors are converted to greyscale
+void graphics_convert_all_palette(void);  // Forward declaration
+static bool __scratch_y("hdmi_bw") greyscale_active = false;
+
+void graphics_set_greyscale(bool active) {
+    if (greyscale_active == active) return;
+    greyscale_active = active;
+    // Reconvert entire palette with new greyscale setting
+    graphics_convert_all_palette();
+}
+
+bool graphics_get_greyscale(void) {
+    return greyscale_active;
+}
+
+// Convert RGB888 to greyscale using luminance formula (fast integer approx)
+// Y = (R*77 + G*150 + B*29) >> 8
+static inline uint32_t rgb_to_grey(uint32_t color888) {
+    uint8_t R = (color888 >> 16) & 0xff;
+    uint8_t G = (color888 >> 8) & 0xff;
+    uint8_t B = color888 & 0xff;
+    uint8_t Y = (uint8_t)((R * 77 + G * 150 + B * 29) >> 8);
+    return (Y << 16) | (Y << 8) | Y;
+}
+
 void graphics_set_buffer(uint8_t *buffer) {
     graphics_buffer = buffer;
 }
@@ -679,14 +704,17 @@ void graphics_set_palette_hdmi(uint8_t i, uint32_t color888) {
     // (This is safe because S9xFixColourBrightness is called between frames)
     color888 &= 0x00ffffff;
     palette[i] = color888;
-    
+
     // Don't write to hardware palette for HDMI control indices (251-254), but allow 255 (bgcolor)
     if ((i >= BASE_HDMI_CTRL_INX) && (i != 255)) return;
-    
+
+    // Apply greyscale conversion if active
+    uint32_t display_color = greyscale_active ? rgb_to_grey(color888) : color888;
+
     uint64_t* conv_color64 = (uint64_t *)conv_color;
-    const uint8_t R = (color888 >> 16) & 0xff;
-    const uint8_t G = (color888 >> 8) & 0xff;
-    const uint8_t B = (color888 >> 0) & 0xff;
+    const uint8_t R = (display_color >> 16) & 0xff;
+    const uint8_t G = (display_color >> 8) & 0xff;
+    const uint8_t B = (display_color >> 0) & 0xff;
     conv_color64[i * 2] = get_ser_diff_data(tmds_encode(R), tmds_encode(G), tmds_encode(B));
     conv_color64[i * 2 + 1] = conv_color64[i * 2] ^ 0x0003ffffffffffffl;
 }
@@ -702,22 +730,22 @@ void graphics_convert_all_palette(void) {
     
     // Convert first 251 colors (0-250) - skip HDMI control indices
     for (int i = 0; i < BASE_HDMI_CTRL_INX; i++) {
-        uint32_t color888 = palette[i];
+        uint32_t color888 = greyscale_active ? rgb_to_grey(palette[i]) : palette[i];
         const uint8_t R = (color888 >> 16) & 0xff;
         const uint8_t G = (color888 >> 8) & 0xff;
         const uint8_t B = (color888 >> 0) & 0xff;
         conv_color64[i * 2] = get_ser_diff_data(tmds_encode(R), tmds_encode(G), tmds_encode(B));
         conv_color64[i * 2 + 1] = conv_color64[i * 2] ^ 0x0003ffffffffffffl;
     }
-    
+
     // Also update color 255 (bgcolor)
-    uint32_t color888 = palette[255];
-    const uint8_t R = (color888 >> 16) & 0xff;
-    const uint8_t G = (color888 >> 8) & 0xff;
-    const uint8_t B = (color888 >> 0) & 0xff;
+    uint32_t c255 = greyscale_active ? rgb_to_grey(palette[255]) : palette[255];
+    const uint8_t R = (c255 >> 16) & 0xff;
+    const uint8_t G = (c255 >> 8) & 0xff;
+    const uint8_t B = (c255 >> 0) & 0xff;
     conv_color64[255 * 2] = get_ser_diff_data(tmds_encode(R), tmds_encode(G), tmds_encode(B));
     conv_color64[255 * 2 + 1] = conv_color64[255 * 2] ^ 0x0003ffffffffffffl;
-    
+
     // Restore sync colors
     graphics_restore_sync_colors();
 
