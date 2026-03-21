@@ -280,11 +280,11 @@ static bool is_snes_ext(const char *fname) {
 
 static int scan_roms(void) {
     rom_count = 0;
-    DIR dir;
+    static DIR dir;
     if (f_opendir(&dir, "/snes") != FR_OK) {
         if (f_opendir(&dir, "/SNES") != FR_OK) return 0;
     }
-    FILINFO fno;
+    static FILINFO fno;
     while (f_readdir(&dir, &fno) == FR_OK && fno.fname[0] != '\0' && rom_count < MAX_ROMS) {
         if (fno.fattrib & AM_DIR) continue;
         if (!is_snes_ext(fno.fname)) continue;
@@ -301,7 +301,7 @@ static void ensure_crc(int idx) {
     if (rom_list[idx].crc_valid) return;
     char path[MAX_ROM_PATH];
     snprintf(path, sizeof(path), "/snes/%s", rom_list[idx].filename);
-    FIL fil;
+    static FIL fil;
     if (f_open(&fil, path, FA_READ) == FR_OK) {
         /* SNES ROMs may have a 512-byte copier header */
         FSIZE_t sz = f_size(&fil);
@@ -319,7 +319,7 @@ static void ensure_crc(int idx) {
 #define LAST_ROM_PATH  "/snes/.last_rom"
 
 static void load_crc_cache(void) {
-    FIL fil;
+    static FIL fil;
     if (f_open(&fil, CRC_CACHE_PATH, FA_READ) != FR_OK) return;
     char line[128];
     while (f_gets(line, sizeof(line), &fil)) {
@@ -345,7 +345,7 @@ static void load_crc_cache(void) {
 }
 
 static void save_crc_cache(void) {
-    FIL fil;
+    static FIL fil;
     if (f_open(&fil, CRC_CACHE_PATH, FA_WRITE | FA_CREATE_ALWAYS) != FR_OK) return;
     for (int i = 0; i < rom_count; i++) {
         if (!rom_list[i].crc_valid) continue;
@@ -363,7 +363,7 @@ static void save_crc_cache(void) {
 static int last_selected_rom = 0;
 
 static void load_last_rom(void) {
-    FIL fil;
+    static FIL fil;
     if (f_open(&fil, LAST_ROM_PATH, FA_READ) != FR_OK) return;
     char name[64];
     if (f_gets(name, sizeof(name), &fil)) {
@@ -381,7 +381,7 @@ static void load_last_rom(void) {
 }
 
 static void save_last_rom(int selected) {
-    FIL fil;
+    static FIL fil;
     if (f_open(&fil, LAST_ROM_PATH, FA_WRITE | FA_CREATE_ALWAYS) != FR_OK) return;
     f_puts(rom_list[selected].filename, &fil);
     f_puts("\n", &fil);
@@ -440,7 +440,7 @@ static void load_rom_title(int idx) {
 
     char path[128];
     snprintf(path, sizeof(path), "/snes/metadata/descr/%c/%08lX.txt", hex_char, (unsigned long)crc);
-    FIL fil;
+    static FIL fil;
     if (f_open(&fil, path, FA_READ) == FR_OK) {
         /* Reuse img_buf (not in use during metadata loading) */
         char *buf = (char *)img_buf;
@@ -482,7 +482,7 @@ static void load_rom_image(int idx) {
     char path[128];
     snprintf(path, sizeof(path), "/snes/metadata/images/%c/%08lX.555", hex_char, (unsigned long)crc);
 
-    FIL fil;
+    static FIL fil;
     if (f_open(&fil, path, FA_READ) != FR_OK) {
         return;
     }
@@ -891,6 +891,7 @@ bool rom_selector_show(char *selected_rom_path, size_t buffer_size, uint8_t *scr
     rom_list = (rom_entry_t *)psram_malloc(MAX_ROMS * sizeof(rom_entry_t));
     rom_meta = (rom_meta_t *)psram_malloc(MAX_ROMS * sizeof(rom_meta_t));
     img_buf = (uint8_t *)psram_malloc(IMG_BUF_BYTES);
+    if (!rom_list || !rom_meta || !img_buf) return false;
     memset(rom_list, 0, MAX_ROMS * sizeof(rom_entry_t));
     memset(rom_meta, 0, MAX_ROMS * sizeof(rom_meta_t));
 
@@ -907,16 +908,24 @@ bool rom_selector_show(char *selected_rom_path, size_t buffer_size, uint8_t *scr
     scan_roms();
     if (rom_count == 0) return false;
 
-    /* CRC cache */
+    /* CRC cache — compute missing CRCs with on-screen progress */
     load_crc_cache();
-    bool cache_dirty = false;
-    for (int i = 0; i < rom_count; i++) {
-        if (!rom_list[i].crc_valid) {
+    int need_crc = 0;
+    for (int i = 0; i < rom_count; i++)
+        if (!rom_list[i].crc_valid) need_crc++;
+
+    if (need_crc > 0) {
+        int done = 0;
+        for (int i = 0; i < rom_count; i++) {
+            if (rom_list[i].crc_valid) continue;
+            done++;
+            fb_fill(PAL_BG);
+            char msg[48];
+            snprintf(msg, sizeof(msg), "Indexing %d/%d...", done, need_crc);
+            fb_text_center(SCREEN_H / 2 - 4, msg, PAL_WHITE);
+            present();
             ensure_crc(i);
-            cache_dirty = true;
         }
-    }
-    if (cache_dirty) {
         save_crc_cache();
     }
 

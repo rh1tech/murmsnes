@@ -19,5 +19,6 @@ cmake \
 	-DBOARD_VARIANT=${BOARD_VARIANT} \
 	-DCPU_SPEED=${CPU_SPEED} \
 	-DPSRAM_SPEED=${PSRAM_SPEED} \
+	-DUSB_HID_ENABLED=OFF \
 	..
 make -j$(sysctl -n hw.ncpu 2>/dev/null || nproc)

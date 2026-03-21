@@ -20,7 +20,7 @@
 
 #include "board_config.h"
 #include "HDMI.h"
-#include "uart_logging.h"
+// USB CDC serial used for debug output (dev builds only)
 #include "psram_init.h"
 #include "psram_allocator.h"
 #include "ff.h"
@@ -147,11 +147,7 @@ static void __no_inline_not_in_flash_func(set_flash_timings)(int cpu_mhz, int fl
 //=============================================================================
 // Logging
 //=============================================================================
-#ifdef MURMSNES_PROFILE
 #define LOG(fmt, ...) printf(fmt, ##__VA_ARGS__)
-#else
-#define LOG(fmt, ...) ((void)0)
-#endif
 
 #ifdef MURMSNES_PROFILE
 typedef struct {
@@ -451,7 +447,7 @@ static inline void snes9x_init(void) {
 //=============================================================================
 
 static bool load_rom_from_sd(const char *filename) {
-    FIL file;
+    static FIL file;
     UINT bytes_read;
     
     LOG("Opening ROM: %s\n", filename);
@@ -1263,10 +1259,12 @@ int main(void) {
         set_sys_clock_khz(252 * 1000, true);
     }
     
-    // Initialize UART logging (TX-only, no USB stdio overhead)
-    uart_logging_init();
     stdio_init_all();
-    uart_logging_register();
+#if PICO_STDIO_USB
+    // Wait up to 2s for USB CDC to enumerate so boot messages are visible
+    for (int i = 0; i < 20 && !stdio_usb_connected(); i++)
+        sleep_ms(100);
+#endif
     
     LOG("\n\n");
     LOG("========================================\n");

@@ -62,7 +62,6 @@ add_library(drivers
     drivers/psram_allocator.c
     drivers/audio.c
     drivers/audio_i2s_opt.S
-    drivers/uart_logging.c
 )
 target_include_directories(drivers PUBLIC drivers src)
 target_compile_definitions(drivers PRIVATE
@@ -200,8 +199,12 @@ target_link_libraries(murmsnes
     usbhid
 )
 
-# UART for logging (no USB stdio - USB is used for HID host)
-pico_enable_stdio_usb(murmsnes 0)
+# Dev builds: USB CDC serial for printf. Release builds (USB_HID): no serial.
 pico_enable_stdio_uart(murmsnes 0)
+if(USB_HID_ENABLED)
+    pico_enable_stdio_usb(murmsnes 0)
+else()
+    pico_enable_stdio_usb(murmsnes 1)
+endif()
 
 pico_add_extra_outputs(murmsnes)
