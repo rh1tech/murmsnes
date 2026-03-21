@@ -294,7 +294,7 @@ Original MurmSNES code is licensed under the GNU General Public License v3.0. Th
 
 Special thanks to:
 - [Gavin](https://t.me/DynaMight1124) — SNES metadata and support
-- [Murmulator community](https://github.com/xrip) — USB HID, HDMI, PSRAM, and audio drivers
+- [Murmulator community](https://murmulator.ru) — USB HID, HDMI, PSRAM, and audio drivers
 
 ## Author
 
