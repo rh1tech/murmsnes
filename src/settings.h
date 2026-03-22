@@ -26,6 +26,25 @@
 #define VOLUME_MAX  100
 #define VOLUME_STEP 10
 
+// Button mapping: 8 remappable SNES buttons (D-pad is always fixed)
+// Each entry maps a SNES button to a physical button index (0-7)
+#define BTNMAP_COUNT 8
+#define BTNMAP_A      0
+#define BTNMAP_B      1
+#define BTNMAP_X      2
+#define BTNMAP_Y      3
+#define BTNMAP_L      4
+#define BTNMAP_R      5
+#define BTNMAP_START  6
+#define BTNMAP_SELECT 7
+
+typedef struct {
+    uint8_t map[BTNMAP_COUNT];  // map[snes_btn] = physical_btn index
+} button_map_t;
+
+// Default identity mapping
+#define BTNMAP_DEFAULT { {0, 1, 2, 3, 4, 5, 6, 7} }
+
 typedef struct {
     uint8_t p1_mode;              // Player 1 input mode (INPUT_MODE_*)
     uint8_t p2_mode;              // Player 2 input mode (INPUT_MODE_*)
@@ -43,6 +62,11 @@ typedef struct {
     // Audio settings
     bool    echo_enabled;         // Sound echo (reverb)
     bool    interpolation;        // Sound interpolation
+
+    // Button mappings per input device
+    button_map_t btnmap_kbd;      // Keyboard
+    button_map_t btnmap_nes;      // NES/SNES gamepad
+    button_map_t btnmap_usb;      // USB gamepad
 } settings_t;
 
 extern settings_t g_settings;

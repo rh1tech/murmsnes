@@ -242,58 +242,75 @@ bool S9xInitDisplay(void) {
 void S9xDeinitDisplay(void) {
 }
 
-/* Helper: merge NES/SNES pad bits into SNES joypad mask */
+/* SNES button masks indexed by BTNMAP_* (A, B, X, Y, L, R, Start, Select) */
+static const uint32_t snes_masks[BTNMAP_COUNT] = {
+    SNES_A_MASK, SNES_B_MASK, SNES_X_MASK, SNES_Y_MASK,
+    SNES_TL_MASK, SNES_TR_MASK, SNES_START_MASK, SNES_SELECT_MASK
+};
+
+/* NES/SNES pad physical button bits indexed by BTNMAP_* */
+static const uint32_t nespad_bits[BTNMAP_COUNT] = {
+    DPAD_A, DPAD_B, DPAD_X, DPAD_Y,
+    DPAD_LT, DPAD_RT, DPAD_START, DPAD_SELECT
+};
+
+/* Keyboard state bits indexed by BTNMAP_* */
+static const uint16_t kbd_bits[BTNMAP_COUNT] = {
+    KBD_STATE_A, KBD_STATE_B, KBD_STATE_X, KBD_STATE_Y,
+    KBD_STATE_L, KBD_STATE_R, KBD_STATE_START, KBD_STATE_SELECT
+};
+
+/* USB gamepad button bits indexed by BTNMAP_* */
+static const uint16_t usbgp_bits[BTNMAP_COUNT] = {
+    0x0001, 0x0002, 0x0004, 0x0008,
+    0x0010, 0x0020, 0x0040, 0x0080
+};
+
+/* Helper: merge NES/SNES pad bits into SNES joypad mask (with button remap) */
 static inline uint32_t nespad_to_snes(uint32_t pad) {
     uint32_t j = 0;
+    /* D-pad is always direct (no remap) */
     if (pad & DPAD_UP)     j |= SNES_UP_MASK;
     if (pad & DPAD_DOWN)   j |= SNES_DOWN_MASK;
     if (pad & DPAD_LEFT)   j |= SNES_LEFT_MASK;
     if (pad & DPAD_RIGHT)  j |= SNES_RIGHT_MASK;
-    if (pad & DPAD_A)      j |= SNES_A_MASK;
-    if (pad & DPAD_B)      j |= SNES_B_MASK;
-    if (pad & DPAD_X)      j |= SNES_X_MASK;
-    if (pad & DPAD_Y)      j |= SNES_Y_MASK;
-    if (pad & DPAD_LT)     j |= SNES_TL_MASK;
-    if (pad & DPAD_RT)     j |= SNES_TR_MASK;
-    if (pad & DPAD_START)  j |= SNES_START_MASK;
-    if (pad & DPAD_SELECT) j |= SNES_SELECT_MASK;
+    /* Face/shoulder buttons use remap table */
+    const uint8_t *map = g_settings.btnmap_nes.map;
+    for (int i = 0; i < BTNMAP_COUNT; i++) {
+        if (pad & nespad_bits[i])
+            j |= snes_masks[map[i]];
+    }
     return j;
 }
 
-/* Helper: merge PS/2+USB keyboard state bits into SNES joypad mask */
+/* Helper: merge PS/2+USB keyboard state bits into SNES joypad mask (with remap) */
 static inline uint32_t kbd_to_snes(uint16_t kbd) {
     uint32_t j = 0;
     if (kbd & KBD_STATE_UP)     j |= SNES_UP_MASK;
     if (kbd & KBD_STATE_DOWN)   j |= SNES_DOWN_MASK;
     if (kbd & KBD_STATE_LEFT)   j |= SNES_LEFT_MASK;
     if (kbd & KBD_STATE_RIGHT)  j |= SNES_RIGHT_MASK;
-    if (kbd & KBD_STATE_A)      j |= SNES_A_MASK;
-    if (kbd & KBD_STATE_B)      j |= SNES_B_MASK;
-    if (kbd & KBD_STATE_X)      j |= SNES_X_MASK;
-    if (kbd & KBD_STATE_Y)      j |= SNES_Y_MASK;
-    if (kbd & KBD_STATE_L)      j |= SNES_TL_MASK;
-    if (kbd & KBD_STATE_R)      j |= SNES_TR_MASK;
-    if (kbd & KBD_STATE_START)  j |= SNES_START_MASK;
-    if (kbd & KBD_STATE_SELECT) j |= SNES_SELECT_MASK;
+    const uint8_t *map = g_settings.btnmap_kbd.map;
+    for (int i = 0; i < BTNMAP_COUNT; i++) {
+        if (kbd & kbd_bits[i])
+            j |= snes_masks[map[i]];
+    }
     return j;
 }
 
 #ifdef USB_HID_ENABLED
-/* Helper: merge USB gamepad state into SNES joypad mask */
+/* Helper: merge USB gamepad state into SNES joypad mask (with remap) */
 static inline uint32_t usbgp_to_snes(usbhid_gamepad_state_t *gp) {
     uint32_t j = 0;
     if (gp->dpad & 0x01) j |= SNES_UP_MASK;
     if (gp->dpad & 0x02) j |= SNES_DOWN_MASK;
     if (gp->dpad & 0x04) j |= SNES_LEFT_MASK;
     if (gp->dpad & 0x08) j |= SNES_RIGHT_MASK;
-    if (gp->buttons & 0x0001) j |= SNES_A_MASK;
-    if (gp->buttons & 0x0002) j |= SNES_B_MASK;
-    if (gp->buttons & 0x0004) j |= SNES_X_MASK;
-    if (gp->buttons & 0x0008) j |= SNES_Y_MASK;
-    if (gp->buttons & 0x0010) j |= SNES_TL_MASK;
-    if (gp->buttons & 0x0020) j |= SNES_TR_MASK;
-    if (gp->buttons & 0x0040) j |= SNES_START_MASK;
-    if (gp->buttons & 0x0080) j |= SNES_SELECT_MASK;
+    const uint8_t *map = g_settings.btnmap_usb.map;
+    for (int i = 0; i < BTNMAP_COUNT; i++) {
+        if (gp->buttons & usbgp_bits[i])
+            j |= snes_masks[map[i]];
+    }
     return j;
 }
 #endif

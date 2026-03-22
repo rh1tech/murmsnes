@@ -50,6 +50,10 @@ typedef enum {
     PAGE_MAIN,
     PAGE_VIDEO,
     PAGE_AUDIO,
+    PAGE_BUTTONS,      // Device selector
+    PAGE_BTNMAP_KBD,   // Keyboard mapping
+    PAGE_BTNMAP_NES,   // NES/SNES pad mapping
+    PAGE_BTNMAP_USB,   // USB gamepad mapping
 } menu_page_t;
 
 /* Main menu items */
@@ -61,6 +65,7 @@ typedef enum {
     MAIN_SEP1,
     MAIN_PLAYER1,
     MAIN_PLAYER2,
+    MAIN_BUTTONS,
     MAIN_SEP2,
     MAIN_SAVE_GAME,
     MAIN_LOAD_GAME,
@@ -110,6 +115,9 @@ settings_t g_settings = {
     .hdma_enabled = true,
     .echo_enabled = false,
     .interpolation = true,
+    .btnmap_kbd = BTNMAP_DEFAULT,
+    .btnmap_nes = BTNMAP_DEFAULT,
+    .btnmap_usb = BTNMAP_DEFAULT,
 };
 
 /* Edit copy */
@@ -428,6 +436,7 @@ static const char *main_label(int item) {
         case MAIN_PLAYER2:   return "GAMEPAD 2";
         case MAIN_SAVE_GAME: return (status_frames > 0) ? status_msg : "SAVE GAME";
         case MAIN_LOAD_GAME: return save_exists ? "LOAD GAME" : "LOAD GAME (-)";
+        case MAIN_BUTTONS:   return "BUTTON MAPPING...";
         case MAIN_VIDEO:     return "VIDEO SETTINGS...";
         case MAIN_AUDIO:     return "AUDIO SETTINGS...";
         case MAIN_BACK_GAME: return "BACK TO GAME";
@@ -594,6 +603,137 @@ static void audio_change_value(int item, int dir) {
     }
 }
 
+/* ─── Item helpers (button mapping device selector) ───────────────── */
+
+typedef enum {
+    BTN_DEV_KEYBOARD,
+    BTN_DEV_NES,
+    BTN_DEV_USB,
+    BTN_DEV_SEP,
+    BTN_DEV_BACK,
+    BTN_DEV_ITEM_COUNT
+} btn_dev_item_t;
+
+static bool is_separator_btndev(int item) { return item == BTN_DEV_SEP; }
+static bool is_selectable_btndev(int item) { return !is_separator_btndev(item); }
+
+static const char *btndev_label(int item) {
+    switch (item) {
+        case BTN_DEV_KEYBOARD: return "KEYBOARD";
+        case BTN_DEV_NES:      return "NES/SNES GAMEPAD";
+        case BTN_DEV_USB:      return "USB GAMEPAD";
+        case BTN_DEV_BACK:     return "BACK";
+        default:               return "";
+    }
+}
+
+static const char *btndev_value(int item) { (void)item; return NULL; }
+
+/* ─── Item helpers (per-device button mapping) ────────────────────── */
+
+typedef enum {
+    BMAP_A,
+    BMAP_B,
+    BMAP_X,
+    BMAP_Y,
+    BMAP_L,
+    BMAP_R,
+    BMAP_START,
+    BMAP_SELECT,
+    BMAP_SEP,
+    BMAP_RESET,
+    BMAP_BACK,
+    BMAP_ITEM_COUNT
+} bmap_item_t;
+
+static const char *phys_btn_names[] = {
+    "A", "B", "X", "Y", "L", "R", "START", "SELECT"
+};
+
+static const char *snes_btn_labels[] = {
+    "SNES A", "SNES B", "SNES X", "SNES Y",
+    "SNES L", "SNES R", "SNES START", "SNES SELECT"
+};
+
+/* Which device's map are we editing? Set when entering a mapping page */
+static button_map_t *edit_btnmap = NULL;
+
+static bool is_separator_bmap(int item) { return item == BMAP_SEP; }
+static bool is_selectable_bmap(int item) { return !is_separator_bmap(item); }
+
+static const char *bmap_label(int item) {
+    if (item >= BMAP_A && item <= BMAP_SELECT) return snes_btn_labels[item];
+    if (item == BMAP_RESET) return "RESET TO DEFAULT";
+    if (item == BMAP_BACK)  return "BACK";
+    return "";
+}
+
+/* Scan mode: -1 = not scanning, 0-7 = scanning for SNES button index */
+static int scan_active = -1;
+static bool scan_wait_release = false;  /* wait for device buttons to be released first */
+
+static const char *bmap_value(int item) {
+    if (item >= BMAP_A && item <= BMAP_SELECT && edit_btnmap) {
+        if (scan_active == item) return "PRESS...";
+        return phys_btn_names[edit_btnmap->map[item]];
+    }
+    return NULL;
+}
+
+/* NES pad physical button bits indexed by BTNMAP_* (for scan detection) */
+static const uint32_t scan_nes_bits[BTNMAP_COUNT] = {
+    DPAD_A, DPAD_B, DPAD_X, DPAD_Y,
+    DPAD_LT, DPAD_RT, DPAD_START, DPAD_SELECT
+};
+
+/* Keyboard state bits indexed by BTNMAP_* (for scan detection) */
+static const uint16_t scan_kbd_bits[BTNMAP_COUNT] = {
+    KBD_STATE_A, KBD_STATE_B, KBD_STATE_X, KBD_STATE_Y,
+    KBD_STATE_L, KBD_STATE_R, KBD_STATE_START, KBD_STATE_SELECT
+};
+
+/* USB gamepad button bits indexed by BTNMAP_* (for scan detection) */
+static const uint16_t scan_usb_bits[BTNMAP_COUNT] = {
+    0x0001, 0x0002, 0x0004, 0x0008,
+    0x0010, 0x0020, 0x0040, 0x0080
+};
+
+/* Poll device-specific raw input and return detected physical button index, or -1.
+ * Caller must have already called nespad_read()/ps2kbd_tick()/usbhid_task(). */
+static int scan_detect_button(menu_page_t page) {
+    switch (page) {
+        case PAGE_BTNMAP_NES: {
+            uint32_t pad = nespad_state | nespad_state2;
+            for (int i = 0; i < BTNMAP_COUNT; i++)
+                if (pad & scan_nes_bits[i]) return i;
+            break;
+        }
+        case PAGE_BTNMAP_KBD: {
+            uint16_t kbd = ps2kbd_get_state();
+#ifdef USB_HID_ENABLED
+            kbd |= usbhid_get_kbd_state();
+#endif
+            for (int i = 0; i < BTNMAP_COUNT; i++)
+                if (kbd & scan_kbd_bits[i]) return i;
+            break;
+        }
+#ifdef USB_HID_ENABLED
+        case PAGE_BTNMAP_USB: {
+            if (usbhid_gamepad_connected()) {
+                usbhid_gamepad_state_t gp;
+                usbhid_get_gamepad_state(&gp);
+                for (int i = 0; i < BTNMAP_COUNT; i++)
+                    if (gp.buttons & scan_usb_bits[i]) return i;
+            }
+            break;
+        }
+#endif
+        default:
+            break;
+    }
+    return -1;
+}
+
 /* ─── Generic navigation ──────────────────────────────────────────── */
 
 typedef bool (*is_selectable_fn)(int);
@@ -742,6 +882,30 @@ void settings_load(void) {
             g_settings.echo_enabled = (atoi(value) != 0);
         } else if (strcmp(key, "interpolation") == 0) {
             g_settings.interpolation = (atoi(value) != 0);
+        } else if (strcmp(key, "btnmap_kbd") == 0) {
+            sscanf(value, "%hhu,%hhu,%hhu,%hhu,%hhu,%hhu,%hhu,%hhu",
+                   &g_settings.btnmap_kbd.map[0], &g_settings.btnmap_kbd.map[1],
+                   &g_settings.btnmap_kbd.map[2], &g_settings.btnmap_kbd.map[3],
+                   &g_settings.btnmap_kbd.map[4], &g_settings.btnmap_kbd.map[5],
+                   &g_settings.btnmap_kbd.map[6], &g_settings.btnmap_kbd.map[7]);
+            for (int i = 0; i < BTNMAP_COUNT; i++)
+                if (g_settings.btnmap_kbd.map[i] >= BTNMAP_COUNT) g_settings.btnmap_kbd.map[i] = (uint8_t)i;
+        } else if (strcmp(key, "btnmap_nes") == 0) {
+            sscanf(value, "%hhu,%hhu,%hhu,%hhu,%hhu,%hhu,%hhu,%hhu",
+                   &g_settings.btnmap_nes.map[0], &g_settings.btnmap_nes.map[1],
+                   &g_settings.btnmap_nes.map[2], &g_settings.btnmap_nes.map[3],
+                   &g_settings.btnmap_nes.map[4], &g_settings.btnmap_nes.map[5],
+                   &g_settings.btnmap_nes.map[6], &g_settings.btnmap_nes.map[7]);
+            for (int i = 0; i < BTNMAP_COUNT; i++)
+                if (g_settings.btnmap_nes.map[i] >= BTNMAP_COUNT) g_settings.btnmap_nes.map[i] = (uint8_t)i;
+        } else if (strcmp(key, "btnmap_usb") == 0) {
+            sscanf(value, "%hhu,%hhu,%hhu,%hhu,%hhu,%hhu,%hhu,%hhu",
+                   &g_settings.btnmap_usb.map[0], &g_settings.btnmap_usb.map[1],
+                   &g_settings.btnmap_usb.map[2], &g_settings.btnmap_usb.map[3],
+                   &g_settings.btnmap_usb.map[4], &g_settings.btnmap_usb.map[5],
+                   &g_settings.btnmap_usb.map[6], &g_settings.btnmap_usb.map[7]);
+            for (int i = 0; i < BTNMAP_COUNT; i++)
+                if (g_settings.btnmap_usb.map[i] >= BTNMAP_COUNT) g_settings.btnmap_usb.map[i] = (uint8_t)i;
         }
     }
 
@@ -771,6 +935,21 @@ bool settings_save(void) {
     f_printf(&file, "hdma=%d\n", g_settings.hdma_enabled ? 1 : 0);
     f_printf(&file, "echo=%d\n", g_settings.echo_enabled ? 1 : 0);
     f_printf(&file, "interpolation=%d\n", g_settings.interpolation ? 1 : 0);
+    f_printf(&file, "btnmap_kbd=%d,%d,%d,%d,%d,%d,%d,%d\n",
+             g_settings.btnmap_kbd.map[0], g_settings.btnmap_kbd.map[1],
+             g_settings.btnmap_kbd.map[2], g_settings.btnmap_kbd.map[3],
+             g_settings.btnmap_kbd.map[4], g_settings.btnmap_kbd.map[5],
+             g_settings.btnmap_kbd.map[6], g_settings.btnmap_kbd.map[7]);
+    f_printf(&file, "btnmap_nes=%d,%d,%d,%d,%d,%d,%d,%d\n",
+             g_settings.btnmap_nes.map[0], g_settings.btnmap_nes.map[1],
+             g_settings.btnmap_nes.map[2], g_settings.btnmap_nes.map[3],
+             g_settings.btnmap_nes.map[4], g_settings.btnmap_nes.map[5],
+             g_settings.btnmap_nes.map[6], g_settings.btnmap_nes.map[7]);
+    f_printf(&file, "btnmap_usb=%d,%d,%d,%d,%d,%d,%d,%d\n",
+             g_settings.btnmap_usb.map[0], g_settings.btnmap_usb.map[1],
+             g_settings.btnmap_usb.map[2], g_settings.btnmap_usb.map[3],
+             g_settings.btnmap_usb.map[4], g_settings.btnmap_usb.map[5],
+             g_settings.btnmap_usb.map[6], g_settings.btnmap_usb.map[7]);
 
     f_close(&file);
     printf("Settings saved to %s\n", SETTINGS_PATH);
@@ -889,6 +1068,50 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
         }
         prev_buttons = buttons;
 
+        /* Button scan mode: skip normal input, poll target device */
+        if (scan_active >= 0) {
+            /* Poll hardware once (shared by cancel check and scan detection) */
+            nespad_read();
+            ps2kbd_tick();
+#ifdef USB_HID_ENABLED
+            usbhid_task();
+#endif
+            /* Cancel: NES Start+Select combo, or ESC/F12 on keyboard */
+            bool cancel = false;
+            uint32_t pad = nespad_state | nespad_state2;
+            if ((pad & DPAD_START) && (pad & DPAD_SELECT)) cancel = true;
+            uint16_t kbd = ps2kbd_get_state();
+#ifdef USB_HID_ENABLED
+            kbd |= usbhid_get_kbd_state();
+#endif
+            if (kbd & (KBD_STATE_ESC | KBD_STATE_F12)) cancel = true;
+#ifdef USB_HID_ENABLED
+            if (usbhid_gamepad_connected()) {
+                usbhid_gamepad_state_t gp;
+                usbhid_get_gamepad_state(&gp);
+                if ((gp.buttons & 0x0040) && (gp.buttons & 0x0080)) cancel = true;
+            }
+#endif
+            if (cancel) {
+                scan_active = -1;
+                for (int i = 0; i < 30; i++) { if (read_menu_buttons() == 0) break; sleep_ms(16); }
+                prev_buttons = read_menu_buttons();
+                goto draw_frame;
+            }
+            /* Detect single button press on the target device */
+            int detected = scan_detect_button(current_page);
+            if (scan_wait_release) {
+                if (detected < 0)
+                    scan_wait_release = false;
+            } else if (detected >= 0 && edit_btnmap) {
+                edit_btnmap->map[scan_active] = (uint8_t)detected;
+                scan_active = -1;
+                for (int i = 0; i < 30; i++) { if (read_menu_buttons() == 0) break; sleep_ms(16); }
+                prev_buttons = read_menu_buttons();
+            }
+            goto draw_frame;
+        }
+
         /* Dispatch based on current page */
         int item_count;
         is_selectable_fn is_sel;
@@ -901,6 +1124,16 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
             case PAGE_AUDIO:
                 item_count = AUDIO_ITEM_COUNT;
                 is_sel = is_selectable_audio;
+                break;
+            case PAGE_BUTTONS:
+                item_count = BTN_DEV_ITEM_COUNT;
+                is_sel = is_selectable_btndev;
+                break;
+            case PAGE_BTNMAP_KBD:
+            case PAGE_BTNMAP_NES:
+            case PAGE_BTNMAP_USB:
+                item_count = BMAP_ITEM_COUNT;
+                is_sel = is_selectable_bmap;
                 break;
             default:
                 item_count = MAIN_ITEM_COUNT;
@@ -920,6 +1153,7 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
                 case PAGE_MAIN:  main_change_value(selected, -1); break;
                 case PAGE_VIDEO: video_change_value(selected, -1); break;
                 case PAGE_AUDIO: audio_change_value(selected, -1); break;
+                default: break;
             }
         }
         if (pressed & BTN_RIGHT) {
@@ -927,6 +1161,7 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
                 case PAGE_MAIN:  main_change_value(selected, 1); break;
                 case PAGE_VIDEO: video_change_value(selected, 1); break;
                 case PAGE_AUDIO: audio_change_value(selected, 1); break;
+                default: break;
             }
         }
 
@@ -939,6 +1174,9 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
                 } else if (selected == MAIN_AUDIO) {
                     current_page = PAGE_AUDIO;
                     selected = AUDIO_ECHO;
+                } else if (selected == MAIN_BUTTONS) {
+                    current_page = PAGE_BUTTONS;
+                    selected = BTN_DEV_KEYBOARD;
                 } else if (selected == MAIN_SAVE_GAME) {
                     bool ok = do_save_game();
                     if (ok) {
@@ -975,10 +1213,40 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
                     current_page = PAGE_MAIN;
                     selected = MAIN_AUDIO;
                 }
+            } else if (current_page == PAGE_BUTTONS) {
+                if (selected == BTN_DEV_KEYBOARD) {
+                    edit_btnmap = &edit.btnmap_kbd;
+                    current_page = PAGE_BTNMAP_KBD;
+                    selected = BMAP_A; scan_active = -1;
+                } else if (selected == BTN_DEV_NES) {
+                    edit_btnmap = &edit.btnmap_nes;
+                    current_page = PAGE_BTNMAP_NES;
+                    selected = BMAP_A; scan_active = -1;
+                } else if (selected == BTN_DEV_USB) {
+                    edit_btnmap = &edit.btnmap_usb;
+                    current_page = PAGE_BTNMAP_USB;
+                    selected = BMAP_A; scan_active = -1;
+                } else if (selected == BTN_DEV_BACK) {
+                    current_page = PAGE_MAIN;
+                    selected = MAIN_BUTTONS;
+                }
+            } else if (current_page == PAGE_BTNMAP_KBD ||
+                       current_page == PAGE_BTNMAP_NES ||
+                       current_page == PAGE_BTNMAP_USB) {
+                if (selected >= BMAP_A && selected <= BMAP_SELECT) {
+                    scan_active = selected;
+                    scan_wait_release = true;
+                } else if (selected == BMAP_RESET) {
+                    for (int i = 0; i < BTNMAP_COUNT; i++)
+                        edit_btnmap->map[i] = (uint8_t)i;
+                } else if (selected == BMAP_BACK) {
+                    current_page = PAGE_BUTTONS;
+                    selected = BTN_DEV_KEYBOARD;
+                }
             }
         }
 
-        /* Back (B) */
+        /* Back (B) — not used on bmap pages (B is a scannable button there) */
         if (pressed & BTN_B) {
             if (current_page == PAGE_VIDEO) {
                 current_page = PAGE_MAIN;
@@ -986,6 +1254,13 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
             } else if (current_page == PAGE_AUDIO) {
                 current_page = PAGE_MAIN;
                 selected = MAIN_AUDIO;
+            } else if (current_page == PAGE_BUTTONS) {
+                current_page = PAGE_MAIN;
+                selected = MAIN_BUTTONS;
+            } else if (current_page == PAGE_BTNMAP_KBD ||
+                       current_page == PAGE_BTNMAP_NES ||
+                       current_page == PAGE_BTNMAP_USB) {
+                /* ignore B on mapping pages */
             } else {
                 /* Main page: save and exit */
                 g_settings = edit;
@@ -995,9 +1270,23 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
             }
         }
 
+        /* Start+Select = back on button mapping pages */
+        if ((buttons & BTN_START) && (buttons & BTN_SEL)) {
+            if (current_page == PAGE_BTNMAP_KBD ||
+                current_page == PAGE_BTNMAP_NES ||
+                current_page == PAGE_BTNMAP_USB) {
+                scan_active = -1;
+                current_page = PAGE_BUTTONS;
+                selected = BTN_DEV_KEYBOARD;
+                for (int i = 0; i < 30; i++) { if (read_menu_buttons() == 0) break; sleep_ms(16); }
+                prev_buttons = read_menu_buttons();
+            }
+        }
+
         /* Tick status message countdown */
         if (status_frames > 0) status_frames--;
 
+draw_frame:
         /* Draw into back buffer, then swap to front */
         uint8_t *back = SCREEN[draw_buf];
         switch (current_page) {
@@ -1009,6 +1298,37 @@ settings_result_t settings_menu_show(uint8_t *screen_buffer, bool in_game) {
                 draw_menu(back, "AUDIO SETTINGS", AUDIO_ITEM_COUNT,
                           audio_label, audio_value, is_separator_audio, NULL, NULL, selected);
                 break;
+            case PAGE_BUTTONS:
+                draw_menu(back, "BUTTON MAPPING", BTN_DEV_ITEM_COUNT,
+                          btndev_label, btndev_value, is_separator_btndev, NULL, NULL, selected);
+                break;
+            case PAGE_BTNMAP_KBD:
+                draw_menu(back, "KEYBOARD MAPPING", BMAP_ITEM_COUNT,
+                          bmap_label, bmap_value, is_separator_bmap, NULL, NULL, selected);
+                goto bmap_help;
+            case PAGE_BTNMAP_NES:
+                draw_menu(back, "NES/SNES PAD MAPPING", BMAP_ITEM_COUNT,
+                          bmap_label, bmap_value, is_separator_bmap, NULL, NULL, selected);
+                goto bmap_help;
+            case PAGE_BTNMAP_USB:
+                draw_menu(back, "USB GAMEPAD MAPPING", BMAP_ITEM_COUNT,
+                          bmap_label, bmap_value, is_separator_bmap, NULL, NULL, selected);
+            bmap_help: {
+                /* Override help text for scan-based mapping */
+                int hy = SCREEN_HEIGHT - 14;
+                draw_hline(back, 0, hy, SCREEN_WIDTH, PAL_BG);
+                draw_hline(back, 0, hy + 1, SCREEN_WIDTH, PAL_BG);
+                draw_hline(back, 0, hy + 2, SCREEN_WIDTH, PAL_BG);
+                draw_hline(back, 0, hy + 3, SCREEN_WIDTH, PAL_BG);
+                draw_hline(back, 0, hy + 4, SCREEN_WIDTH, PAL_BG);
+                draw_hline(back, 0, hy + 5, SCREEN_WIDTH, PAL_BG);
+                draw_hline(back, 0, hy + 6, SCREEN_WIDTH, PAL_BG);
+                const char *help = scan_active >= 0
+                    ? "PRESS BUTTON  ST+SEL:CANCEL"
+                    : "A:SCAN  ST+SEL:BACK";
+                draw_text_centered(back, hy, help, PAL_GRAY);
+                break;
+            }
             default:
                 draw_menu(back, "SETTINGS", MAIN_ITEM_COUNT,
                           main_label, main_value, is_separator_main, is_hidden_main,
