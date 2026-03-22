@@ -86,6 +86,7 @@ set(SNES9X_SOURCES
     src/snes9x/dma.c
     src/snes9x/dsp.c
     src/snes9x/getset.c
+    src/snes9x/colormath.c
     src/snes9x/gfx.c
     src/snes9x/globals.c
     src/snes9x/memmap.c

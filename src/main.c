@@ -82,6 +82,9 @@ uint8_t __attribute__((aligned(4))) SCREEN[2][SNES_WIDTH * SNES_HEIGHT];
 static uint8_t __attribute__((aligned(4))) ZBuffer[SNES_WIDTH * SNES_HEIGHT];
 static uint8_t __attribute__((aligned(4))) SubZBuffer[SNES_WIDTH * SNES_HEIGHT];
 
+// Separate sub-screen buffer for transparency (allocated in PSRAM)
+static uint8_t *SubScreenBuffer = NULL;
+
 // Current display buffer (double buffering) - accessed by HDMI driver
 volatile uint32_t current_buffer = 0;
 
@@ -218,7 +221,19 @@ static inline void perf_min_u32(uint32_t *dst, uint32_t v) {
 bool S9xInitDisplay(void) {
     GFX.Pitch = SNES_WIDTH;  // 8-bit pixels: 1 byte per pixel
     GFX.ZPitch = SNES_WIDTH;
-    GFX.SubScreen = GFX.Screen = SCREEN[current_buffer];
+    GFX.Screen = SCREEN[current_buffer];
+
+    // Allocate separate sub-screen buffer in PSRAM for transparency
+    if (!SubScreenBuffer) {
+        SubScreenBuffer = (uint8_t *)psram_malloc(SNES_WIDTH * SNES_HEIGHT);
+        if (SubScreenBuffer)
+            memset(SubScreenBuffer, 0, SNES_WIDTH * SNES_HEIGHT);
+    }
+    if (g_settings.transparency_enabled && SubScreenBuffer)
+        GFX.SubScreen = SubScreenBuffer;
+    else
+        GFX.SubScreen = GFX.Screen;
+
     GFX.ZBuffer = (uint8_t *)ZBuffer;
     GFX.SubZBuffer = (uint8_t *)SubZBuffer;
     return true;
@@ -856,7 +871,9 @@ static bool __time_critical_func(emulation_loop)(void) {  /* returns true if use
 
             // Restore emulation: renderer writes to SCREEN[0], HDMI shows SCREEN[!0]=SCREEN[1]
             current_buffer = 0;
-            GFX.SubScreen = GFX.Screen = SCREEN[0];
+            GFX.Screen = SCREEN[0];
+            GFX.SubScreen = (g_settings.transparency_enabled && SubScreenBuffer)
+                            ? SubScreenBuffer : GFX.Screen;
 
             // Restore emulation palette
             S9xFixColourBrightness();
@@ -1016,7 +1033,9 @@ static bool __time_critical_func(emulation_loop)(void) {  /* returns true if use
 
             // Swap display buffers only when we rendered
             current_buffer = !current_buffer;
-            GFX.SubScreen = GFX.Screen = SCREEN[current_buffer];
+            GFX.Screen = SCREEN[current_buffer];
+            GFX.SubScreen = (g_settings.transparency_enabled && SubScreenBuffer)
+                            ? SubScreenBuffer : GFX.Screen;
         }
 
         // Update palette if brightness changed during frame

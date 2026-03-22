@@ -17,6 +17,7 @@
 #include "gfx.h"
 #include "apu.h"
 #include "settings.h"
+#include "colormath.h"
 
 extern volatile bool g_palette_needs_update;
 
@@ -246,9 +247,11 @@ bool S9xInitGFX(void)
       return false;
 
 #if defined(MURMSNES_FAST_MODE) && BG_CACHE_ENABLED
-   /* Use SubZBuffer as Z-cache - it's unused in FAST_MODE (subscreen disabled) */
-   /* This is set AFTER GFX.SubZBuffer is initialized by caller */
-   bg_cache_zbuffer = GFX.SubZBuffer;
+   /* Use SubZBuffer as Z-cache - only safe when subscreen/transparency is disabled */
+   if (!g_settings.transparency_enabled)
+      bg_cache_zbuffer = GFX.SubZBuffer;
+   else
+      bg_cache_zbuffer = NULL;
 #endif
 
    GFX.OBJLines = LocalState->OBJLines;
@@ -2750,8 +2753,8 @@ static void RenderScreen(uint8_t* Screen, bool sub, bool force_no_add, uint8_t D
    GFX.S = Screen;
 
 #ifdef MURMSNES_FAST_MODE
-   /* FAST MODE: Skip subscreen rendering entirely */
-   if (sub)
+   /* FAST MODE: Skip subscreen rendering when transparency is off */
+   if (sub && !g_settings.transparency_enabled)
    {
 #ifdef MURMSNES_PROFILE
       murmsnes_prof_add_render_screen_us((uint32_t)(time_us_32() - __rs_t0));
@@ -3029,11 +3032,13 @@ void S9xUpdateScreen(void)
    GFX.Pseudo = Memory.FillRAM [0x2133] & 8;
 
 #ifdef MURMSNES_FAST_MODE
-   /* FAST MODE: Disable subscreen and color math entirely for maximum speed */
-   GFX.r212d = 0;  /* No subscreen layers */
-   GFX.r2131 = 0;  /* No color math (add/sub) */
-   GFX.r2130 = 0;  /* Disable color window, fixed color subtraction */
-   GFX.Pseudo = 0; /* Disable pseudo hi-res */
+   if (!g_settings.transparency_enabled) {
+      /* FAST MODE: Disable subscreen and color math entirely for maximum speed */
+      GFX.r212d = 0;  /* No subscreen layers */
+      GFX.r2131 = 0;  /* No color math (add/sub) */
+      GFX.r2130 = 0;  /* Disable color window, fixed color subtraction */
+      GFX.Pseudo = 0; /* Disable pseudo hi-res */
+   }
 #endif
 
    if (IPPU.OBJChanged)
@@ -3136,6 +3141,19 @@ void S9xUpdateScreen(void)
       GFX.r212d |= (Memory.FillRAM [0x212c] & 0x0f);
       GFX.r2130 |= 2;
    }
+
+   /* Rebuild color math grid if palette changed and transparency is active */
+   if (colormath_dirty && g_settings.transparency_enabled)
+      colormath_rebuild();
+
+   /* Recalculate Delta in case SubScreen pointer changed */
+   GFX.Delta = GFX.SubScreen - GFX.Screen;
+   GFX.DepthDelta = GFX.SubZBuffer - GFX.ZBuffer;
+
+   /* Store fixed colour as 15-bit SNES RGB for color math blending */
+   GFX.FixedColour15 = IPPU.XB[PPU.FixedColourRed]
+                      | (IPPU.XB[PPU.FixedColourGreen] << 5)
+                      | (IPPU.XB[PPU.FixedColourBlue] << 10);
 
    if (!PPU.ForcedBlanking && ADD_OR_SUB_ON_ANYTHING && (GFX.r2130 & 0x30) != 0x30 && !((GFX.r2130 & 0x30) == 0x10 && IPPU.Clip[1].Count[5] == 0))
    {
@@ -3307,74 +3325,33 @@ void S9xUpdateScreen(void)
                      continue;
                }
 
-               if (GFX.r2131 & 0x80)
                {
-                  if (GFX.r2131 & 0x40)
-                  {
-                     /* Subtract, halving the result. */
-                     uint8_t* p = GFX.Screen + y * GFX.Pitch2 + Left;
-                     uint8_t* d = GFX.ZBuffer + y * GFX.ZPitch;
-                     uint8_t* s = GFX.SubZBuffer + y * GFX.ZPitch + Left;
-                     uint8_t* e = d + Right;
-                     uint8_t back_fixed = (uint8_t)back; /* palette-indexed: no color math */
-
-                     d += Left;
-                     while (d < e)
-                     {
-                        if (*d == 0)
-                        {
-                           if (*s)
-                           {
-                              if (*s != 1)
-                                 *p = (uint8_t) back; /* palette-indexed: no color math */
-                              else
-                                 *p = back_fixed;
-                           }
-                           else
-                              *p = (uint8_t) back;
-                        }
-                        d++;
-                        p++;
-                        s++;
+                  /* Select blend functions based on color math mode.
+                   * Note: fixed color always uses FULL add/sub (not half),
+                   * matching snes9x2005 behavior. */
+                  uint8_t (*cm_blend)(uint8_t, uint8_t);
+                  uint8_t (*cm_fixed)(uint8_t, uint16_t);
+                  if (GFX.r2131 & 0x80) {
+                     if (GFX.r2131 & 0x40) {
+                        cm_blend = colormath_sub_half;
+                        cm_fixed = colormath_fixed_sub;
+                     } else {
+                        cm_blend = colormath_sub;
+                        cm_fixed = colormath_fixed_sub;
                      }
+                  } else if (GFX.r2131 & 0x40) {
+                     cm_blend = colormath_add_half;
+                     cm_fixed = colormath_fixed_add;
+                  } else {
+                     cm_blend = colormath_add;
+                     cm_fixed = colormath_fixed_add;
                   }
-                  else
-                  {
-                     /* Subtract */
-                     uint8_t* p = GFX.Screen + y * GFX.Pitch2 + Left;
-                     uint8_t* s = GFX.SubZBuffer + y * GFX.ZPitch + Left;
-                     uint8_t* d = GFX.ZBuffer + y * GFX.ZPitch;
-                     uint8_t* e = d + Right;
-                     uint8_t back_fixed = (uint8_t)back; /* palette-indexed: no color math */
 
-                     d += Left;
-                     while (d < e)
-                     {
-                        if (*d == 0)
-                        {
-                           if (*s)
-                           {
-                              if (*s != 1)
-                                 *p = (uint8_t) back; /* palette-indexed: no color math */
-                              else
-                                 *p = back_fixed;
-                           }
-                           else
-                              *p = (uint8_t) back;
-                        }
-                        d++;
-                        p++;
-                        s++;
-                     }
-                  }
-               }
-               else if (GFX.r2131 & 0x40)
-               {
+                  uint8_t back_idx = (uint8_t)back;
                   uint8_t* p = GFX.Screen + y * GFX.Pitch2 + Left;
                   uint8_t* d = GFX.ZBuffer + y * GFX.ZPitch;
                   uint8_t* s = GFX.SubZBuffer + y * GFX.ZPitch + Left;
                   uint8_t* e = d + Right;
-                  uint8_t back_fixed = (uint8_t)back; /* palette-indexed: no color math */
                   d += Left;
                   while (d < e)
                   {
@@ -3383,76 +3360,16 @@ void S9xUpdateScreen(void)
                         if (*s)
                         {
                            if (*s != 1)
-                              *p = (uint8_t) back; /* palette-indexed: no color math */
+                              *p = cm_blend(back_idx, *(p + GFX.Delta));
                            else
-                              *p = back_fixed;
+                              *p = cm_fixed(back_idx, GFX.FixedColour15);
                         }
                         else
-                           *p = (uint8_t) back;
+                           *p = back_idx;
                      }
                      d++;
                      p++;
                      s++;
-                  }
-               }
-               else if (back != 0)
-               {
-                  uint8_t* p = GFX.Screen + y * GFX.Pitch2 + Left;
-                  uint8_t* d = GFX.ZBuffer + y * GFX.ZPitch;
-                  uint8_t* s = GFX.SubZBuffer + y * GFX.ZPitch + Left;
-                  uint8_t* e = d + Right;
-                  uint8_t back_fixed = (uint8_t)back; /* palette-indexed: no color math */
-                  d += Left;
-                  while (d < e)
-                  {
-                     if (*d == 0)
-                     {
-                        if (*s)
-                        {
-                           if (*s != 1)
-                              *p = (uint8_t) back; /* palette-indexed: no color math */
-                           else
-                              *p = back_fixed;
-                        }
-                        else
-                           *p = (uint8_t) back;
-                     }
-                     d++;
-                     p++;
-                     s++;
-                  }
-               }
-               else
-               {
-                  if (!pClip->Count [5])
-                  {
-                     /* The backdrop has not been cleared yet - so
-                      * copy the sub-screen to the main screen
-                      * or fill it with the back-drop colour if the
-                      * sub-screen is clear. */
-                     uint8_t* p = GFX.Screen + y * GFX.Pitch2 + Left;
-                     uint8_t* d = GFX.ZBuffer + y * GFX.ZPitch;
-                     uint8_t* s = GFX.SubZBuffer + y * GFX.ZPitch + Left;
-                     uint8_t* e = d + Right;
-                     d += Left;
-                     while (d < e)
-                     {
-                        if (*d == 0)
-                        {
-                           if (*s)
-                           {
-                              if (*s != 1) {
-                                 *p = *(p + GFX.Delta);
-                              } else
-                                 *p = GFX.FixedColour;
-                           }
-                           else
-                              *p = (uint8_t) back;
-                        }
-                        d++;
-                        p++;
-                        s++;
-                     }
                   }
                }
             }

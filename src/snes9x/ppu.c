@@ -92,7 +92,7 @@ void S9xUpdateHTimer()
 
 void S9xFixColourBrightness() {
    IPPU.XB = mul_brightness [PPU.Brightness];
-   
+
    for (size_t i = 0; i < 256; i++)
    {
       IPPU.Red [i] = IPPU.XB [PPU.CGDATA [i] & 0x1f];
@@ -103,6 +103,10 @@ void S9xFixColourBrightness() {
    // Request HDMI palette update (will be applied during vblank)
    extern void graphics_request_palette_update(void);
    graphics_request_palette_update();
+
+   // Mark color math grid as needing rebuild
+   extern bool colormath_dirty;
+   colormath_dirty = true;
 }
 
 /******************************************************************************/

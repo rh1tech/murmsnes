@@ -51,6 +51,7 @@ typedef struct
    uint8_t     Z1;         /* Depth for comparison */
    uint8_t     Z2;         /* Depth to save */
    uint32_t    FixedColour;
+   uint16_t    FixedColour15;  /* 15-bit SNES RGB for color math blending */
    uint32_t    StartY;
    uint32_t    EndY;
    ClipData*   pCurrentClip;
